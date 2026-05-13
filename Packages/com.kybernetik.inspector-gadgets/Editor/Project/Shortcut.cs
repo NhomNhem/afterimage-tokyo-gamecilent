@@ -71,7 +71,9 @@ namespace InspectorGadgets
             if (Event.current == null)
                 return false;
 
+#pragma warning disable CS0618
             var shortcut = EditorUtility.InstanceIDToObject(instanceID) as Shortcut;
+#pragma warning restore CS0618
             if (shortcut != null)
             {
                 shortcut.GoToTarget();
