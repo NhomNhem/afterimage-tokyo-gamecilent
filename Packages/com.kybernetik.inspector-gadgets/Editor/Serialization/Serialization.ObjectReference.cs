@@ -60,7 +60,11 @@ namespace InspectorGadgets.Editor
             private void Initialize()
             {
                 if (_Object == null)
+                {
+#pragma warning disable CS0618
                     _Object = EditorUtility.InstanceIDToObject(_InstanceID);
+#pragma warning restore CS0618
+                }
                 else
                     _InstanceID = _Object.GetInstanceID();
             }

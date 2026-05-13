@@ -19,7 +19,9 @@ namespace InspectorGadgets.Editor
             if (Event.current == null)
                 return false;
 
+#pragma warning disable CS0618
             var asset = EditorUtility.InstanceIDToObject(instanceID);
+#pragma warning restore CS0618
 
             if (asset is GameObject prefab)
                 return OnOpenPrefab(prefab);

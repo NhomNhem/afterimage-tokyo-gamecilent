@@ -28,7 +28,9 @@ namespace InspectorGadgets.Editor
             if (!IsEnabled)
                 return;
 
+#pragma warning disable CS0618
             var item = EditorUtility.InstanceIDToObject(instanceID);
+#pragma warning restore CS0618
             if (item is GameObject gameObject)
                 OnHierarchyWindowItemGUI(gameObject, area);
         }

@@ -6,11 +6,11 @@ using UnityEngine.Rendering.Universal;
 namespace ToonShadersPro.URP
 {
     [System.Serializable, VolumeComponentMenu("Toon Shaders Pro/Outlines")]
+    [DisplayInfo(name = "Outlines")]
     public sealed class OutlineSettings : VolumeComponent, IPostProcessComponent
     {
         public OutlineSettings()
         {
-            displayName = "Outlines";
         }
 
         [Tooltip("Choose where to insert this pass in URP's render loop.\n" +
