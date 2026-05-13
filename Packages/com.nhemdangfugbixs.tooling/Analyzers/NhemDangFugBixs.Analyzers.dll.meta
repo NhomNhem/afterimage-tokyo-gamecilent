@@ -1,0 +1,48 @@
+fileFormatVersion: 2
+guid: 3696ffe8dc8a4a42a3d528afddfe5598
+labels:
+- RoslynAnalyzer
+PluginImporter:
+  serializedVersion: 2
+  iconMap: {}
+  executionOrder: {}
+  defineConstraints: []
+  isPreloaded: 0
+  isAutoReferenced: 0
+  validateReferences: 0
+  platformData:
+  - first:
+      Any: 
+    second:
+      enabled: 0
+  - first:
+      Editor: 
+    second:
+      enabled: 0
+  - first:
+      Win64: 
+    second:
+      enabled: 0
+  - first:
+      OSXUniversal: 
+    second:
+      enabled: 0
+  - first:
+      Linux64: 
+    second:
+      enabled: 0
+  - first:
+      Android: 
+    second:
+      enabled: 0
+  - first:
+      iOS: 
+    second:
+      enabled: 0
+  - first:
+      WebGL: 
+    second:
+      enabled: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
