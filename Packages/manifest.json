@@ -6,7 +6,7 @@
     "com.cysharp.zlinq": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
     "com.cysharp.zstring": "https://github.com/Cysharp/ZString.git?path=src/ZString.Unity/Assets/Scripts/ZString",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
-    "com.nhemdangfugbixs.tooling": "https://github.com/NhomNhem/NhemDangFugBixs.Tooling.git",
+    "com.nhemdangfugbixs.tooling": "file:com.nhemdangfugbixs.tooling",
     "com.unity.ai.navigation": "2.0.11",
     "com.unity.collab-proxy": "2.11.4",
     "com.unity.editorcoroutines": "1.0.1",
