@@ -124,64 +124,158 @@ namespace GlassRefrain.Core
         Unknown = 0,
         LightAttack = 1,
         HeavyAttack = 2,
-        Parry = 3,
-        Dodge = 4,
+        Dodge = 3,
+        Parry = 4,
         Counter = 5
+    }
+
+    public enum CombatCoreState
+    {
+        Neutral = 0,
+        AttackStartup = 1,
+        AttackActive = 2,
+        AttackRecovery = 3,
+        DodgeStartup = 4,
+        DodgeActive = 5,
+        DodgeRecovery = 6,
+        ParryStartup = 7,
+        ParryActive = 8,
+        ParryRecovery = 9,
+        CounterWindow = 10,
+        CounterActive = 11,
+        HitReact = 12,
+        RevealBeat = 13,
+        Disabled = 14
+    }
+
+    public enum CombatActionResult
+    {
+        Accepted = 0,
+        Rejected = 1,
+        Ignored = 2
+    }
+
+    public enum CombatRequestSourceType
+    {
+        Unknown = 0,
+        InputMapping = 1,
+        CombatCore = 2,
+        Encounter = 3,
+        Memory = 4,
+        TestHarness = 5
     }
 
     public readonly struct CombatActionRequest
     {
         public CombatActionType ActionType { get; }
+        public float TimestampSeconds { get; }
+        public CombatRequestSourceType SourceType { get; }
         public string Source { get; }
         public string ContextLabel { get; }
 
-        public CombatActionRequest(CombatActionType actionType, string source, string contextLabel)
+        public CombatActionRequest(
+            CombatActionType actionType,
+            float timestampSeconds,
+            CombatRequestSourceType sourceType,
+            string source,
+            string contextLabel)
         {
             ActionType = actionType;
-            Source = source;
-            ContextLabel = contextLabel;
+            TimestampSeconds = timestampSeconds;
+            SourceType = sourceType;
+            Source = source ?? string.Empty;
+            ContextLabel = contextLabel ?? string.Empty;
+        }
+
+        public CombatActionRequest(CombatActionType actionType, string source, string contextLabel)
+            : this(actionType, 0f, CombatRequestSourceType.Unknown, source, contextLabel)
+        {
         }
     }
 
     public readonly struct CombatActionRequestResult
     {
+        public CombatActionResult Result { get; }
         public bool Accepted { get; }
         public string Reason { get; }
         public string StateLabel { get; }
 
-        public CombatActionRequestResult(bool accepted, string reason, string stateLabel)
+        public CombatActionRequestResult(CombatActionResult result, string reason, string stateLabel)
         {
-            Accepted = accepted;
-            Reason = reason;
-            StateLabel = stateLabel;
+            Result = result;
+            Accepted = result == CombatActionResult.Accepted;
+            Reason = reason ?? string.Empty;
+            StateLabel = stateLabel ?? string.Empty;
+        }
+
+        public CombatActionRequestResult(bool accepted, string reason, string stateLabel)
+            : this(accepted ? CombatActionResult.Accepted : CombatActionResult.Rejected, reason, stateLabel)
+        {
         }
     }
 
     public readonly struct CombatResolutionResult
     {
+        public CombatActionType ActionType { get; }
         public bool Resolved { get; }
         public bool Successful { get; }
+        public bool HitConfirmed { get; }
+        public bool TriggeredCounterWindow { get; }
+        public string SourceLabel { get; }
         public string Detail { get; }
 
-        public CombatResolutionResult(bool resolved, bool successful, string detail)
+        public CombatResolutionResult(
+            CombatActionType actionType,
+            bool resolved,
+            bool successful,
+            bool hitConfirmed,
+            bool triggeredCounterWindow,
+            string sourceLabel,
+            string detail)
         {
+            ActionType = actionType;
             Resolved = resolved;
             Successful = successful;
-            Detail = detail;
+            HitConfirmed = hitConfirmed;
+            TriggeredCounterWindow = triggeredCounterWindow;
+            SourceLabel = sourceLabel ?? string.Empty;
+            Detail = detail ?? string.Empty;
+        }
+
+        public CombatResolutionResult(bool resolved, bool successful, string detail)
+            : this(CombatActionType.Unknown, resolved, successful, false, false, string.Empty, detail)
+        {
         }
     }
 
     public readonly struct ActionLockContext
     {
-        public bool IsLocked { get; }
-        public string Source { get; }
-        public string Reason { get; }
+        public bool LockActive { get; }
+        public string LockSource { get; }
+        public CombatCoreState RequestingState { get; }
+        public bool IsLocked
+        {
+            get { return LockActive; }
+        }
+        public string Source
+        {
+            get { return LockSource; }
+        }
+        public string Reason
+        {
+            get { return LockSource; }
+        }
+
+        public ActionLockContext(bool lockActive, string lockSource, CombatCoreState requestingState)
+        {
+            LockActive = lockActive;
+            LockSource = lockSource ?? string.Empty;
+            RequestingState = requestingState;
+        }
 
         public ActionLockContext(bool isLocked, string source, string reason)
+            : this(isLocked, string.IsNullOrEmpty(reason) ? source : reason, CombatCoreState.Neutral)
         {
-            IsLocked = isLocked;
-            Source = source;
-            Reason = reason;
         }
     }
 
@@ -196,17 +290,127 @@ namespace GlassRefrain.Core
 
     public readonly struct RecoveryContext
     {
+        public bool RecoveryActive { get; }
+        public string RecoverySourceLabel { get; }
+        public CombatCoreState RequestingState { get; }
         public RecoverySource Source { get; }
-        public bool IsRecovering { get; }
+        public bool IsRecovering
+        {
+            get { return RecoveryActive; }
+        }
         public float RemainingSeconds { get; }
-        public string Detail { get; }
+        public string Detail
+        {
+            get { return RecoverySourceLabel; }
+        }
+
+        public RecoveryContext(
+            bool recoveryActive,
+            string recoverySourceLabel,
+            CombatCoreState requestingState,
+            RecoverySource source,
+            float remainingSeconds)
+        {
+            RecoveryActive = recoveryActive;
+            RecoverySourceLabel = recoverySourceLabel ?? string.Empty;
+            RequestingState = requestingState;
+            Source = source;
+            RemainingSeconds = remainingSeconds;
+        }
 
         public RecoveryContext(RecoverySource source, bool isRecovering, float remainingSeconds, string detail)
+            : this(isRecovering, detail, CombatCoreState.Neutral, source, remainingSeconds)
         {
-            Source = source;
-            IsRecovering = isRecovering;
-            RemainingSeconds = remainingSeconds;
-            Detail = detail;
+        }
+    }
+
+    public readonly struct CounterWindowState
+    {
+        public bool IsOpen { get; }
+        public string SourceTag { get; }
+        public float ElapsedSeconds { get; }
+        public float DurationSeconds { get; }
+        public float RemainingSeconds
+        {
+            get { return DurationSeconds - ElapsedSeconds; }
+        }
+
+        public CounterWindowState(bool isOpen, string sourceTag, float elapsedSeconds, float durationSeconds)
+        {
+            IsOpen = isOpen;
+            SourceTag = sourceTag ?? string.Empty;
+            ElapsedSeconds = elapsedSeconds;
+            DurationSeconds = durationSeconds;
+        }
+    }
+
+    public readonly struct M0CombatSnapshot
+    {
+        public CombatCoreState State { get; }
+        public CombatActionRequestResult LastActionResult { get; }
+        public CombatResolutionResult LastResolutionResult { get; }
+        public CounterWindowState CounterWindow { get; }
+        public ActionLockContext ActionLock { get; }
+        public RecoveryContext Recovery { get; }
+
+        public M0CombatSnapshot(
+            CombatCoreState state,
+            CombatActionRequestResult lastActionResult,
+            CombatResolutionResult lastResolutionResult,
+            CounterWindowState counterWindow,
+            ActionLockContext actionLock,
+            RecoveryContext recovery)
+        {
+            State = state;
+            LastActionResult = lastActionResult;
+            LastResolutionResult = lastResolutionResult;
+            CounterWindow = counterWindow;
+            ActionLock = actionLock;
+            Recovery = recovery;
+        }
+    }
+
+    public readonly struct CombatStepResult
+    {
+        public bool Transitioned { get; }
+        public CombatCoreState PreviousState { get; }
+        public CombatCoreState CurrentState { get; }
+        public string Reason { get; }
+
+        public CombatStepResult(bool transitioned, CombatCoreState previousState, CombatCoreState currentState, string reason)
+        {
+            Transitioned = transitioned;
+            PreviousState = previousState;
+            CurrentState = currentState;
+            Reason = reason ?? string.Empty;
+        }
+    }
+
+    public readonly struct RevealRequestContext
+    {
+        public CombatRequestSourceType RequestSourceType { get; }
+        public string CombatResultSourceLabel { get; }
+        public string SourceId { get; }
+        public string MemoryId { get; }
+        public string ContextLabel { get; }
+
+        public RevealRequestContext(
+            CombatRequestSourceType requestSourceType,
+            string combatResultSourceLabel,
+            string sourceId,
+            string memoryId,
+            string contextLabel)
+        {
+            RequestSourceType = requestSourceType;
+            CombatResultSourceLabel = combatResultSourceLabel ?? string.Empty;
+            SourceId = sourceId ?? string.Empty;
+            MemoryId = memoryId ?? string.Empty;
+            ContextLabel = contextLabel ?? string.Empty;
+        }
+
+        public RevealRequestContext(string sourceId, string memoryId, string contextLabel)
+            : this(CombatRequestSourceType.Unknown, string.Empty, sourceId, memoryId, contextLabel)
+        {
         }
     }
 
@@ -604,20 +808,6 @@ namespace GlassRefrain.Core
         {
             IsDefeated = isDefeated;
             Reason = reason;
-        }
-    }
-
-    public readonly struct RevealRequestContext
-    {
-        public string SourceId { get; }
-        public string MemoryId { get; }
-        public string ContextLabel { get; }
-
-        public RevealRequestContext(string sourceId, string memoryId, string contextLabel)
-        {
-            SourceId = sourceId;
-            MemoryId = memoryId;
-            ContextLabel = contextLabel;
         }
     }
 
