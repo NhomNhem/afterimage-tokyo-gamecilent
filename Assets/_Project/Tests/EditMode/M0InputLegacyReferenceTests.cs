@@ -1,12 +1,9 @@
 using System.IO;
 using NUnit.Framework;
 
-namespace GlassRefrain.Tests.EditMode
-{
-    public class M0InputLegacyReferenceTests
-    {
-        private static readonly string[] ForbiddenLegacyInputPatterns =
-        {
+namespace GlassRefrain.Tests.EditMode {
+    public class M0InputLegacyReferenceTests {
+        private static readonly string[] ForbiddenLegacyInputPatterns = {
             "UnityEngine.Input;",
             "UnityEngine.Input ",
             "Input.GetAxis",
@@ -25,25 +22,21 @@ namespace GlassRefrain.Tests.EditMode
         };
 
         [Test]
-        public void InputFoundationAndRouterFilesDoNotReferenceLegacyInputManager()
-        {
-            string[] files =
-            {
+        public void InputFoundationAndRouterFilesDoNotReferenceLegacyInputManager() {
+            string[] files = {
                 "Assets/_Project/Code/Input/M0InputFoundation.cs",
                 "Assets/_Project/Code/Input/M0InputRouter.cs",
                 "Assets/_Project/Content/Data/Input/M0InputActions.inputactions"
             };
 
-            foreach (string file in files)
-            {
+            foreach (var file in files) {
                 Assert.That(File.Exists(file), Is.True, "Expected file to exist: " + file);
 
-                string contents = File.ReadAllText(file);
+                var contents = File.ReadAllText(file);
 
-                foreach (string pattern in ForbiddenLegacyInputPatterns)
-                {
-                    Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden legacy input pattern: " + pattern);
-                }
+                foreach (var pattern in ForbiddenLegacyInputPatterns)
+                    Assert.That(contents.Contains(pattern), Is.False,
+                        file + " contains forbidden legacy input pattern: " + pattern);
             }
         }
     }

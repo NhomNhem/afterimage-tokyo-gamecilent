@@ -1,16 +1,16 @@
 {
-    "name": "GlassRefrain.Encounter",
-    "rootNamespace": "GlassRefrain.Encounter",
-    "references": [
-        "GlassRefrain.Core"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "GlassRefrain.Encounter",
+  "rootNamespace": "GlassRefrain.Encounter",
+  "references": [
+    "GlassRefrain.Core"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

@@ -1,16 +1,16 @@
 {
-    "name": "GlassRefrain.Enemy",
-    "rootNamespace": "GlassRefrain.Enemy",
-    "references": [
-        "GlassRefrain.Core"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "GlassRefrain.Enemy",
+  "rootNamespace": "GlassRefrain.Enemy",
+  "references": [
+    "GlassRefrain.Core"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

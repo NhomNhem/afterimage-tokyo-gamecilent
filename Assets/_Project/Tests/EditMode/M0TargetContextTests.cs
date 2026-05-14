@@ -5,14 +5,11 @@ using GlassRefrain.Input;
 using GlassRefrain.Targeting;
 using NUnit.Framework;
 
-namespace GlassRefrain.Tests.EditMode
-{
-    public class M0TargetContextTests
-    {
+namespace GlassRefrain.Tests.EditMode {
+    public class M0TargetContextTests {
         [Test]
-        public void TargetContextDefaultsToInactiveWithoutTarget()
-        {
-            M0TargetContext context = new M0TargetContext();
+        public void TargetContextDefaultsToInactiveWithoutTarget() {
+            var context = new M0TargetContext();
 
             Assert.That(context.Snapshot.FocusState, Is.EqualTo(TargetFocusState.Inactive));
             Assert.That(context.Snapshot.IsLockedOn, Is.False);
@@ -21,13 +18,12 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void TargetContextCanAcquireAndFocusValidTarget()
-        {
-            M0TargetContext context = new M0TargetContext();
+        public void TargetContextCanAcquireAndFocusValidTarget() {
+            var context = new M0TargetContext();
             context.SetTargetDirection(new TargetDirectionContext(new Axis2(0f, 1f), true, "forward"));
             context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
 
-            TargetAcquireResult result = context.RequestAcquire(new TargetAcquireRequest("Enemy_01", "Test", "Acquire target"));
+            var result = context.RequestAcquire(new TargetAcquireRequest("Enemy_01", "Test", "Acquire target"));
 
             Assert.That(result.Accepted, Is.True);
             Assert.That(context.Snapshot.FocusState, Is.EqualTo(TargetFocusState.Focused));
@@ -37,12 +33,11 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void TargetContextConsumesRawLockOnIntentAsRequestData()
-        {
-            M0TargetContext context = new M0TargetContext();
+        public void TargetContextConsumesRawLockOnIntentAsRequestData() {
+            var context = new M0TargetContext();
             context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
 
-            bool consumed = context.ConsumeInputIntent(CreateInputSnapshot(true));
+            var consumed = context.ConsumeInputIntent(CreateInputSnapshot(true));
 
             Assert.That(consumed, Is.True);
             Assert.That(context.Snapshot.FocusState, Is.EqualTo(TargetFocusState.Focused));
@@ -50,13 +45,14 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void TargetContextCanReleaseFocusedTarget()
-        {
-            M0TargetContext context = new M0TargetContext();
+        public void TargetContextCanReleaseFocusedTarget() {
+            var context = new M0TargetContext();
             context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
             context.RequestAcquire(new TargetAcquireRequest("Enemy_01", "Test", "Acquire target"));
 
-            bool changed = context.RequestRelease(new TargetReleaseRequest(TargetReleaseReason.Manual, "Test", "Player released target"));
+            var changed =
+                context.RequestRelease(new TargetReleaseRequest(TargetReleaseReason.Manual, "Test",
+                    "Player released target"));
 
             Assert.That(changed, Is.True);
             Assert.That(context.Snapshot.FocusState, Is.EqualTo(TargetFocusState.Inactive));
@@ -65,9 +61,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void TargetContextMarksInvalidTargetsReadably()
-        {
-            M0TargetContext context = new M0TargetContext();
+        public void TargetContextMarksInvalidTargetsReadably() {
+            var context = new M0TargetContext();
             context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
             context.RequestAcquire(new TargetAcquireRequest("Enemy_01", "Test", "Acquire target"));
             context.SetTargetValidity(new TargetValidityContext("Enemy_01", false, "Enemy defeated"));
@@ -78,15 +73,14 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void TargetContextDebugSnapshotIsReadOnly()
-        {
-            M0TargetContext context = new M0TargetContext();
+        public void TargetContextDebugSnapshotIsReadOnly() {
+            var context = new M0TargetContext();
             context.SetTargetDirection(new TargetDirectionContext(new Axis2(-1f, 0f), true, "left"));
             context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
             context.RequestAcquire(new TargetAcquireRequest("Enemy_01", "Test", "Acquire target"));
 
-            TargetDebugSnapshot debugSnapshot = context.CreateDebugSnapshot();
-            string joined = string.Join("\n", debugSnapshot.Details);
+            var debugSnapshot = context.CreateDebugSnapshot();
+            var joined = string.Join("\n", debugSnapshot.Details);
 
             Assert.That(debugSnapshot.Summary, Is.EqualTo("M0 target context"));
             Assert.That(debugSnapshot.Details, Is.InstanceOf<IReadOnlyList<string>>());
@@ -96,17 +90,14 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void TargetContextFilesDoNotReferenceLegacyInputManagerOrGeneratedDi()
-        {
-            string[] files =
-            {
+        public void TargetContextFilesDoNotReferenceLegacyInputManagerOrGeneratedDi() {
+            string[] files = {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
                 "Assets/_Project/Code/Targeting/M0TargetContext.cs",
                 "Assets/_Project/Code/Targeting/GlassRefrain.Targeting.asmdef"
             };
 
-            string[] forbiddenPatterns =
-            {
+            string[] forbiddenPatterns = {
                 "InputManager",
                 "UnityEngine.Input;",
                 "UnityEngine.Input ",
@@ -114,20 +105,16 @@ namespace GlassRefrain.Tests.EditMode
                 "NhemDangFugBixs.Attributes"
             };
 
-            foreach (string file in files)
-            {
+            foreach (var file in files) {
                 Assert.That(File.Exists(file), Is.True, "Expected file to exist: " + file);
 
-                string contents = File.ReadAllText(file);
-                foreach (string pattern in forbiddenPatterns)
-                {
+                var contents = File.ReadAllText(file);
+                foreach (var pattern in forbiddenPatterns)
                     Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden pattern: " + pattern);
-                }
             }
         }
 
-        private static InputIntentSnapshot CreateInputSnapshot(bool lockOnPressed)
-        {
+        private static InputIntentSnapshot CreateInputSnapshot(bool lockOnPressed) {
             return new InputIntentSnapshot(
                 new Axis2(0f, 0f),
                 new Axis2(0f, 0f),

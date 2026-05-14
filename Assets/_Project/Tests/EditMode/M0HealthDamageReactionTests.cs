@@ -3,15 +3,12 @@ using GlassRefrain.Core;
 using GlassRefrain.Health;
 using NUnit.Framework;
 
-namespace GlassRefrain.Tests.EditMode
-{
-    public class M0HealthDamageReactionTests
-    {
+namespace GlassRefrain.Tests.EditMode {
+    public class M0HealthDamageReactionTests {
         [Test]
-        public void DamageRequestResultAcceptedForValidDamage()
-        {
-            M0HealthDamageReactionModel model = new M0HealthDamageReactionModel(100f);
-            DamageApplicationResult result = model.ApplyDamage(
+        public void DamageRequestResultAcceptedForValidDamage() {
+            var model = new M0HealthDamageReactionModel(100f);
+            var result = model.ApplyDamage(
                 new DamageApplicationContext("CombatCoreConfirmed", "Player", 25f, "Basic", "ConfirmedHit"));
 
             Assert.That(result.Result, Is.EqualTo(DamageApplicationResultType.Accepted));
@@ -20,9 +17,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void HealthSnapshotReflectsLatestDamageResult()
-        {
-            M0HealthDamageReactionModel model = new M0HealthDamageReactionModel(80f);
+        public void HealthSnapshotReflectsLatestDamageResult() {
+            var model = new M0HealthDamageReactionModel(80f);
             model.ApplyDamage(new DamageApplicationContext("Enemy", "Player", 10f, "Basic", "Hit"));
 
             Assert.That(model.Snapshot.LastDamageResult.Result, Is.EqualTo(DamageApplicationResultType.Accepted));
@@ -31,9 +27,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void HitReactionPlaceholderIsSetAfterAcceptedDamage()
-        {
-            M0HealthDamageReactionModel model = new M0HealthDamageReactionModel();
+        public void HitReactionPlaceholderIsSetAfterAcceptedDamage() {
+            var model = new M0HealthDamageReactionModel();
             model.ApplyDamage(new DamageApplicationContext("EnemyStrike", "Player", 5f, "Basic", "Hit"));
 
             Assert.That(model.Snapshot.HitReaction.SourceId, Is.EqualTo("EnemyStrike"));
@@ -42,9 +37,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void DefeatedStateTriggeredWhenHealthReachesZero()
-        {
-            M0HealthDamageReactionModel model = new M0HealthDamageReactionModel(20f);
+        public void DefeatedStateTriggeredWhenHealthReachesZero() {
+            var model = new M0HealthDamageReactionModel(20f);
             model.ApplyDamage(new DamageApplicationContext("Enemy", "Player", 20f, "Basic", "Lethal"));
 
             Assert.That(model.Snapshot.Defeat.IsDefeated, Is.True);
@@ -53,17 +47,14 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void HealthFilesDoNotReferenceForbiddenDependencies()
-        {
-            string[] files =
-            {
+        public void HealthFilesDoNotReferenceForbiddenDependencies() {
+            string[] files = {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
                 "Assets/_Project/Code/Health/M0HealthDamageReactionModel.cs",
                 "Assets/_Project/Code/Health/GlassRefrain.Health.asmdef"
             };
 
-            string[] forbiddenPatterns =
-            {
+            string[] forbiddenPatterns = {
                 "InputManager",
                 "UnityEngine.Input;",
                 "UnityEngine.Input ",
@@ -83,14 +74,11 @@ namespace GlassRefrain.Tests.EditMode
                 "GetComponent<"
             };
 
-            foreach (string file in files)
-            {
+            foreach (var file in files) {
                 Assert.That(File.Exists(file), Is.True, "Expected file to exist: " + file);
-                string contents = File.ReadAllText(file);
-                foreach (string pattern in forbiddenPatterns)
-                {
+                var contents = File.ReadAllText(file);
+                foreach (var pattern in forbiddenPatterns)
                     Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden pattern: " + pattern);
-                }
             }
         }
     }

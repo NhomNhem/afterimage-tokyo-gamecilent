@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using GlassRefrain.Core;
 
-namespace GlassRefrain.Input
-{
-    public sealed class M0InputRouter : IInputIntentSource
-    {
+namespace GlassRefrain.Input {
+    public sealed class M0InputRouter : IInputIntentSource {
         private Axis2 move;
         private Axis2 look;
         private bool lightAttackPressed;
@@ -20,73 +18,49 @@ namespace GlassRefrain.Input
         private InputIntentSnapshot latestSnapshot;
         private readonly List<InputRoutingResult> routingHistory;
 
-        public M0InputRouter(bool inputEnabled = true)
-        {
+        public M0InputRouter(bool inputEnabled = true) {
             this.inputEnabled = inputEnabled;
             routingHistory = new List<InputRoutingResult>();
             RefreshSnapshot();
         }
 
-        public InputIntentSnapshot Snapshot
-        {
-            get { return latestSnapshot; }
-        }
+        public InputIntentSnapshot Snapshot => latestSnapshot;
 
-        public IReadOnlyList<InputRoutingResult> RoutingHistory
-        {
-            get { return routingHistory; }
-        }
+        public IReadOnlyList<InputRoutingResult> RoutingHistory => routingHistory;
 
-        public bool InputEnabled
-        {
-            get { return inputEnabled; }
-        }
+        public bool InputEnabled => inputEnabled;
 
         public event Action<InputIntentSnapshot> SnapshotChanged;
         public event Action<InputRoutingResult> RoutingRecorded;
 
-        public bool SetInputEnabled(bool enabled)
-        {
-            if (inputEnabled == enabled)
-            {
-                return false;
-            }
+        public bool SetInputEnabled(bool enabled) {
+            if (inputEnabled == enabled) return false;
 
             inputEnabled = enabled;
             RefreshSnapshot();
             return true;
         }
 
-        public bool SetMove(Axis2 value)
-        {
-            if (AreEqual(move, value))
-            {
-                return false;
-            }
+        public bool SetMove(Axis2 value) {
+            if (AreEqual(move, value)) return false;
 
             move = value;
             RefreshSnapshot();
             return true;
         }
 
-        public bool SetLook(Axis2 value)
-        {
-            if (AreEqual(look, value))
-            {
-                return false;
-            }
+        public bool SetLook(Axis2 value) {
+            if (AreEqual(look, value)) return false;
 
             look = value;
             RefreshSnapshot();
             return true;
         }
 
-        public bool SetActionPressed(InputActionIntent action, bool pressed)
-        {
+        public bool SetActionPressed(InputActionIntent action, bool pressed) {
             bool changed;
 
-            switch (action)
-            {
+            switch (action) {
                 case InputActionIntent.LightAttack:
                     changed = UpdateButton(ref lightAttackPressed, pressed);
                     break;
@@ -115,10 +89,7 @@ namespace GlassRefrain.Input
                     return false;
             }
 
-            if (changed)
-            {
-                RefreshSnapshot();
-            }
+            if (changed) RefreshSnapshot();
 
             return changed;
         }
@@ -127,24 +98,18 @@ namespace GlassRefrain.Input
             InputActionIntent action,
             InputRoutingDisposition disposition,
             string routedTo,
-            string reason)
-        {
-            string destination = routedTo ?? string.Empty;
-            string detail = reason ?? string.Empty;
-            InputRoutingResult result = new InputRoutingResult(action, disposition, destination, detail);
+            string reason) {
+            var destination = routedTo ?? string.Empty;
+            var detail = reason ?? string.Empty;
+            var result = new InputRoutingResult(action, disposition, destination, detail);
             routingHistory.Add(result);
 
-            Action<InputRoutingResult> handler = RoutingRecorded;
-            if (handler != null)
-            {
-                handler(result);
-            }
+            var handler = RoutingRecorded;
+            if (handler != null) handler(result);
         }
 
-        public InputDebugSnapshot CreateDebugSnapshot()
-        {
-            string[] details = new string[]
-            {
+        public InputDebugSnapshot CreateDebugSnapshot() {
+            var details = new string[] {
                 "InputEnabled: " + inputEnabled,
                 "Move: (" + move.X + ", " + move.Y + ")",
                 "Look: (" + look.X + ", " + look.Y + ")",
@@ -159,10 +124,10 @@ namespace GlassRefrain.Input
                 "RoutingCount: " + routingHistory.Count
             };
 
-            if (routingHistory.Count > 0)
-            {
-                InputRoutingResult latestRouting = routingHistory[routingHistory.Count - 1];
-                string lastRouting = latestRouting.Intent + " | " + latestRouting.Disposition + " | " + latestRouting.RoutedTo + " | " + latestRouting.Reason;
+            if (routingHistory.Count > 0) {
+                var latestRouting = routingHistory[routingHistory.Count - 1];
+                var lastRouting = latestRouting.Intent + " | " + latestRouting.Disposition + " | " +
+                                  latestRouting.RoutedTo + " | " + latestRouting.Reason;
                 Array.Resize(ref details, details.Length + 1);
                 details[details.Length - 1] = "LatestRouting: " + lastRouting;
             }
@@ -170,8 +135,7 @@ namespace GlassRefrain.Input
             return new InputDebugSnapshot("M0 input state", Array.AsReadOnly(details));
         }
 
-        private void RefreshSnapshot()
-        {
+        private void RefreshSnapshot() {
             latestSnapshot = new InputIntentSnapshot(
                 move,
                 look,
@@ -185,26 +149,18 @@ namespace GlassRefrain.Input
                 toggleDebugOverlayPressed,
                 inputEnabled);
 
-            Action<InputIntentSnapshot> handler = SnapshotChanged;
-            if (handler != null)
-            {
-                handler(latestSnapshot);
-            }
+            var handler = SnapshotChanged;
+            if (handler != null) handler(latestSnapshot);
         }
 
-        private static bool UpdateButton(ref bool current, bool next)
-        {
-            if (current == next)
-            {
-                return false;
-            }
+        private static bool UpdateButton(ref bool current, bool next) {
+            if (current == next) return false;
 
             current = next;
             return true;
         }
 
-        private static bool AreEqual(Axis2 left, Axis2 right)
-        {
+        private static bool AreEqual(Axis2 left, Axis2 right) {
             return left.X == right.X && left.Y == right.Y;
         }
     }

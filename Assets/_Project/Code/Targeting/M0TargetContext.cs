@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using GlassRefrain.Core;
 
-namespace GlassRefrain.Targeting
-{
-    public sealed class M0TargetContext
-    {
+namespace GlassRefrain.Targeting {
+    public sealed class M0TargetContext {
         private TargetFocusState focusState;
         private string targetId;
         private bool targetValid;
@@ -15,8 +13,7 @@ namespace GlassRefrain.Targeting
         private string invalidReason;
         private TargetContextSnapshot latestSnapshot;
 
-        public M0TargetContext()
-        {
+        public M0TargetContext() {
             focusState = TargetFocusState.Inactive;
             targetId = string.Empty;
             targetValid = false;
@@ -27,28 +24,20 @@ namespace GlassRefrain.Targeting
             RefreshSnapshot();
         }
 
-        public TargetContextSnapshot Snapshot
-        {
-            get { return latestSnapshot; }
-        }
+        public TargetContextSnapshot Snapshot => latestSnapshot;
 
         public event Action<TargetContextSnapshot> SnapshotChanged;
 
-        public bool ConsumeInputIntent(InputIntentSnapshot inputIntent)
-        {
-            if (!inputIntent.LockOnPressed)
-            {
-                return false;
-            }
+        public bool ConsumeInputIntent(InputIntentSnapshot inputIntent) {
+            if (!inputIntent.LockOnPressed) return false;
 
-            if (focusState == TargetFocusState.Focused)
-            {
-                RequestRelease(new TargetReleaseRequest(TargetReleaseReason.Manual, "InputMapping", "LockOn toggled off"));
+            if (focusState == TargetFocusState.Focused) {
+                RequestRelease(new TargetReleaseRequest(TargetReleaseReason.Manual, "InputMapping",
+                    "LockOn toggled off"));
                 return true;
             }
 
-            if (targetValid && !string.IsNullOrEmpty(targetId))
-            {
+            if (targetValid && !string.IsNullOrEmpty(targetId)) {
                 RequestAcquire(new TargetAcquireRequest(targetId, "InputMapping", "LockOn toggled on"));
                 return true;
             }
@@ -59,10 +48,8 @@ namespace GlassRefrain.Targeting
             return true;
         }
 
-        public TargetAcquireResult RequestAcquire(TargetAcquireRequest request)
-        {
-            if (string.IsNullOrEmpty(request.TargetId))
-            {
+        public TargetAcquireResult RequestAcquire(TargetAcquireRequest request) {
+            if (string.IsNullOrEmpty(request.TargetId)) {
                 focusState = TargetFocusState.AcquireRequested;
                 acquireReason = request.Reason;
                 targetValid = false;
@@ -74,8 +61,7 @@ namespace GlassRefrain.Targeting
             acquireReason = request.Reason;
             releaseReason = string.Empty;
 
-            if (targetValid)
-            {
+            if (targetValid) {
                 focusState = TargetFocusState.Focused;
                 invalidReason = string.Empty;
                 RefreshSnapshot();
@@ -88,9 +74,8 @@ namespace GlassRefrain.Targeting
             return new TargetAcquireResult(false, targetId, "Target not yet valid");
         }
 
-        public bool RequestRelease(TargetReleaseRequest request)
-        {
-            bool changed = focusState != TargetFocusState.Inactive || !string.IsNullOrEmpty(releaseReason);
+        public bool RequestRelease(TargetReleaseRequest request) {
+            var changed = focusState != TargetFocusState.Inactive || !string.IsNullOrEmpty(releaseReason);
 
             focusState = TargetFocusState.Inactive;
             releaseReason = request.Detail;
@@ -100,47 +85,38 @@ namespace GlassRefrain.Targeting
             return changed;
         }
 
-        public void SetTargetValidity(TargetValidityContext validity)
-        {
-            if (!string.IsNullOrEmpty(validity.TargetId))
-            {
-                targetId = validity.TargetId;
-            }
+        public void SetTargetValidity(TargetValidityContext validity) {
+            if (!string.IsNullOrEmpty(validity.TargetId)) targetId = validity.TargetId;
 
             targetValid = validity.IsValid;
             invalidReason = validity.IsValid ? string.Empty : validity.Reason;
 
-            if (validity.IsValid)
-            {
-                if (focusState == TargetFocusState.AcquireRequested && !string.IsNullOrEmpty(targetId))
-                {
+            if (validity.IsValid) {
+                if (focusState == TargetFocusState.AcquireRequested && !string.IsNullOrEmpty(targetId)) {
                     focusState = TargetFocusState.Focused;
                     releaseReason = string.Empty;
                 }
             }
-            else if (focusState == TargetFocusState.Focused || focusState == TargetFocusState.AcquireRequested)
-            {
+            else if (focusState == TargetFocusState.Focused || focusState == TargetFocusState.AcquireRequested) {
                 focusState = TargetFocusState.Invalid;
             }
 
             RefreshSnapshot();
         }
 
-        public void SetTargetDirection(TargetDirectionContext direction)
-        {
+        public void SetTargetDirection(TargetDirectionContext direction) {
             targetDirection = direction;
             RefreshSnapshot();
         }
 
-        public TargetDebugSnapshot CreateDebugSnapshot()
-        {
-            string[] details = new string[]
-            {
+        public TargetDebugSnapshot CreateDebugSnapshot() {
+            var details = new string[] {
                 "FocusState: " + latestSnapshot.FocusState,
                 "TargetId: " + latestSnapshot.TargetId,
                 "IsLockedOn: " + latestSnapshot.IsLockedOn,
                 "IsValid: " + latestSnapshot.IsValid,
-                "Direction: " + latestSnapshot.Direction.Label + " | " + latestSnapshot.Direction.HasDirection + " | (" + latestSnapshot.Direction.Direction.X + ", " + latestSnapshot.Direction.Direction.Y + ")",
+                "Direction: " + latestSnapshot.Direction.Label + " | " + latestSnapshot.Direction.HasDirection +
+                " | (" + latestSnapshot.Direction.Direction.X + ", " + latestSnapshot.Direction.Direction.Y + ")",
                 "AcquireReason: " + latestSnapshot.AcquireReason,
                 "ReleaseReason: " + latestSnapshot.ReleaseReason,
                 "InvalidReason: " + latestSnapshot.InvalidReason
@@ -149,8 +125,7 @@ namespace GlassRefrain.Targeting
             return new TargetDebugSnapshot("M0 target context", Array.AsReadOnly(details));
         }
 
-        private void RefreshSnapshot()
-        {
+        private void RefreshSnapshot() {
             latestSnapshot = new TargetContextSnapshot(
                 focusState,
                 targetId,
@@ -160,11 +135,8 @@ namespace GlassRefrain.Targeting
                 releaseReason,
                 invalidReason);
 
-            Action<TargetContextSnapshot> handler = SnapshotChanged;
-            if (handler != null)
-            {
-                handler(latestSnapshot);
-            }
+            var handler = SnapshotChanged;
+            if (handler != null) handler(latestSnapshot);
         }
     }
 }

@@ -1,33 +1,27 @@
-namespace GlassRefrain.Core
-{
-    public readonly struct Axis2
-    {
+namespace GlassRefrain.Core {
+    public readonly struct Axis2 {
         public float X { get; }
         public float Y { get; }
 
-        public Axis2(float x, float y)
-        {
+        public Axis2(float x, float y) {
             X = x;
             Y = y;
         }
     }
 
-    public readonly struct Axis3
-    {
+    public readonly struct Axis3 {
         public float X { get; }
         public float Y { get; }
         public float Z { get; }
 
-        public Axis3(float x, float y, float z)
-        {
+        public Axis3(float x, float y, float z) {
             X = x;
             Y = y;
             Z = z;
         }
     }
 
-    public enum InputActionIntent
-    {
+    public enum InputActionIntent {
         None = 0,
         Move = 1,
         Look = 2,
@@ -41,16 +35,14 @@ namespace GlassRefrain.Core
         ToggleDebugOverlay = 10
     }
 
-    public enum InputRoutingDisposition
-    {
+    public enum InputRoutingDisposition {
         Disabled = 0,
         Ignored = 1,
         Routed = 2,
         Rejected = 3
     }
 
-    public readonly struct InputIntentSnapshot
-    {
+    public readonly struct InputIntentSnapshot {
         public Axis2 Move { get; }
         public Axis2 Look { get; }
         public bool LightAttackPressed { get; }
@@ -74,8 +66,7 @@ namespace GlassRefrain.Core
             bool lockOnPressed,
             bool resetEncounterPressed,
             bool toggleDebugOverlayPressed,
-            bool inputEnabled)
-        {
+            bool inputEnabled) {
             Move = move;
             Look = look;
             LightAttackPressed = lightAttackPressed;
@@ -90,23 +81,18 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct InputRoutingResult
-    {
+    public readonly struct InputRoutingResult {
         public InputActionIntent Intent { get; }
         public InputRoutingDisposition Disposition { get; }
         public string RoutedTo { get; }
         public string Reason { get; }
-        public bool Accepted
-        {
-            get { return Disposition == InputRoutingDisposition.Routed; }
-        }
+        public bool Accepted => Disposition == InputRoutingDisposition.Routed;
 
         public InputRoutingResult(
             InputActionIntent intent,
             InputRoutingDisposition disposition,
             string routedTo,
-            string reason)
-        {
+            string reason) {
             Intent = intent;
             Disposition = disposition;
             RoutedTo = routedTo;
@@ -114,13 +100,11 @@ namespace GlassRefrain.Core
         }
     }
 
-    public interface IInputIntentSource
-    {
+    public interface IInputIntentSource {
         InputIntentSnapshot Snapshot { get; }
     }
 
-    public enum CombatActionType
-    {
+    public enum CombatActionType {
         Unknown = 0,
         LightAttack = 1,
         HeavyAttack = 2,
@@ -129,8 +113,7 @@ namespace GlassRefrain.Core
         Counter = 5
     }
 
-    public enum CombatCoreState
-    {
+    public enum CombatCoreState {
         Neutral = 0,
         AttackStartup = 1,
         AttackActive = 2,
@@ -148,15 +131,13 @@ namespace GlassRefrain.Core
         Disabled = 14
     }
 
-    public enum CombatActionResult
-    {
+    public enum CombatActionResult {
         Accepted = 0,
         Rejected = 1,
         Ignored = 2
     }
 
-    public enum CombatRequestSourceType
-    {
+    public enum CombatRequestSourceType {
         Unknown = 0,
         InputMapping = 1,
         CombatCore = 2,
@@ -165,8 +146,7 @@ namespace GlassRefrain.Core
         TestHarness = 5
     }
 
-    public readonly struct CombatActionRequest
-    {
+    public readonly struct CombatActionRequest {
         public CombatActionType ActionType { get; }
         public float TimestampSeconds { get; }
         public CombatRequestSourceType SourceType { get; }
@@ -178,8 +158,7 @@ namespace GlassRefrain.Core
             float timestampSeconds,
             CombatRequestSourceType sourceType,
             string source,
-            string contextLabel)
-        {
+            string contextLabel) {
             ActionType = actionType;
             TimestampSeconds = timestampSeconds;
             SourceType = sourceType;
@@ -188,20 +167,16 @@ namespace GlassRefrain.Core
         }
 
         public CombatActionRequest(CombatActionType actionType, string source, string contextLabel)
-            : this(actionType, 0f, CombatRequestSourceType.Unknown, source, contextLabel)
-        {
-        }
+            : this(actionType, 0f, CombatRequestSourceType.Unknown, source, contextLabel) { }
     }
 
-    public readonly struct CombatActionRequestResult
-    {
+    public readonly struct CombatActionRequestResult {
         public CombatActionResult Result { get; }
         public bool Accepted { get; }
         public string Reason { get; }
         public string StateLabel { get; }
 
-        public CombatActionRequestResult(CombatActionResult result, string reason, string stateLabel)
-        {
+        public CombatActionRequestResult(CombatActionResult result, string reason, string stateLabel) {
             Result = result;
             Accepted = result == CombatActionResult.Accepted;
             Reason = reason ?? string.Empty;
@@ -209,13 +184,10 @@ namespace GlassRefrain.Core
         }
 
         public CombatActionRequestResult(bool accepted, string reason, string stateLabel)
-            : this(accepted ? CombatActionResult.Accepted : CombatActionResult.Rejected, reason, stateLabel)
-        {
-        }
+            : this(accepted ? CombatActionResult.Accepted : CombatActionResult.Rejected, reason, stateLabel) { }
     }
 
-    public readonly struct CombatResolutionResult
-    {
+    public readonly struct CombatResolutionResult {
         public CombatActionType ActionType { get; }
         public bool Resolved { get; }
         public bool Successful { get; }
@@ -231,8 +203,7 @@ namespace GlassRefrain.Core
             bool hitConfirmed,
             bool triggeredCounterWindow,
             string sourceLabel,
-            string detail)
-        {
+            string detail) {
             ActionType = actionType;
             Resolved = resolved;
             Successful = successful;
@@ -243,44 +214,29 @@ namespace GlassRefrain.Core
         }
 
         public CombatResolutionResult(bool resolved, bool successful, string detail)
-            : this(CombatActionType.Unknown, resolved, successful, false, false, string.Empty, detail)
-        {
-        }
+            : this(CombatActionType.Unknown, resolved, successful, false, false, string.Empty, detail) { }
     }
 
-    public readonly struct ActionLockContext
-    {
+    public readonly struct ActionLockContext {
         public bool LockActive { get; }
         public string LockSource { get; }
         public CombatCoreState RequestingState { get; }
-        public bool IsLocked
-        {
-            get { return LockActive; }
-        }
-        public string Source
-        {
-            get { return LockSource; }
-        }
-        public string Reason
-        {
-            get { return LockSource; }
-        }
+        public bool IsLocked => LockActive;
 
-        public ActionLockContext(bool lockActive, string lockSource, CombatCoreState requestingState)
-        {
+        public string Source => LockSource;
+        public string Reason => LockSource;
+
+        public ActionLockContext(bool lockActive, string lockSource, CombatCoreState requestingState) {
             LockActive = lockActive;
             LockSource = lockSource ?? string.Empty;
             RequestingState = requestingState;
         }
 
         public ActionLockContext(bool isLocked, string source, string reason)
-            : this(isLocked, string.IsNullOrEmpty(reason) ? source : reason, CombatCoreState.Neutral)
-        {
-        }
+            : this(isLocked, string.IsNullOrEmpty(reason) ? source : reason, CombatCoreState.Neutral) { }
     }
 
-    public enum RecoverySource
-    {
+    public enum RecoverySource {
         Unknown = 0,
         CombatCore = 1,
         PlayerLocomotion = 2,
@@ -288,29 +244,21 @@ namespace GlassRefrain.Core
         Encounter = 4
     }
 
-    public readonly struct RecoveryContext
-    {
+    public readonly struct RecoveryContext {
         public bool RecoveryActive { get; }
         public string RecoverySourceLabel { get; }
         public CombatCoreState RequestingState { get; }
         public RecoverySource Source { get; }
-        public bool IsRecovering
-        {
-            get { return RecoveryActive; }
-        }
+        public bool IsRecovering => RecoveryActive;
         public float RemainingSeconds { get; }
-        public string Detail
-        {
-            get { return RecoverySourceLabel; }
-        }
+        public string Detail => RecoverySourceLabel;
 
         public RecoveryContext(
             bool recoveryActive,
             string recoverySourceLabel,
             CombatCoreState requestingState,
             RecoverySource source,
-            float remainingSeconds)
-        {
+            float remainingSeconds) {
             RecoveryActive = recoveryActive;
             RecoverySourceLabel = recoverySourceLabel ?? string.Empty;
             RequestingState = requestingState;
@@ -319,24 +267,17 @@ namespace GlassRefrain.Core
         }
 
         public RecoveryContext(RecoverySource source, bool isRecovering, float remainingSeconds, string detail)
-            : this(isRecovering, detail, CombatCoreState.Neutral, source, remainingSeconds)
-        {
-        }
+            : this(isRecovering, detail, CombatCoreState.Neutral, source, remainingSeconds) { }
     }
 
-    public readonly struct CounterWindowState
-    {
+    public readonly struct CounterWindowState {
         public bool IsOpen { get; }
         public string SourceTag { get; }
         public float ElapsedSeconds { get; }
         public float DurationSeconds { get; }
-        public float RemainingSeconds
-        {
-            get { return DurationSeconds - ElapsedSeconds; }
-        }
+        public float RemainingSeconds => DurationSeconds - ElapsedSeconds;
 
-        public CounterWindowState(bool isOpen, string sourceTag, float elapsedSeconds, float durationSeconds)
-        {
+        public CounterWindowState(bool isOpen, string sourceTag, float elapsedSeconds, float durationSeconds) {
             IsOpen = isOpen;
             SourceTag = sourceTag ?? string.Empty;
             ElapsedSeconds = elapsedSeconds;
@@ -344,8 +285,7 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct M0CombatSnapshot
-    {
+    public readonly struct M0CombatSnapshot {
         public CombatCoreState State { get; }
         public CombatActionRequestResult LastActionResult { get; }
         public CombatResolutionResult LastResolutionResult { get; }
@@ -359,8 +299,7 @@ namespace GlassRefrain.Core
             CombatResolutionResult lastResolutionResult,
             CounterWindowState counterWindow,
             ActionLockContext actionLock,
-            RecoveryContext recovery)
-        {
+            RecoveryContext recovery) {
             State = state;
             LastActionResult = lastActionResult;
             LastResolutionResult = lastResolutionResult;
@@ -370,15 +309,14 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct CombatStepResult
-    {
+    public readonly struct CombatStepResult {
         public bool Transitioned { get; }
         public CombatCoreState PreviousState { get; }
         public CombatCoreState CurrentState { get; }
         public string Reason { get; }
 
-        public CombatStepResult(bool transitioned, CombatCoreState previousState, CombatCoreState currentState, string reason)
-        {
+        public CombatStepResult(bool transitioned, CombatCoreState previousState, CombatCoreState currentState,
+            string reason) {
             Transitioned = transitioned;
             PreviousState = previousState;
             CurrentState = currentState;
@@ -386,9 +324,19 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct RevealRequestContext
-    {
+    public enum RevealRequestClassification {
+        Unknown = 0,
+        CounterConfirmed = 1,
+        GenericHit = 2,
+        FailedDodge = 3,
+        FailedParry = 4,
+        InvalidCounter = 5,
+        PresentationOnly = 6
+    }
+
+    public readonly struct RevealRequestContext {
         public CombatRequestSourceType RequestSourceType { get; }
+        public RevealRequestClassification Classification { get; }
         public string CombatResultSourceLabel { get; }
         public string SourceId { get; }
         public string MemoryId { get; }
@@ -399,30 +347,47 @@ namespace GlassRefrain.Core
             string combatResultSourceLabel,
             string sourceId,
             string memoryId,
-            string contextLabel)
-        {
+            string contextLabel,
+            RevealRequestClassification classification) {
             RequestSourceType = requestSourceType;
+            Classification = classification;
             CombatResultSourceLabel = combatResultSourceLabel ?? string.Empty;
             SourceId = sourceId ?? string.Empty;
             MemoryId = memoryId ?? string.Empty;
             ContextLabel = contextLabel ?? string.Empty;
         }
 
+        public RevealRequestContext(
+            CombatRequestSourceType requestSourceType,
+            string combatResultSourceLabel,
+            string sourceId,
+            string memoryId,
+            string contextLabel)
+            : this(
+                requestSourceType,
+                combatResultSourceLabel,
+                sourceId,
+                memoryId,
+                contextLabel,
+                RevealRequestClassification.Unknown) { }
+
         public RevealRequestContext(string sourceId, string memoryId, string contextLabel)
-            : this(CombatRequestSourceType.Unknown, string.Empty, sourceId, memoryId, contextLabel)
-        {
-        }
+            : this(
+                CombatRequestSourceType.Unknown,
+                string.Empty,
+                sourceId,
+                memoryId,
+                contextLabel,
+                RevealRequestClassification.Unknown) { }
     }
 
-    public readonly struct MovementRestrictionContext
-    {
+    public readonly struct MovementRestrictionContext {
         public bool CanTranslate { get; }
         public bool CanRotate { get; }
         public float RestrictionStrength { get; }
         public string Source { get; }
 
-        public MovementRestrictionContext(bool canTranslate, bool canRotate, float restrictionStrength, string source)
-        {
+        public MovementRestrictionContext(bool canTranslate, bool canRotate, float restrictionStrength, string source) {
             CanTranslate = canTranslate;
             CanRotate = canRotate;
             RestrictionStrength = restrictionStrength;
@@ -430,8 +395,7 @@ namespace GlassRefrain.Core
         }
     }
 
-    public enum LocomotionState
-    {
+    public enum LocomotionState {
         Uninitialized = 0,
         Idle = 1,
         Moving = 2,
@@ -439,8 +403,7 @@ namespace GlassRefrain.Core
         Recovering = 4
     }
 
-    public readonly struct LocomotionStateSnapshot
-    {
+    public readonly struct LocomotionStateSnapshot {
         public LocomotionState State { get; }
         public Axis2 MoveIntent { get; }
         public bool InputEnabled { get; }
@@ -448,18 +411,10 @@ namespace GlassRefrain.Core
         public RecoveryContext Recovery { get; }
         public CameraMovementBasisSnapshot CameraMovementBasis { get; }
         public string StateDetail { get; }
-        public bool HasMoveIntent
-        {
-            get { return MoveIntent.X != 0f || MoveIntent.Y != 0f; }
-        }
-        public bool IsRestricted
-        {
-            get { return State == LocomotionState.Restricted; }
-        }
-        public bool IsRecovering
-        {
-            get { return State == LocomotionState.Recovering; }
-        }
+        public bool HasMoveIntent => MoveIntent.X != 0f || MoveIntent.Y != 0f;
+
+        public bool IsRestricted => State == LocomotionState.Restricted;
+        public bool IsRecovering => State == LocomotionState.Recovering;
 
         public LocomotionStateSnapshot(
             LocomotionState state,
@@ -468,8 +423,7 @@ namespace GlassRefrain.Core
             MovementRestrictionContext movementRestriction,
             RecoveryContext recovery,
             CameraMovementBasisSnapshot cameraMovementBasis,
-            string stateDetail)
-        {
+            string stateDetail) {
             State = state;
             MoveIntent = moveIntent;
             InputEnabled = inputEnabled;
@@ -480,29 +434,25 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct FacingContextSnapshot
-    {
+    public readonly struct FacingContextSnapshot {
         public Axis2 FacingDirection { get; }
         public Axis2 TargetDirection { get; }
         public bool HasTarget { get; }
 
-        public FacingContextSnapshot(Axis2 facingDirection, Axis2 targetDirection, bool hasTarget)
-        {
+        public FacingContextSnapshot(Axis2 facingDirection, Axis2 targetDirection, bool hasTarget) {
             FacingDirection = facingDirection;
             TargetDirection = targetDirection;
             HasTarget = hasTarget;
         }
     }
 
-    public readonly struct LocomotionTransitionRecord
-    {
+    public readonly struct LocomotionTransitionRecord {
         public string FromState { get; }
         public string ToState { get; }
         public string Reason { get; }
         public float TimeSeconds { get; }
 
-        public LocomotionTransitionRecord(string fromState, string toState, string reason, float timeSeconds)
-        {
+        public LocomotionTransitionRecord(string fromState, string toState, string reason, float timeSeconds) {
             FromState = fromState;
             ToState = toState;
             Reason = reason;
@@ -510,48 +460,41 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct DodgeRequestContext
-    {
+    public readonly struct DodgeRequestContext {
         public bool Requested { get; }
         public string Source { get; }
         public bool IsCameraRelative { get; }
 
-        public DodgeRequestContext(bool requested, string source, bool isCameraRelative)
-        {
+        public DodgeRequestContext(bool requested, string source, bool isCameraRelative) {
             Requested = requested;
             Source = source;
             IsCameraRelative = isCameraRelative;
         }
     }
 
-    public readonly struct DodgePhaseContext
-    {
+    public readonly struct DodgePhaseContext {
         public string PhaseName { get; }
         public float RemainingSeconds { get; }
 
-        public DodgePhaseContext(string phaseName, float remainingSeconds)
-        {
+        public DodgePhaseContext(string phaseName, float remainingSeconds) {
             PhaseName = phaseName;
             RemainingSeconds = remainingSeconds;
         }
     }
 
-    public readonly struct DodgeResultContext
-    {
+    public readonly struct DodgeResultContext {
         public bool Accepted { get; }
         public bool Invulnerable { get; }
         public string Reason { get; }
 
-        public DodgeResultContext(bool accepted, bool invulnerable, string reason)
-        {
+        public DodgeResultContext(bool accepted, bool invulnerable, string reason) {
             Accepted = accepted;
             Invulnerable = invulnerable;
             Reason = reason;
         }
     }
 
-    public enum EnemyIntentState
-    {
+    public enum EnemyIntentState {
         Idle = 0,
         Telegraph = 1,
         Commit = 2,
@@ -559,15 +502,14 @@ namespace GlassRefrain.Core
         Recovery = 4
     }
 
-    public readonly struct EnemyAttackIntentContext
-    {
+    public readonly struct EnemyAttackIntentContext {
         public string AttackId { get; }
         public string IntentLabel { get; }
         public float DurationSeconds { get; }
         public EnemyAttackTagSet AttackTags { get; }
 
-        public EnemyAttackIntentContext(string attackId, string intentLabel, float durationSeconds, EnemyAttackTagSet attackTags)
-        {
+        public EnemyAttackIntentContext(string attackId, string intentLabel, float durationSeconds,
+            EnemyAttackTagSet attackTags) {
             AttackId = attackId ?? string.Empty;
             IntentLabel = intentLabel ?? string.Empty;
             DurationSeconds = durationSeconds;
@@ -575,8 +517,7 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct EnemyIntentSnapshot
-    {
+    public readonly struct EnemyIntentSnapshot {
         public EnemyIntentState State { get; }
         public string EnemyId { get; }
         public string IntentLabel { get; }
@@ -594,8 +535,7 @@ namespace GlassRefrain.Core
             float remainingSeconds,
             TelegraphStateSnapshot telegraph,
             EnemyAttackIntentContext attackIntent,
-            EnemyPunishWindowContext punishWindow)
-        {
+            EnemyPunishWindowContext punishWindow) {
             State = state;
             EnemyId = enemyId ?? string.Empty;
             IntentLabel = intentLabel ?? string.Empty;
@@ -607,125 +547,103 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct TelegraphStateSnapshot
-    {
+    public readonly struct TelegraphStateSnapshot {
         public string TelegraphId { get; }
         public bool IsActive { get; }
         public float RemainingSeconds { get; }
 
-        public TelegraphStateSnapshot(string telegraphId, bool isActive, float remainingSeconds)
-        {
+        public TelegraphStateSnapshot(string telegraphId, bool isActive, float remainingSeconds) {
             TelegraphId = telegraphId;
             IsActive = isActive;
             RemainingSeconds = remainingSeconds;
         }
     }
 
-    public readonly struct EnemyAttackTagSet
-    {
+    public readonly struct EnemyAttackTagSet {
         public string[] Tags { get; }
 
-        public EnemyAttackTagSet(string[] tags)
-        {
+        public EnemyAttackTagSet(string[] tags) {
             Tags = tags;
         }
     }
 
-    public readonly struct EnemyPunishWindowContext
-    {
+    public readonly struct EnemyPunishWindowContext {
         public bool IsOpen { get; }
         public float RemainingSeconds { get; }
         public string Source { get; }
 
-        public EnemyPunishWindowContext(bool isOpen, float remainingSeconds, string source)
-        {
+        public EnemyPunishWindowContext(bool isOpen, float remainingSeconds, string source) {
             IsOpen = isOpen;
             RemainingSeconds = remainingSeconds;
             Source = source;
         }
     }
 
-    public enum TargetFocusState
-    {
+    public enum TargetFocusState {
         Inactive = 0,
         AcquireRequested = 1,
         Focused = 2,
         Invalid = 3
     }
 
-    public readonly struct TargetDirectionContext
-    {
+    public readonly struct TargetDirectionContext {
         public Axis2 Direction { get; }
         public bool HasDirection { get; }
         public string Label { get; }
 
-        public TargetDirectionContext(Axis2 direction, bool hasDirection, string label)
-        {
+        public TargetDirectionContext(Axis2 direction, bool hasDirection, string label) {
             Direction = direction;
             HasDirection = hasDirection;
             Label = label;
         }
     }
 
-    public readonly struct TargetAcquireRequest
-    {
+    public readonly struct TargetAcquireRequest {
         public string TargetId { get; }
         public string Source { get; }
         public string Reason { get; }
 
-        public TargetAcquireRequest(string targetId, string source, string reason)
-        {
+        public TargetAcquireRequest(string targetId, string source, string reason) {
             TargetId = targetId;
             Source = source;
             Reason = reason;
         }
     }
 
-    public readonly struct TargetReleaseRequest
-    {
+    public readonly struct TargetReleaseRequest {
         public TargetReleaseReason Reason { get; }
         public string Source { get; }
         public string Detail { get; }
 
-        public TargetReleaseRequest(TargetReleaseReason reason, string source, string detail)
-        {
+        public TargetReleaseRequest(TargetReleaseReason reason, string source, string detail) {
             Reason = reason;
             Source = source;
             Detail = detail;
         }
     }
 
-    public readonly struct TargetValidityContext
-    {
+    public readonly struct TargetValidityContext {
         public string TargetId { get; }
         public bool IsValid { get; }
         public string Reason { get; }
 
-        public TargetValidityContext(string targetId, bool isValid, string reason)
-        {
+        public TargetValidityContext(string targetId, bool isValid, string reason) {
             TargetId = targetId;
             IsValid = isValid;
             Reason = reason;
         }
     }
 
-    public readonly struct TargetContextSnapshot
-    {
+    public readonly struct TargetContextSnapshot {
         public TargetFocusState FocusState { get; }
         public string TargetId { get; }
-        public bool IsLockedOn
-        {
-            get { return FocusState == TargetFocusState.Focused; }
-        }
+        public bool IsLockedOn => FocusState == TargetFocusState.Focused;
         public bool IsValid { get; }
         public TargetDirectionContext Direction { get; }
         public string AcquireReason { get; }
         public string ReleaseReason { get; }
         public string InvalidReason { get; }
-        public bool HasTarget
-        {
-            get { return !string.IsNullOrEmpty(TargetId); }
-        }
+        public bool HasTarget => !string.IsNullOrEmpty(TargetId);
 
         public TargetContextSnapshot(
             TargetFocusState focusState,
@@ -734,8 +652,7 @@ namespace GlassRefrain.Core
             TargetDirectionContext direction,
             string acquireReason,
             string releaseReason,
-            string invalidReason)
-        {
+            string invalidReason) {
             FocusState = focusState;
             TargetId = targetId;
             IsValid = isValid;
@@ -746,34 +663,29 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct TargetAcquireResult
-    {
+    public readonly struct TargetAcquireResult {
         public bool Accepted { get; }
         public string TargetId { get; }
         public string Reason { get; }
 
-        public TargetAcquireResult(bool accepted, string targetId, string reason)
-        {
+        public TargetAcquireResult(bool accepted, string targetId, string reason) {
             Accepted = accepted;
             TargetId = targetId;
             Reason = reason;
         }
     }
 
-    public readonly struct TargetDebugSnapshot
-    {
+    public readonly struct TargetDebugSnapshot {
         public string Summary { get; }
         public System.Collections.Generic.IReadOnlyList<string> Details { get; }
 
-        public TargetDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details)
-        {
+        public TargetDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public enum TargetReleaseReason
-    {
+    public enum TargetReleaseReason {
         Unknown = 0,
         Manual = 1,
         Invalid = 2,
@@ -782,15 +694,13 @@ namespace GlassRefrain.Core
         TargetLost = 5
     }
 
-    public readonly struct CameraMovementBasisSnapshot
-    {
+    public readonly struct CameraMovementBasisSnapshot {
         public Axis2 Forward { get; }
         public Axis2 Right { get; }
         public bool IsValid { get; }
         public string CameraModeLabel { get; }
 
-        public CameraMovementBasisSnapshot(Axis2 forward, Axis2 right, bool isValid, string cameraModeLabel)
-        {
+        public CameraMovementBasisSnapshot(Axis2 forward, Axis2 right, bool isValid, string cameraModeLabel) {
             Forward = forward;
             Right = right;
             IsValid = isValid;
@@ -798,16 +708,15 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct DamageApplicationContext
-    {
+    public readonly struct DamageApplicationContext {
         public string SourceId { get; }
         public string TargetId { get; }
         public float Amount { get; }
         public string DamageType { get; }
         public string ContextLabel { get; }
 
-        public DamageApplicationContext(string sourceId, string targetId, float amount, string damageType, string contextLabel)
-        {
+        public DamageApplicationContext(string sourceId, string targetId, float amount, string damageType,
+            string contextLabel) {
             SourceId = sourceId ?? string.Empty;
             TargetId = targetId ?? string.Empty;
             Amount = amount;
@@ -816,35 +725,29 @@ namespace GlassRefrain.Core
         }
 
         public DamageApplicationContext(string sourceId, float amount, string damageType)
-            : this(sourceId, string.Empty, amount, damageType, string.Empty)
-        {
-        }
+            : this(sourceId, string.Empty, amount, damageType, string.Empty) { }
     }
 
-    public enum HealthState
-    {
+    public enum HealthState {
         Living = 0,
         Damaged = 1,
         Recovering = 2,
         Disabled = 3
     }
 
-    public enum DamageApplicationResultType
-    {
+    public enum DamageApplicationResultType {
         Accepted = 0,
         Rejected = 1,
         Ignored = 2
     }
 
-    public readonly struct DamageApplicationResult
-    {
+    public readonly struct DamageApplicationResult {
         public DamageApplicationResultType Result { get; }
         public bool Accepted { get; }
         public string Reason { get; }
         public float AppliedAmount { get; }
 
-        public DamageApplicationResult(DamageApplicationResultType result, string reason, float appliedAmount)
-        {
+        public DamageApplicationResult(DamageApplicationResultType result, string reason, float appliedAmount) {
             Result = result;
             Accepted = result == DamageApplicationResultType.Accepted;
             Reason = reason ?? string.Empty;
@@ -852,8 +755,7 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct HealthStateSnapshot
-    {
+    public readonly struct HealthStateSnapshot {
         public HealthState State { get; }
         public float Current { get; }
         public float Max { get; }
@@ -869,8 +771,7 @@ namespace GlassRefrain.Core
             bool isAlive,
             DamageApplicationResult lastDamageResult,
             HitReactionContext hitReaction,
-            DefeatStateContext defeat)
-        {
+            DefeatStateContext defeat) {
             State = state;
             Current = current;
             Max = max;
@@ -888,232 +789,282 @@ namespace GlassRefrain.Core
                 isAlive,
                 new DamageApplicationResult(DamageApplicationResultType.Ignored, "No damage processed yet", 0f),
                 new HitReactionContext(string.Empty, string.Empty, 0f),
-                new DefeatStateContext(!isAlive, isAlive ? string.Empty : "Disabled"))
-        {
-        }
+                new DefeatStateContext(!isAlive, isAlive ? string.Empty : "Disabled")) { }
     }
 
-    public readonly struct HitReactionContext
-    {
+    public readonly struct HitReactionContext {
         public string SourceId { get; }
         public string ReactionLabel { get; }
         public float SuppressionSeconds { get; }
 
-        public HitReactionContext(string sourceId, string reactionLabel, float suppressionSeconds)
-        {
+        public HitReactionContext(string sourceId, string reactionLabel, float suppressionSeconds) {
             SourceId = sourceId;
             ReactionLabel = reactionLabel;
             SuppressionSeconds = suppressionSeconds;
         }
     }
 
-    public readonly struct DefeatStateContext
-    {
+    public readonly struct DefeatStateContext {
         public bool IsDefeated { get; }
         public string Reason { get; }
 
-        public DefeatStateContext(bool isDefeated, string reason)
-        {
+        public DefeatStateContext(bool isDefeated, string reason) {
             IsDefeated = isDefeated;
             Reason = reason;
         }
     }
 
-    public readonly struct RevealRequestResult
-    {
-        public bool Accepted { get; }
+    public enum RevealRequestDecision {
+        Accepted = 0,
+        Rejected = 1
+    }
+
+    public readonly struct RevealRequestResult {
+        public RevealRequestDecision Decision { get; }
+        public bool Accepted {
+            get { return Decision == RevealRequestDecision.Accepted; }
+        }
         public string Reason { get; }
+        public string ResultContext { get; }
+        public RevealRequestClassification RequestClassification { get; }
+        public string MemoryId { get; }
+
+        public RevealRequestResult(
+            RevealRequestDecision decision,
+            string reason,
+            string resultContext,
+            RevealRequestClassification requestClassification,
+            string memoryId) {
+            Decision = decision;
+            Reason = reason ?? string.Empty;
+            ResultContext = resultContext ?? string.Empty;
+            RequestClassification = requestClassification;
+            MemoryId = memoryId ?? string.Empty;
+        }
 
         public RevealRequestResult(bool accepted, string reason)
-        {
-            Accepted = accepted;
-            Reason = reason;
-        }
+            : this(
+                accepted ? RevealRequestDecision.Accepted : RevealRequestDecision.Rejected,
+                reason,
+                string.Empty,
+                RevealRequestClassification.Unknown,
+                string.Empty) { }
     }
 
-    public readonly struct MemoryStateSnapshot
-    {
-        public string MemoryId { get; }
-        public bool IsRevealed { get; }
-        public float CooldownSeconds { get; }
-
-        public MemoryStateSnapshot(string memoryId, bool isRevealed, float cooldownSeconds)
-        {
-            MemoryId = memoryId;
-            IsRevealed = isRevealed;
-            CooldownSeconds = cooldownSeconds;
-        }
+    public enum MemoryRevealPhase {
+        Dormant = 0,
+        Requested = 1,
+        Accepted = 2,
+        Rejected = 3,
+        Responding = 4,
+        Cooldown = 5
     }
 
-    public readonly struct MemoryResponseContext
-    {
+    public readonly struct MemoryResponseContext {
         public string MemoryId { get; }
         public string ResponseLabel { get; }
-        public bool IsAccepted { get; }
+        public bool ResponseActive { get; }
+        public string Detail { get; }
+        public bool IsAccepted {
+            get { return ResponseActive; }
+        }
+
+        public MemoryResponseContext(string memoryId, string responseLabel, bool responseActive, string detail) {
+            MemoryId = memoryId ?? string.Empty;
+            ResponseLabel = responseLabel ?? string.Empty;
+            ResponseActive = responseActive;
+            Detail = detail ?? string.Empty;
+        }
 
         public MemoryResponseContext(string memoryId, string responseLabel, bool isAccepted)
-        {
-            MemoryId = memoryId;
-            ResponseLabel = responseLabel;
-            IsAccepted = isAccepted;
+            : this(memoryId, responseLabel, isAccepted, string.Empty) { }
+    }
+
+    public readonly struct MemoryCooldownContext {
+        public bool CooldownActive { get; }
+        public float RemainingSeconds { get; }
+        public string Reason { get; }
+
+        public MemoryCooldownContext(bool cooldownActive, float remainingSeconds, string reason) {
+            CooldownActive = cooldownActive;
+            RemainingSeconds = remainingSeconds;
+            Reason = reason ?? string.Empty;
         }
     }
 
-    public readonly struct EncounterStateSnapshot
-    {
+    public readonly struct MemoryStateSnapshot {
+        public string MemoryId { get; }
+        public MemoryRevealPhase Phase { get; }
+        public RevealRequestContext LastRequest { get; }
+        public RevealRequestResult LastResult { get; }
+        public MemoryResponseContext Response { get; }
+        public MemoryCooldownContext Cooldown { get; }
+        public bool IsRevealed {
+            get { return Phase == MemoryRevealPhase.Responding || Phase == MemoryRevealPhase.Cooldown; }
+        }
+        public float CooldownSeconds {
+            get { return Cooldown.RemainingSeconds; }
+        }
+
+        public MemoryStateSnapshot(
+            string memoryId,
+            MemoryRevealPhase phase,
+            RevealRequestContext lastRequest,
+            RevealRequestResult lastResult,
+            MemoryResponseContext response,
+            MemoryCooldownContext cooldown) {
+            MemoryId = memoryId ?? string.Empty;
+            Phase = phase;
+            LastRequest = lastRequest;
+            LastResult = lastResult;
+            Response = response;
+            Cooldown = cooldown;
+        }
+
+        public MemoryStateSnapshot(string memoryId, bool isRevealed, float cooldownSeconds)
+            : this(
+                memoryId,
+                isRevealed ? MemoryRevealPhase.Responding : MemoryRevealPhase.Dormant,
+                new RevealRequestContext(string.Empty, memoryId, string.Empty),
+                new RevealRequestResult(
+                    isRevealed ? RevealRequestDecision.Accepted : RevealRequestDecision.Rejected,
+                    isRevealed ? "Reveal active" : "Reveal dormant",
+                    string.Empty,
+                    RevealRequestClassification.Unknown,
+                    memoryId),
+                new MemoryResponseContext(memoryId, string.Empty, isRevealed, string.Empty),
+                new MemoryCooldownContext(cooldownSeconds > 0f, cooldownSeconds, string.Empty)) { }
+    }
+
+    public readonly struct EncounterStateSnapshot {
         public string EncounterId { get; }
         public bool IsActive { get; }
         public int ParticipantCount { get; }
 
-        public EncounterStateSnapshot(string encounterId, bool isActive, int participantCount)
-        {
+        public EncounterStateSnapshot(string encounterId, bool isActive, int participantCount) {
             EncounterId = encounterId;
             IsActive = isActive;
             ParticipantCount = participantCount;
         }
     }
 
-    public readonly struct EncounterStartContext
-    {
+    public readonly struct EncounterStartContext {
         public string EncounterId { get; }
         public string Reason { get; }
 
-        public EncounterStartContext(string encounterId, string reason)
-        {
+        public EncounterStartContext(string encounterId, string reason) {
             EncounterId = encounterId;
             Reason = reason;
         }
     }
 
-    public readonly struct EncounterEndContext
-    {
+    public readonly struct EncounterEndContext {
         public string EncounterId { get; }
         public string EndReason { get; }
 
-        public EncounterEndContext(string encounterId, string endReason)
-        {
+        public EncounterEndContext(string encounterId, string endReason) {
             EncounterId = encounterId;
             EndReason = endReason;
         }
     }
 
-    public readonly struct EncounterResetContext
-    {
+    public readonly struct EncounterResetContext {
         public string EncounterId { get; }
         public string ResetReason { get; }
 
-        public EncounterResetContext(string encounterId, string resetReason)
-        {
+        public EncounterResetContext(string encounterId, string resetReason) {
             EncounterId = encounterId;
             ResetReason = resetReason;
         }
     }
 
-    public readonly struct CombatDebugSnapshot
-    {
+    public readonly struct CombatDebugSnapshot {
         public string Summary { get; }
         public string[] Details { get; }
 
-        public CombatDebugSnapshot(string summary, string[] details)
-        {
+        public CombatDebugSnapshot(string summary, string[] details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct LocomotionDebugSnapshot
-    {
+    public readonly struct LocomotionDebugSnapshot {
         public string Summary { get; }
         public System.Collections.Generic.IReadOnlyList<string> Details { get; }
 
-        public LocomotionDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details)
-        {
+        public LocomotionDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct EnemyIntentDebugSnapshot
-    {
+    public readonly struct EnemyIntentDebugSnapshot {
         public string Summary { get; }
         public string[] Details { get; }
 
-        public EnemyIntentDebugSnapshot(string summary, string[] details)
-        {
+        public EnemyIntentDebugSnapshot(string summary, string[] details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct HealthDebugSnapshot
-    {
+    public readonly struct HealthDebugSnapshot {
         public string Summary { get; }
         public string[] Details { get; }
 
-        public HealthDebugSnapshot(string summary, string[] details)
-        {
+        public HealthDebugSnapshot(string summary, string[] details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct MemoryDebugSnapshot
-    {
+    public readonly struct MemoryDebugSnapshot {
         public string Summary { get; }
         public string[] Details { get; }
 
-        public MemoryDebugSnapshot(string summary, string[] details)
-        {
+        public MemoryDebugSnapshot(string summary, string[] details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct CameraDebugSnapshot
-    {
+    public readonly struct CameraDebugSnapshot {
         public string Summary { get; }
         public string[] Details { get; }
 
-        public CameraDebugSnapshot(string summary, string[] details)
-        {
+        public CameraDebugSnapshot(string summary, string[] details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct EncounterDebugSnapshot
-    {
+    public readonly struct EncounterDebugSnapshot {
         public string Summary { get; }
         public string[] Details { get; }
 
-        public EncounterDebugSnapshot(string summary, string[] details)
-        {
+        public EncounterDebugSnapshot(string summary, string[] details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct InputDebugSnapshot
-    {
+    public readonly struct InputDebugSnapshot {
         public string Summary { get; }
         public System.Collections.Generic.IReadOnlyList<string> Details { get; }
 
-        public InputDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details)
-        {
+        public InputDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details) {
             Summary = summary;
             Details = details;
         }
     }
 
-    public readonly struct DebugTransitionEvent
-    {
+    public readonly struct DebugTransitionEvent {
         public string SystemName { get; }
         public string EventName { get; }
         public string Detail { get; }
         public bool Accepted { get; }
 
-        public DebugTransitionEvent(string systemName, string eventName, string detail, bool accepted)
-        {
+        public DebugTransitionEvent(string systemName, string eventName, string detail, bool accepted) {
             SystemName = systemName;
             EventName = eventName;
             Detail = detail;

@@ -5,13 +5,10 @@ using GlassRefrain.Infrastructure;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 
-namespace GlassRefrain.Tests.PlayMode
-{
-    public class SceneFoundationTests
-    {
+namespace GlassRefrain.Tests.PlayMode {
+    public class SceneFoundationTests {
         [UnityTest]
-        public IEnumerator RequiredSceneAssetsExist()
-        {
+        public IEnumerator RequiredSceneAssetsExist() {
             Assert.That(File.Exists(ProjectScenePaths.Bootstrap), Is.True);
             Assert.That(File.Exists(ProjectScenePaths.Systems), Is.True);
             Assert.That(File.Exists(ProjectScenePaths.GameplayCombatPrototype), Is.True);
@@ -23,8 +20,7 @@ namespace GlassRefrain.Tests.PlayMode
         }
 
         [UnityTest]
-        public IEnumerator ScopeShellTypesExist()
-        {
+        public IEnumerator ScopeShellTypesExist() {
             Assert.That(typeof(ProjectRootLifetimeScope), Is.Not.Null);
             Assert.That(typeof(GameplayLifetimeScope), Is.Not.Null);
             Assert.That(typeof(CameraCombatPrototypeLifetimeScope), Is.Not.Null);

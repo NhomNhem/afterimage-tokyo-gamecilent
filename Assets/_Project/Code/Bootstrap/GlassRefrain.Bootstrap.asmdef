@@ -1,18 +1,18 @@
 {
-    "name": "GlassRefrain.Bootstrap",
-    "rootNamespace": "GlassRefrain.Bootstrap",
-    "references": [
-        "GlassRefrain.Core",
-        "GlassRefrain.Infrastructure",
-        "VContainer"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "GlassRefrain.Bootstrap",
+  "rootNamespace": "GlassRefrain.Bootstrap",
+  "references": [
+    "GlassRefrain.Core",
+    "GlassRefrain.Infrastructure",
+    "VContainer"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }
