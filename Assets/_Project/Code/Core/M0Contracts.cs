@@ -381,6 +381,95 @@ namespace GlassRefrain.Core {
                 RevealRequestClassification.Unknown) { }
     }
 
+    public enum MemoryVFXResponseState {
+        Idle = 0,
+        Requested = 1,
+        Playing = 2,
+        CoolingDown = 3,
+        Rejected = 4,
+        Ignored = 5
+    }
+
+    public static class MemoryVFXResponseReasons {
+        public const string GenericHit = "generic_hit";
+        public const string FailedDodge = "failed_dodge";
+        public const string FailedParry = "failed_parry";
+        public const string PresentationOnly = "presentation_only";
+        public const string InCooldown = "in_cooldown";
+        public const string AlreadyPlaying = "already_playing";
+        public const string NotAcceptedByMemoryState = "not_accepted_by_memory_state";
+    }
+
+    public interface IAcceptedMemoryRevealContext {
+        string MemoryId { get; }
+        RevealRequestContext RevealRequest { get; }
+        RevealRequestResult RevealResult { get; }
+        string SourceLabel { get; }
+        string ContextLabel { get; }
+    }
+
+    public readonly struct AcceptedMemoryRevealContext : IAcceptedMemoryRevealContext {
+        public string MemoryId { get; }
+        public RevealRequestContext RevealRequest { get; }
+        public RevealRequestResult RevealResult { get; }
+        public string SourceLabel { get; }
+        public string ContextLabel { get; }
+
+        public AcceptedMemoryRevealContext(
+            string memoryId,
+            RevealRequestContext revealRequest,
+            RevealRequestResult revealResult,
+            string sourceLabel,
+            string contextLabel) {
+            MemoryId = memoryId ?? string.Empty;
+            RevealRequest = revealRequest;
+            RevealResult = revealResult;
+            SourceLabel = sourceLabel ?? string.Empty;
+            ContextLabel = contextLabel ?? string.Empty;
+        }
+
+        public AcceptedMemoryRevealContext(IAcceptedMemoryRevealContext source)
+            : this(
+                source == null ? string.Empty : source.MemoryId,
+                source == null ? new RevealRequestContext(string.Empty, string.Empty, string.Empty) : source.RevealRequest,
+                source == null ? new RevealRequestResult(false, string.Empty) : source.RevealResult,
+                source == null ? string.Empty : source.SourceLabel,
+                source == null ? string.Empty : source.ContextLabel) { }
+    }
+
+    public interface IMemoryVFXResponseSnapshot {
+        MemoryVFXResponseState State { get; }
+        IAcceptedMemoryRevealContext SourceAcceptedContext { get; }
+        string RejectionReason { get; }
+        float CooldownProgress { get; }
+        string IntensityLabel { get; }
+    }
+
+    public readonly struct MemoryVFXResponseSnapshot : IMemoryVFXResponseSnapshot {
+        private readonly AcceptedMemoryRevealContext? sourceAcceptedContext;
+
+        public MemoryVFXResponseState State { get; }
+        public IAcceptedMemoryRevealContext SourceAcceptedContext {
+            get { return sourceAcceptedContext.HasValue ? (IAcceptedMemoryRevealContext)sourceAcceptedContext.Value : null; }
+        }
+        public string RejectionReason { get; }
+        public float CooldownProgress { get; }
+        public string IntensityLabel { get; }
+
+        public MemoryVFXResponseSnapshot(
+            MemoryVFXResponseState state,
+            AcceptedMemoryRevealContext? sourceAcceptedContext,
+            string rejectionReason,
+            float cooldownProgress,
+            string intensityLabel) {
+            State = state;
+            this.sourceAcceptedContext = sourceAcceptedContext;
+            RejectionReason = rejectionReason ?? string.Empty;
+            CooldownProgress = cooldownProgress;
+            IntensityLabel = intensityLabel ?? string.Empty;
+        }
+    }
+
     public readonly struct MovementRestrictionContext {
         public bool CanTranslate { get; }
         public bool CanRotate { get; }
