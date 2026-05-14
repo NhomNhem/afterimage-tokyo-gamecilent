@@ -2,14 +2,11 @@ using GlassRefrain.Core;
 using GlassRefrain.Input;
 using NUnit.Framework;
 
-namespace GlassRefrain.Tests.EditMode
-{
-    public class M0InputRouterTests
-    {
+namespace GlassRefrain.Tests.EditMode {
+    public class M0InputRouterTests {
         [Test]
-        public void RouterDefaultsToEnabledAndEmptyState()
-        {
-            M0InputRouter router = new M0InputRouter();
+        public void RouterDefaultsToEnabledAndEmptyState() {
+            var router = new M0InputRouter();
 
             Assert.That(router.InputEnabled, Is.True);
             Assert.That(router.Snapshot.InputEnabled, Is.True);
@@ -20,16 +17,15 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void RouterCapturesRawIntentAndEnabledState()
-        {
-            M0InputRouter router = new M0InputRouter();
+        public void RouterCapturesRawIntentAndEnabledState() {
+            var router = new M0InputRouter();
 
             router.SetInputEnabled(false);
             router.SetMove(new Axis2(1f, -0.5f));
             router.SetLook(new Axis2(-2f, 0.25f));
             router.SetActionPressed(InputActionIntent.LightAttack, true);
 
-            InputIntentSnapshot snapshot = router.Snapshot;
+            var snapshot = router.Snapshot;
 
             Assert.That(snapshot.InputEnabled, Is.False);
             Assert.That(snapshot.Move.X, Is.EqualTo(1f));
@@ -40,14 +36,17 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void RouterRecordsDistinctRoutingOutcomes()
-        {
-            M0InputRouter router = new M0InputRouter();
+        public void RouterRecordsDistinctRoutingOutcomes() {
+            var router = new M0InputRouter();
 
-            router.RecordRoutingOutcome(InputActionIntent.Move, InputRoutingDisposition.Disabled, string.Empty, "disabled");
-            router.RecordRoutingOutcome(InputActionIntent.LightAttack, InputRoutingDisposition.Ignored, "none", string.Empty);
-            router.RecordRoutingOutcome(InputActionIntent.Dodge, InputRoutingDisposition.Routed, "Locomotion", string.Empty);
-            router.RecordRoutingOutcome(InputActionIntent.Parry, InputRoutingDisposition.Rejected, "Combat", "locked out");
+            router.RecordRoutingOutcome(InputActionIntent.Move, InputRoutingDisposition.Disabled, string.Empty,
+                "disabled");
+            router.RecordRoutingOutcome(InputActionIntent.LightAttack, InputRoutingDisposition.Ignored, "none",
+                string.Empty);
+            router.RecordRoutingOutcome(InputActionIntent.Dodge, InputRoutingDisposition.Routed, "Locomotion",
+                string.Empty);
+            router.RecordRoutingOutcome(InputActionIntent.Parry, InputRoutingDisposition.Rejected, "Combat",
+                "locked out");
 
             Assert.That(router.RoutingHistory.Count, Is.EqualTo(4));
             Assert.That(router.RoutingHistory[0].Disposition, Is.EqualTo(InputRoutingDisposition.Disabled));
@@ -59,15 +58,15 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void RouterCreatesDebugSnapshot()
-        {
-            M0InputRouter router = new M0InputRouter();
+        public void RouterCreatesDebugSnapshot() {
+            var router = new M0InputRouter();
 
             router.SetInputEnabled(false);
-            router.RecordRoutingOutcome(InputActionIntent.LockOn, InputRoutingDisposition.Rejected, "Targeting", "no target");
+            router.RecordRoutingOutcome(InputActionIntent.LockOn, InputRoutingDisposition.Rejected, "Targeting",
+                "no target");
 
-            InputDebugSnapshot debugSnapshot = router.CreateDebugSnapshot();
-            string joined = string.Join("\n", debugSnapshot.Details);
+            var debugSnapshot = router.CreateDebugSnapshot();
+            var joined = string.Join("\n", debugSnapshot.Details);
 
             Assert.That(debugSnapshot.Summary, Is.EqualTo("M0 input state"));
             Assert.That(debugSnapshot.Details, Is.Not.Null);

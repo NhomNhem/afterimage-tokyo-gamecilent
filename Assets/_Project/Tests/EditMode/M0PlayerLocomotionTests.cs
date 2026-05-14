@@ -5,14 +5,11 @@ using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
 using NUnit.Framework;
 
-namespace GlassRefrain.Tests.EditMode
-{
-    public class M0PlayerLocomotionTests
-    {
+namespace GlassRefrain.Tests.EditMode {
+    public class M0PlayerLocomotionTests {
         [Test]
-        public void LocomotionDefaultsToUninitializedWithDeferredCameraBasis()
-        {
-            M0PlayerLocomotion locomotion = new M0PlayerLocomotion();
+        public void LocomotionDefaultsToUninitializedWithDeferredCameraBasis() {
+            var locomotion = new M0PlayerLocomotion();
 
             Assert.That(locomotion.Snapshot.State, Is.EqualTo(LocomotionState.Uninitialized));
             Assert.That(locomotion.Snapshot.InputEnabled, Is.True);
@@ -21,12 +18,11 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void LocomotionConsumesRawMoveIntentFromInputSnapshot()
-        {
-            M0InputRouter router = new M0InputRouter();
+        public void LocomotionConsumesRawMoveIntentFromInputSnapshot() {
+            var router = new M0InputRouter();
             router.SetMove(new Axis2(1f, -0.25f));
 
-            M0PlayerLocomotion locomotion = new M0PlayerLocomotion();
+            var locomotion = new M0PlayerLocomotion();
             locomotion.ConsumeInputIntent(router.Snapshot);
 
             Assert.That(locomotion.Snapshot.State, Is.EqualTo(LocomotionState.Moving));
@@ -36,9 +32,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void LocomotionBecomesIdleForZeroMoveIntent()
-        {
-            M0PlayerLocomotion locomotion = new M0PlayerLocomotion();
+        public void LocomotionBecomesIdleForZeroMoveIntent() {
+            var locomotion = new M0PlayerLocomotion();
             locomotion.ConsumeInputIntent(CreateInputSnapshot(0f, 0f, true));
 
             Assert.That(locomotion.Snapshot.State, Is.EqualTo(LocomotionState.Idle));
@@ -47,9 +42,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void LocomotionBecomesRestrictedWhenMovementIsBlocked()
-        {
-            M0PlayerLocomotion locomotion = new M0PlayerLocomotion();
+        public void LocomotionBecomesRestrictedWhenMovementIsBlocked() {
+            var locomotion = new M0PlayerLocomotion();
             locomotion.SetMovementRestriction(new MovementRestrictionContext(false, true, 1f, "CombatCore"));
             locomotion.ConsumeInputIntent(CreateInputSnapshot(1f, 0f, false));
 
@@ -60,10 +54,10 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void LocomotionBecomesRecoveringWhenRecoveryContextIsActive()
-        {
-            M0PlayerLocomotion locomotion = new M0PlayerLocomotion();
-            locomotion.SetRecoveryContext(new RecoveryContext(RecoverySource.CombatCore, true, 0.35f, "Recovering after committed action"));
+        public void LocomotionBecomesRecoveringWhenRecoveryContextIsActive() {
+            var locomotion = new M0PlayerLocomotion();
+            locomotion.SetRecoveryContext(new RecoveryContext(RecoverySource.CombatCore, true, 0.35f,
+                "Recovering after committed action"));
 
             Assert.That(locomotion.Snapshot.State, Is.EqualTo(LocomotionState.Recovering));
             Assert.That(locomotion.Snapshot.Recovery.IsRecovering, Is.True);
@@ -71,13 +65,12 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void LocomotionDebugSnapshotIsReadOnlyAndDerivedFromState()
-        {
-            M0PlayerLocomotion locomotion = new M0PlayerLocomotion();
+        public void LocomotionDebugSnapshotIsReadOnlyAndDerivedFromState() {
+            var locomotion = new M0PlayerLocomotion();
             locomotion.ConsumeInputIntent(CreateInputSnapshot(1f, 0f, true));
 
-            LocomotionDebugSnapshot debugSnapshot = locomotion.CreateDebugSnapshot();
-            string joined = string.Join("\n", debugSnapshot.Details);
+            var debugSnapshot = locomotion.CreateDebugSnapshot();
+            var joined = string.Join("\n", debugSnapshot.Details);
 
             Assert.That(debugSnapshot.Summary, Is.EqualTo("M0 locomotion state"));
             Assert.That(debugSnapshot.Details, Is.InstanceOf<IReadOnlyList<string>>());
@@ -87,17 +80,14 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void LocomotionFilesDoNotReferenceLegacyInputManagerOrGeneratedDi()
-        {
-            string[] files =
-            {
+        public void LocomotionFilesDoNotReferenceLegacyInputManagerOrGeneratedDi() {
+            string[] files = {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
                 "Assets/_Project/Code/Locomotion/M0PlayerLocomotion.cs",
                 "Assets/_Project/Code/Locomotion/GlassRefrain.Locomotion.asmdef"
             };
 
-            string[] forbiddenPatterns =
-            {
+            string[] forbiddenPatterns = {
                 "InputManager",
                 "UnityEngine.Input;",
                 "UnityEngine.Input ",
@@ -105,20 +95,16 @@ namespace GlassRefrain.Tests.EditMode
                 "NhemDangFugBixs.Attributes"
             };
 
-            foreach (string file in files)
-            {
+            foreach (var file in files) {
                 Assert.That(File.Exists(file), Is.True, "Expected file to exist: " + file);
 
-                string contents = File.ReadAllText(file);
-                foreach (string pattern in forbiddenPatterns)
-                {
+                var contents = File.ReadAllText(file);
+                foreach (var pattern in forbiddenPatterns)
                     Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden pattern: " + pattern);
-                }
             }
         }
 
-        private static InputIntentSnapshot CreateInputSnapshot(float moveX, float moveY, bool inputEnabled)
-        {
+        private static InputIntentSnapshot CreateInputSnapshot(float moveX, float moveY, bool inputEnabled) {
             return new InputIntentSnapshot(
                 new Axis2(moveX, moveY),
                 new Axis2(0f, 0f),

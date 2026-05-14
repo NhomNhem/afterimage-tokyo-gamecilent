@@ -3,14 +3,11 @@ using GlassRefrain.Combat;
 using GlassRefrain.Core;
 using NUnit.Framework;
 
-namespace GlassRefrain.Tests.EditMode
-{
-    public class M0CombatCoreTests
-    {
+namespace GlassRefrain.Tests.EditMode {
+    public class M0CombatCoreTests {
         [Test]
-        public void NeutralAcceptsAllM0CombatRequests()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void NeutralAcceptsAllM0CombatRequests() {
+            var core = new M0CombatCore();
 
             AssertAccepted(core, CombatActionType.LightAttack);
             core.AdvanceState("attack active");
@@ -37,21 +34,19 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void RequestsAreRejectedDuringCommittedStates()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void RequestsAreRejectedDuringCommittedStates() {
+            var core = new M0CombatCore();
             AssertAccepted(core, CombatActionType.LightAttack);
 
-            CombatActionRequestResult duringStartup = core.RequestAction(CreateRequest(CombatActionType.Dodge));
+            var duringStartup = core.RequestAction(CreateRequest(CombatActionType.Dodge));
             Assert.That(duringStartup.Result, Is.EqualTo(CombatActionResult.Rejected));
             Assert.That(duringStartup.Accepted, Is.False);
             Assert.That(duringStartup.StateLabel, Is.EqualTo(CombatCoreState.AttackStartup.ToString()));
         }
 
         [Test]
-        public void AttackCycleTransitionsThroughExpectedStates()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void AttackCycleTransitionsThroughExpectedStates() {
+            var core = new M0CombatCore();
             AssertAccepted(core, CombatActionType.LightAttack);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup));
 
@@ -67,9 +62,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void DodgeCycleTransitionsThroughExpectedStates()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void DodgeCycleTransitionsThroughExpectedStates() {
+            var core = new M0CombatCore();
             AssertAccepted(core, CombatActionType.Dodge);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeStartup));
 
@@ -84,9 +78,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void ParryCycleTransitionsThroughExpectedStatesAndOpensCounterWindow()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void ParryCycleTransitionsThroughExpectedStatesAndOpensCounterWindow() {
+            var core = new M0CombatCore();
             AssertAccepted(core, CombatActionType.Parry);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryStartup));
 
@@ -106,13 +99,11 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void CounterPathEmitsRevealRequestContext()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void CounterPathEmitsRevealRequestContext() {
+            var core = new M0CombatCore();
             RevealRequestContext emitted = default;
-            bool wasEmitted = false;
-            core.RevealRequestEmitted += context =>
-            {
+            var wasEmitted = false;
+            core.RevealRequestEmitted += context => {
                 emitted = context;
                 wasEmitted = true;
             };
@@ -128,9 +119,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void SnapshotRemainsConsistentWithInternalState()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void SnapshotRemainsConsistentWithInternalState() {
+            var core = new M0CombatCore();
 
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
             Assert.That(core.Snapshot.ActionLock.LockActive, Is.False);
@@ -142,9 +132,8 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void CommittedAndRecoveryStatesEmitLockAndRecoveryContexts()
-        {
-            M0CombatCore core = new M0CombatCore();
+        public void CommittedAndRecoveryStatesEmitLockAndRecoveryContexts() {
+            var core = new M0CombatCore();
 
             AssertAccepted(core, CombatActionType.Dodge);
             Assert.That(core.Snapshot.ActionLock.LockActive, Is.True);
@@ -158,17 +147,14 @@ namespace GlassRefrain.Tests.EditMode
         }
 
         [Test]
-        public void CombatFilesDoNotReferenceLegacyInputManagerOrGeneratedDi()
-        {
-            string[] files =
-            {
+        public void CombatFilesDoNotReferenceLegacyInputManagerOrGeneratedDi() {
+            string[] files = {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
                 "Assets/_Project/Code/Combat/M0CombatCore.cs",
                 "Assets/_Project/Code/Combat/GlassRefrain.Combat.asmdef"
             };
 
-            string[] forbiddenPatterns =
-            {
+            string[] forbiddenPatterns = {
                 "InputManager",
                 "UnityEngine.Input;",
                 "UnityEngine.Input ",
@@ -176,27 +162,22 @@ namespace GlassRefrain.Tests.EditMode
                 "NhemDangFugBixs.Attributes"
             };
 
-            foreach (string file in files)
-            {
+            foreach (var file in files) {
                 Assert.That(File.Exists(file), Is.True, "Expected file to exist: " + file);
 
-                string contents = File.ReadAllText(file);
-                foreach (string pattern in forbiddenPatterns)
-                {
+                var contents = File.ReadAllText(file);
+                foreach (var pattern in forbiddenPatterns)
                     Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden pattern: " + pattern);
-                }
             }
         }
 
-        private static void AssertAccepted(M0CombatCore core, CombatActionType actionType)
-        {
-            CombatActionRequestResult result = core.RequestAction(CreateRequest(actionType));
+        private static void AssertAccepted(M0CombatCore core, CombatActionType actionType) {
+            var result = core.RequestAction(CreateRequest(actionType));
             Assert.That(result.Accepted, Is.True, actionType + " should be accepted in Neutral");
             Assert.That(result.Result, Is.EqualTo(CombatActionResult.Accepted));
         }
 
-        private static CombatActionRequest CreateRequest(CombatActionType actionType)
-        {
+        private static CombatActionRequest CreateRequest(CombatActionType actionType) {
             return new CombatActionRequest(
                 actionType,
                 1f,

@@ -1,17 +1,17 @@
 {
-    "name": "GlassRefrain.Input",
-    "rootNamespace": "GlassRefrain.Input",
-    "references": [
-        "GlassRefrain.Core",
-        "Unity.InputSystem"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "GlassRefrain.Input",
+  "rootNamespace": "GlassRefrain.Input",
+  "references": [
+    "GlassRefrain.Core",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

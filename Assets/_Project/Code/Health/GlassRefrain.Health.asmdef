@@ -1,16 +1,16 @@
 {
-    "name": "GlassRefrain.Health",
-    "rootNamespace": "GlassRefrain.Health",
-    "references": [
-        "GlassRefrain.Core"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "GlassRefrain.Health",
+  "rootNamespace": "GlassRefrain.Health",
+  "references": [
+    "GlassRefrain.Core"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

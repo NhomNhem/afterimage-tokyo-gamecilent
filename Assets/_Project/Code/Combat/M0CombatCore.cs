@@ -1,10 +1,8 @@
 using System;
 using GlassRefrain.Core;
 
-namespace GlassRefrain.Combat
-{
-    public sealed class M0CombatCore
-    {
+namespace GlassRefrain.Combat {
+    public sealed class M0CombatCore {
         private CombatCoreState currentState;
         private CombatActionRequestResult lastActionResult;
         private CombatResolutionResult lastResolutionResult;
@@ -14,49 +12,44 @@ namespace GlassRefrain.Combat
         private RevealRequestContext lastRevealRequestContext;
         private M0CombatSnapshot latestSnapshot;
 
-        public M0CombatCore()
-        {
+        public M0CombatCore() {
             currentState = CombatCoreState.Neutral;
-            lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "No action processed yet", currentState.ToString());
-            lastResolutionResult = new CombatResolutionResult(CombatActionType.Unknown, false, false, false, false, string.Empty, "No resolution yet");
+            lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "No action processed yet",
+                currentState.ToString());
+            lastResolutionResult = new CombatResolutionResult(CombatActionType.Unknown, false, false, false, false,
+                string.Empty, "No resolution yet");
             counterWindowState = new CounterWindowState(false, string.Empty, 0f, 0f);
             actionLockContext = new ActionLockContext(false, string.Empty, CombatCoreState.Neutral);
-            recoveryContext = new RecoveryContext(false, string.Empty, CombatCoreState.Neutral, RecoverySource.CombatCore, 0f);
-            lastRevealRequestContext = new RevealRequestContext(CombatRequestSourceType.Unknown, string.Empty, string.Empty, string.Empty, string.Empty);
+            recoveryContext = new RecoveryContext(false, string.Empty, CombatCoreState.Neutral,
+                RecoverySource.CombatCore, 0f);
+            lastRevealRequestContext = new RevealRequestContext(CombatRequestSourceType.Unknown, string.Empty,
+                string.Empty, string.Empty, string.Empty);
             RefreshSnapshot();
         }
 
-        public M0CombatSnapshot Snapshot
-        {
-            get { return latestSnapshot; }
-        }
+        public M0CombatSnapshot Snapshot => latestSnapshot;
 
-        public RevealRequestContext LastRevealRequestContext
-        {
-            get { return lastRevealRequestContext; }
-        }
+        public RevealRequestContext LastRevealRequestContext => lastRevealRequestContext;
 
         public event Action<M0CombatSnapshot> SnapshotChanged;
         public event Action<RevealRequestContext> RevealRequestEmitted;
 
-        public CombatActionRequestResult RequestAction(CombatActionRequest request)
-        {
-            if (currentState == CombatCoreState.Disabled)
-            {
-                lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "Combat core is disabled", currentState.ToString());
+        public CombatActionRequestResult RequestAction(CombatActionRequest request) {
+            if (currentState == CombatCoreState.Disabled) {
+                lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "Combat core is disabled",
+                    currentState.ToString());
                 RefreshSnapshot();
                 return lastActionResult;
             }
 
-            if (currentState != CombatCoreState.Neutral)
-            {
-                lastActionResult = new CombatActionRequestResult(CombatActionResult.Rejected, "Action rejected outside Neutral", currentState.ToString());
+            if (currentState != CombatCoreState.Neutral) {
+                lastActionResult = new CombatActionRequestResult(CombatActionResult.Rejected,
+                    "Action rejected outside Neutral", currentState.ToString());
                 RefreshSnapshot();
                 return lastActionResult;
             }
 
-            switch (request.ActionType)
-            {
+            switch (request.ActionType) {
                 case CombatActionType.LightAttack:
                 case CombatActionType.HeavyAttack:
                     TransitionTo(CombatCoreState.AttackStartup, request.ActionType + " accepted");
@@ -71,22 +64,22 @@ namespace GlassRefrain.Combat
                     TransitionTo(CombatCoreState.CounterActive, "Counter accepted");
                     break;
                 default:
-                    lastActionResult = new CombatActionRequestResult(CombatActionResult.Rejected, "Unknown action type", currentState.ToString());
+                    lastActionResult = new CombatActionRequestResult(CombatActionResult.Rejected, "Unknown action type",
+                        currentState.ToString());
                     RefreshSnapshot();
                     return lastActionResult;
             }
 
-            lastActionResult = new CombatActionRequestResult(CombatActionResult.Accepted, "Action accepted", currentState.ToString());
+            lastActionResult = new CombatActionRequestResult(CombatActionResult.Accepted, "Action accepted",
+                currentState.ToString());
             RefreshSnapshot();
             return lastActionResult;
         }
 
-        public CombatStepResult AdvanceState(string reason)
-        {
-            CombatCoreState previous = currentState;
+        public CombatStepResult AdvanceState(string reason) {
+            var previous = currentState;
 
-            switch (currentState)
-            {
+            switch (currentState) {
                 case CombatCoreState.AttackStartup:
                     TransitionTo(CombatCoreState.AttackActive, reason);
                     break;
@@ -134,8 +127,7 @@ namespace GlassRefrain.Combat
             return new CombatStepResult(previous != currentState, previous, currentState, reason);
         }
 
-        public void OpenCounterWindow(string sourceTag, float durationSeconds)
-        {
+        public void OpenCounterWindow(string sourceTag, float durationSeconds) {
             counterWindowState = new CounterWindowState(true, sourceTag, 0f, durationSeconds);
             TransitionTo(CombatCoreState.CounterWindow, "Counter window opened");
             lastResolutionResult = new CombatResolutionResult(
@@ -149,9 +141,9 @@ namespace GlassRefrain.Combat
             RefreshSnapshot();
         }
 
-        public void CloseCounterWindow(string reason)
-        {
-            counterWindowState = new CounterWindowState(false, counterWindowState.SourceTag, counterWindowState.DurationSeconds, counterWindowState.DurationSeconds);
+        public void CloseCounterWindow(string reason) {
+            counterWindowState = new CounterWindowState(false, counterWindowState.SourceTag,
+                counterWindowState.DurationSeconds, counterWindowState.DurationSeconds);
             lastResolutionResult = new CombatResolutionResult(
                 CombatActionType.Parry,
                 true,
@@ -163,8 +155,7 @@ namespace GlassRefrain.Combat
             RefreshSnapshot();
         }
 
-        public void TriggerHitReact(string sourceLabel)
-        {
+        public void TriggerHitReact(string sourceLabel) {
             TransitionTo(CombatCoreState.HitReact, sourceLabel);
             lastResolutionResult = new CombatResolutionResult(
                 CombatActionType.Unknown,
@@ -177,31 +168,27 @@ namespace GlassRefrain.Combat
             RefreshSnapshot();
         }
 
-        public void SetDisabled(bool disabled, string reason)
-        {
-            if (disabled)
-            {
+        public void SetDisabled(bool disabled, string reason) {
+            if (disabled) {
                 TransitionTo(CombatCoreState.Disabled, reason);
-                lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "Combat disabled", currentState.ToString());
+                lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "Combat disabled",
+                    currentState.ToString());
             }
-            else
-            {
+            else {
                 TransitionTo(CombatCoreState.Neutral, reason);
             }
 
             RefreshSnapshot();
         }
 
-        private void TransitionTo(CombatCoreState nextState, string reason)
-        {
+        private void TransitionTo(CombatCoreState nextState, string reason) {
             currentState = nextState;
             actionLockContext = ResolveLockContext(nextState);
             recoveryContext = ResolveRecoveryContext(nextState);
 
             if (nextState != CombatCoreState.CounterWindow && counterWindowState.IsOpen)
-            {
-                counterWindowState = new CounterWindowState(false, counterWindowState.SourceTag, counterWindowState.DurationSeconds, counterWindowState.DurationSeconds);
-            }
+                counterWindowState = new CounterWindowState(false, counterWindowState.SourceTag,
+                    counterWindowState.DurationSeconds, counterWindowState.DurationSeconds);
 
             lastResolutionResult = new CombatResolutionResult(
                 lastResolutionResult.ActionType,
@@ -213,8 +200,7 @@ namespace GlassRefrain.Combat
                 "Transitioned to " + nextState);
         }
 
-        private ActionLockContext ResolveLockContext(CombatCoreState state)
-        {
+        private ActionLockContext ResolveLockContext(CombatCoreState state) {
             if (state == CombatCoreState.AttackStartup ||
                 state == CombatCoreState.AttackActive ||
                 state == CombatCoreState.DodgeStartup ||
@@ -223,43 +209,34 @@ namespace GlassRefrain.Combat
                 state == CombatCoreState.ParryActive ||
                 state == CombatCoreState.CounterActive ||
                 state == CombatCoreState.HitReact)
-            {
                 return new ActionLockContext(true, state.ToString(), state);
-            }
 
             return new ActionLockContext(false, string.Empty, state);
         }
 
-        private RecoveryContext ResolveRecoveryContext(CombatCoreState state)
-        {
+        private RecoveryContext ResolveRecoveryContext(CombatCoreState state) {
             if (state == CombatCoreState.AttackRecovery ||
                 state == CombatCoreState.DodgeRecovery ||
                 state == CombatCoreState.ParryRecovery)
-            {
                 return new RecoveryContext(true, state.ToString(), state, RecoverySource.CombatCore, 0.25f);
-            }
 
             return new RecoveryContext(false, string.Empty, state, RecoverySource.CombatCore, 0f);
         }
 
-        private void EmitRevealRequest(string sourceLabel)
-        {
+        private void EmitRevealRequest(string sourceLabel) {
             lastRevealRequestContext = new RevealRequestContext(
                 CombatRequestSourceType.CombatCore,
                 sourceLabel,
                 "CombatCore",
                 "M0RevealCandidate",
-                "CounterActive to RevealBeat");
+                "CounterActive to RevealBeat",
+                RevealRequestClassification.CounterConfirmed);
 
-            Action<RevealRequestContext> handler = RevealRequestEmitted;
-            if (handler != null)
-            {
-                handler(lastRevealRequestContext);
-            }
+            var handler = RevealRequestEmitted;
+            if (handler != null) handler(lastRevealRequestContext);
         }
 
-        private void RefreshSnapshot()
-        {
+        private void RefreshSnapshot() {
             latestSnapshot = new M0CombatSnapshot(
                 currentState,
                 lastActionResult,
@@ -268,11 +245,8 @@ namespace GlassRefrain.Combat
                 actionLockContext,
                 recoveryContext);
 
-            Action<M0CombatSnapshot> handler = SnapshotChanged;
-            if (handler != null)
-            {
-                handler(latestSnapshot);
-            }
+            var handler = SnapshotChanged;
+            if (handler != null) handler(latestSnapshot);
         }
     }
 }

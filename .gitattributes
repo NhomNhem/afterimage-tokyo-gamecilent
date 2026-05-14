@@ -149,7 +149,7 @@ Packages/packages-lock.json linguist-generated
 *.skel.bytes            lfs
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
+Assets/Tokyo_Street/Other/Terrain.asset filter=lfs diff=lfs merge=lfs -text
 * !text !filter !merge !diff
 Assets/Editor/x64/Bakery/cudnn64_7.dll filter=lfs diff=lfs merge=lfs -text
 Assets/Resources/Tokyo_Street/Other/Terrain.asset filter=lfs diff=lfs merge=lfs -text
-Assets/Tokyo_Street/Other/Terrain.asset filter=lfs diff=lfs merge=lfs -text
