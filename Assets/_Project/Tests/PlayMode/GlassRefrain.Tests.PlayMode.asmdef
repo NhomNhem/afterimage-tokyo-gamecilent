@@ -1,0 +1,24 @@
+{
+    "name": "GlassRefrain.Tests.PlayMode",
+    "rootNamespace": "GlassRefrain.Tests.PlayMode",
+    "references": [
+        "GlassRefrain.Core",
+        "GlassRefrain.Infrastructure",
+        "GlassRefrain.Bootstrap",
+        "GlassRefrain.Input"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

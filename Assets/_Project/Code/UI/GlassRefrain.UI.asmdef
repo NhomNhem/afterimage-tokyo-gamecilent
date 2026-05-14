@@ -1,0 +1,16 @@
+{
+    "name": "GlassRefrain.UI",
+    "rootNamespace": "GlassRefrain.UI",
+    "references": [
+        "GlassRefrain.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
