@@ -7,6 +7,7 @@
         "GlassRefrain.Bootstrap",
         "GlassRefrain.Combat",
         "GlassRefrain.Enemy",
+        "GlassRefrain.Health",
         "GlassRefrain.Input",
         "GlassRefrain.Locomotion",
         "GlassRefrain.Targeting"
