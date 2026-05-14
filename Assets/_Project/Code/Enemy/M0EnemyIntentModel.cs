@@ -13,6 +13,7 @@ namespace GlassRefrain.Enemy {
         private EnemyAttackIntentContext attackIntent;
         private EnemyPunishWindowContext punishWindow;
         private EnemyIntentSnapshot latestSnapshot;
+        public event Action<EnemyIntentSnapshot> SnapshotChanged;
 
         public M0EnemyIntentModel(string enemyId = "M0Enemy") {
             this.enemyId = enemyId ?? string.Empty;
@@ -36,9 +37,7 @@ namespace GlassRefrain.Enemy {
         }
 
         public EnemyIntentSnapshot Snapshot => latestSnapshot;
-
-        public event Action<EnemyIntentSnapshot> SnapshotChanged;
-
+        
         public void EnterIdle(string reason) {
             currentState = EnemyIntentState.Idle;
             intentLabel = string.IsNullOrEmpty(reason) ? "Idle" : reason;

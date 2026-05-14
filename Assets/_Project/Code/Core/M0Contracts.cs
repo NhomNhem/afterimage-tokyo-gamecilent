@@ -1317,6 +1317,96 @@ namespace GlassRefrain.Core {
         }
     }
 
+    public enum DebugOverlayChannelId {
+        Input = 0,
+        Locomotion = 1,
+        TargetContext = 2,
+        CombatCore = 3,
+        EnemyIntent = 4,
+        Health = 5,
+        MemoryState = 6,
+        MemoryVFXResponse = 7,
+        EncounterFramework = 8
+    }
+
+    public interface IDebugOverlayChannelSnapshot {
+        DebugOverlayChannelId ChannelId { get; }
+        string ChannelLabel { get; }
+        bool IsVisible { get; }
+        string LastReason { get; }
+        object SourceSnapshot { get; }
+    }
+
+    public readonly struct DebugOverlayChannelSnapshot<TSnapshot> : IDebugOverlayChannelSnapshot {
+        public DebugOverlayChannelId ChannelId { get; }
+        public string ChannelLabel { get; }
+        public bool IsVisible { get; }
+        public TSnapshot Snapshot { get; }
+        public string LastReason { get; }
+        public TSnapshot SourceSnapshot { get { return Snapshot; } }
+        object IDebugOverlayChannelSnapshot.SourceSnapshot => Snapshot;
+
+        public DebugOverlayChannelSnapshot(
+            DebugOverlayChannelId channelId,
+            string channelLabel,
+            bool isVisible,
+            TSnapshot snapshot,
+            string lastReason) {
+            ChannelId = channelId;
+            ChannelLabel = channelLabel ?? string.Empty;
+            IsVisible = isVisible;
+            Snapshot = snapshot;
+            LastReason = lastReason ?? string.Empty;
+        }
+    }
+
+    public readonly struct DebugOverlayAggregateSnapshot {
+        public DebugOverlayChannelSnapshot<InputIntentSnapshot> Input { get; }
+        public DebugOverlayChannelSnapshot<LocomotionStateSnapshot> Locomotion { get; }
+        public DebugOverlayChannelSnapshot<TargetContextSnapshot> TargetContext { get; }
+        public DebugOverlayChannelSnapshot<M0CombatSnapshot> CombatCore { get; }
+        public DebugOverlayChannelSnapshot<EnemyIntentSnapshot> EnemyIntent { get; }
+        public DebugOverlayChannelSnapshot<HealthStateSnapshot> Health { get; }
+        public DebugOverlayChannelSnapshot<MemoryStateSnapshot> MemoryState { get; }
+        public DebugOverlayChannelSnapshot<IMemoryVFXResponseSnapshot> MemoryVFXResponse { get; }
+        public DebugOverlayChannelSnapshot<EncounterLifecycleSnapshot> EncounterFramework { get; }
+        public System.Collections.Generic.IReadOnlyList<IDebugOverlayChannelSnapshot> Channels { get; }
+        public int ChannelCount { get; }
+
+        public DebugOverlayAggregateSnapshot(
+            DebugOverlayChannelSnapshot<InputIntentSnapshot> input,
+            DebugOverlayChannelSnapshot<LocomotionStateSnapshot> locomotion,
+            DebugOverlayChannelSnapshot<TargetContextSnapshot> targetContext,
+            DebugOverlayChannelSnapshot<M0CombatSnapshot> combatCore,
+            DebugOverlayChannelSnapshot<EnemyIntentSnapshot> enemyIntent,
+            DebugOverlayChannelSnapshot<HealthStateSnapshot> health,
+            DebugOverlayChannelSnapshot<MemoryStateSnapshot> memoryState,
+            DebugOverlayChannelSnapshot<IMemoryVFXResponseSnapshot> memoryVfxResponse,
+            DebugOverlayChannelSnapshot<EncounterLifecycleSnapshot> encounterFramework) {
+            Input = input;
+            Locomotion = locomotion;
+            TargetContext = targetContext;
+            CombatCore = combatCore;
+            EnemyIntent = enemyIntent;
+            Health = health;
+            MemoryState = memoryState;
+            MemoryVFXResponse = memoryVfxResponse;
+            EncounterFramework = encounterFramework;
+            Channels = new IDebugOverlayChannelSnapshot[] {
+                input,
+                locomotion,
+                targetContext,
+                combatCore,
+                enemyIntent,
+                health,
+                memoryState,
+                memoryVfxResponse,
+                encounterFramework
+            };
+            ChannelCount = Channels.Count;
+        }
+    }
+
     public readonly struct DebugTransitionEvent {
         public string SystemName { get; }
         public string EventName { get; }
