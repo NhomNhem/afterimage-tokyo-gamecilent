@@ -41,6 +41,14 @@ namespace GlassRefrain.Core
         ToggleDebugOverlay = 10
     }
 
+    public enum InputRoutingDisposition
+    {
+        Disabled = 0,
+        Ignored = 1,
+        Routed = 2,
+        Rejected = 3
+    }
+
     public readonly struct InputIntentSnapshot
     {
         public Axis2 Move { get; }
@@ -84,13 +92,23 @@ namespace GlassRefrain.Core
 
     public readonly struct InputRoutingResult
     {
-        public bool Accepted { get; }
+        public InputActionIntent Intent { get; }
+        public InputRoutingDisposition Disposition { get; }
         public string RoutedTo { get; }
         public string Reason { get; }
-
-        public InputRoutingResult(bool accepted, string routedTo, string reason)
+        public bool Accepted
         {
-            Accepted = accepted;
+            get { return Disposition == InputRoutingDisposition.Routed; }
+        }
+
+        public InputRoutingResult(
+            InputActionIntent intent,
+            InputRoutingDisposition disposition,
+            string routedTo,
+            string reason)
+        {
+            Intent = intent;
+            Disposition = disposition;
             RoutedTo = routedTo;
             Reason = reason;
         }
@@ -663,9 +681,9 @@ namespace GlassRefrain.Core
     public readonly struct InputDebugSnapshot
     {
         public string Summary { get; }
-        public string[] Details { get; }
+        public System.Collections.Generic.IReadOnlyList<string> Details { get; }
 
-        public InputDebugSnapshot(string summary, string[] details)
+        public InputDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details)
         {
             Summary = summary;
             Details = details;
