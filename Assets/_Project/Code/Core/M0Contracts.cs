@@ -801,28 +801,95 @@ namespace GlassRefrain.Core
     public readonly struct DamageApplicationContext
     {
         public string SourceId { get; }
+        public string TargetId { get; }
         public float Amount { get; }
         public string DamageType { get; }
+        public string ContextLabel { get; }
+
+        public DamageApplicationContext(string sourceId, string targetId, float amount, string damageType, string contextLabel)
+        {
+            SourceId = sourceId ?? string.Empty;
+            TargetId = targetId ?? string.Empty;
+            Amount = amount;
+            DamageType = damageType ?? string.Empty;
+            ContextLabel = contextLabel ?? string.Empty;
+        }
 
         public DamageApplicationContext(string sourceId, float amount, string damageType)
+            : this(sourceId, string.Empty, amount, damageType, string.Empty)
         {
-            SourceId = sourceId;
-            Amount = amount;
-            DamageType = damageType;
+        }
+    }
+
+    public enum HealthState
+    {
+        Living = 0,
+        Damaged = 1,
+        Recovering = 2,
+        Disabled = 3
+    }
+
+    public enum DamageApplicationResultType
+    {
+        Accepted = 0,
+        Rejected = 1,
+        Ignored = 2
+    }
+
+    public readonly struct DamageApplicationResult
+    {
+        public DamageApplicationResultType Result { get; }
+        public bool Accepted { get; }
+        public string Reason { get; }
+        public float AppliedAmount { get; }
+
+        public DamageApplicationResult(DamageApplicationResultType result, string reason, float appliedAmount)
+        {
+            Result = result;
+            Accepted = result == DamageApplicationResultType.Accepted;
+            Reason = reason ?? string.Empty;
+            AppliedAmount = appliedAmount;
         }
     }
 
     public readonly struct HealthStateSnapshot
     {
+        public HealthState State { get; }
         public float Current { get; }
         public float Max { get; }
         public bool IsAlive { get; }
+        public DamageApplicationResult LastDamageResult { get; }
+        public HitReactionContext HitReaction { get; }
+        public DefeatStateContext Defeat { get; }
 
-        public HealthStateSnapshot(float current, float max, bool isAlive)
+        public HealthStateSnapshot(
+            HealthState state,
+            float current,
+            float max,
+            bool isAlive,
+            DamageApplicationResult lastDamageResult,
+            HitReactionContext hitReaction,
+            DefeatStateContext defeat)
         {
+            State = state;
             Current = current;
             Max = max;
             IsAlive = isAlive;
+            LastDamageResult = lastDamageResult;
+            HitReaction = hitReaction;
+            Defeat = defeat;
+        }
+
+        public HealthStateSnapshot(float current, float max, bool isAlive)
+            : this(
+                isAlive ? HealthState.Living : HealthState.Disabled,
+                current,
+                max,
+                isAlive,
+                new DamageApplicationResult(DamageApplicationResultType.Ignored, "No damage processed yet", 0f),
+                new HitReactionContext(string.Empty, string.Empty, 0f),
+                new DefeatStateContext(!isAlive, isAlive ? string.Empty : "Disabled"))
+        {
         }
     }
 
