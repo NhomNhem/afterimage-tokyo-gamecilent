@@ -30,9 +30,7 @@ namespace GlassRefrain.Memory {
             RefreshSnapshot();
         }
 
-        public MemoryStateSnapshot Snapshot {
-            get { return latestSnapshot; }
-        }
+        public MemoryStateSnapshot Snapshot => latestSnapshot;
 
         public event Action<MemoryStateSnapshot> SnapshotChanged;
 

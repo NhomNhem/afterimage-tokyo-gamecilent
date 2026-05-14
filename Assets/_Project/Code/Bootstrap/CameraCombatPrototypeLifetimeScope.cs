@@ -5,6 +5,7 @@ namespace GlassRefrain.Bootstrap {
     public sealed class CameraCombatPrototypeLifetimeScope : LifetimeScope {
         protected override void Configure(IContainerBuilder builder) {
             // Manual VContainer skeleton; generated scope registration is deferred.
+            
         }
     }
 }

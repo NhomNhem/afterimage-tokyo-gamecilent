@@ -15,8 +15,7 @@ namespace GlassRefrain.Health {
             this.maxHealth = maxHealth > 0f ? maxHealth : 100f;
             currentHealth = this.maxHealth;
             state = HealthState.Living;
-            lastDamageResult =
-                new DamageApplicationResult(DamageApplicationResultType.Ignored, "No damage processed yet", 0f);
+            lastDamageResult = new DamageApplicationResult(DamageApplicationResultType.Ignored, "No damage processed yet", 0f);
             hitReaction = new HitReactionContext(string.Empty, string.Empty, 0f);
             defeat = new DefeatStateContext(false, string.Empty);
             RefreshSnapshot();

@@ -12,6 +12,9 @@ namespace GlassRefrain.Enemy {
         private EnemyPunishWindowContext punishWindow;
         private EnemyIntentSnapshot latestSnapshot;
 
+        // Event 
+        //public event Action<EnemyIntentSnapshot> SnapshotChanged;
+        
         public M0EnemyIntentModel(string enemyId = "M0Enemy") {
             this.enemyId = enemyId ?? string.Empty;
             currentState = EnemyIntentState.Idle;
