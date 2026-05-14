@@ -6,6 +6,7 @@
     "GlassRefrain.Infrastructure",
     "GlassRefrain.Bootstrap",
     "GlassRefrain.Combat",
+        "GlassRefrain.Encounter",
         "GlassRefrain.Enemy",
         "GlassRefrain.Health",
         "GlassRefrain.Input",
