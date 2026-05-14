@@ -821,9 +821,11 @@ namespace GlassRefrain.Core {
 
     public readonly struct RevealRequestResult {
         public RevealRequestDecision Decision { get; }
+
         public bool Accepted {
             get { return Decision == RevealRequestDecision.Accepted; }
         }
+
         public string Reason { get; }
         public string ResultContext { get; }
         public RevealRequestClassification RequestClassification { get; }
@@ -865,6 +867,7 @@ namespace GlassRefrain.Core {
         public string ResponseLabel { get; }
         public bool ResponseActive { get; }
         public string Detail { get; }
+
         public bool IsAccepted {
             get { return ResponseActive; }
         }
@@ -899,9 +902,11 @@ namespace GlassRefrain.Core {
         public RevealRequestResult LastResult { get; }
         public MemoryResponseContext Response { get; }
         public MemoryCooldownContext Cooldown { get; }
+
         public bool IsRevealed {
             get { return Phase == MemoryRevealPhase.Responding || Phase == MemoryRevealPhase.Cooldown; }
         }
+
         public float CooldownSeconds {
             get { return Cooldown.RemainingSeconds; }
         }
