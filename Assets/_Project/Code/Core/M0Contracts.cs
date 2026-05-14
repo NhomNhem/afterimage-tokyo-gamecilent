@@ -1072,6 +1072,171 @@ namespace GlassRefrain.Core {
         }
     }
 
+    public enum EncounterLifecycleState {
+        Uninitialized = 0,
+        Preparing = 1,
+        Ready = 2,
+        Starting = 3,
+        Active = 4,
+        Completing = 5,
+        Completed = 6,
+        Failed = 7,
+        Aborted = 8,
+        Resetting = 9
+    }
+
+    public enum EncounterParticipantRole {
+        Player = 0,
+        Enemy = 1
+    }
+
+    public enum EncounterLifecycleRequestKind {
+        Prepare = 0,
+        Start = 1,
+        Complete = 2,
+        Fail = 3,
+        Abort = 4,
+        Reset = 5
+    }
+
+    public readonly struct EncounterParticipantRegistration {
+        public string ParticipantId { get; }
+        public string SourceLabel { get; }
+        public string Reason { get; }
+
+        public EncounterParticipantRegistration(string participantId, string sourceLabel, string reason) {
+            ParticipantId = participantId ?? string.Empty;
+            SourceLabel = sourceLabel ?? string.Empty;
+            Reason = reason ?? string.Empty;
+        }
+    }
+
+    public readonly struct EncounterParticipantContext {
+        public EncounterParticipantRole Role { get; }
+        public string ParticipantId { get; }
+        public string SourceLabel { get; }
+        public bool IsRegistered { get; }
+        public string Reason { get; }
+
+        public EncounterParticipantContext(
+            EncounterParticipantRole role,
+            string participantId,
+            string sourceLabel,
+            bool isRegistered,
+            string reason) {
+            Role = role;
+            ParticipantId = participantId ?? string.Empty;
+            SourceLabel = sourceLabel ?? string.Empty;
+            IsRegistered = isRegistered;
+            Reason = reason ?? string.Empty;
+        }
+    }
+
+    public readonly struct EncounterReadinessBlocker {
+        public string Code { get; }
+        public string Reason { get; }
+
+        public EncounterReadinessBlocker(string code, string reason) {
+            Code = code ?? string.Empty;
+            Reason = reason ?? string.Empty;
+        }
+    }
+
+    public readonly struct EncounterLifecycleRequest {
+        public EncounterLifecycleRequestKind Kind { get; }
+        public string Reason { get; }
+
+        public EncounterLifecycleRequest(EncounterLifecycleRequestKind kind, string reason) {
+            Kind = kind;
+            Reason = reason ?? string.Empty;
+        }
+    }
+
+    public readonly struct EncounterLifecycleResult {
+        public EncounterLifecycleRequestKind Kind { get; }
+        public bool Accepted { get; }
+        public EncounterLifecycleState PreviousState { get; }
+        public EncounterLifecycleState CurrentState { get; }
+        public string Reason { get; }
+
+        public EncounterLifecycleResult(
+            EncounterLifecycleRequestKind kind,
+            bool accepted,
+            EncounterLifecycleState previousState,
+            EncounterLifecycleState currentState,
+            string reason) {
+            Kind = kind;
+            Accepted = accepted;
+            PreviousState = previousState;
+            CurrentState = currentState;
+            Reason = reason ?? string.Empty;
+        }
+    }
+
+    public readonly struct EncounterObservationContext {
+        public bool PlayerDefeated { get; }
+        public bool EnemyDefeated { get; }
+        public bool RevealAccepted { get; }
+        public bool ManualResetRequested { get; }
+        public bool ManualAbortRequested { get; }
+        public string MemoryId { get; }
+        public string Reason { get; }
+
+        public EncounterObservationContext(
+            bool playerDefeated,
+            bool enemyDefeated,
+            bool revealAccepted,
+            bool manualResetRequested,
+            bool manualAbortRequested,
+            string memoryId,
+            string reason) {
+            PlayerDefeated = playerDefeated;
+            EnemyDefeated = enemyDefeated;
+            RevealAccepted = revealAccepted;
+            ManualResetRequested = manualResetRequested;
+            ManualAbortRequested = manualAbortRequested;
+            MemoryId = memoryId ?? string.Empty;
+            Reason = reason ?? string.Empty;
+        }
+    }
+
+    public readonly struct EncounterLifecycleSnapshot {
+        public string EncounterId { get; }
+        public EncounterLifecycleState State { get; }
+        public EncounterParticipantContext PlayerParticipant { get; }
+        public EncounterParticipantContext EnemyParticipant { get; }
+        public System.Collections.Generic.IReadOnlyList<EncounterReadinessBlocker> ReadinessBlockers { get; }
+        public EncounterObservationContext Observation { get; }
+        public EncounterLifecycleResult LastResult { get; }
+        public string LastReason { get; }
+        public float ElapsedSeconds { get; }
+        public int ParticipantCount { get; }
+        public bool IsReady => State == EncounterLifecycleState.Ready;
+        public bool IsActive => State == EncounterLifecycleState.Active;
+
+        public EncounterLifecycleSnapshot(
+            string encounterId,
+            EncounterLifecycleState state,
+            EncounterParticipantContext playerParticipant,
+            EncounterParticipantContext enemyParticipant,
+            System.Collections.Generic.IReadOnlyList<EncounterReadinessBlocker> readinessBlockers,
+            EncounterObservationContext observation,
+            EncounterLifecycleResult lastResult,
+            string lastReason,
+            float elapsedSeconds) {
+            EncounterId = encounterId ?? string.Empty;
+            State = state;
+            PlayerParticipant = playerParticipant;
+            EnemyParticipant = enemyParticipant;
+            ReadinessBlockers = readinessBlockers ?? new EncounterReadinessBlocker[0];
+            Observation = observation;
+            LastResult = lastResult;
+            LastReason = lastReason ?? string.Empty;
+            ElapsedSeconds = elapsedSeconds;
+            ParticipantCount = (playerParticipant.IsRegistered ? 1 : 0) + (enemyParticipant.IsRegistered ? 1 : 0);
+        }
+    }
+
     public readonly struct CombatDebugSnapshot {
         public string Summary { get; }
         public string[] Details { get; }
