@@ -1511,15 +1511,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936793071567454570, guid: 6a28377cf758fac449f40ab81e9e1cf3, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7936793071567454570, guid: 6a28377cf758fac449f40ab81e9e1cf3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7936793071567454570, guid: 6a28377cf758fac449f40ab81e9e1cf3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 7936793071861883244, guid: 6a28377cf758fac449f40ab81e9e1cf3, type: 3}
       propertyPath: m_AnchoredPosition.y

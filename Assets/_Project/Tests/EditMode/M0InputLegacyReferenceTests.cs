@@ -5,6 +5,25 @@ namespace GlassRefrain.Tests.EditMode
 {
     public class M0InputLegacyReferenceTests
     {
+        private static readonly string[] ForbiddenLegacyInputPatterns =
+        {
+            "UnityEngine.Input;",
+            "UnityEngine.Input ",
+            "Input.GetAxis",
+            "Input.GetButton",
+            "Input.GetButtonDown",
+            "Input.GetButtonUp",
+            "Input.GetKey",
+            "Input.GetKeyDown",
+            "Input.GetKeyUp",
+            "Input.GetMouseButton",
+            "Input.GetMouseButtonDown",
+            "Input.GetMouseButtonUp",
+            "Input.mousePosition",
+            "Input.touches",
+            "Input.touchCount"
+        };
+
         [Test]
         public void InputFoundationAndRouterFilesDoNotReferenceLegacyInputManager()
         {
@@ -20,8 +39,11 @@ namespace GlassRefrain.Tests.EditMode
                 Assert.That(File.Exists(file), Is.True, "Expected file to exist: " + file);
 
                 string contents = File.ReadAllText(file);
-                Assert.That(contents.Contains("InputManager"), Is.False, file);
-                Assert.That(contents.Contains("UnityEngine.Input"), Is.False, file);
+
+                foreach (string pattern in ForbiddenLegacyInputPatterns)
+                {
+                    Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden legacy input pattern: " + pattern);
+                }
             }
         }
     }

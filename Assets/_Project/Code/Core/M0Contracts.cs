@@ -226,21 +226,53 @@ namespace GlassRefrain.Core
         }
     }
 
+    public enum LocomotionState
+    {
+        Uninitialized = 0,
+        Idle = 1,
+        Moving = 2,
+        Restricted = 3,
+        Recovering = 4
+    }
+
     public readonly struct LocomotionStateSnapshot
     {
-        public Axis2 Velocity { get; }
-        public Axis2 Facing { get; }
-        public bool IsGrounded { get; }
-        public bool IsDashing { get; }
-        public bool IsRecovering { get; }
-
-        public LocomotionStateSnapshot(Axis2 velocity, Axis2 facing, bool isGrounded, bool isDashing, bool isRecovering)
+        public LocomotionState State { get; }
+        public Axis2 MoveIntent { get; }
+        public bool InputEnabled { get; }
+        public MovementRestrictionContext MovementRestriction { get; }
+        public RecoveryContext Recovery { get; }
+        public CameraMovementBasisSnapshot CameraMovementBasis { get; }
+        public string StateDetail { get; }
+        public bool HasMoveIntent
         {
-            Velocity = velocity;
-            Facing = facing;
-            IsGrounded = isGrounded;
-            IsDashing = isDashing;
-            IsRecovering = isRecovering;
+            get { return MoveIntent.X != 0f || MoveIntent.Y != 0f; }
+        }
+        public bool IsRestricted
+        {
+            get { return State == LocomotionState.Restricted; }
+        }
+        public bool IsRecovering
+        {
+            get { return State == LocomotionState.Recovering; }
+        }
+
+        public LocomotionStateSnapshot(
+            LocomotionState state,
+            Axis2 moveIntent,
+            bool inputEnabled,
+            MovementRestrictionContext movementRestriction,
+            RecoveryContext recovery,
+            CameraMovementBasisSnapshot cameraMovementBasis,
+            string stateDetail)
+        {
+            State = state;
+            MoveIntent = moveIntent;
+            InputEnabled = inputEnabled;
+            MovementRestriction = movementRestriction;
+            Recovery = recovery;
+            CameraMovementBasis = cameraMovementBasis;
+            StateDetail = stateDetail ?? string.Empty;
         }
     }
 
@@ -368,19 +400,104 @@ namespace GlassRefrain.Core
         }
     }
 
-    public readonly struct TargetContextSnapshot
+    public enum TargetFocusState
+    {
+        Inactive = 0,
+        AcquireRequested = 1,
+        Focused = 2,
+        Invalid = 3
+    }
+
+    public readonly struct TargetDirectionContext
+    {
+        public Axis2 Direction { get; }
+        public bool HasDirection { get; }
+        public string Label { get; }
+
+        public TargetDirectionContext(Axis2 direction, bool hasDirection, string label)
+        {
+            Direction = direction;
+            HasDirection = hasDirection;
+            Label = label;
+        }
+    }
+
+    public readonly struct TargetAcquireRequest
     {
         public string TargetId { get; }
-        public bool IsLockedOn { get; }
-        public bool IsValid { get; }
-        public string ReleaseReason { get; }
+        public string Source { get; }
+        public string Reason { get; }
 
-        public TargetContextSnapshot(string targetId, bool isLockedOn, bool isValid, string releaseReason)
+        public TargetAcquireRequest(string targetId, string source, string reason)
         {
             TargetId = targetId;
-            IsLockedOn = isLockedOn;
+            Source = source;
+            Reason = reason;
+        }
+    }
+
+    public readonly struct TargetReleaseRequest
+    {
+        public TargetReleaseReason Reason { get; }
+        public string Source { get; }
+        public string Detail { get; }
+
+        public TargetReleaseRequest(TargetReleaseReason reason, string source, string detail)
+        {
+            Reason = reason;
+            Source = source;
+            Detail = detail;
+        }
+    }
+
+    public readonly struct TargetValidityContext
+    {
+        public string TargetId { get; }
+        public bool IsValid { get; }
+        public string Reason { get; }
+
+        public TargetValidityContext(string targetId, bool isValid, string reason)
+        {
+            TargetId = targetId;
             IsValid = isValid;
+            Reason = reason;
+        }
+    }
+
+    public readonly struct TargetContextSnapshot
+    {
+        public TargetFocusState FocusState { get; }
+        public string TargetId { get; }
+        public bool IsLockedOn
+        {
+            get { return FocusState == TargetFocusState.Focused; }
+        }
+        public bool IsValid { get; }
+        public TargetDirectionContext Direction { get; }
+        public string AcquireReason { get; }
+        public string ReleaseReason { get; }
+        public string InvalidReason { get; }
+        public bool HasTarget
+        {
+            get { return !string.IsNullOrEmpty(TargetId); }
+        }
+
+        public TargetContextSnapshot(
+            TargetFocusState focusState,
+            string targetId,
+            bool isValid,
+            TargetDirectionContext direction,
+            string acquireReason,
+            string releaseReason,
+            string invalidReason)
+        {
+            FocusState = focusState;
+            TargetId = targetId;
+            IsValid = isValid;
+            Direction = direction;
+            AcquireReason = acquireReason;
             ReleaseReason = releaseReason;
+            InvalidReason = invalidReason;
         }
     }
 
@@ -395,6 +512,18 @@ namespace GlassRefrain.Core
             Accepted = accepted;
             TargetId = targetId;
             Reason = reason;
+        }
+    }
+
+    public readonly struct TargetDebugSnapshot
+    {
+        public string Summary { get; }
+        public System.Collections.Generic.IReadOnlyList<string> Details { get; }
+
+        public TargetDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details)
+        {
+            Summary = summary;
+            Details = details;
         }
     }
 
@@ -597,9 +726,9 @@ namespace GlassRefrain.Core
     public readonly struct LocomotionDebugSnapshot
     {
         public string Summary { get; }
-        public string[] Details { get; }
+        public System.Collections.Generic.IReadOnlyList<string> Details { get; }
 
-        public LocomotionDebugSnapshot(string summary, string[] details)
+        public LocomotionDebugSnapshot(string summary, System.Collections.Generic.IReadOnlyList<string> details)
         {
             Summary = summary;
             Details = details;
@@ -636,18 +765,6 @@ namespace GlassRefrain.Core
         public string[] Details { get; }
 
         public MemoryDebugSnapshot(string summary, string[] details)
-        {
-            Summary = summary;
-            Details = details;
-        }
-    }
-
-    public readonly struct TargetDebugSnapshot
-    {
-        public string Summary { get; }
-        public string[] Details { get; }
-
-        public TargetDebugSnapshot(string summary, string[] details)
         {
             Summary = summary;
             Details = details;
