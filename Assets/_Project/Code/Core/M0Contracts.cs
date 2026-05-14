@@ -550,19 +550,60 @@ namespace GlassRefrain.Core
         }
     }
 
+    public enum EnemyIntentState
+    {
+        Idle = 0,
+        Telegraph = 1,
+        Commit = 2,
+        Active = 3,
+        Recovery = 4
+    }
+
+    public readonly struct EnemyAttackIntentContext
+    {
+        public string AttackId { get; }
+        public string IntentLabel { get; }
+        public float DurationSeconds { get; }
+        public EnemyAttackTagSet AttackTags { get; }
+
+        public EnemyAttackIntentContext(string attackId, string intentLabel, float durationSeconds, EnemyAttackTagSet attackTags)
+        {
+            AttackId = attackId ?? string.Empty;
+            IntentLabel = intentLabel ?? string.Empty;
+            DurationSeconds = durationSeconds;
+            AttackTags = attackTags;
+        }
+    }
+
     public readonly struct EnemyIntentSnapshot
     {
+        public EnemyIntentState State { get; }
         public string EnemyId { get; }
         public string IntentLabel { get; }
         public bool IsTelegraphing { get; }
         public float RemainingSeconds { get; }
+        public TelegraphStateSnapshot Telegraph { get; }
+        public EnemyAttackIntentContext AttackIntent { get; }
+        public EnemyPunishWindowContext PunishWindow { get; }
 
-        public EnemyIntentSnapshot(string enemyId, string intentLabel, bool isTelegraphing, float remainingSeconds)
+        public EnemyIntentSnapshot(
+            EnemyIntentState state,
+            string enemyId,
+            string intentLabel,
+            bool isTelegraphing,
+            float remainingSeconds,
+            TelegraphStateSnapshot telegraph,
+            EnemyAttackIntentContext attackIntent,
+            EnemyPunishWindowContext punishWindow)
         {
-            EnemyId = enemyId;
-            IntentLabel = intentLabel;
+            State = state;
+            EnemyId = enemyId ?? string.Empty;
+            IntentLabel = intentLabel ?? string.Empty;
             IsTelegraphing = isTelegraphing;
             RemainingSeconds = remainingSeconds;
+            Telegraph = telegraph;
+            AttackIntent = attackIntent;
+            PunishWindow = punishWindow;
         }
     }
 
