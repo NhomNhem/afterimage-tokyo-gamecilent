@@ -5,7 +5,9 @@
         "GlassRefrain.Core",
         "GlassRefrain.Infrastructure",
         "GlassRefrain.Bootstrap",
-        "GlassRefrain.Input"
+        "GlassRefrain.Input",
+        "GlassRefrain.Locomotion",
+        "GlassRefrain.Targeting"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
