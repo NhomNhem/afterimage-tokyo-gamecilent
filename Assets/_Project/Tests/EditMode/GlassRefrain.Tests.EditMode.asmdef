@@ -5,6 +5,7 @@
         "GlassRefrain.Core",
         "GlassRefrain.Infrastructure",
         "GlassRefrain.Bootstrap",
+        "GlassRefrain.Combat",
         "GlassRefrain.Input",
         "GlassRefrain.Locomotion",
         "GlassRefrain.Targeting"
