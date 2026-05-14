@@ -323,6 +323,14 @@
       },
       "url": "https://packages.unity.com"
     },
+    "dev.ameye.linework": {
+      "version": "file:dev.ameye.linework",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.collections": "1.0.0"
+      }
+    },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.17.0",
       "depth": 0,
