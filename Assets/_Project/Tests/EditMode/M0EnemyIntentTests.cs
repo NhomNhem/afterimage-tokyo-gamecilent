@@ -72,11 +72,77 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void IdleStateHasEmptyAttackIntent() {
+            var model = new M0EnemyIntentModel();
+
+            Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Idle));
+            Assert.That(model.Snapshot.AttackIntent.AttackId, Is.EqualTo(string.Empty));
+            Assert.That(model.Snapshot.AttackIntent.AttackTags.Tags, Is.Empty);
+        }
+
+        [Test]
+        public void TelegraphDoesNotAdvanceStateOnTick() {
+            var model = new M0EnemyIntentModel();
+
+            model.EnterTelegraph("TelegraphA", 1.0f, "Test");
+            model.Tick(0.4f);
+
+            Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Telegraph));
+            Assert.That(model.Snapshot.RemainingSeconds, Is.EqualTo(0.6f).Within(0.001f));
+            Assert.That(model.Snapshot.Telegraph.RemainingSeconds, Is.EqualTo(0.6f).Within(0.001f));
+        }
+
+        [Test]
+        public void ActiveStatePreservesAttackIntentFromCommit() {
+            var model = new M0EnemyIntentModel();
+            var intent = new EnemyAttackIntentContext(
+                "SlashB",
+                "M0BasicSlash",
+                0.15f,
+                new EnemyAttackTagSet(new[] { "DodgePunishable", "ParryEligible", "CounterOnWhiff" }));
+
+            model.EnterCommit(intent, 0.2f, "Commit");
+            model.EnterActive(0.15f, "Active");
+
+            Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Active));
+            Assert.That(model.Snapshot.AttackIntent.AttackId, Is.EqualTo("SlashB"));
+            CollectionAssert.AreEquivalent(
+                new[] { "DodgePunishable", "ParryEligible", "CounterOnWhiff" },
+                model.Snapshot.AttackIntent.AttackTags.Tags);
+        }
+
+        [Test]
+        public void ActiveStateFromIdleHasEmptyAttackIntent() {
+            var model = new M0EnemyIntentModel();
+
+            model.EnterActive(0.15f, "Active");
+
+            Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Active));
+            Assert.That(model.Snapshot.AttackIntent.AttackId, Is.EqualTo(string.Empty));
+            Assert.That(model.Snapshot.AttackIntent.AttackTags.Tags, Is.Empty);
+        }
+
+        [Test]
+        public void SnapshotIsReadOnlyValueCopy() {
+            var model = new M0EnemyIntentModel();
+            model.EnterTelegraph("TestTelegraph", 1.0f, "Test");
+
+            var snapA = model.Snapshot;
+            model.Tick(0.5f);
+            var snapB = model.Snapshot;
+
+            Assert.That(snapA.RemainingSeconds, Is.EqualTo(1.0f));
+            Assert.That(snapB.RemainingSeconds, Is.EqualTo(0.5f).Within(0.001f));
+            Assert.That(snapA.RemainingSeconds, Is.Not.EqualTo(snapB.RemainingSeconds));
+        }
+
+        [Test]
         public void EnemyIntentFilesDoNotReferenceForbiddenDependencies() {
             string[] coreAndEnemyFiles = {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
                 "Assets/_Project/Code/Enemy/M0EnemyIntentModel.cs",
-                "Assets/_Project/Code/Enemy/GlassRefrain.Enemy.asmdef"
+                "Assets/_Project/Code/Enemy/GlassRefrain.Enemy.asmdef",
+                "Assets/_Project/Code/Bootstrap/M0EnemyIntentLoopDriver.cs"
             };
 
             string[] sharedForbiddenPatterns = {
@@ -111,7 +177,8 @@ namespace GlassRefrain.Tests.EditMode {
 
             string[] enemyOnlyFiles = {
                 "Assets/_Project/Code/Enemy/M0EnemyIntentModel.cs",
-                "Assets/_Project/Code/Enemy/GlassRefrain.Enemy.asmdef"
+                "Assets/_Project/Code/Enemy/GlassRefrain.Enemy.asmdef",
+                "Assets/_Project/Code/Bootstrap/M0EnemyIntentLoopDriver.cs"
             };
 
             foreach (var file in enemyOnlyFiles) {

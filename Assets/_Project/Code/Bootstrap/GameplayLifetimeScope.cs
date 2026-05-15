@@ -18,6 +18,7 @@ namespace GlassRefrain.Bootstrap {
     public sealed class GameplayLifetimeScope : LifetimeScope {
         [SerializeField] private M0GameplayTickHandler tickHandler;
         [SerializeField] private M0TargetableSceneAdapter targetableAdapter;
+        [SerializeField] private M0EnemyIntentLoopDriver loopDriver;
 
         protected override void Configure(IContainerBuilder builder) {
             // Manual VContainer registration for M0.
@@ -29,7 +30,7 @@ namespace GlassRefrain.Bootstrap {
             builder.Register<M0PlayerLocomotion>(Lifetime.Singleton);
             builder.Register<M0TargetContext>(Lifetime.Singleton);
             builder.Register<M0HealthDamageReactionModel>(Lifetime.Singleton);
-            builder.Register<M0EnemyIntentModel>(Lifetime.Singleton);
+            builder.RegisterInstance(new M0EnemyIntentModel());
             builder.Register<M0MemoryState>(Lifetime.Singleton);
 
             // Targeting: Manual DI per ADR-0004
@@ -47,6 +48,10 @@ namespace GlassRefrain.Bootstrap {
 
             if (targetableAdapter != null) {
                 builder.RegisterComponent(targetableAdapter);
+            }
+
+            if (loopDriver != null) {
+                builder.RegisterComponent(loopDriver);
             }
 
             // Diagnostic log for M0 wiring verification
