@@ -6,8 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/_Project/Content/Scenes/Bootstrap/Bootstrap.unity
+    guid: d581e874c997e6742b3a2838893a1796
+  - enabled: 1
+    path: Assets/_Project/Content/Scenes/Systems/Systems.unity
+    guid: 5108a3b90f7b32d49a458b9da3ea8993
+  - enabled: 1
+    path: Assets/_Project/Content/Scenes/Levels/TokyoAct1/Level_TokyoStreet_Blockout.unity
+    guid: 0002b5ff93832ae46948a3062867966b
+  - enabled: 1
+    path: Assets/_Project/Content/Scenes/Gameplay/Gameplay_CombatPrototype.unity
+    guid: af25be46bdd073641a5ef65a35363460
+  - enabled: 1
+    path: Assets/_Project/Content/Scenes/Camera/Camera_CombatPrototype.unity
+    guid: c8d9ff24492134b4c9197731d17eee31
+  - enabled: 1
+    path: Assets/_Project/Content/Scenes/UI/UI_DebugOverlay.unity
+    guid: f491e86d62da810419fa39e2cd10a185
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

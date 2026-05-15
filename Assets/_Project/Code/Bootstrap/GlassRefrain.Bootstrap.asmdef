@@ -1,11 +1,19 @@
 {
   "name": "GlassRefrain.Bootstrap",
   "rootNamespace": "GlassRefrain.Bootstrap",
-  "references": [
-    "GlassRefrain.Core",
-    "GlassRefrain.Infrastructure",
-    "VContainer"
-  ],
+    "references": [
+      "GlassRefrain.Core",
+      "GlassRefrain.Infrastructure",
+      "GlassRefrain.Combat",
+      "GlassRefrain.Locomotion",
+      "GlassRefrain.Targeting",
+      "GlassRefrain.Health",
+      "GlassRefrain.Enemy",
+      "GlassRefrain.Memory",
+      "GlassRefrain.Input",
+      "GlassRefrain.Camera",
+      "VContainer"
+    ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

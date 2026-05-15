@@ -1,32 +1,36 @@
 {
-  "name": "GlassRefrain.Tests.EditMode",
-  "rootNamespace": "GlassRefrain.Tests.EditMode",
-  "references": [
-    "GlassRefrain.Core",
-    "GlassRefrain.Infrastructure",
-    "GlassRefrain.Bootstrap",
-    "GlassRefrain.Combat",
-    "GlassRefrain.DebugOverlay",
-    "GlassRefrain.Encounter",
+    "name": "GlassRefrain.Tests.EditMode",
+    "rootNamespace": "GlassRefrain.Tests.EditMode",
+    "references": [
+        "GlassRefrain.Core",
+        "GlassRefrain.Infrastructure",
+        "GlassRefrain.Bootstrap",
+        "GlassRefrain.Combat",
+        "GlassRefrain.DebugOverlay",
+        "GlassRefrain.Encounter",
         "GlassRefrain.Enemy",
         "GlassRefrain.Health",
         "GlassRefrain.Input",
         "GlassRefrain.Locomotion",
         "GlassRefrain.Memory",
-        "GlassRefrain.Targeting"
+        "GlassRefrain.Targeting",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "VContainer",
+        "VContainer.Editor"
     ],
-  "optionalUnityReferences": [
-    "TestAssemblies"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": false,
-  "defineConstraints": [
-    "UNITY_INCLUDE_TESTS"
-  ],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS",
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

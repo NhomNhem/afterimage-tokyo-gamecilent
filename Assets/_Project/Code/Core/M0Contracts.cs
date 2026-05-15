@@ -549,6 +549,39 @@ namespace GlassRefrain.Core {
         }
     }
 
+    /// <summary>
+    /// LocomotionMovementSnapshot — read-only snapshot of M0PlayerLocomotion movement truth.
+    /// 
+    /// Adapters and presentation systems read this snapshot to observe:
+    /// - Current world-space position
+    /// - Current world-space facing direction
+    /// - Current velocity
+    /// - Current FSM state and detail
+    /// 
+    /// This snapshot is owned entirely by M0PlayerLocomotion.
+    /// Adapters must NOT mutate these values.
+    /// </summary>
+    public readonly struct LocomotionMovementSnapshot {
+        public UnityEngine.Vector3 Position { get; }
+        public UnityEngine.Vector3 Facing { get; }
+        public UnityEngine.Vector3 Velocity { get; }
+        public LocomotionState State { get; }
+        public string StateDetail { get; }
+
+        public LocomotionMovementSnapshot(
+            UnityEngine.Vector3 position,
+            UnityEngine.Vector3 facing,
+            UnityEngine.Vector3 velocity,
+            LocomotionState state,
+            string stateDetail) {
+            Position = position;
+            Facing = facing;
+            Velocity = velocity;
+            State = state;
+            StateDetail = stateDetail ?? string.Empty;
+        }
+    }
+
     public readonly struct DodgeRequestContext {
         public bool Requested { get; }
         public string Source { get; }
