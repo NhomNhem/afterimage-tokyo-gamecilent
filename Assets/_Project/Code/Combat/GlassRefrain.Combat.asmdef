@@ -2,7 +2,8 @@
   "name": "GlassRefrain.Combat",
   "rootNamespace": "GlassRefrain.Combat",
   "references": [
-    "GlassRefrain.Core"
+    "GlassRefrain.Core",
+    "GlassRefrain.Targeting"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

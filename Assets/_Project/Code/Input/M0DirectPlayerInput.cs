@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using GlassRefrain.Combat;
 using GlassRefrain.Core;
 using GlassRefrain.Locomotion;
 using GlassRefrain.Targeting;
@@ -10,13 +11,17 @@ namespace GlassRefrain.Input {
     // action map and feeds it to gameplay systems via ConsumeInputIntent.
     // No gamepad/keyboard/legacy Input Manager API is used — only InputActionAsset.
     // Story 1-3: Routes LockOn intent to M0TargetContext (toggle acquire/release).
+    // Story 1-4: Routes LightAttack/HeavyAttack intents to M0CombatCore (raw intent only).
     public class M0DirectPlayerInput : MonoBehaviour {
         [SerializeField] private InputActionAsset inputAsset;
         private InputActionMap gameplayMap;
         private InputAction moveAction;
         private InputAction lockOnAction;
+        private InputAction lightAttackAction;
+        private InputAction heavyAttackAction;
         private M0PlayerLocomotion locomotion;
         private M0TargetContext targetContext;
+        private M0CombatCore combatCore;
 
         public void SetLocomotion(M0PlayerLocomotion loco) {
             locomotion = loco;
@@ -26,12 +31,18 @@ namespace GlassRefrain.Input {
             targetContext = context;
         }
 
+        public void SetCombatCore(M0CombatCore combat) {
+            combatCore = combat;
+        }
+
         private void OnEnable() {
             if (inputAsset == null) return;
             gameplayMap = inputAsset.FindActionMap("Gameplay");
             if (gameplayMap == null) return;
             moveAction = gameplayMap.FindAction("Move");
             lockOnAction = gameplayMap.FindAction("LockOn");
+            lightAttackAction = gameplayMap.FindAction("LightAttack");
+            heavyAttackAction = gameplayMap.FindAction("HeavyAttack");
             gameplayMap.Enable();
         }
 
@@ -44,6 +55,8 @@ namespace GlassRefrain.Input {
             gameplayMap = null;
             moveAction = null;
             lockOnAction = null;
+            lightAttackAction = null;
+            heavyAttackAction = null;
         }
 
         private void Update() {
@@ -71,6 +84,20 @@ namespace GlassRefrain.Input {
                         false, false, false, false, false, true, false, false,
                         true);
                     targetContext.ConsumeInputIntent(intent);
+                }
+            }
+
+            // Handle LightAttack input for combat (Story 1-4) — raw intent only
+            if (combatCore != null && lightAttackAction != null) {
+                if (lightAttackAction.WasPressedThisFrame()) {
+                    combatCore.ConsumeAttackIntent(CombatActionType.LightAttack);
+                }
+            }
+
+            // Handle HeavyAttack input for combat (Story 1-4) — raw intent only
+            if (combatCore != null && heavyAttackAction != null) {
+                if (heavyAttackAction.WasPressedThisFrame()) {
+                    combatCore.ConsumeAttackIntent(CombatActionType.HeavyAttack);
                 }
             }
         }

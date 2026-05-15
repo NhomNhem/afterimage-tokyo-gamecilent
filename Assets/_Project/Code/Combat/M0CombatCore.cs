@@ -1,5 +1,6 @@
 using System;
 using GlassRefrain.Core;
+using GlassRefrain.Targeting;
 
 namespace GlassRefrain.Combat {
     public sealed class M0CombatCore {
@@ -11,6 +12,7 @@ namespace GlassRefrain.Combat {
         private RecoveryContext recoveryContext;
         private RevealRequestContext lastRevealRequestContext;
         private M0CombatSnapshot latestSnapshot;
+        private M0TargetContext targetContext;
 
         public M0CombatCore() {
             currentState = CombatCoreState.Neutral;
@@ -33,6 +35,41 @@ namespace GlassRefrain.Combat {
 
         public event Action<M0CombatSnapshot> SnapshotChanged;
         public event Action<RevealRequestContext> RevealRequestEmitted;
+
+        public void SetTargetContext(M0TargetContext context) {
+            targetContext = context;
+        }
+
+        public CombatActionRequestResult ConsumeAttackIntent(CombatActionType attackType) {
+            var request = new CombatActionRequest(
+                attackType,
+                0f,
+                CombatRequestSourceType.InputMapping,
+                "M0DirectPlayerInput",
+                attackType.ToString() + " intent from Input");
+            var result = RequestAction(request);
+            if (result.Accepted) {
+                ResolveAttack(attackType);
+            }
+            return result;
+        }
+
+        public CombatResolutionResult ResolveAttack(CombatActionType attackType) {
+            var targetSnapshot = targetContext != null ? targetContext.Snapshot : default(TargetContextSnapshot);
+            bool hasValidTarget = targetSnapshot.IsLockedOn && targetSnapshot.IsValid;
+
+            lastResolutionResult = new CombatResolutionResult(
+                attackType,
+                true,
+                hasValidTarget,
+                hasValidTarget,
+                false,
+                hasValidTarget ? targetSnapshot.TargetId : string.Empty,
+                hasValidTarget ? attackType + " hit (placeholder)" : attackType + " whiff — no valid target");
+
+            RefreshSnapshot();
+            return lastResolutionResult;
+        }
 
         public CombatActionRequestResult RequestAction(CombatActionRequest request) {
             if (currentState == CombatCoreState.Disabled) {
