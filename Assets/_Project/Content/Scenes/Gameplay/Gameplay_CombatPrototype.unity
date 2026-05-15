@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Bootstrap::GlassRefrain.Bootstrap.M0GameplayTickHandler
   adapter: {fileID: 1932872212}
-  directInput: {fileID: 1672346951}
+  directInput: {fileID: 1932872214}
   cameraBasisProvider: {fileID: 500000002}
 --- !u!4 &179067872
 Transform:
@@ -201,6 +201,7 @@ MonoBehaviour:
   autoInjectGameObjects: []
   tickHandler: {fileID: 179067871}
   targetableAdapter: {fileID: 500000004}
+  loopDriver: {fileID: 500000013}
 --- !u!4 &322684301
 Transform:
   m_ObjectHideFlags: 0
@@ -215,7 +216,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 179067872}
-  - {fileID: 1672346952}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &500000001
@@ -286,6 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 500000012}
   - component: {fileID: 500000004}
+  - component: {fileID: 500000013}
   m_Layer: 0
   m_Name: Enemy_M0TargetablePlaceholder
   m_TagString: Untagged
@@ -308,51 +309,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1672346950
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1672346952}
-  - component: {fileID: 1672346951}
-  m_Layer: 0
-  m_Name: M0DirectPlayerInput
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1672346951
+--- !u!114 &500000013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672346950}
+  m_GameObject: {fileID: 500000010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edc3aa55ee40f0946a994615da80b14d, type: 3}
+  m_Script: {fileID: 11500000, guid: e99c93d50ff701f41923ff0bd8fdedf0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: GlassRefrain.Input::GlassRefrain.Input.M0DirectPlayerInput
-  inputAsset: {fileID: -944628639613478452, guid: bad54941cef5c844d9f83834126a155d, type: 3}
---- !u!4 &1672346952
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672346950}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 322684301}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_EditorClassIdentifier: GlassRefrain.Bootstrap::GlassRefrain.Bootstrap.M0EnemyIntentLoopDriver
+  idleDuration: 1.5
+  telegraphDuration: 0.75
+  commitDuration: 0.2
+  activeDuration: 0.15
+  recoveryDuration: 0.6
+  punishWindowDuration: 0.35
+  telegraphId: BasicSlashTelegraph
+  attackId: BasicSlash
+  attackLabel: M0BasicSlash
 --- !u!1 &1932872211
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1932872213}
   - component: {fileID: 1932872212}
+  - component: {fileID: 1932872214}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -397,6 +375,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1932872214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932872211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc3aa55ee40f0946a994615da80b14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GlassRefrain.Input::GlassRefrain.Input.M0DirectPlayerInput
+  inputAsset: {fileID: -944628639613478452, guid: bad54941cef5c844d9f83834126a155d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

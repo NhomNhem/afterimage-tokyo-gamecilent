@@ -13,6 +13,7 @@ namespace GlassRefrain.Combat {
         private RevealRequestContext lastRevealRequestContext;
         private M0CombatSnapshot latestSnapshot;
         private M0TargetContext targetContext;
+        private bool parryWasEligible;
 
         public M0CombatCore() {
             currentState = CombatCoreState.Neutral;
@@ -38,6 +39,62 @@ namespace GlassRefrain.Combat {
 
         public void SetTargetContext(M0TargetContext context) {
             targetContext = context;
+        }
+
+        // Story 1-6: Tick method for time-based state management (CounterWindow duration expiry).
+        public void Tick(float deltaTime) {
+            if (counterWindowState.IsOpen) {
+                float newElapsed = counterWindowState.ElapsedSeconds + deltaTime;
+                if (newElapsed >= counterWindowState.DurationSeconds) {
+                    CloseCounterWindow("Duration expired");
+                } else {
+                    counterWindowState = new CounterWindowState(
+                        counterWindowState.IsOpen,
+                        counterWindowState.SourceTag,
+                        newElapsed,
+                        counterWindowState.DurationSeconds);
+                    RefreshSnapshot();
+                }
+            }
+        }
+
+        // Story 1-6: Defensive intent — EnemyIntentSnapshot passed as value struct by M0GameplayTickHandler.
+        // Combat Core owns all validation; no reference to GlassRefrain.Enemy is needed.
+        public CombatActionRequestResult ConsumeDefensiveIntent(CombatActionType actionType, EnemyIntentSnapshot enemySnapshot) {
+            if (actionType == CombatActionType.Parry) {
+                bool stateValid = enemySnapshot.State == EnemyIntentState.Active;
+                string[] tags = enemySnapshot.AttackIntent.AttackTags.Tags;
+                bool tagsValid = tags == null || tags.Length == 0 || System.Array.IndexOf(tags, "ParryEligible") >= 0;
+                parryWasEligible = stateValid && tagsValid;
+                var request = new CombatActionRequest(
+                    CombatActionType.Parry, 0f,
+                    CombatRequestSourceType.InputMapping, "M0GameplayTickHandler", "Parry intent from Input");
+                return RequestAction(request);
+            }
+            if (actionType == CombatActionType.Dodge) {
+                var request = new CombatActionRequest(
+                    CombatActionType.Dodge, 0f,
+                    CombatRequestSourceType.InputMapping, "M0GameplayTickHandler", "Dodge intent from Input");
+                return RequestAction(request);
+            }
+            if (actionType == CombatActionType.Counter) {
+                if (!counterWindowState.IsOpen) {
+                    lastActionResult = new CombatActionRequestResult(
+                        CombatActionResult.Rejected, "Counter rejected: CounterWindow is not open",
+                        currentState.ToString());
+                    RefreshSnapshot();
+                    return lastActionResult;
+                }
+                var request = new CombatActionRequest(
+                    CombatActionType.Counter, 0f,
+                    CombatRequestSourceType.InputMapping, "M0GameplayTickHandler", "Counter intent from Input");
+                return RequestAction(request);
+            }
+            lastActionResult = new CombatActionRequestResult(
+                CombatActionResult.Rejected, "ConsumeDefensiveIntent called with non-defensive action",
+                currentState.ToString());
+            RefreshSnapshot();
+            return lastActionResult;
         }
 
         public CombatActionRequestResult ConsumeAttackIntent(CombatActionType attackType) {
@@ -98,6 +155,15 @@ namespace GlassRefrain.Combat {
                     TransitionTo(CombatCoreState.ParryStartup, "Parry accepted");
                     break;
                 case CombatActionType.Counter:
+                    if (!counterWindowState.IsOpen) {
+                        lastActionResult = new CombatActionRequestResult(
+                            CombatActionResult.Rejected, "Counter rejected: CounterWindow is not open",
+                            currentState.ToString());
+                        RefreshSnapshot();
+                        return lastActionResult;
+                    }
+                    // Story 1-6: Close CounterWindow immediately when Counter is consumed.
+                    CloseCounterWindow("Counter consumed");
                     TransitionTo(CombatCoreState.CounterActive, "Counter accepted");
                     break;
                 default:
@@ -140,7 +206,11 @@ namespace GlassRefrain.Combat {
                     break;
                 case CombatCoreState.ParryActive:
                     TransitionTo(CombatCoreState.ParryRecovery, reason);
-                    OpenCounterWindow("ParrySuccessPlaceholder", 0.5f);
+                    // Story 1-6: CounterWindow opens only on a valid parry (Active + ParryEligible).
+                    if (parryWasEligible) {
+                        OpenCounterWindow("ParrySuccess", 0.5f);
+                    }
+                    parryWasEligible = false;
                     break;
                 case CombatCoreState.ParryRecovery:
                     TransitionTo(CombatCoreState.Neutral, reason);
@@ -166,7 +236,10 @@ namespace GlassRefrain.Combat {
 
         public void OpenCounterWindow(string sourceTag, float durationSeconds) {
             counterWindowState = new CounterWindowState(true, sourceTag, 0f, durationSeconds);
-            TransitionTo(CombatCoreState.CounterWindow, "Counter window opened");
+            // Story 1-6: Do NOT transition to CounterWindow state here.
+            // CounterWindow is a transient cleanup state used when the window times out.
+            // The "window is open" condition is tracked by counterWindowState.IsOpen only.
+            // State remains in the caller's state (ParryRecovery) so player can press Counter from Neutral later.
             lastResolutionResult = new CombatResolutionResult(
                 CombatActionType.Parry,
                 true,
@@ -223,9 +296,10 @@ namespace GlassRefrain.Combat {
             actionLockContext = ResolveLockContext(nextState);
             recoveryContext = ResolveRecoveryContext(nextState);
 
-            if (nextState != CombatCoreState.CounterWindow && counterWindowState.IsOpen)
-                counterWindowState = new CounterWindowState(false, counterWindowState.SourceTag,
-                    counterWindowState.DurationSeconds, counterWindowState.DurationSeconds);
+            // Story 1-6: CounterWindow is duration-based, not state-based.
+            // Do NOT auto-close on state transitions. Only CloseCounterWindow or duration expiry should close it.
+            // The CounterWindow state is a transient cleanup state for when the window times out,
+            // but the open flag (counterWindowState.IsOpen) should persist across normal state changes.
 
             lastResolutionResult = new CombatResolutionResult(
                 lastResolutionResult.ActionType,

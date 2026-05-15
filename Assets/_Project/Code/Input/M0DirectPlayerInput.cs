@@ -12,6 +12,7 @@ namespace GlassRefrain.Input {
     // No gamepad/keyboard/legacy Input Manager API is used — only InputActionAsset.
     // Story 1-3: Routes LockOn intent to M0TargetContext (toggle acquire/release).
     // Story 1-4: Routes LightAttack/HeavyAttack intents to M0CombatCore (raw intent only).
+    // Story 1-6: Defensive intent reads — routing to CombatCore handled by M0GameplayTickHandler.
     public class M0DirectPlayerInput : MonoBehaviour {
         [SerializeField] private InputActionAsset inputAsset;
         private InputActionMap gameplayMap;
@@ -19,6 +20,10 @@ namespace GlassRefrain.Input {
         private InputAction lockOnAction;
         private InputAction lightAttackAction;
         private InputAction heavyAttackAction;
+        // Story 1-6: Defensive intent reads — no device polling, no validity decisions.
+        private InputAction parryAction;
+        private InputAction dodgeAction;
+        private InputAction counterAction;
         private M0PlayerLocomotion locomotion;
         private M0TargetContext targetContext;
         private M0CombatCore combatCore;
@@ -43,6 +48,9 @@ namespace GlassRefrain.Input {
             lockOnAction = gameplayMap.FindAction("LockOn");
             lightAttackAction = gameplayMap.FindAction("LightAttack");
             heavyAttackAction = gameplayMap.FindAction("HeavyAttack");
+            parryAction = gameplayMap.FindAction("Parry");
+            dodgeAction = gameplayMap.FindAction("Dodge");
+            counterAction = gameplayMap.FindAction("Counter");
             gameplayMap.Enable();
         }
 
@@ -57,7 +65,14 @@ namespace GlassRefrain.Input {
             lockOnAction = null;
             lightAttackAction = null;
             heavyAttackAction = null;
+            parryAction = null;
+            dodgeAction = null;
+            counterAction = null;
         }
+
+        public bool ParryPressedThisFrame => parryAction != null && parryAction.WasPressedThisFrame();
+        public bool DodgePressedThisFrame => dodgeAction != null && dodgeAction.WasPressedThisFrame();
+        public bool CounterPressedThisFrame => counterAction != null && counterAction.WasPressedThisFrame();
 
         private void Update() {
             // Handle movement input for locomotion

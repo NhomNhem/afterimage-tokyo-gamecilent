@@ -27,9 +27,15 @@ namespace GlassRefrain.Tests.EditMode {
             AssertAccepted(core, CombatActionType.Parry);
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
-            core.AdvanceState("window");
-            core.AdvanceState("back to neutral");
+            // Story 1-6: Parry via RequestAction does not set parryWasEligible, so CounterWindow stays closed.
+            // Advance through CounterWindow state if open, otherwise just back to Neutral.
+            if (core.Snapshot.CounterWindow.IsOpen) {
+                core.AdvanceState("window");
+                core.AdvanceState("back to neutral");
+            }
 
+            // Story 1-6: Counter now requires CounterWindow open. Open it manually then test.
+            core.OpenCounterWindow("test", 0.5f);
             AssertAccepted(core, CombatActionType.Counter);
         }
 
@@ -78,7 +84,9 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
-        public void ParryCycleTransitionsThroughExpectedStatesAndOpensCounterWindow() {
+        public void ParryCycleViaRequestActionDoesNotOpenCounterWindow() {
+            // Story 1-6: RequestAction(Parry) no longer sets parryWasEligible — CounterWindow stays closed.
+            // Valid parry via ConsumeDefensiveIntent is tested in M0DefensiveResolutionTests.
             var core = new M0CombatCore();
             AssertAccepted(core, CombatActionType.Parry);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryStartup));
@@ -88,14 +96,11 @@ namespace GlassRefrain.Tests.EditMode {
 
             core.AdvanceState("parry recovery");
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryRecovery));
-
-            core.AdvanceState("open window");
-            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.CounterWindow));
-            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True);
-
-            core.AdvanceState("close window");
-            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
+            // Window must NOT open when parryWasEligible was never set.
             Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.False);
+
+            core.AdvanceState("back to neutral");
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
         }
 
         [Test]
@@ -108,6 +113,11 @@ namespace GlassRefrain.Tests.EditMode {
                 wasEmitted = true;
             };
 
+            // Story 1-6: Counter requires CounterWindow open. OpenCounterWindow now keeps state in Neutral.
+            core.OpenCounterWindow("test", 0.5f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral), "OpenCounterWindow should not change state");
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True, "CounterWindow should be open");
+            
             AssertAccepted(core, CombatActionType.Counter);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.CounterActive));
 
