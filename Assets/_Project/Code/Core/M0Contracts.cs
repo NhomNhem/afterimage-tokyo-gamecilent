@@ -1453,4 +1453,25 @@ namespace GlassRefrain.Core {
             Accepted = accepted;
         }
     }
+
+    /// <summary>
+    /// Contract for an entity that can be targeted in the duel.
+    /// M0: One player, one enemy, one active target max.
+    /// </summary>
+    public interface ITargetable {
+        string TargetId { get; }
+        bool IsTargetable { get; }
+        Axis2 GetPosition();
+    }
+
+    /// <summary>
+    /// Contract for the targetable registry that manages duel participants.
+    /// M0: Single enemy registration for the one-on-one duel.
+    /// </summary>
+    public interface ITargetableRegistry {
+        void Register(ITargetable targetable);
+        void Unregister(ITargetable targetable);
+        ITargetable GetCurrentDuelEnemy();
+        bool HasRegisteredTargetable(string targetId);
+    }
 }

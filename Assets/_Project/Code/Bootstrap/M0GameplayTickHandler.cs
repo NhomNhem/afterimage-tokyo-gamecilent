@@ -3,6 +3,7 @@ using VContainer;
 using GlassRefrain.Camera;
 using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
+using GlassRefrain.Targeting;
 
 namespace GlassRefrain.Bootstrap {
     public class M0GameplayTickHandler : MonoBehaviour {
@@ -11,16 +12,19 @@ namespace GlassRefrain.Bootstrap {
         [SerializeField] private CameraMovementBasisProvider cameraBasisProvider;
 
         private M0PlayerLocomotion locomotion;
+        private M0TargetContext targetContext;
         private bool warnedMissingBasis;
 
         [Inject]
-        private void Construct(M0PlayerLocomotion locomotion) {
+        private void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext) {
             this.locomotion = locomotion;
+            this.targetContext = targetContext;
             if (adapter != null) {
                 adapter.SetLocomotion(locomotion);
             }
             if (directInput != null) {
                 directInput.SetLocomotion(locomotion);
+                directInput.SetTargetContext(targetContext);
             }
         }
 

@@ -2,6 +2,8 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using GlassRefrain.Combat;
+using GlassRefrain.Core;
+using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
 using GlassRefrain.Targeting;
 using GlassRefrain.Health;
@@ -28,6 +30,12 @@ namespace GlassRefrain.Bootstrap {
             builder.Register<M0HealthDamageReactionModel>(Lifetime.Singleton);
             builder.Register<M0EnemyIntentModel>(Lifetime.Singleton);
             builder.Register<M0MemoryState>(Lifetime.Singleton);
+
+            // Targeting: Manual DI per ADR-0004
+            builder.Register<ITargetableRegistry, M0TargetableRegistry>(Lifetime.Singleton);
+
+            // Input: Router service for routing intents to gameplay systems
+            builder.Register<M0InputRouter>(Lifetime.Singleton);
 
             // Explicit manual composition: register scene components for M0 runtime wiring.
             // M0GameplayTickHandler receives the singleton M0PlayerLocomotion via [Inject]

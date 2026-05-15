@@ -4,6 +4,7 @@
   "references": [
     "GlassRefrain.Core",
     "GlassRefrain.Locomotion",
+    "GlassRefrain.Targeting",
     "Unity.InputSystem"
   ],
   "includePlatforms": [],

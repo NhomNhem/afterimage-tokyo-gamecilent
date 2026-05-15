@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ab2a3b386448308ca6bc2fffbada7c, type: 3}
+  m_Name: New Bootstrap Config
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::NhemBootstrap.Editor.Config.BootstrapConfig
+  packages:
+  - https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask
+  - https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity
+  - https://github.com/Cysharp/R3.git?path=src/R3.Unity/Assets/R3.Unity
+  - https://github.com/NhomNhem/NhemDangFugBixs.Tooling.git?path=/&branch=deploy
+  folders:
+  - Assets/_Project
+  asmdefs: []

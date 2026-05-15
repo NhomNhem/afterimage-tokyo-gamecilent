@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+    <Style src="project://database/Assets/NhemBootstrap/Editor/UI/BootstrapWindow.uss?fileID=7433441132597879392&amp;guid=a25d8180204ce82498383082bf0c28e4&amp;type=3#BootstrapWindow" />
+    <ui:VisualElement class="container">
+
+        <ui:Label text="🚀 Nhem Bootstrap Framework" class="title"/>
+
+        <ui:ScrollView name="step-list" class="step-list"/>
+
+        <ui:ProgressBar name="progress" title="Progress" value="0"/>
+
+        <ui:Button name="run-btn" text="Run Selected"/>
+
+        <ui:ScrollView name="log-view" class="log-view"/>
+
+    </ui:VisualElement>
+
+</ui:UXML>
