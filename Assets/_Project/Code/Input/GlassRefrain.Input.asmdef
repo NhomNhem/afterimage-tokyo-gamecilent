@@ -3,6 +3,7 @@
   "rootNamespace": "GlassRefrain.Input",
   "references": [
     "GlassRefrain.Core",
+    "GlassRefrain.Locomotion",
     "Unity.InputSystem"
   ],
   "includePlatforms": [],

@@ -1,8 +1,25 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using GlassRefrain.Core;
 
 namespace GlassRefrain.Locomotion {
+    /// <summary>
+    /// M0PlayerLocomotion — Pure C# gameplay truth owner for camera-relative movement.
+    /// 
+    /// Ownership:
+    /// - Owns position, rotation (facing), velocity, and movement state
+    /// - Processes input intents from Input System
+    /// - Reads camera movement basis (read-only snapshot)
+    /// - Expresses movement to adapters via read-only snapshot
+    /// 
+    /// Story 1-2 Scope:
+    /// - Camera-relative movement and free-movement facing
+    /// - No lock-on facing (deferred to Story 1-3)
+    /// - No collision/ground detection (deferred to future)
+    /// - No animator authority (FSM is Pure C# only, adapters observe)
+    /// - No root motion (Locomotion owns movement truth)
+    /// </summary>
     public sealed class M0PlayerLocomotion {
         private InputIntentSnapshot currentInput;
         private MovementRestrictionContext movementRestriction;
@@ -11,7 +28,23 @@ namespace GlassRefrain.Locomotion {
         private bool hasReceivedInput;
         private LocomotionStateSnapshot latestSnapshot;
 
-        public M0PlayerLocomotion() {
+        // Movement truth owned by M0PlayerLocomotion (Pure C#)
+        private Vector3 position = Vector3.zero;  // World-space position
+        private Vector3 facing = Vector3.forward; // World-space facing direction (normalized)
+        private Vector3 velocity = Vector3.zero;  // Current movement velocity
+
+        // Settings for tuning movement
+        private M0LocomotionSettings settings;
+
+        // Cached camera movement basis vectors (projected to world space)
+        private Vector3 cachedCameraForward = Vector3.forward;
+        private Vector3 cachedCameraRight = Vector3.right;
+
+        public M0PlayerLocomotion() : this(new M0LocomotionSettings()) { }
+
+        public M0PlayerLocomotion(M0LocomotionSettings settings) {
+            this.settings = settings;
+
             currentInput = new InputIntentSnapshot(
                 new Axis2(0f, 0f),
                 new Axis2(0f, 0f),
@@ -35,6 +68,19 @@ namespace GlassRefrain.Locomotion {
 
         public LocomotionStateSnapshot Snapshot => latestSnapshot;
 
+        /// <summary>
+        /// Returns a read-only snapshot of current movement state for adapters.
+        /// Includes position, facing, velocity, and FSM state.
+        /// </summary>
+        public LocomotionMovementSnapshot GetMovementSnapshot() {
+            return new LocomotionMovementSnapshot(
+                position,
+                facing,
+                velocity,
+                latestSnapshot.State,
+                latestSnapshot.StateDetail);
+        }
+
         public event Action<LocomotionStateSnapshot> SnapshotChanged;
 
         public void ConsumeInputIntent(InputIntentSnapshot inputIntent) {
@@ -55,7 +101,64 @@ namespace GlassRefrain.Locomotion {
 
         public void SetCameraMovementBasis(CameraMovementBasisSnapshot cameraBasis) {
             cameraMovementBasis = cameraBasis;
+            
+            // Cache projected camera vectors to avoid repeated construction in ProcessMovementInput
+            if (cameraBasis.IsValid) {
+                cachedCameraForward = new Vector3(cameraBasis.Forward.X, 0f, cameraBasis.Forward.Y);
+                cachedCameraRight = new Vector3(cameraBasis.Right.X, 0f, cameraBasis.Right.Y);
+            } else {
+                cachedCameraForward = Vector3.forward;
+                cachedCameraRight = Vector3.right;
+            }
+            
             RefreshSnapshot();
+        }
+
+        /// <summary>
+        /// Process movement input and update velocity based on camera movement basis.
+        /// Should be called once per frame before UpdatePosition.
+        /// </summary>
+        public void ProcessMovementInput(float deltaTime) {
+            if (!currentInput.InputEnabled || !movementRestriction.CanTranslate) {
+                velocity = Vector3.zero;
+                return;
+            }
+
+            // Apply deadzone to input
+            Axis2 inputAxis = currentInput.Move;
+            float inputMagnitude = Mathf.Sqrt(inputAxis.X * inputAxis.X + inputAxis.Y * inputAxis.Y);
+            if (inputMagnitude < settings.InputDeadzone) {
+                velocity = Vector3.zero;
+                return;
+            }
+
+            // If camera basis is not valid, don't process movement
+            if (!cameraMovementBasis.IsValid) {
+                velocity = Vector3.zero;
+                return;
+            }
+
+            // Use cached camera basis vectors (projected to world space)
+            // Combine camera forward and right by input axis
+            Vector3 desiredDirection = (cachedCameraForward * inputAxis.Y + cachedCameraRight * inputAxis.X).normalized;
+
+            // Calculate velocity
+            float speed = settings.MoveSpeed * inputMagnitude;
+            velocity = desiredDirection * speed;
+
+            // Update facing to follow movement direction
+            if (inputMagnitude > settings.InputDeadzone) {
+                facing = Vector3.Lerp(facing, desiredDirection, settings.FacingLerpSpeed * deltaTime);
+                facing = facing.normalized;
+            }
+        }
+
+        /// <summary>
+        /// Integrate position based on current velocity.
+        /// Should be called once per frame after ProcessMovementInput.
+        /// </summary>
+        public void UpdatePosition(float deltaTime) {
+            position += velocity * deltaTime;
         }
 
         public LocomotionDebugSnapshot CreateDebugSnapshot() {
@@ -71,7 +174,10 @@ namespace GlassRefrain.Locomotion {
                 "Recovery: " + latestSnapshot.Recovery.IsRecovering + " | " + latestSnapshot.Recovery.RemainingSeconds +
                 " | " + latestSnapshot.Recovery.Source + " | " + latestSnapshot.Recovery.Detail,
                 "CameraBasis: " + latestSnapshot.CameraMovementBasis.IsValid + " | " +
-                latestSnapshot.CameraMovementBasis.CameraModeLabel
+                latestSnapshot.CameraMovementBasis.CameraModeLabel,
+                "Position: " + position.x + ", " + position.y + ", " + position.z,
+                "Facing: " + facing.x + ", " + facing.y + ", " + facing.z,
+                "Velocity: " + velocity.x + ", " + velocity.y + ", " + velocity.z
             };
 
             return new LocomotionDebugSnapshot("M0 locomotion state", Array.AsReadOnly(details));
