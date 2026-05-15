@@ -17,6 +17,7 @@ namespace GlassRefrain.Bootstrap {
     /// </summary>
     public sealed class GameplayLifetimeScope : LifetimeScope {
         [SerializeField] private M0GameplayTickHandler tickHandler;
+        [SerializeField] private M0TargetableSceneAdapter targetableAdapter;
 
         protected override void Configure(IContainerBuilder builder) {
             // Manual VContainer registration for M0.
@@ -42,6 +43,10 @@ namespace GlassRefrain.Bootstrap {
             // and wires both the adapter and the input bridge.
             if (tickHandler != null) {
                 builder.RegisterComponent(tickHandler);
+            }
+
+            if (targetableAdapter != null) {
+                builder.RegisterComponent(targetableAdapter);
             }
 
             // Diagnostic log for M0 wiring verification
