@@ -1,28 +1,20 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
 using System.Runtime.CompilerServices;
-using Cysharp.Text;
-using Microsoft.Extensions.Logging;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using ZLogger;
 
 namespace NhemDangFugBixs.NhemLogging;
 
-public sealed class NhemZLogger : INhemLogger {
-    private readonly ILogger<NhemZLogger> logger;
+public sealed class NhemUnityLogger : INhemLogger {
     private readonly ConcurrentDictionary<string, string> colorCache = new();
-
-    public NhemZLogger(ILoggerFactory loggerFactory) {
-        logger = loggerFactory.CreateLogger<NhemZLogger>();
-    }
 
     public void Log(
         object? message,
         Object? context = null,
         [CallerFilePath] string file = "",
         [CallerLineNumber] int line = 0) {
-        logger.ZLogInformation($"{FormatMessage(message, file, line)}");
+        Debug.Log(FormatPrefix(file, line) + (message?.ToString() ?? "null"), context);
     }
 
     public void LogWarning(
@@ -30,7 +22,7 @@ public sealed class NhemZLogger : INhemLogger {
         Object? context = null,
         [CallerFilePath] string file = "",
         [CallerLineNumber] int line = 0) {
-        logger.ZLogWarning($"{FormatMessage(message, file, line)}");
+        Debug.LogWarning(FormatPrefix(file, line) + (message?.ToString() ?? "null"), context);
     }
 
     public void LogError(
@@ -38,10 +30,10 @@ public sealed class NhemZLogger : INhemLogger {
         Object? context = null,
         [CallerFilePath] string file = "",
         [CallerLineNumber] int line = 0) {
-        logger.ZLogError($"{FormatMessage(message, file, line)}");
+        Debug.LogError(FormatPrefix(file, line) + (message?.ToString() ?? "null"), context);
     }
 
-    private string FormatMessage(object? message, string file, int line) {
+    private string FormatPrefix(string file, int line) {
         var className = Path.GetFileNameWithoutExtension(file);
 
         if (string.IsNullOrWhiteSpace(className)) className = "Unknown";
@@ -51,33 +43,9 @@ public sealed class NhemZLogger : INhemLogger {
             ? string.Empty
             : file.Replace("\\", "/").Replace("\"", "%22");
 
-        using var sb = ZString.CreateStringBuilder();
+        if (string.IsNullOrWhiteSpace(safeFile)) return $"<color=#{color}><b>[{className}:{line}]</b></color>: ";
 
-        if (string.IsNullOrWhiteSpace(safeFile)) {
-            sb.Append("<color=#");
-            sb.Append(color);
-            sb.Append("><b>[");
-            sb.Append(className);
-            sb.Append(":");
-            sb.Append(line);
-            sb.Append("]</b></color>: ");
-        }
-        else {
-            sb.Append("<color=#");
-            sb.Append(color);
-            sb.Append("><b><a href=\"");
-            sb.Append(safeFile);
-            sb.Append("\" line=\"");
-            sb.Append(line);
-            sb.Append("\">[");
-            sb.Append(className);
-            sb.Append(":");
-            sb.Append(line);
-            sb.Append("]</a></b></color>: ");
-        }
-
-        sb.Append(message?.ToString() ?? "null");
-        return sb.ToString();
+        return $"<color=#{color}><b><a href=\"{safeFile}\" line=\"{line}\">[{className}:{line}]</a></b></color>: ";
     }
 
     private string GetCachedColor(string className) {
