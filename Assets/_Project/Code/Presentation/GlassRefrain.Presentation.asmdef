@@ -1,7 +1,9 @@
 {
     "name": "GlassRefrain.Presentation",
     "references": [
-        "GlassRefrain.Core"
+        "GlassRefrain.Core",
+        "UnityEngine.UIElements",
+        "UnityEngine.UIElementsModule"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

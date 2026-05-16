@@ -6,6 +6,7 @@
     "GlassRefrain.Combat",
     "GlassRefrain.Locomotion",
     "GlassRefrain.Targeting",
+    "NhemDangFugBixs.Logging",
     "Unity.InputSystem"
   ],
   "includePlatforms": [],

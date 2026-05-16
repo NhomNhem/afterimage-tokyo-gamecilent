@@ -4,6 +4,7 @@ using GlassRefrain.Combat;
 using GlassRefrain.Core;
 using GlassRefrain.Locomotion;
 using GlassRefrain.Targeting;
+using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Input {
     // TODO: Rename to M0InputIntentBridge once scene references are updated.
@@ -27,6 +28,7 @@ namespace GlassRefrain.Input {
         private M0PlayerLocomotion locomotion;
         private M0TargetContext targetContext;
         private M0CombatCore combatCore;
+        private INhemLogger logger;
 
         public void SetLocomotion(M0PlayerLocomotion loco) {
             locomotion = loco;
@@ -38,6 +40,10 @@ namespace GlassRefrain.Input {
 
         public void SetCombatCore(M0CombatCore combat) {
             combatCore = combat;
+        }
+
+        public void SetLogger(INhemLogger logger) {
+            this.logger = logger;
         }
 
         private void OnEnable() {
@@ -93,6 +99,9 @@ namespace GlassRefrain.Input {
             if (targetContext != null && lockOnAction != null) {
                 bool lockOnPressed = lockOnAction.WasPressedThisFrame();
                 if (lockOnPressed) {
+#if GR_INPUT_DEBUG
+                    logger?.Log("[M0Input] LockOn pressed");
+#endif
                     var intent = new InputIntentSnapshot(
                         new Axis2(0f, 0f),
                         new Axis2(0f, 0f),
@@ -105,6 +114,9 @@ namespace GlassRefrain.Input {
             // Handle LightAttack input for combat (Story 1-4) — raw intent only
             if (combatCore != null && lightAttackAction != null) {
                 if (lightAttackAction.WasPressedThisFrame()) {
+#if GR_INPUT_DEBUG
+                    logger?.Log("[M0Input] LightAttack pressed");
+#endif
                     combatCore.ConsumeAttackIntent(CombatActionType.LightAttack);
                 }
             }
@@ -112,6 +124,9 @@ namespace GlassRefrain.Input {
             // Handle HeavyAttack input for combat (Story 1-4) — raw intent only
             if (combatCore != null && heavyAttackAction != null) {
                 if (heavyAttackAction.WasPressedThisFrame()) {
+#if GR_INPUT_DEBUG
+                    logger?.Log("[M0Input] HeavyAttack pressed");
+#endif
                     combatCore.ConsumeAttackIntent(CombatActionType.HeavyAttack);
                 }
             }

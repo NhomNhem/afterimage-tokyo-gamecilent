@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="CombatDebugOverlay.uss" />
+    
+    <ui:VisualElement name="debug-overlay" class="debug-container">
+        <ui:Label name="combat-state-label" text="Combat: Idle" class="debug-label" />
+        <ui:Label name="enemy-intent-label" text="Enemy: Telegraph" class="debug-label" />
+        <ui:Label name="counter-window-label" text="CounterWindow: Closed" class="debug-label" />
+        <ui:Label name="last-input-label" text="Last Input: None" class="debug-label" />
+        <ui:Label name="lock-on-target-label" text="LockOn: None" class="debug-label" />
+    </ui:VisualElement>
+</ui:UXML>
