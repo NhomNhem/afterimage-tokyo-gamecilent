@@ -17,6 +17,13 @@
       },
       "hash": "a2a5edf8d8e3f715881c0db4589c18feff7c379f"
     },
+    "com.cysharp.csprojmodifier": {
+      "version": "https://github.com/Cysharp/CsprojModifier.git?path=src/CsprojModifier/Assets/CsprojModifier",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3c9be1a827ce7a2e0d9518e34905fc2fc7a6d5df"
+    },
     "com.cysharp.r3": {
       "version": "https://github.com/Cysharp/R3.git?path=src/R3.Unity/Assets/R3.Unity",
       "depth": 0,
@@ -39,6 +46,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "f1f95d363131eb3eb740b621ce469782100f37ac"
+    },
+    "com.cysharp.zlogger": {
+      "version": "https://github.com/Cysharp/ZLogger.git?path=src/ZLogger.Unity/Assets/ZLogger.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d1cae41df272687ce2fd17e923640b809bd90e3f"
     },
     "com.cysharp.zstring": {
       "version": "https://github.com/Cysharp/ZString.git?path=src/ZString.Unity/Assets/Scripts/ZString",
@@ -252,13 +266,6 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.33"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ide.vscode": {
-      "version": "1.2.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {

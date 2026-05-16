@@ -12,6 +12,7 @@
       "GlassRefrain.Memory",
       "GlassRefrain.Input",
       "GlassRefrain.Camera",
+      "GlassRefrain.Presentation",
       "VContainer"
     ],
   "includePlatforms": [],
