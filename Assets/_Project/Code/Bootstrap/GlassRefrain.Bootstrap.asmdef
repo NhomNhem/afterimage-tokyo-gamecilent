@@ -13,7 +13,8 @@
       "GlassRefrain.Input",
       "GlassRefrain.Camera",
       "GlassRefrain.Presentation",
-      "VContainer"
+      "VContainer",
+      "NhemDangFugBixs.Logging"
     ],
   "includePlatforms": [],
   "excludePlatforms": [],
