@@ -18,8 +18,8 @@ namespace GlassRefrain.Input {
         private InputIntentSnapshot latestSnapshot;
         private readonly List<InputRoutingResult> routingHistory;
 
-        public M0InputRouter(bool inputEnabled = true) {
-            this.inputEnabled = inputEnabled;
+        public M0InputRouter() {
+            this.inputEnabled = true;
             routingHistory = new List<InputRoutingResult>();
             RefreshSnapshot();
         }
