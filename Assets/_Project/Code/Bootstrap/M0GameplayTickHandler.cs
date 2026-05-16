@@ -8,6 +8,7 @@ using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
 using GlassRefrain.Presentation;
 using GlassRefrain.Targeting;
+using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Bootstrap {
     public class M0GameplayTickHandler : MonoBehaviour {
@@ -22,6 +23,7 @@ namespace GlassRefrain.Bootstrap {
         private M0CombatCore combatCore;
         private M0EnemyIntentModel enemyIntentModel;
         private M0InputRouter inputRouter;
+        private INhemLogger logger;
         private bool warnedMissingBasis;
 
         private M0CombatSnapshot lastCombatSnapshot;
@@ -30,12 +32,13 @@ namespace GlassRefrain.Bootstrap {
         private TargetContextSnapshot lastTargetSnapshot;
 
         [Inject]
-        private void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext, M0CombatCore combatCore, M0EnemyIntentModel enemyIntentModel, M0InputRouter inputRouter) {
+        private void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext, M0CombatCore combatCore, M0EnemyIntentModel enemyIntentModel, M0InputRouter inputRouter, INhemLogger logger) {
             this.locomotion = locomotion;
             this.targetContext = targetContext;
             this.combatCore = combatCore;
             this.enemyIntentModel = enemyIntentModel;
             this.inputRouter = inputRouter;
+            this.logger = logger;
             combatCore.SetTargetContext(targetContext);
             if (adapter != null) {
                 adapter.SetLocomotion(locomotion);
@@ -44,6 +47,7 @@ namespace GlassRefrain.Bootstrap {
                 directInput.SetLocomotion(locomotion);
                 directInput.SetTargetContext(targetContext);
                 directInput.SetCombatCore(combatCore);
+                directInput.SetLogger(logger);
             }
 
             // Subscribe to snapshot events for presentation adapters
@@ -66,10 +70,10 @@ namespace GlassRefrain.Bootstrap {
 
             // Warn if presentation adapters are not assigned in Inspector
             if (visualFeedbackAdapter == null) {
-                Debug.LogWarning("[M0GameplayTickHandler] M0CombatVisualFeedbackAdapter not assigned in Inspector. Visual feedback will be disabled.");
+                logger?.LogWarning("[M0Presentation] Visual feedback adapter missing; skipping presentation update");
             }
             if (debugOverlayAdapter == null) {
-                Debug.LogWarning("[M0GameplayTickHandler] M0CombatDebugOverlayAdapter not assigned in Inspector. Debug overlay will be disabled.");
+                logger?.LogWarning("[M0Presentation] Debug overlay adapter missing; skipping presentation update");
             }
         }
 
@@ -107,12 +111,24 @@ namespace GlassRefrain.Bootstrap {
             // EnemyIntentSnapshot as value struct so Combat Core has no Enemy assembly dependency.
             if (directInput != null && combatCore != null && enemyIntentModel != null) {
                 var enemySnapshot = enemyIntentModel.Snapshot;
-                if (directInput.ParryPressedThisFrame)
+                if (directInput.ParryPressedThisFrame) {
+#if GR_INPUT_DEBUG
+                    logger?.Log("[M0Input] Parry pressed");
+#endif
                     combatCore.ConsumeDefensiveIntent(CombatActionType.Parry, enemySnapshot);
-                if (directInput.DodgePressedThisFrame)
+                }
+                if (directInput.DodgePressedThisFrame) {
+#if GR_INPUT_DEBUG
+                    logger?.Log("[M0Input] Dodge pressed");
+#endif
                     combatCore.ConsumeDefensiveIntent(CombatActionType.Dodge, enemySnapshot);
-                if (directInput.CounterPressedThisFrame)
+                }
+                if (directInput.CounterPressedThisFrame) {
+#if GR_INPUT_DEBUG
+                    logger?.Log("[M0Input] Counter pressed");
+#endif
                     combatCore.ConsumeDefensiveIntent(CombatActionType.Counter, enemySnapshot);
+                }
             }
 
             // Story 1-6: Recovery context forwarding — forwards combat recovery state to locomotion each frame.

@@ -3,7 +3,8 @@
   "rootNamespace": "GlassRefrain.Combat",
   "references": [
     "GlassRefrain.Core",
-    "GlassRefrain.Targeting"
+    "GlassRefrain.Targeting",
+    "NhemDangFugBixs.Logging"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

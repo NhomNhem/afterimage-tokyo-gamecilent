@@ -14,6 +14,7 @@
         "GlassRefrain.Locomotion",
         "GlassRefrain.Memory",
         "GlassRefrain.Targeting",
+        "NhemDangFugBixs.Logging",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "VContainer",

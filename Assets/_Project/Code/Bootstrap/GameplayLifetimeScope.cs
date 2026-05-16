@@ -9,6 +9,7 @@ using GlassRefrain.Targeting;
 using GlassRefrain.Health;
 using GlassRefrain.Enemy;
 using GlassRefrain.Memory;
+using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Bootstrap {
     /// <summary>
@@ -19,10 +20,18 @@ namespace GlassRefrain.Bootstrap {
         [SerializeField] private M0GameplayTickHandler tickHandler;
         [SerializeField] private M0TargetableSceneAdapter targetableAdapter;
         [SerializeField] private M0EnemyIntentLoopDriver loopDriver;
+        private INhemLogger logger;
 
         protected override void Configure(IContainerBuilder builder) {
             // Manual VContainer registration for M0.
             // ADR-0004: All registrations MUST be manual in composition roots.
+
+            // Logging: register INhemLogger for gameplay-scoped debug logs
+#if GR_M0_PROTOTYPE
+            builder.Register<INhemLogger, NhemUnityLogger>(Lifetime.Singleton);
+#else
+            builder.Register<INhemLogger, NhemNullLogger>(Lifetime.Singleton);
+#endif
 
             // Core Gameplay Skeletons (Pure C# Authority)
             builder.Register<M0CombatCore>(Lifetime.Singleton);
@@ -53,9 +62,6 @@ namespace GlassRefrain.Bootstrap {
             if (loopDriver != null) {
                 builder.RegisterComponent(loopDriver);
             }
-
-            // Diagnostic log for M0 wiring verification
-            UnityEngine.Debug.Log("[GameplayScope] M0 Technical Skeletons registered manually.");
         }
     }
 }

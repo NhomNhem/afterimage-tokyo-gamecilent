@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using GlassRefrain.Core;
 
 namespace GlassRefrain.Presentation
@@ -7,29 +7,33 @@ namespace GlassRefrain.Presentation
     public class M0CombatDebugOverlayAdapter : MonoBehaviour
     {
         [Header("UI References")]
-        public Canvas debugCanvas;
-        public Text combatStateLabel;
-        public Text enemyIntentStateLabel;
-        public Text counterWindowLabel;
-        public Text lastInputLabel;
-        public Text lockOnTargetLabel;
+        public UIDocument uiDocument;
 
-        private bool isVisible = true;
+        private VisualElement root;
+        private Label combatStateLabel;
+        private Label enemyIntentStateLabel;
+        private Label counterWindowLabel;
+        private Label lastInputLabel;
+        private Label lockOnTargetLabel;
 
         private void Start()
         {
-            if (debugCanvas != null)
+            if (uiDocument != null && uiDocument.rootVisualElement != null)
             {
-                isVisible = debugCanvas.gameObject.activeSelf;
+                root = uiDocument.rootVisualElement.Q<VisualElement>("debug-overlay");
+                combatStateLabel = root.Q<Label>("combat-state-label");
+                enemyIntentStateLabel = root.Q<Label>("enemy-intent-label");
+                counterWindowLabel = root.Q<Label>("counter-window-label");
+                lastInputLabel = root.Q<Label>("last-input-label");
+                lockOnTargetLabel = root.Q<Label>("lock-on-target-label");
             }
         }
 
         public void ToggleOverlay()
         {
-            isVisible = !isVisible;
-            if (debugCanvas != null)
+            if (uiDocument != null)
             {
-                debugCanvas.gameObject.SetActive(isVisible);
+                uiDocument.gameObject.SetActive(!uiDocument.gameObject.activeSelf);
             }
         }
 

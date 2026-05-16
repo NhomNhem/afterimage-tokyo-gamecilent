@@ -1,6 +1,7 @@
 using System;
 using GlassRefrain.Core;
 using GlassRefrain.Targeting;
+using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Combat {
     public sealed class M0CombatCore {
@@ -14,8 +15,10 @@ namespace GlassRefrain.Combat {
         private M0CombatSnapshot latestSnapshot;
         private M0TargetContext targetContext;
         private bool parryWasEligible;
+        private readonly INhemLogger? logger;
 
-        public M0CombatCore() {
+        public M0CombatCore(INhemLogger? logger = null) {
+            this.logger = logger;
             currentState = CombatCoreState.Neutral;
             lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "No action processed yet",
                 currentState.ToString());
@@ -132,6 +135,9 @@ namespace GlassRefrain.Combat {
             if (currentState == CombatCoreState.Disabled) {
                 lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "Combat core is disabled",
                     currentState.ToString());
+#if GR_COMBAT_DEBUG
+                logger?.Log("[M0Combat] " + request.ActionType + " ignored: combat core disabled");
+#endif
                 RefreshSnapshot();
                 return lastActionResult;
             }
@@ -139,6 +145,9 @@ namespace GlassRefrain.Combat {
             if (currentState != CombatCoreState.Neutral) {
                 lastActionResult = new CombatActionRequestResult(CombatActionResult.Rejected,
                     "Action rejected outside Neutral", currentState.ToString());
+#if GR_COMBAT_DEBUG
+                logger?.Log("[M0Combat] " + request.ActionType + " rejected: not in Neutral (current=" + currentState + ")");
+#endif
                 RefreshSnapshot();
                 return lastActionResult;
             }
@@ -159,6 +168,9 @@ namespace GlassRefrain.Combat {
                         lastActionResult = new CombatActionRequestResult(
                             CombatActionResult.Rejected, "Counter rejected: CounterWindow is not open",
                             currentState.ToString());
+#if GR_COMBAT_DEBUG
+                        logger?.Log("[M0Combat] Counter rejected: CounterWindow is not open");
+#endif
                         RefreshSnapshot();
                         return lastActionResult;
                     }
@@ -169,6 +181,9 @@ namespace GlassRefrain.Combat {
                 default:
                     lastActionResult = new CombatActionRequestResult(CombatActionResult.Rejected, "Unknown action type",
                         currentState.ToString());
+#if GR_COMBAT_DEBUG
+                    logger?.Log("[M0Combat] Unknown action type rejected");
+#endif
                     RefreshSnapshot();
                     return lastActionResult;
             }
@@ -208,8 +223,16 @@ namespace GlassRefrain.Combat {
                     TransitionTo(CombatCoreState.ParryRecovery, reason);
                     // Story 1-6: CounterWindow opens only on a valid parry (Active + ParryEligible).
                     if (parryWasEligible) {
+#if GR_COMBAT_DEBUG
+                        logger?.Log("[M0Combat] Parry success: CounterWindow opening");
+#endif
                         OpenCounterWindow("ParrySuccess", 0.5f);
                     }
+#if GR_COMBAT_DEBUG
+                    else {
+                        logger?.Log("[M0Combat] Parry fail: enemy intent not parry-eligible");
+                    }
+#endif
                     parryWasEligible = false;
                     break;
                 case CombatCoreState.ParryRecovery:
@@ -236,6 +259,9 @@ namespace GlassRefrain.Combat {
 
         public void OpenCounterWindow(string sourceTag, float durationSeconds) {
             counterWindowState = new CounterWindowState(true, sourceTag, 0f, durationSeconds);
+#if GR_COMBAT_DEBUG
+            logger?.Log("[M0Combat] CounterWindow opened duration=" + durationSeconds);
+#endif
             // Story 1-6: Do NOT transition to CounterWindow state here.
             // CounterWindow is a transient cleanup state used when the window times out.
             // The "window is open" condition is tracked by counterWindowState.IsOpen only.
@@ -254,6 +280,9 @@ namespace GlassRefrain.Combat {
         public void CloseCounterWindow(string reason) {
             counterWindowState = new CounterWindowState(false, counterWindowState.SourceTag,
                 counterWindowState.DurationSeconds, counterWindowState.DurationSeconds);
+#if GR_COMBAT_DEBUG
+            logger?.Log("[M0Combat] CounterWindow " + reason);
+#endif
             lastResolutionResult = new CombatResolutionResult(
                 CombatActionType.Parry,
                 true,
@@ -292,7 +321,13 @@ namespace GlassRefrain.Combat {
         }
 
         private void TransitionTo(CombatCoreState nextState, string reason) {
+            var previousState = currentState;
             currentState = nextState;
+#if GR_COMBAT_DEBUG
+            if (previousState != nextState) {
+                logger?.Log("[M0Combat] State changed: " + previousState + " -> " + nextState);
+            }
+#endif
             actionLockContext = ResolveLockContext(nextState);
             recoveryContext = ResolveRecoveryContext(nextState);
 
