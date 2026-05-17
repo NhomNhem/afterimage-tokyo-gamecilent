@@ -14,7 +14,10 @@
       "GlassRefrain.Camera",
       "GlassRefrain.Presentation",
       "VContainer",
-      "NhemDangFugBixs.Logging"
+      "NhemDangFugBixs.Logging",
+      "NhemDangFugBixs.Attributes",
+      "NhemDangFugBixs.Runtime",
+      "GlassRefrain.Shared"
     ],
   "includePlatforms": [],
   "excludePlatforms": [],

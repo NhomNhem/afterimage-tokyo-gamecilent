@@ -2,7 +2,8 @@
   "name": "GlassRefrain.Memory",
   "rootNamespace": "GlassRefrain.Memory",
   "references": [
-    "GlassRefrain.Core"
+    "GlassRefrain.Core",
+    "GlassRefrain.Shared"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

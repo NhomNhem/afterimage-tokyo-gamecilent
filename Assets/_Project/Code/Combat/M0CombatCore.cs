@@ -1,10 +1,14 @@
 using System;
+using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
 using GlassRefrain.Targeting;
+using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Combat {
-    public sealed class M0CombatCore {
+    public interface IM0CombatCore { }
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+    public sealed class M0CombatCore : IM0CombatCore {
         private CombatCoreState currentState;
         private CombatActionRequestResult lastActionResult;
         private CombatResolutionResult lastResolutionResult;

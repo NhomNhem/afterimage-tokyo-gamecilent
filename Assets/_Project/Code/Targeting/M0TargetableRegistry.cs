@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Targeting {
     /// <summary>
     /// M0 implementation of the targetable registry.
     /// Manages exactly one duel enemy for the one-on-one encounter.
     /// </summary>
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+    [As<ITargetableRegistry>()]
     public sealed class M0TargetableRegistry : ITargetableRegistry {
         private readonly Dictionary<string, ITargetable> registeredTargets;
         private string currentDuelEnemyId;

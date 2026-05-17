@@ -1,8 +1,19 @@
 using System;
+using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Health {
-    public sealed class M0HealthDamageReactionModel {
+    public interface IM0HealthDamageReactionModel {
+        HealthStateSnapshot Snapshot { get; }
+        event Action<HealthStateSnapshot> SnapshotChanged;
+        DamageApplicationResult ApplyDamage(DamageApplicationContext request);
+        void EnterRecovery(string reason, float suppressionSeconds);
+        void EnterLiving(string reason);
+    }
+    
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+    public sealed class M0HealthDamageReactionModel : IM0HealthDamageReactionModel {
         private readonly float maxHealth;
         private float currentHealth;
         private HealthState state;
@@ -23,7 +34,7 @@ namespace GlassRefrain.Health {
 
         public HealthStateSnapshot Snapshot => latestSnapshot;
 
-        public event Action<HealthStateSnapshot> SnapshotChanged;
+        public event Action<HealthStateSnapshot>? SnapshotChanged;
 
         public DamageApplicationResult ApplyDamage(DamageApplicationContext request) {
             if (state == HealthState.Disabled || defeat.IsDefeated) {

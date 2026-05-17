@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using _Project.Code.Shared.DI;
 using UnityEngine;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Locomotion {
     /// <summary>
@@ -20,7 +22,21 @@ namespace GlassRefrain.Locomotion {
     /// - No animator authority (FSM is Pure C# only, adapters observe)
     /// - No root motion (Locomotion owns movement truth)
     /// </summary>
-    public sealed class M0PlayerLocomotion {
+    
+    public interface IM0PlayerLocomotion {
+        LocomotionStateSnapshot Snapshot { get; }
+        LocomotionMovementSnapshot GetMovementSnapshot();
+        void ConsumeInputIntent(InputIntentSnapshot inputIntent);
+        void SetMovementRestriction(MovementRestrictionContext restriction);
+        void SetRecoveryContext(RecoveryContext recovery);
+        void SetCameraMovementBasis(CameraMovementBasisSnapshot cameraBasis);
+        void ProcessMovementInput(float deltaTime);
+        void UpdatePosition(float deltaTime);
+        LocomotionDebugSnapshot CreateDebugSnapshot();
+    }
+    
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+    public sealed class M0PlayerLocomotion : IM0PlayerLocomotion {
         private InputIntentSnapshot currentInput;
         private MovementRestrictionContext movementRestriction;
         private RecoveryContext recoveryContext;

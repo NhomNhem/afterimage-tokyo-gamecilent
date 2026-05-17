@@ -1,30 +1,35 @@
+using _Project.Code.Shared.DI;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using GlassRefrain.Combat;
 using GlassRefrain.Core;
 using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
 using GlassRefrain.Targeting;
-using GlassRefrain.Health;
 using GlassRefrain.Enemy;
-using GlassRefrain.Memory;
+using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
+using NhemDangFugBixs.VContainer;
 
 namespace GlassRefrain.Bootstrap {
     /// <summary>
     /// Manual VContainer composition root for M0 Gameplay.
     /// Resolves core gameplay skeleton services and wires runtime drivers.
     /// </summary>
+
+    [LifetimeScopeFor<IGameplayLifetimeScope>()]
     public sealed class GameplayLifetimeScope : LifetimeScope {
         [SerializeField] private M0GameplayTickHandler tickHandler;
         [SerializeField] private M0TargetableSceneAdapter targetableAdapter;
         [SerializeField] private M0EnemyIntentLoopDriver loopDriver;
-        private INhemLogger logger;
+        private INhemLogger _logger;
 
         protected override void Configure(IContainerBuilder builder) {
             // Manual VContainer registration for M0.
             // ADR-0004: All registrations MUST be manual in composition roots.
+
+            // Auto-register all types marked with [AutoRegisterIn<IGameplayLifetimeScope>]
+            // Source generator will generate registration code automatically
 
             // Logging: register INhemLogger for gameplay-scoped debug logs
 #if GR_M0_PROTOTYPE
@@ -33,17 +38,18 @@ namespace GlassRefrain.Bootstrap {
             builder.Register<INhemLogger, NhemNullLogger>(Lifetime.Singleton);
 #endif
 
+            builder.RegisterGeneratedFor<IGameplayLifetimeScope>();
             // Core Gameplay Skeletons (Pure C# Authority)
-            builder.Register<M0CombatCore>(Lifetime.Singleton);
+            // M0CombatCore is auto-registered via [AutoRegisterIn<IGameplayLifetimeScope>]
             builder.RegisterInstance(new M0LocomotionSettings());
-            builder.Register<M0PlayerLocomotion>(Lifetime.Singleton);
-            builder.Register<M0TargetContext>(Lifetime.Singleton);
-            builder.Register<M0HealthDamageReactionModel>(Lifetime.Singleton);
+            //builder.Register<M0PlayerLocomotion>(Lifetime.Singleton);
+            //builder.Register<M0TargetContext>(Lifetime.Singleton);
+            //builder.Register<M0HealthDamageReactionModel>(Lifetime.Singleton);
             builder.RegisterInstance(new M0EnemyIntentModel());
-            builder.Register<M0MemoryState>(Lifetime.Singleton);
+            //builder.Register<M0MemoryState>(Lifetime.Singleton);
 
             // Targeting: Manual DI per ADR-0004
-            builder.Register<ITargetableRegistry, M0TargetableRegistry>(Lifetime.Singleton);
+            //builder.Register<ITargetableRegistry, M0TargetableRegistry>(Lifetime.Singleton);
 
             // Input: Router service for routing intents to gameplay systems
             builder.Register<M0InputRouter>(Lifetime.Singleton);

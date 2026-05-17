@@ -85,10 +85,13 @@
       }
     },
     "com.nhemdangfugbixs.tooling": {
-      "version": "file:com.nhemdangfugbixs.tooling",
+      "version": "https://github.com/NhomNhem/NhemDangFugBixs.Tooling.git",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {
+        "jp.hadashikick.vcontainer": "1.17.0"
+      },
+      "hash": "8f41ca84aab1da08da423781fbb4f542223c57dd"
     },
     "com.unity.ai.navigation": {
       "version": "2.0.11",
