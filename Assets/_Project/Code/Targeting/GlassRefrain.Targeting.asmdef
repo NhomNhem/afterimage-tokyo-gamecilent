@@ -2,7 +2,8 @@
   "name": "GlassRefrain.Targeting",
   "rootNamespace": "GlassRefrain.Targeting",
   "references": [
-    "GlassRefrain.Core"
+    "GlassRefrain.Core",
+    "GlassRefrain.Shared"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

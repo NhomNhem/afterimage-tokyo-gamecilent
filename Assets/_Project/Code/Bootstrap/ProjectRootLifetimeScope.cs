@@ -1,3 +1,5 @@
+using _Project.Code.Shared.DI;
+using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
 using VContainer;
 using VContainer.Unity;
@@ -7,6 +9,8 @@ namespace GlassRefrain.Bootstrap {
     /// Manual VContainer composition root for the Application.
     /// Resolves global/infrastructure services that persist across scenes.
     /// </summary>
+    
+    [LifetimeScopeFor<IProjectRootLifetimeScope>()]
     public sealed class ProjectRootLifetimeScope : LifetimeScope {
         protected override void Configure(IContainerBuilder builder)
         {

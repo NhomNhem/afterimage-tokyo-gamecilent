@@ -4,7 +4,9 @@
   "references": [
     "GlassRefrain.Core",
     "GlassRefrain.Targeting",
-    "NhemDangFugBixs.Logging"
+    "NhemDangFugBixs.Logging",
+    "GlassRefrain.Shared",
+    "VContainer"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

@@ -1,9 +1,22 @@
 using System;
 using System.Collections.Generic;
+using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Targeting {
-    public sealed class M0TargetContext {
+    public interface IM0TargetContext {
+        TargetContextSnapshot Snapshot { get; }
+        event Action<TargetContextSnapshot> SnapshotChanged;
+        bool ConsumeInputIntent(InputIntentSnapshot inputIntent);
+        TargetAcquireResult RequestAcquire(TargetAcquireRequest request);
+        bool RequestRelease(TargetReleaseRequest request);
+        void SetTargetValidity(TargetValidityContext validity);
+        void SetTargetDirection(TargetDirectionContext direction);
+        TargetDebugSnapshot CreateDebugSnapshot();
+    }
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+    public sealed class M0TargetContext : IM0TargetContext {
         private TargetFocusState focusState;
         private string targetId;
         private bool targetValid;

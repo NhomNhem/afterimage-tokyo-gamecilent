@@ -1,9 +1,7 @@
 {
-  "name": "GlassRefrain.Locomotion",
-  "rootNamespace": "GlassRefrain.Locomotion",
+  "name": "GlassRefrain.Shared",
   "references": [
-    "GlassRefrain.Core",
-    "GlassRefrain.Shared"
+    "NhemDangFugBixs.Attributes"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
