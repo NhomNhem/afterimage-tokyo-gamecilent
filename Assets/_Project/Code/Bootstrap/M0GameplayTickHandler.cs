@@ -18,13 +18,13 @@ namespace GlassRefrain.Bootstrap {
         [SerializeField] private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
         [SerializeField] private M0CombatDebugOverlayAdapter debugOverlayAdapter;
 
-        private M0PlayerLocomotion locomotion;
-        private M0TargetContext targetContext;
-        private M0CombatCore combatCore;
-        private M0EnemyIntentModel enemyIntentModel;
-        private M0InputRouter inputRouter;
-        private INhemLogger logger;
-        private bool warnedMissingBasis;
+        private M0PlayerLocomotion _locomotion;
+        private M0TargetContext _targetContext;
+        private M0CombatCore _combatCore;
+        private M0EnemyIntentModel _enemyIntentModel;
+        private M0InputRouter _inputRouter;
+        private INhemLogger _logger;
+        private bool _warnedMissingBasis;
 
         private M0CombatSnapshot lastCombatSnapshot;
         private EnemyIntentSnapshot lastEnemyIntentSnapshot;
@@ -32,13 +32,13 @@ namespace GlassRefrain.Bootstrap {
         private TargetContextSnapshot lastTargetSnapshot;
 
         [Inject]
-        private void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext, M0CombatCore combatCore, M0EnemyIntentModel enemyIntentModel, M0InputRouter inputRouter, INhemLogger logger) {
-            this.locomotion = locomotion;
-            this.targetContext = targetContext;
-            this.combatCore = combatCore;
-            this.enemyIntentModel = enemyIntentModel;
-            this.inputRouter = inputRouter;
-            this.logger = logger;
+        internal void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext, M0CombatCore combatCore, M0EnemyIntentModel enemyIntentModel, M0InputRouter inputRouter, INhemLogger logger) {
+            this._locomotion = locomotion;
+            this._targetContext = targetContext;
+            this._combatCore = combatCore;
+            this._enemyIntentModel = enemyIntentModel;
+            this._inputRouter = inputRouter;
+            this._logger = logger;
             combatCore.SetTargetContext(targetContext);
             if (adapter != null) {
                 adapter.SetLocomotion(locomotion);
@@ -78,63 +78,63 @@ namespace GlassRefrain.Bootstrap {
         }
 
         private void OnDestroy() {
-            if (combatCore != null) combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
-            if (enemyIntentModel != null) enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
-            if (inputRouter != null) inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
-            if (targetContext != null) targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
+            if (_combatCore != null) _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
+            if (_enemyIntentModel != null) _enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
+            if (_inputRouter != null) _inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
+            if (_targetContext != null) _targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
         }
 
         private void Update() {
-            if (locomotion == null) return;
+            if (_locomotion == null) return;
 
             float dt = Time.deltaTime;
 
             if (cameraBasisProvider != null) {
-                locomotion.SetCameraMovementBasis(cameraBasisProvider.GetMovementBasis());
-                warnedMissingBasis = false;
+                _locomotion.SetCameraMovementBasis(cameraBasisProvider.GetMovementBasis());
+                _warnedMissingBasis = false;
             } else {
-                if (!warnedMissingBasis) {
+                if (!_warnedMissingBasis) {
                     Debug.LogWarning("[M0GameplayTickHandler] CameraMovementBasisProvider not assigned. Camera-relative movement disabled.");
-                    warnedMissingBasis = true;
+                    _warnedMissingBasis = true;
                 }
             }
 
-            locomotion.ProcessMovementInput(dt);
-            locomotion.UpdatePosition(dt);
+            _locomotion.ProcessMovementInput(dt);
+            _locomotion.UpdatePosition(dt);
 
-            enemyIntentModel?.Tick(dt);
+            _enemyIntentModel?.Tick(dt);
 
             // Story 1-6: Combat Core tick for time-based state management (CounterWindow duration expiry).
-            combatCore?.Tick(dt);
+            _combatCore?.Tick(dt);
 
             // Story 1-6: Defensive intent forwarding — reads pressed flags from input, passes
             // EnemyIntentSnapshot as value struct so Combat Core has no Enemy assembly dependency.
-            if (directInput != null && combatCore != null && enemyIntentModel != null) {
-                var enemySnapshot = enemyIntentModel.Snapshot;
+            if (directInput != null && _combatCore != null && _enemyIntentModel != null) {
+                var enemySnapshot = _enemyIntentModel.Snapshot;
                 if (directInput.ParryPressedThisFrame) {
 #if GR_INPUT_DEBUG
-                    logger?.Log("[M0Input] Parry pressed");
+                    _logger?.Log("[M0Input] Parry pressed");
 #endif
-                    combatCore.ConsumeDefensiveIntent(CombatActionType.Parry, enemySnapshot);
+                    _combatCore.ConsumeDefensiveIntent(CombatActionType.Parry, enemySnapshot);
                 }
                 if (directInput.DodgePressedThisFrame) {
 #if GR_INPUT_DEBUG
-                    logger?.Log("[M0Input] Dodge pressed");
+                    _logger?.Log("[M0Input] Dodge pressed");
 #endif
-                    combatCore.ConsumeDefensiveIntent(CombatActionType.Dodge, enemySnapshot);
+                    _combatCore.ConsumeDefensiveIntent(CombatActionType.Dodge, enemySnapshot);
                 }
                 if (directInput.CounterPressedThisFrame) {
 #if GR_INPUT_DEBUG
-                    logger?.Log("[M0Input] Counter pressed");
+                    _logger?.Log("[M0Input] Counter pressed");
 #endif
-                    combatCore.ConsumeDefensiveIntent(CombatActionType.Counter, enemySnapshot);
+                    _combatCore.ConsumeDefensiveIntent(CombatActionType.Counter, enemySnapshot);
                 }
             }
 
             // Story 1-6: Recovery context forwarding — forwards combat recovery state to locomotion each frame.
             // M0PlayerLocomotion.SetRecoveryContext already handles IsRecovering == false as a no-op.
-            if (combatCore != null && locomotion != null)
-                locomotion.SetRecoveryContext(combatCore.Snapshot.Recovery);
+            if (_combatCore != null && _locomotion != null)
+                _locomotion.SetRecoveryContext(_combatCore.Snapshot.Recovery);
         }
 
         private void OnCombatSnapshotChanged(M0CombatSnapshot snapshot)

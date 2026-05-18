@@ -2,14 +2,13 @@ using _Project.Code.Shared.DI;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using GlassRefrain.Core;
 using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
-using GlassRefrain.Targeting;
 using GlassRefrain.Enemy;
 using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
 using NhemDangFugBixs.VContainer;
+using Sirenix.OdinInspector;
 
 namespace GlassRefrain.Bootstrap {
     /// <summary>
@@ -19,10 +18,10 @@ namespace GlassRefrain.Bootstrap {
 
     [LifetimeScopeFor<IGameplayLifetimeScope>()]
     public sealed class GameplayLifetimeScope : LifetimeScope {
-        [SerializeField] private M0GameplayTickHandler tickHandler;
-        [SerializeField] private M0TargetableSceneAdapter targetableAdapter;
-        [SerializeField] private M0EnemyIntentLoopDriver loopDriver;
-        private INhemLogger _logger;
+        [SerializeField, Required] private M0GameplayTickHandler? tickHandler;
+        [SerializeField] private M0TargetableSceneAdapter? targetableAdapter;
+        [SerializeField] private M0EnemyIntentLoopDriver? loopDriver;
+        private INhemLogger? _logger;
 
         protected override void Configure(IContainerBuilder builder) {
             // Manual VContainer registration for M0.

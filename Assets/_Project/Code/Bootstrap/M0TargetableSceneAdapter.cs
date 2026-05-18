@@ -1,7 +1,6 @@
 using UnityEngine;
 using VContainer;
 using GlassRefrain.Core;
-using GlassRefrain.Targeting;
 
 namespace GlassRefrain.Bootstrap {
     /// <summary>
@@ -13,13 +12,13 @@ namespace GlassRefrain.Bootstrap {
     public sealed class M0TargetableSceneAdapter : MonoBehaviour, ITargetable {
         [SerializeField] private string targetId = "enemy-m0-placeholder";
 
-        private ITargetableRegistry registry;
+        private ITargetableRegistry? registry;
 
         public string TargetId => targetId;
         public bool IsTargetable => gameObject.activeInHierarchy;
 
         [Inject]
-        public void Construct(ITargetableRegistry targetableRegistry) {
+        internal void Construct(ITargetableRegistry targetableRegistry) {
             registry = targetableRegistry;
         }
 
