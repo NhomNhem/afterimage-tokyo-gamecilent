@@ -1,0 +1,118 @@
+﻿root = true
+
+# ============================================================
+# Project code
+# ============================================================
+# Keep our own architecture / DI diagnostics visible.
+# These warnings are useful and should be fixed, not hidden.
+#
+# ND003:
+#   Nhem DI analyzer warning.
+#   A class has more than one public constructor, or constructor injection
+#   is ambiguous. Fix by keeping exactly one public constructor or marking
+#   the intended constructor with [Inject].
+#
+# NHEM_DI_010:
+#   Auto-registered services exist for a scope marker, but no
+#   [LifetimeScopeFor(...)] mapping was found.
+#
+# NHEM_DI_011:
+#   A LifetimeScope maps a scope marker, but Configure does not call
+#   builder.RegisterGeneratedFor<TScope>().
+#
+# Current log examples:
+#   M0PlayerLocomotion.cs -> ND003
+#   Gameplay scope services -> NHEM_DI_010
+#   ProjectRootLifetimeScope.cs -> NHEM_DI_011
+
+[Assets/_Project/**/*.cs]
+dotnet_diagnostic.ND003.severity = warning
+dotnet_diagnostic.NHEM_DI_010.severity = warning
+dotnet_diagnostic.NHEM_DI_011.severity = warning
+
+
+# ============================================================
+# RaycastPro vendor warnings
+# ============================================================
+# These warnings come from third-party vendor code.
+# We suppress them in IDE/Rider to keep our own project warnings visible.
+#
+# CS0618:
+#   Obsolete API usage.
+#   RaycastPro uses Unity APIs that are deprecated in newer Unity versions,
+#   such as Physics2D.*NonAlloc and Object.FindObjectOfType.
+#
+# CS0628:
+#   New protected member declared in sealed type.
+#   This is a vendor code style issue. Since sealed classes cannot be
+#   inherited, protected members are effectively unnecessary.
+#
+# CS0414:
+#   Field is assigned but its value is never used.
+#   Usually harmless in vendor/sample/internal tool code unless it affects
+#   runtime behavior.
+#
+# Current log examples:
+#   Assets/Plugins/RaycastPro/Core/Base/RayManager.cs
+#   Assets/Plugins/RaycastPro/Core/Detectors2D/*
+#   Assets/Plugins/RaycastPro/Core/RaySensors/PointerRay.cs
+
+[Assets/Plugins/RaycastPro/**/*.cs]
+dotnet_diagnostic.CS0618.severity = none
+dotnet_diagnostic.CS0628.severity = none
+dotnet_diagnostic.CS0414.severity = none
+
+
+# ============================================================
+# Kinematic Character Controller examples
+# ============================================================
+# CS0618:
+#   Obsolete API usage.
+#   The sample StressTestManager uses Physics.autoSimulation, which Unity
+#   replaced with Physics.simulationMode.
+#
+# This is example code, not our production gameplay code.
+
+[Assets/KinematicCharacterController/Examples/**/*.cs]
+dotnet_diagnostic.CS0618.severity = none
+
+
+# ============================================================
+# Master Stylized Projectiles vendor warning
+# ============================================================
+# CS0108:
+#   Member hides inherited member.
+#   Example: a field named 'audio' hides Component.audio.
+#   This is a vendor naming issue. Suppress for the asset folder only.
+
+[Assets/MasterStylizedProjectiles/**/*.cs]
+dotnet_diagnostic.CS0108.severity = none
+
+
+# ============================================================
+# Gabriel Aguiar Productions vendor warnings
+# ============================================================
+# CS0618:
+#   Obsolete Unity Editor API usage.
+#   Example: PrefabStage.prefabAssetPath was replaced by assetPath.
+#
+# This is vendor/editor tooling code, not project architecture code.
+
+[Assets/GabrielAguiarProductions/**/*.cs]
+dotnet_diagnostic.CS0618.severity = none
+
+
+# ============================================================
+# Combat Girls Character Pack / Unity Toon Shader vendor warnings
+# ============================================================
+# CS0618:
+#   Obsolete Unity API usage.
+#   Examples:
+#     - UxmlFactory<T> deprecated in favor of UxmlElementAttribute.
+#     - PlayerSettings.Get/SetScriptingDefineSymbolsForGroup deprecated
+#       in favor of NamedBuildTarget APIs.
+#
+# Suppress only in this vendor asset folder.
+
+[Assets/CombatGirlsCharacterPack/**/*.cs]
+dotnet_diagnostic.CS0618.severity = none

@@ -34,7 +34,7 @@ namespace GlassRefrain.Health {
 
         public HealthStateSnapshot Snapshot => latestSnapshot;
 
-        public event Action<HealthStateSnapshot>? SnapshotChanged;
+        public event Action<HealthStateSnapshot> SnapshotChanged;
 
         public DamageApplicationResult ApplyDamage(DamageApplicationContext request) {
             if (state == HealthState.Disabled || defeat.IsDefeated) {

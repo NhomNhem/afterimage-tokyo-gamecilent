@@ -16,15 +16,15 @@ namespace GlassRefrain.Bootstrap {
         [SerializeField] private string attackId = "BasicSlash";
         [SerializeField] private string attackLabel = "M0BasicSlash";
 
-        private M0EnemyIntentModel model;
+        private M0EnemyIntentModel? _model;
 
         [Inject]
-        private void Construct(M0EnemyIntentModel enemyIntentModel) {
-            model = enemyIntentModel;
+        internal void Construct(M0EnemyIntentModel enemyIntentModel) {
+            _model = enemyIntentModel;
         }
 
         private void Start() {
-            if (model == null) {
+            if (_model == null) {
                 Debug.LogWarning("[M0EnemyIntentLoopDriver] M0EnemyIntentModel not injected. Loop will not run.");
                 return;
             }
@@ -41,19 +41,19 @@ namespace GlassRefrain.Bootstrap {
             );
 
             while (true) {
-                model.EnterIdle("LoopIdle");
+                _model?.EnterIdle("LoopIdle");
                 yield return new WaitForSeconds(idleDuration);
 
-                model.EnterTelegraph(telegraphId, telegraphDuration, "LoopTelegraph");
+                _model?.EnterTelegraph(telegraphId, telegraphDuration, "LoopTelegraph");
                 yield return new WaitForSeconds(telegraphDuration);
 
-                model.EnterCommit(attackIntent, commitDuration, "LoopCommit");
+                _model?.EnterCommit(attackIntent, commitDuration, "LoopCommit");
                 yield return new WaitForSeconds(commitDuration);
 
-                model.EnterActive(activeDuration, "LoopActive");
+                _model?.EnterActive(activeDuration, "LoopActive");
                 yield return new WaitForSeconds(activeDuration);
 
-                model.EnterRecovery(recoveryDuration, "LoopRecovery", true, punishWindowDuration, "RecoveryEnd");
+                _model?.EnterRecovery(recoveryDuration, "LoopRecovery", true, punishWindowDuration, "RecoveryEnd");
                 yield return new WaitForSeconds(recoveryDuration);
             }
         }
