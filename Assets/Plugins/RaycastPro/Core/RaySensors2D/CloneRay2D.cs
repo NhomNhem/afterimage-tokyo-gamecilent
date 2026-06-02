@@ -16,10 +16,10 @@
         private Transform outer;
 
         private RaySensor2D sensor;
-        
-        // Non Allocation 
+
+        // Non Allocation
         private readonly List<Vector2> _tPath = new List<Vector2>();
-        
+
         private float radius;
 
         internal void CopyFrom(RaySensor2D raySensor, Planar2D _getter, Transform _outer)
@@ -90,7 +90,7 @@
         protected override void OnCast()
         {
             UpdatePath();
-            
+
             if (pathCast)
             {
                 if (sensor is IRadius iRadius) radius = iRadius.Radius;
@@ -114,7 +114,7 @@
             bool hasInfo = true)
         {
             BeginVerticalBox();
-            
+
             if (IsPlaying)
             {
                 if (sensor) EditorGUILayout.LabelField("Clone From: " + sensor.gameObject.name);
@@ -123,7 +123,7 @@
             }
 
             EditorGUILayout.LabelField("Clone Rays can't be modified.");
-            
+
             EndVertical();
             BaseField(_so, hasInfluence: false, hasInteraction: false, hasUpdateMode: false);
             InformationField();

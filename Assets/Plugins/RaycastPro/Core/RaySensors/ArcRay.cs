@@ -13,15 +13,15 @@ namespace RaycastPro.RaySensors
     {
         public enum InputType { Velocity, Target }
         public InputType inputType = InputType.Velocity;
-        
+
         [Tooltip("Number of segments to divide the arc path.")]
         public int segments = 8;
-        
+
         [Tooltip("Total duration over which the arc is simulated.")]
         public float elapsedTime = 5f;
 
         public Transform target;
-        
+
         [FormerlySerializedAs("velocityLocal")] [Tooltip("If enabled, the velocity will be applied in local space.")]
         public bool accelerationLocal;
 
@@ -121,16 +121,16 @@ namespace RaycastPro.RaySensors
         }
         private float t;
         private Vector3 g, _dir, _tPos, _pos;
-        
+
 #if UNITY_EDITOR
         internal override string Info => "Casts a ray based on the incoming velocity and returns the hit information." + HAccurate + HDirectional + HPathRay + HIRadius;
 
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
             AdvancePathDraw(startRadius,  radius, true);
-            
+
             if (hit.transform) DrawNormal(hit.point, hit.normal, hit.transform.name);
         }
 
@@ -144,18 +144,18 @@ namespace RaycastPro.RaySensors
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(direction)), "Velocity".ToContent(""));
                 LocalField(_so.FindProperty(nameof(local)));
                 BeginHorizontal();
-                
+
                 var prop = _so.FindProperty(nameof(inputType));
                 PropertyEnumField(prop, 2,  "Input Type".ToContent("Input Type"), new GUIContent[]
                 {
                     "Velocity".ToContent("Velocity"),
                     "Target".ToContent("Target"),
                 });
-                
+
 
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(segments)));
                 segments = Mathf.Max(1, segments);
-                
+
                 if (inputType == InputType.Velocity)
                 {
                     BeginHorizontal();
@@ -168,7 +168,7 @@ namespace RaycastPro.RaySensors
                 {
                     EditorGUILayout.PropertyField(_so.FindProperty(nameof(target)));
                 }
-                
+
                 StartRadiusField(_so);
                 RadiusField(_so);
             }

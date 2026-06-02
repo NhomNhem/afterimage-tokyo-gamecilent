@@ -18,7 +18,7 @@
 
         [Tooltip("The number of ray reflection that will be cut off when reaching it. Negative numbers use free direction length.")]
         public int maxReflect = -1;
-        
+
         [Tooltip("Reflect layer")]
         public LayerMask reflectLayer;
 
@@ -35,7 +35,7 @@
         private float distance;
         private RaycastHit2D h;
         private int DI;
-        
+
         protected override void OnCast()
         {
             isDetect = false;
@@ -70,7 +70,7 @@
                 else
                 {
                     h = Physics2D.Raycast(point, _direction, distance, reflectLayer.value | detectLayer.value,
-                        MinDepth, MaxDepth); 
+                        MinDepth, MaxDepth);
                 }
                 if (h)
                 {

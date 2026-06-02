@@ -5,7 +5,7 @@
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
-    
+
     [RequireComponent(typeof(Rigidbody2D))]
 
     [AddComponentMenu("RaycastPro/Bullets/" + nameof(PhysicalBullet2D))]
@@ -16,13 +16,13 @@
         {
             if (!body2D) body2D = GetComponent<Rigidbody2D>();
 
-            
+
             transform.position = raySource.Base;
             transform.right = raySource.TipDirection;
 
             body2D.angularVelocity = 0;
             body2D.linearVelocity = Vector2.zero;
-            
+
             body2D.AddForce(transform.right * power, forceMode);
         }
 
@@ -30,7 +30,7 @@
         public float power = 1f;
 
         public ForceMode2D forceMode = ForceMode2D.Force;
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         public void AddForce(Vector3 direction) => GetComponent<Rigidbody2D>().AddForce(direction * power, forceMode);
 #if UNITY_EDITOR

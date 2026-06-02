@@ -10,7 +10,7 @@
 #endif
 
     /// <summary>
-    /// A powerful Ray interaction component that provides detailed access to raycasting results, 
+    /// A powerful Ray interaction component that provides detailed access to raycasting results,
     /// including direction, hit data, physics interaction, terrain detection, and material access.
     /// Use this component to query hits, manipulate hit objects, and retrieve advanced spatial data.
     /// </summary>
@@ -72,7 +72,7 @@
         public float DirectionLength => direction.magnitude;
 
         /// <summary>
-        /// The direct distance from the ray origin to the hit point. 
+        /// The direct distance from the ray origin to the hit point.
         /// Returns the full ray length if no hit occurred.
         /// </summary>
         [Tooltip("Returns the distance from the base to hit point, or full length if no hit.")]
@@ -154,7 +154,7 @@
         /// Example: If the path is 10 meters long and you pass distance = 3,
         /// the returned position will be exactly 3 meters forward on the path,
         /// even if the path bends or turns.
-        /// 
+        ///
         /// Common use cases:
         /// - Moving a projectile smoothly along a curved path
         /// - Advancing an object step-by-step over time
@@ -189,7 +189,7 @@
         /// Returns a position offset from the hit point along the surface normal.
         /// Example: After hitting a wall, pushing the position slightly outward
         /// prevents objects or effects from clipping into the surface.
-        /// 
+        ///
         /// Common use cases:
         /// - Spawning impact effects slightly off the surface
         /// - Placing decals without z-fighting
@@ -207,7 +207,7 @@
         /// Returns a position offset backward from the hit point, opposite to the cast direction.
         /// Example: When a bullet hits a target, this can be used to move the bullet
         /// slightly backward along its travel direction.
-        /// 
+        ///
         /// Common use cases:
         /// - Pulling objects back after a hit
         /// - Computing a safe fallback position
@@ -224,7 +224,7 @@
         /// <summary>
         /// Replaces the current direction vector with a new one.
         /// Example: Resetting the cast direction when the player changes aim.
-        /// 
+        ///
         /// Common use cases:
         /// - Updating aim direction
         /// - Redirecting a ray or projectile
@@ -238,7 +238,7 @@
         /// <summary>
         /// Adds a vector to the current direction, allowing gradual or additive changes.
         /// Example: Adding recoil, spread, or steering influence to an existing direction.
-        /// 
+        ///
         /// Common use cases:
         /// - Weapon recoil
         /// - Steering projectiles
@@ -252,7 +252,7 @@
         /// <summary>
         /// Enables or disables the GameObject that was hit by the cast.
         /// Example: Temporarily hiding a hit target instead of destroying it.
-        /// 
+        ///
         /// Common use cases:
         /// - Toggle visibility of hit objects
         /// - Enable / disable interaction targets
@@ -269,7 +269,7 @@
         /// <summary>
         /// Destroys the GameObject that was hit by the cast, optionally after a delay.
         /// Example: Destroying a destructible object a few seconds after impact.
-        /// 
+        ///
         /// Common use cases:
         /// - Breaking objects
         /// - Cleaning up temporary targets
@@ -286,7 +286,7 @@
         /// <summary>
         /// Sets the world position of the hit object.
         /// Example: Snapping a hit object to a grid or moving it to an exact point.
-        /// 
+        ///
         /// Common use cases:
         /// - Aligning objects after collision
         /// - Teleporting hit targets
@@ -303,7 +303,7 @@
         /// <summary>
         /// Moves the hit object by a relative translation.
         /// Example: Nudging an object slightly upward or sideways after impact.
-        /// 
+        ///
         /// Common use cases:
         /// - Fine adjustments after collision
         /// - Push-back or knockback effects
@@ -322,7 +322,7 @@
         /// using the tip direction as its forward orientation.
         /// Example: Creating a duplicate target at a specific spawn point,
         /// aligned with the cast direction.
-        /// 
+        ///
         /// Common use cases:
         /// - Spawning projectiles or props based on a hit
         /// - Cloning interactable objects
@@ -338,11 +338,11 @@
 
         /// <summary>
         /// Applies a physical force to the hit Rigidbody in the direction of the surface normal.
-        /// 
+        ///
         /// Example:
         /// When a bullet hits a wall or object, this pushes the object outward,
         /// directly away from the surface it was hit on.
-        /// 
+        ///
         /// Common use cases:
         /// - Impact reactions (objects pushed away from walls)
         /// - Explosion or shockwave effects
@@ -360,11 +360,11 @@
         }
 
         /// Applies a physical force to the hit Rigidbody in the direction of the hit.
-        /// 
+        ///
         /// Example:
         /// A projectile transfers its momentum to an object, pushing it forward
         /// in the same direction it was traveling.
-        /// 
+        ///
         /// Common use cases:
         /// - Bullet impact force
         /// - Knockback effects
@@ -383,11 +383,11 @@
 
         /// <summary>
         /// Applies a force to the hit Rigidbody using the tip direction as the forward vector.
-        /// 
+        ///
         /// Example:
         /// Useful when the visual or logical "tip" of a tool or weapon determines
         /// the force direction rather than the actual hit ray.
-        /// 
+        ///
         /// Common use cases:
         /// - Melee weapons (swords, spears)
         /// - Tools or probes with a defined forward tip
@@ -406,11 +406,11 @@
 
         /// <summary>
         /// Applies a dynamic force along the tip direction, scaled by the continuous distance.
-        /// 
+        ///
         /// Example:
         /// The farther the object travels before hitting something,
         /// the stronger the applied force becomes.
-        /// 
+        ///
         /// Common use cases:
         /// - Charge-based attacks
         /// - Speed-scaled impacts
@@ -430,11 +430,11 @@
         /// <summary>
         /// Applies a dynamic force along the surface normal,
         /// scaled by the continuous travel distance.
-        /// 
+        ///
         /// Example:
         /// A fast-moving object hitting a surface causes a stronger push
         /// directly away from the impact point.
-        /// 
+        ///
         /// Common use cases:
         /// - Physics-based collisions
         /// - Heavy impacts
@@ -454,11 +454,11 @@
         /// <summary>
         /// Applies a dynamic force in the hit direction,
         /// scaled by the continuous travel distance.
-        /// 
+        ///
         /// Example:
         /// A projectile that travels a longer distance before impact
         /// transfers more energy forward to the hit object.
-        /// 
+        ///
         /// Common use cases:
         /// - Projectile physics
         /// - Velocity-based knockback
@@ -477,10 +477,10 @@
 
         /// <summary>
         /// Plays an audio clip at the hit point in world space.
-        /// 
+        ///
         /// Example:
         /// Playing an impact sound exactly where a bullet or tool hits a surface.
-        /// 
+        ///
         /// Common use cases:
         /// - Bullet or melee impact sounds
         /// - Environmental interaction audio
@@ -526,17 +526,17 @@
         }
 
         /// <summary>
-        /// Get Hit point Material Color 
+        /// Get Hit point Material Color
         /// </summary>
         public Color HitColor => hit.GetColor();
 
         /// <summary>
-        /// Get Hit point Material Alpha 
+        /// Get Hit point Material Alpha
         /// </summary>
         public float HitAlpha => hit.GetColor().a;
 
         /// <summary>
-        /// Get Hit point Sprite Alpha 
+        /// Get Hit point Sprite Alpha
         /// </summary>
         public float HitSpriteAlpha => hit.GetSpriteColor().a;
 
@@ -626,7 +626,7 @@
 
 
         /// <summary>
-        /// Updates the attached LineRenderer to reflect the current ray state, 
+        /// Updates the attached LineRenderer to reflect the current ray state,
         /// considering clamping, hit-cutting, and offset corrections.
         /// </summary>
         public override void UpdateLiner()

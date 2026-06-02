@@ -30,7 +30,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
             if (raySensor)
             {
                 if (!raySensor.enabled) raySensor.Cast();
-                
+
                 switch (syncCondition)
                 {
                     case SyncCondition.Always:
@@ -53,7 +53,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
             else if (raySensor2D)
             {
                 if (!raySensor2D.enabled) raySensor2D.Cast();
-                
+
                 switch (syncCondition)
                 {
                     case SyncCondition.Always:

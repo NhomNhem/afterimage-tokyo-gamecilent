@@ -11,7 +11,7 @@
 #endif
 
     using UnityEngine;
-    
+
     [AddComponentMenu("RaycastPro/Detectors/" + nameof(PathDetector))]
     public sealed class PathDetector : ColliderDetector, IRadius, IPulse
     {
@@ -19,34 +19,34 @@
         /// Main Source of Getting Path, Its better to disable it if don't need single casting.
         /// </summary>
         public RaySensor sourceRay;
-        
+
         [SerializeField] private float radius = 2f;
-        
+
         public float Radius
         {
             get => radius;
             set => radius = Mathf.Max(0, value);
         }
-        
+
         public RaycastEvent onHit;
         public RaycastEvent onNewHit;
         public RaycastEvent onLostHit;
-        
+
         public List<Vector3> PathPoints;
         public override bool Performed
         {
             get => DetectedHits.Count > 0;
             protected set { }
         }
-        
+
         protected override void OnCast()
         {
             if (!sourceRay) return;
 
             if (!sourceRay.enabled) sourceRay.Cast();
-            
+
             CachePrevious();
-            
+
             sourceRay.GetPath(ref PathPoints);
 
 #if UNITY_EDITOR
@@ -70,7 +70,7 @@
 #if UNITY_EDITOR
                             else
                             {
-                                GizmoGate += () => { DrawCross(r.point, r.normal); };   
+                                GizmoGate += () => { DrawCross(r.point, r.normal); };
                             }
 #endif
                         }
@@ -82,11 +82,11 @@
                     else PathCastAll(PathPoints, ref DetectedHits, radius);
                 }
             }
-            
+
             Clear();
-            
+
             foreach (var _dHit in DetectedHits) DetectedColliders.Add(_dHit.collider);
-            
+
 #if UNITY_EDITOR
             foreach (var c in DetectedColliders) PassColliderGate(c);
 #endif
@@ -104,9 +104,9 @@
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
             DrawPath(PathPoints, drawSphere:true, radius: (sourceRay is IRadius _iRad ? _iRad.Radius+DotSize : radius), dotted: true);
-            
+
             Handles.color = DetectColor;
         }
         internal override void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true,
@@ -139,7 +139,7 @@
                 GeneralField(_so);
                 BaseField(_so);
             }
-            
+
             if (hasEvents)
             {
                 EventField(_so);

@@ -14,7 +14,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
         public Color green = Color.green;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
         private static readonly int Speed = Shader.PropertyToID("_Speed");
-        
+
         public Image left, right, up, down;
 
         private void Start()
@@ -30,7 +30,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
             left.color = right.color = up.color = down.color = Color.grey;
             if (soundDetector.Performed)
             {
-                
+
                 if (soundDetector.IsHearingBack)
                 {
                     down.color = Color.cyan;
@@ -47,12 +47,12 @@ namespace Plugins.RaycastPro.Demo.Scripts
                 {
                     right.color = Color.white;
                 }
-                
-                
+
+
                 _meshRenderer.materials[1].SetColor(EmissionColor, col);
                 _meshRenderer.materials[2].SetColor(EmissionColor, col);
             }
-            
+
         }
     }
 }

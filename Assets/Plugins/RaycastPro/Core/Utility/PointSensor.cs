@@ -42,11 +42,11 @@
         }
 
         private bool performed;
-        
+
         protected override void OnCast()
         {
             var _t = transform;
-            
+
             performed = false;
             switch (dotType)
             {

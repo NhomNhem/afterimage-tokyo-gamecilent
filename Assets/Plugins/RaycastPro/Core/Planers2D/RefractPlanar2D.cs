@@ -31,7 +31,7 @@
             bool hasInfo = true)
         {
             if (hasMain) PropertySliderField(_so.FindProperty(nameof(refractAngle)), 0f, 360f, "Refract Angle".ToContent());
-            
+
             if (hasGeneral) GeneralField(_so);
 
             if (hasEvents) EventField(_so);

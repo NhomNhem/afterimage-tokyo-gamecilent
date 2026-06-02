@@ -16,24 +16,24 @@
     {
         public RaySensor outerRay;
         public override bool Performed { get; protected set; }
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public RaySensorEvent onReceiveRay;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public RaySensorEvent onCloneRay;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public RaySensorEvent onBeginReceiveRay;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public RaySensorEvent onEndReceiveRay;
 
@@ -93,7 +93,7 @@
             RenameClone(raySensor.cloneRaySensor);
 #endif
             raySensor.cloneRaySensor.baseRaySensor = raySensor;
-        } 
+        }
         private GameObject _tObj;
         protected CloneRay cloneRay;
         private void InstantiateClone(RaySensor raySensor)
@@ -103,18 +103,18 @@
             SceneManager.MoveGameObjectToScene(_tObj, raySensor.gameObject.scene);
             cloneRay = _tObj.AddComponent<CloneRay>();
             cloneRay.transform.parent = poolManager;
-            
+
 #if UNITY_EDITOR
             RenameClone(cloneRay);
 #endif
             cloneRay.CopyFrom(raySensor, this, (this is PortalPlanar planar) ? planar.outer : transform);
             // Double supported Clone Sensors
-            
+
             cloneRay.baseRaySensor = raySensor;
             raySensor.cloneRaySensor = cloneRay;
         }
 #if UNITY_EDITOR
-        
+
         private Collider validateCollideGizmo;
         private void OnValidate()
         {
@@ -126,7 +126,7 @@
         protected void DrawPlanar()
         {
             Gizmos.color = DefaultColor.Alpha(.5f);
-            
+
             if (validateCollideGizmo is MeshCollider _mc)
             {
                 Gizmos.DrawWireMesh(_mc.sharedMesh, transform.position, transform.rotation, transform.lossyScale);
@@ -180,7 +180,7 @@
         internal virtual void OnBeginReceiveRay(RaySensor sensor)
         {
             if (this is BlockPlanar) return;
-            
+
             CloneInstantiate(sensor);
             sensor.cloneRaySensor?.transform.RemoveChildren();
             OnCloneRay(sensor.cloneRaySensor);
@@ -195,7 +195,7 @@
         internal virtual bool OnEndReceiveRay(RaySensor sensor)
         {
             Destroy(sensor.cloneRaySensor.gameObject);
-            
+
             return true;
         }
 

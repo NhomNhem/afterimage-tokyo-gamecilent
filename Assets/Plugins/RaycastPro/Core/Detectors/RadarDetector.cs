@@ -31,7 +31,7 @@ namespace RaycastPro.Detectors
         public float height;
 
         public RadarEvent onRadarDetect;
-        
+
         public Transform graphicShape;
         public Vector3 eulerOffset;
         public Axis shapeAxis;
@@ -51,7 +51,7 @@ namespace RaycastPro.Detectors
 #endif
 
             CachePrevious();
-            
+
             delta = GetDelta(timeMode);
 
 #if UNITY_EDITOR
@@ -80,7 +80,7 @@ namespace RaycastPro.Detectors
 
             _dir = Quaternion.AngleAxis(currentAngle, tUp) * tForward;
             _colliders.Clear();
-            
+
             foreach (var _h in Physics.BoxCastAll(_t.position, new Vector3(0, height, 0), _dir,
                          _t.rotation, radius, detectLayer.value, triggerInteraction))
             {
@@ -125,8 +125,8 @@ namespace RaycastPro.Detectors
                 }
             }
             #endregion
-            
-            
+
+
 #if UNITY_EDITOR
             GizmoGate += () =>
             {
@@ -144,7 +144,7 @@ namespace RaycastPro.Detectors
                                          + HCDetector + HIRadius + HRotatable;
 
         private static readonly string[] events = new string[]{"onDetectCollider", "onRadarDetect", "onNewCollider", "onLostCollider"};
-        
+
         internal override void OnGizmos()
         {
             EditorUpdate();
@@ -161,7 +161,7 @@ namespace RaycastPro.Detectors
 
         internal override void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true, bool hasEvents = true, bool hasInfo = true)
         {
-            
+
             if (hasMain)
             {
                 BeginHorizontal();
@@ -182,14 +182,14 @@ namespace RaycastPro.Detectors
                 {
                     "X".ToContent(), "Y".ToContent(), "Z".ToContent(),
                 });
-                
+
                 GUI.enabled = true;
 
                 EndVertical();
 
                 #endregion
             }
-            
+
             if (hasGeneral)
             {
                 GeneralField(_so);
@@ -218,7 +218,7 @@ namespace RaycastPro.Detectors
                 EndVertical();
             });
         }
-        
+
         protected override void DrawDetectorGuide(Vector3 point) { }
 #endif
 

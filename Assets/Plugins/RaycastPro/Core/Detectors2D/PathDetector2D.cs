@@ -27,21 +27,21 @@
             get => DetectedHits.Count > 0;
             protected set { }
         }
-        
+
         public List<RaycastHit2D> DetectedHits = new List<RaycastHit2D>();
         public RaycastHit2D[] PreviousHits = Array.Empty<RaycastHit2D>();
-        
+
         public HashSet<Collider2D> DetectedColliders = new HashSet<Collider2D>();
         public HashSet<Collider2D> PreviousColliders  = new HashSet<Collider2D>();
 
         private List<Vector2> PathPoints;
-        
+
         protected override void OnCast()
         {
             if (!sourceRay.enabled) sourceRay.Cast();
-            
+
             PreviousHits = DetectedHits.ToArray();
-            
+
             sourceRay.GetPath2D(ref PathPoints);
 
 #if UNITY_EDITOR
@@ -64,14 +64,14 @@
                     };
 #endif
                 foreach (var _dHit in DetectedHits) DetectedColliders.Add(_dHit.collider);
-            
+
 #if UNITY_EDITOR
                 foreach (var c in DetectedColliders) PassColliderGate(c);
 #endif
                 if (onHit != null) foreach (var _member in DetectedHits) onHit.Invoke(_member);
                 if (onNewHit != null) foreach (var _member in DetectedHits.Except(PreviousHits)) onNewHit.Invoke(_member);
                 if (onLostHit != null) foreach (var _member in PreviousHits.Except(DetectedHits)) onLostHit.Invoke(_member);
-                
+
                 if (onDetectCollider != null) foreach (var _member in DetectedColliders) onDetectCollider.Invoke(_member);
                 if (onNewCollider != null) foreach (var _member in DetectedColliders.Except(PreviousColliders)) onNewCollider.Invoke(_member);
                 if (onLostCollider != null) foreach (var _member in PreviousColliders.Except(DetectedColliders)) onLostCollider.Invoke(_member);

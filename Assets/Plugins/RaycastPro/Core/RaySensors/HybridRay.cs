@@ -13,7 +13,7 @@
         [SerializeField] private RaySensor[] raySensors = Array.Empty<RaySensor>();
         public bool sequenceOnTip = false;
         public bool sequenceCast;
-        
+
         [SerializeField] private float radius = .4f;
         public float Radius
         {
@@ -53,7 +53,7 @@
                     PathPoints.Add(_r.transform.position);
                     PathPoints.Add(_r.RawTip);
                 }
-                
+
                 l = i;
             }
         }
@@ -93,7 +93,7 @@
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
             if (pathCast)
             {
                 FullPathDraw(radius, true, true);
@@ -130,7 +130,7 @@
                 RadiusField(_so);
                 GUI.enabled = true;
             }
-            
+
             if (hasGeneral) PathRayGeneralField(_so);
             if (hasEvents) EventField(_so);
             if (hasInfo) InformationField();

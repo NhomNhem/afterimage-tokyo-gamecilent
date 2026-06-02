@@ -26,7 +26,7 @@
         public override Vector3 FocusPoint => transform.TransformPoint(detectVector);
         #endregion
 
-   
+
 #if UNITY_EDITOR
         protected void DrawFocusVector()
         {

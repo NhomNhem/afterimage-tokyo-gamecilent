@@ -27,7 +27,7 @@
 
         public float minAngle;
         public float maxAngle = 90;
-        
+
         internal RaySensor2D baseRaySensor;
         internal RaySensor2D cloneRaySensor;
 
@@ -36,9 +36,9 @@
         #region Lambdas
 
         public override Vector3 TipTarget => hit ? hit.point.ToDepth(z) : Tip.ToDepth(z);
-        
+
         public override Vector3 TargetDirection => hit ? -hit.normal.ToDepth(z) : HitDirection.ToDepth();
-        
+
         public RaycastHit2D CloneHit => cloneRaySensor ? cloneRaySensor.CloneHit : hit;
 
         #endregion
@@ -50,7 +50,7 @@
         public Vector2 Direction => local ? LocalDirection : direction;
         public Vector2 ScaledDirection => Vector2.Scale(Direction, transform.lossyScale);
         public Vector2 FullDirection => scalable ? ScaledDirection : Direction;
-        
+
         /// <summary>
         /// Direction on Depth (Z)
         /// </summary>
@@ -64,7 +64,7 @@
         public float scaleX => transform.lossyScale.x;
         public virtual float ContinuesDistance => Length - HitDistance;
         public float HitDistance => hit ? (hit.point.ToDepth(z) - Base).magnitude : Length;
-        
+
         /// <summary>
         /// The length traveled from Ray to reach the target point
         /// </summary>
@@ -94,17 +94,17 @@
                 }
             }
         }
-        
+
         public virtual void GetPath2D(ref List<Vector2> path)
         {
             path = new List<Vector2>() {Base, Tip};
         }
-        
+
         public virtual void GetPath(ref List<Vector3> path)
         {
             path = new List<Vector3>() {Base, Tip};
         }
-        
+
         #region Public Methods
 
         public void SetDirection(Vector2 newDirection) => direction = newDirection;
@@ -248,7 +248,7 @@
                     : target
             );
         }
-        
+
         protected bool FilterCheck(RaycastHit2D _hit, Vector2 dir)
         {
             if (!_hit) return false;
@@ -270,7 +270,7 @@
             return false;
         }
         private bool tQ, tHB;
-        
+
         private void SolvedQueriesCast()
         {
             tHB = Physics2D.queriesStartInColliders;
@@ -385,7 +385,7 @@
             }
             onEndDetect?.Invoke(PreviousHit);
         }
-        
+
         internal override void OnDetect()
         {
             onDetect?.Invoke(hit);
@@ -428,13 +428,13 @@
         internal void DrawDepthLine(Vector3 p1, Vector3 p2, Color color = default)
         {
             GizmoColor = (MaxDepth > MinDepth ? HelperColor : color == default ? DefaultColor : color).Alpha(alphaCharge);
-            
+
             Gizmos.DrawLine(new Vector3(p1.x, p1.y, MaxDepth), new Vector3(p2.x, p2.y, MaxDepth));
             Handles.DrawDottedLine(new Vector3(p1.x, p1.y, MaxDepth), new Vector3(p1.x, p1.y, MinDepth), StepSizeLine);
             Gizmos.DrawLine(new Vector3(p1.x, p1.y, MinDepth), new Vector3(p2.x, p2.y, MinDepth));
             Handles.DrawDottedLine(new Vector3(p2.x, p2.y, MaxDepth), new Vector3(p2.x, p2.y, MinDepth), StepSizeLine);
         }
-        
+
         /// <summary>
         /// Full Fixed Box Ray
         /// </summary>
@@ -460,7 +460,7 @@
             var p2 = (pos - up + right).ToDepth(z);
             var p3 = (pos + up - right).ToDepth(z);
             var p4 = (pos - up - right).ToDepth(z);
-            
+
             // Handles.Label(p1, "p1");
             // Handles.Label(p2, "p2");
             // Handles.Label(p3, "p3");
@@ -470,7 +470,7 @@
             {
                 Gizmos.DrawLine(p1, p3);
                 Gizmos.DrawLine(p2+localDirection, p4+localDirection);
-                
+
                 if (_dir.x < 0)
                 {
                     Gizmos.DrawRay(p2, localDirection);
@@ -486,7 +486,7 @@
             {
                 Gizmos.DrawLine(p2, p4);
                 Gizmos.DrawLine(p1+localDirection, p3+localDirection);
-                
+
                 if (_dir.x > 0)
                 {
                     Gizmos.DrawRay(p2, localDirection);
@@ -524,7 +524,7 @@
                 UpdateStamp();
                 UpdateLiner();
             }
-            
+
             GizmoGate?.Invoke();
 
             if (cloneRaySensor && cloneRaySensor.gameObject) cloneRaySensor.OnGizmos();
@@ -565,7 +565,7 @@
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(minDepth)), "Min Depth".ToContent());
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(maxDepth)), "Max Depth".ToContent());
         }
-        
+
         protected void GeneralField(SerializedObject _so)
         {
             DetectLayerField(_so);

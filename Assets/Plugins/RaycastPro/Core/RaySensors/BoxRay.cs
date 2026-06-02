@@ -8,8 +8,8 @@ namespace RaycastPro.RaySensors
     using System.Threading.Tasks;
     using UnityEditor;
 #endif
-    
-    
+
+
     [AddComponentMenu("RaycastPro/Rey Sensors/" + nameof(BoxRay))]
     public sealed class BoxRay : RaySensor
     {
@@ -18,7 +18,7 @@ namespace RaycastPro.RaySensors
             "Casts a box in a specified direction with defined extents and returns the corresponding hit information." +
             HAccurate + HDirectional + HScalable;
 #endif
-        
+
         public Vector3 extents = new Vector3(.4f, .4f, .1f);
 
         private Vector3 _dir, sExtents;
@@ -32,7 +32,7 @@ namespace RaycastPro.RaySensors
             else
             {
                 _dir = Direction;
-                sExtents = extents; 
+                sExtents = extents;
             }
             Physics.BoxCast(transform.position, sExtents / 2, _dir, out hit, transform.rotation,
                 _dir.magnitude, detectLayer.value, triggerInteraction);
@@ -95,7 +95,7 @@ namespace RaycastPro.RaySensors
         }
 
 #if UNITY_EDITOR
-        
+
         /// <summary>
         /// Hint: This command will make your references missing.
         /// </summary>
@@ -103,7 +103,7 @@ namespace RaycastPro.RaySensors
         private async void ConvertToPipeRay()
         {
             var _ray = Undo.AddComponent<PipeRay>(gameObject);
-            
+
             _ray.direction = direction;
             _ray.Radius = extents.x;
             _ray.Height = extents.y;
@@ -118,11 +118,11 @@ namespace RaycastPro.RaySensors
         private async void ConvertToBasicRay()
         {
             var _ray = Undo.AddComponent<BasicRay>(gameObject);
-            
+
             _ray.direction = direction;
 
             await Task.Delay(1);
-            
+
             Undo.DestroyObjectImmediate (this);
         }
 
@@ -155,7 +155,7 @@ namespace RaycastPro.RaySensors
 
         private Vector3 ExtentVector => LocalDirection.normalized * extents.z / 2;
         public override Vector3 Tip => RawTip + ExtentVector;
-        
+
         public override Vector3 RawTip => transform.position + Direction;
         public override float RayLength => direction.magnitude + extents.z;
         public override Vector3 Base => transform.position;

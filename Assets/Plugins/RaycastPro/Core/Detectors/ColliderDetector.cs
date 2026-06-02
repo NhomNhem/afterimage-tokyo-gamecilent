@@ -22,9 +22,9 @@ namespace RaycastPro.Detectors
             get => DetectedColliders.Any();
             protected set { }
         }
-        
+
         [SerializeField] public Collider[] ignoreList = Array.Empty<Collider>();
-        
+
         [SerializeField]
         protected Collider[] colliders = Array.Empty<Collider>();
 
@@ -56,7 +56,7 @@ namespace RaycastPro.Detectors
         public Collider FirstMember => DetectedColliders.FirstOrDefault();
 
         public Collider LastMember => DetectedColliders.LastOrDefault();
-        
+
         public Vector3 GetAveragePosition
         {
             get
@@ -103,12 +103,12 @@ namespace RaycastPro.Detectors
                 }
             }
         }
-        
-        
+
+
 
         #endregion
 
-        
+
         protected float _tDis;
 
         #region Public Methods
@@ -118,20 +118,20 @@ namespace RaycastPro.Detectors
             return (c.ClosestPoint(point),
                 c.ClosestPoint(c.transform.position + (c.transform.position - point) * int.MaxValue));
         }
-        
+
         public void ActiveObject(Collider collider) => collider.gameObject.SetActive(true);
-        
+
         public void DeactiveObject(Collider collider) => collider.gameObject.SetActive(false);
 
         public void ActiveMeshRenderer(Collider collider) => collider.GetComponent<MeshRenderer>().enabled = true;
-        
+
         public void DeactiveMeshRenderer(Collider collider) => collider.GetComponent<MeshRenderer>().enabled = false;
-        
+
         public void InstantiateOnDetections(GameObject obj)
         {
             foreach (var c in DetectedColliders) Instantiate(obj, c.transform.position, c.transform.rotation);
         }
-        
+
         public void ApplyExplosionForce(float force, float radius)
         {
             foreach (var c in DetectedColliders)
@@ -194,7 +194,7 @@ namespace RaycastPro.Detectors
         }
 
         public float GetMemberDistance(Collider member) => Vector3.Distance(transform.position, member.transform.position);
-        
+
         #endregion
 
 
@@ -236,7 +236,7 @@ namespace RaycastPro.Detectors
         }
 
         protected Vector3 BoundsCenter(Collider _c) => boundsCenter ? _c.bounds.center : _c.transform.position;
-        
+
         protected Func<Collider, Vector3> SetupDetectFunction()
         {
             switch (solverType)
@@ -367,11 +367,11 @@ namespace RaycastPro.Detectors
         protected Func<Collider, Vector3> DetectFunction;
 
         private void OnEnable() => DetectFunction = SetupDetectFunction();
-        
+
         protected bool TagPass(Collider c) => c && !ignoreList.Contains(c) && (!usingTagFilter || c.CompareTag(tagFilter));
         protected bool TagPass(GameObject g) => g && (!usingTagFilter || g.CompareTag(tagFilter));
 #if UNITY_EDITOR
-        
+
         protected readonly string[] CEventNames = {"onDetectCollider", "onNewCollider", "onLostCollider"};
         protected bool GuideCondition => RCProPanel.DrawGuide && gizmosUpdate == GizmosMode.Select;
 
@@ -379,7 +379,7 @@ namespace RaycastPro.Detectors
         {
             DetectFunction = SetupDetectFunction();
         }
-        
+
         protected void SetupGates(Collider c, Vector3 point, bool blocked, RaycastHit blockHit)
         {
             void DrawDetectBox(Collider _col)
@@ -427,7 +427,7 @@ namespace RaycastPro.Detectors
                 }
             };
         }
-        
+
         protected void ColliderDetectorGeneralField(SerializedObject _so)
         {
             GeneralField(_so);
@@ -436,7 +436,7 @@ namespace RaycastPro.Detectors
             SolverField(_so);
             IgnoreListField(_so);
         }
-        
+
         protected void SolverField(SerializedObject _so)
         {
             BaseSolverField(_so, () =>

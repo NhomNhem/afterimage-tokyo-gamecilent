@@ -31,7 +31,7 @@
             if (!outer) return;
 
             var _dSize = DotSize * transform.lossyScale.magnitude;
-            
+
             var p1 = transform.position + transform.forward * _dSize;
 
             var p2 = outer.transform.position - outer.transform.forward * _dSize;
@@ -65,11 +65,11 @@
         internal override void OnReceiveRay(RaySensor sensor)
         {
             if (!sensor.cloneRaySensor) return;
-            
+
             pos = sensor.hit.point;
             clone = sensor.cloneRaySensor;
             if (!clone) return;
-            
+
             if (clone.liner) clone.liner.enabled = sensor.liner.enabled;
             tOuter = outer ? outer : transform;
 

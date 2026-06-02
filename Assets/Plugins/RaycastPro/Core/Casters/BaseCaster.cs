@@ -18,7 +18,7 @@ namespace RaycastPro
         /// </summary>
         /// <param name="_bulletIndex">Bullet Array Index</param>
         public abstract void Cast(int _bulletIndex);
-        
+
         [Tooltip("Automatically instantiate into this object.")]
         public Transform poolManager;
 
@@ -26,13 +26,13 @@ namespace RaycastPro
         public UnityEvent onRate;
         [SerializeField]
         public UnityEvent onReload;
-        
-                
+
+
         [Tooltip("When turn on, gun auto reload on enable or end of shooting.")]
         public bool autoReload = true;
-        
+
         public abstract void Reload();
-        
+
         #region Update
         protected void Update()
         {
@@ -74,25 +74,25 @@ namespace RaycastPro
         {
             [Tooltip("When activate, the cost of shooting will be zero.")]
             [SerializeField] public bool infiniteAmmo = true;
-            
+
             [Tooltip("The total number of bullets out of the magazine")]
             [SerializeField] public int amount = 12;
-            
+
             [Tooltip("The Capacity of each magazine that will enter the reload time when it runs out.")]
             [SerializeField] public int magazineCapacity = 6;
-            
+
             [Tooltip("The number of bullets in the current magazine.")]
             [SerializeField] public int magazineAmount = 6;
 
             [Tooltip("Interruption time until the magazine is filled")]
             [SerializeField] public float reloadTime = 2f;
-            
+
             [Tooltip("The firing pause time between each shot")]
             [SerializeField] public float rateTime = .1f;
-            
+
             [Tooltip("Randomness")]
             [SerializeField] public float randomness = 0f;
-            
+
             [Tooltip("Chance to miss shooting when cast, 0-1 : 0-100%")]
             [SerializeField] public float missRate = 0f;
             /// <summary>
@@ -120,12 +120,12 @@ namespace RaycastPro
                 get => amount;
                 set => amount = Mathf.Max(0, value);
             }
-            
+
             public bool Use(BaseCaster _caster, int _amount = 1)
             {
                 if (inRate) return false;
                 if (inReload) return false;
-                
+
                 if (magazineAmount < _amount)
                 {
                     if (_caster.autoReload)
@@ -137,7 +137,7 @@ namespace RaycastPro
                     return false;
                 }
                 if (value > missRate)
-                {       
+                {
                     magazineAmount -= _amount;
                     _inRateC = _caster.StartCoroutine(IRate());
                     _caster.onRate?.Invoke();
@@ -146,7 +146,7 @@ namespace RaycastPro
             }
 
             private Coroutine _inRateC;
-            
+
             /// <summary>
             ///  Change to Ienumerator
             /// </summary>
@@ -168,7 +168,7 @@ namespace RaycastPro
                     yield return new WaitForSeconds(Time.deltaTime);
                 }
                 currentReloadTime = 0f;
-                
+
                 if (infiniteAmmo) // Bill
                 {
                     magazineAmount = magazineCapacity;
@@ -184,7 +184,7 @@ namespace RaycastPro
             }
 
 #if UNITY_EDITOR
-            
+
             internal void EditorPanel(SerializedProperty serializedProperty)
             {
                 BeginHorizontal();

@@ -33,4 +33,3 @@ namespace Udar.SceneManager.Editor
         }
     }
 }
-

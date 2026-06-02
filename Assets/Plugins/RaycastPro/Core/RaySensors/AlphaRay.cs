@@ -22,7 +22,7 @@ namespace RaycastPro.RaySensors
         public Sprite sprite;
         public Texture2D texture;
     }
-    
+
     static class RaycastMeshCache
     {
         // Set the CacheSize here >>>
@@ -117,7 +117,7 @@ namespace RaycastPro.RaySensors
         [Tooltip("When enabled, the raycast evaluates alpha using Sprite sampling instead of Mesh/Material sampling. " +
                  "Use this for SpriteRenderer-based objects to allow the ray to pass through transparent sprite areas.")]
         public bool spriteThrough = false;
-        
+
         [Tooltip("Enables component caching to avoid repeated GetComponent calls during frequent raycasts. " +
                  "Improves performance when raycasting every frame, especially with alpha-based penetration.")]
         public bool cacheComponent = true;
@@ -161,7 +161,7 @@ namespace RaycastPro.RaySensors
                         return true;
                     }
                 }
-                
+
                 // آلفا شفاف است → ادامه Raycast
                 var traveled = hit.distance + offset;
                 remainingLength -= traveled;
@@ -210,7 +210,7 @@ namespace RaycastPro.RaySensors
 
             _p = transform.position;
             Gizmos.color = Performed ? DetectColor : DefaultColor;
-            
+
             if (IsManuelMode)
             {
                 GizmoColor = DefaultColor;

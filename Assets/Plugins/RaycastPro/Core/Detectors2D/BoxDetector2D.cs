@@ -23,13 +23,13 @@
             get => difference;
             set => difference = new Vector2(Mathf.Clamp(value.x, 0, size.x), Mathf.Clamp(value.y, 0, size.y));
         }
-        
+
         [SerializeField] private bool limited;
         [SerializeField] private int limitCount = 3;
 
         [SerializeField]
         public bool local;
-        
+
         public bool Limited
         {
             get => limited;
@@ -73,7 +73,7 @@
             if (limited)
             {
                 for (var i = 0; i < colliders.Length; i++) colliders[i] = null;
-                Physics2D.OverlapBoxNonAlloc(pos2D, size,  angle, colliders, detectLayer.value, MinDepth, MaxDepth);    
+                Physics2D.OverlapBoxNonAlloc(pos2D, size,  angle, colliders, detectLayer.value, MinDepth, MaxDepth);
             }
             else
             {
@@ -88,9 +88,9 @@
             bounds = new Bounds(pos, size.ToDepth(delta));
             boundsMin = new Bounds(pos, difference.ToDepth(delta));
             #endregion
-            
+
             Clear();
-            
+
             if (IsIgnoreSolver)
             {
                 foreach (var c in colliders)
@@ -112,7 +112,7 @@
                     TDP = DetectFunction(c);
                     _tPoint = transform.InverseTransformDirection(TDP.To2D() - Position2D).ToDepth();
                     if (!bounds.Contains(_tPoint) || boundsMin.Contains(_tPoint)) continue;
-                    
+
                     _blockHit = Physics2D.Linecast(transform.position, TDP, blockLayer.value, MinDepth, MaxDepth);
 #if UNITY_EDITOR
                     PassGate(c, TDP, _blockHit);
@@ -124,7 +124,7 @@
                     }
                 }
             }
-            
+
 #if UNITY_EDITOR
             GizmoGate += () =>
             {
@@ -137,7 +137,7 @@
 
 #if UNITY_EDITOR
         internal override string Info => "A sophisticated 2D volumetric sensor that defines a hollow, frame-like detection area. It operates in two stages: a broad-phase `OverlapBox` to gather potential candidates, followed by a precise narrow-phase test that verifies if targets not only lie within the hollow volume but also have a clear line-of-sight. The sensor is highly versatile, supporting both world-aligned (AABB) and locally-oriented (OBB) detection modes. It also includes a non-allocating mode to optimize performance and prevent garbage collection, making it a powerful tool for complex 2D perception scenarios."+ HAccurate + HIPulse + HCDetector + HLOS_Solver + HRotatable + HINonAllocator;
-        
+
         private Vector3 boundsSizeZ0, boundsMinSizeZ0, sizeY, sizeX;
         private Matrix4x4 matrix;
 
@@ -147,7 +147,7 @@
             EditorUpdate();
             if (IsIgnoreSolver) return;
             DrawFocusLine();
-            
+
             Gizmos.color = HelperColor;
             boundsSizeZ0 = bounds.size.ToDepth() / 2;
             boundsMinSizeZ0 = boundsMin.size.ToDepth() / 2;
@@ -223,7 +223,7 @@
             {
                 InformationField(PanelGate);
             }
-            
+
         }
 #endif
     }

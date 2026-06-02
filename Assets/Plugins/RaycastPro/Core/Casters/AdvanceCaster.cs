@@ -9,16 +9,16 @@
     using UnityEditor;
     using Editor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Casters/" + nameof(AdvanceCaster))]
     public sealed class AdvanceCaster : GunCaster<Bullet, Collider, RaySensor>
     {
         [SerializeField]
         public RaySensor[] raySensors = Array.Empty<RaySensor>();
-        
+
         [Tooltip("current ray (Gun Barrel) in shooting.")]
         public int rayIndex;
-        
+
         [Tooltip("Ping Phong Phase")]
         public bool PPhase;
 
@@ -76,7 +76,7 @@
             foreach (var sensor in raySensors)
             {
                 if (!sensor) continue;
-                
+
                 position = sensor ? sensor.Base : transform.position;
                 DrawCapLine(position, position + sensor.TipDirection);
             }
@@ -99,13 +99,13 @@
                     CPingPong.ToContent(TPingPong),
                 });
                 EndVertical();
-                
+
                 GunField(_so);
             }
 
             if (hasGeneral) GeneralField(_so);
-            
-            if (hasEvents) 
+
+            if (hasEvents)
             {
                 EventFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(EventFoldout, CEvents.ToContent(TEvents),
                     RCProEditor.HeaderFoldout);

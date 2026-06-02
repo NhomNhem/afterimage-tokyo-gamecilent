@@ -13,7 +13,7 @@
     {
 
         protected RaycastHit2D _blockHit;
-        
+
         public Collider2DEvent onDetectCollider;
         public Collider2DEvent onNewCollider;
         public Collider2DEvent onLostCollider;
@@ -21,26 +21,26 @@
         public Collider2D[] PreviousColliders { get; protected set; } = Array.Empty<Collider2D>();
         protected readonly Dictionary<Collider2D, RaycastHit2D> detectedLOSHits = new Dictionary<Collider2D, RaycastHit2D>();
         public Dictionary<Collider2D, RaycastHit2D> DetectedLOSHits => detectedLOSHits;
-        
-        
+
+
         public Collider2D[] ignoreList = Array.Empty<Collider2D>();
-        
+
         /// <summary>
         /// This will find Smart Solver Point, Setup in: (OnEnable)
         /// </summary>
         protected Func<Collider2D, Vector2> DetectFunction;
-        
+
         public override bool Performed
         {
             get => DetectedColliders.Any(); protected set {}
-            
+
         }
-        
+
         #region Methods
         public Collider2D FirstMember => DetectedColliders.FirstOrDefault();
 
         public Collider2D LastMember => DetectedColliders.LastOrDefault();
-        
+
         /// <summary>
         /// It will calculate nearest collider based on current detected colliders on detector.
         /// </summary>
@@ -78,15 +78,15 @@
             }
         }
         #endregion
-        
+
         protected void Start() // Refreshing
         {
             PreviousColliders = Array.Empty<Collider2D>();
             DetectedColliders = new List<Collider2D>();
         }
-        
+
         protected float _tDis;
-        
+
         [Tooltip("This option is considered for optimization and limits the detection point in the bounds of a cube.")]
         public bool boundsSolver;
         [Tooltip("If selected, the detection point will be mounted on Collider Bounds Center. otherwise on transform.position.")]
@@ -224,9 +224,9 @@
             }
             return c => c.transform.position;
         }
-        
+
         protected Vector3 BoundsCenter(Collider2D _c) => boundsCenter ? _c.bounds.center : _c.transform.position;
-        
+
 #if UNITY_EDITOR
         protected readonly string[] CEventNames = {"onDetectCollider", "onNewCollider", "onLostCollider"};
         private void OnEnable()
@@ -250,7 +250,7 @@
             RCProEditor.DrawSerializedList(_so.FindProperty(nameof(ignoreList)));
             EndVertical();
         }
-        
+
         protected void SolverField(SerializedObject _so)
         {
             BaseSolverField(_so, () =>
@@ -261,7 +261,7 @@
                     CBlockLayer.ToContent(TBlockLayer));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(boundsSolver)));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(collectLOS)));
-                
+
                 if (IsPivotSolver)
                 {
                     EditorGUILayout.PropertyField(_so.FindProperty(nameof(boundsCenter)));
@@ -272,13 +272,13 @@
                     EditorGUILayout.PropertyField(_so.FindProperty(nameof(focusPointOffset)),
                         CFocusPoint.ToContent(TFocusPoint));
                 }
-                
+
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(checkLineOfSight)),
                     CCheckLineOfSight.ToContent(TCheckLineOfSight));
 
                 GUI.enabled = checkLineOfSight;
 
-                GUI.enabled = true; 
+                GUI.enabled = true;
             });
         }
 #endif

@@ -13,7 +13,7 @@
     public sealed class ArcRay2D : PathRay2D, IRadius
     {
         public int segments = 5;
-        
+
         public float elapsedTime = 5f;
 
         [SerializeField] private float radius = .1f;
@@ -55,7 +55,7 @@
         }
 
 #if UNITY_EDITOR
-        
+
         internal override string Info => "A procedural path sensor that simulates and predicts a ballistic trajectory. It generates a parabolic arc based on the classical kinematic equation for projectile motion, using an initial launch direction and a constant acceleration force (to simulate gravity). The component then performs a cast along this entire predicted flight path to detect future collisions. This makes it an ideal tool for visualizing aiming arcs for thrown objects like grenades, or for AI systems to calculate projectile impact points."
                                          + HAccurate + HDirectional + HPathRay + HIRadius;
         internal override void OnGizmos()
@@ -73,13 +73,13 @@
             if (hasMain)
             {
                 DirectionField(_so);
-                
+
                 BeginHorizontal();
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(velocity)),
                     CVelocity.ToContent(CVelocity));
                 LocalField(_so.FindProperty(nameof(velocityLocal)));
                 EndHorizontal();
-                
+
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(segments)),
                     CSegments.ToContent(TSegments));
                 segments = Mathf.Max(1, segments);

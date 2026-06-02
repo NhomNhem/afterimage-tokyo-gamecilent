@@ -7,7 +7,7 @@
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Utility/" + nameof(RayStamp))]
     public sealed class RayStamp : BaseUtility
     {
@@ -29,7 +29,7 @@
         [SerializeField] internal AxisRun syncStamp = new AxisRun();
 
         private Vector3 _direction;
-        
+
         protected override void OnCast()
         {
             if (raySensor)
@@ -40,7 +40,7 @@
             else if (raySensor2D)
             {
                 if (AutoHide) stamp.gameObject.SetActive(raySensor2D.Performed);
-                UpdateStamp(); 
+                UpdateStamp();
             }
         }
 
@@ -75,7 +75,7 @@
         public void UpdateStamp()
         {
             if (!stamp) return;
-            
+
             if (raySensor)
             {
                 if (raySensor.cloneRaySensor && raySensor.cloneRaySensor.enabled) return;
@@ -90,7 +90,7 @@
                 _tLength = TrueLength2D;
                 _direction = stamp.forward;
             }
-            
+
             switch (weightType)
             {
                 case WeightType.Clamp:
@@ -105,9 +105,9 @@
                 }
                     break;
             }
-            
+
             ApplyPosition(_tDistance);
-            
+
             if (syncStamp.syncAxis)
             {
                 syncStamp.SyncAxis(stamp, _direction);
@@ -136,8 +136,8 @@
                 {
                     EditorGUILayout.PropertyField(_so.FindProperty(nameof(raySensor2D)));
                 }
-                
-                
+
+
                 WeightField(_so.FindProperty(nameof(weightType)),
                     _so.FindProperty(nameof(weight)),
                     _so.FindProperty(nameof(distance)),
@@ -149,7 +149,7 @@
                 BaseField(_so);
             }
         }
-        
+
         private void StampField(SerializedObject _so)
         {
             if (stamp) BeginVerticalBox();

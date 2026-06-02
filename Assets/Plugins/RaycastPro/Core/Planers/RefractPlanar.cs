@@ -55,10 +55,10 @@ namespace RaycastPro.Planers
             clone = sensor.cloneRaySensor;
             if (!clone) return;
             if (clone.liner) clone.liner.enabled = sensor.liner.enabled;
-            
+
             GetForward(sensor, out forward);
             forward *= -1;
-            
+
             ApplyLengthControl(sensor);
             clone.transform.position = sensor.hit.point;
             look = Quaternion.AngleAxis(sideAngle, Vector3.forward) * Quaternion.AngleAxis(refractAngle, Vector3.right) * forward;

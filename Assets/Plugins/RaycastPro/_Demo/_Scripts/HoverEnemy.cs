@@ -21,7 +21,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
         }
         public ParticleSystem explosionEffect;
         public ParticleSystem reviveEffect;
-    
+
         private MeshRenderer _meshRenderer;
         private static Color green = new Color(0.24f, 1f, 0.17f);
         private static Color red = new Color(1f, 0.12f, 0.13f);
@@ -63,7 +63,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
             {
                 Instantiate(reviveEffect, transform.position, transform.rotation);
             }
-        
+
             gameObject.SetActive(true);
             transform.position = startPosition;
             transform.rotation = startRotation;
@@ -78,13 +78,13 @@ namespace Plugins.RaycastPro.Demo.Scripts
                 {
                     Instantiate(explosionEffect, transform.position, transform.rotation);
                 }
-        
+
                 gameObject.SetActive(false);
-        
+
                 GunSwap.singleton.Revive(this, 10);
             }
         }
-    
+
         public void TakeDamage(float amount)
         {
             Hp -= amount;

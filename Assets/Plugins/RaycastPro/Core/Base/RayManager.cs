@@ -37,7 +37,7 @@ namespace RaycastPro
         protected void Reset()
         {
             Refresh();
-            
+
             styleH = new GUIStyle
             {
                 margin = new RectOffset(0, 0, 4, 4),
@@ -57,23 +57,23 @@ namespace RaycastPro
         private GUIStyle styleH, styleM;
         protected override void OnCast()
         {
-            
+
         }
-        
+
 
 
 #if UNITY_EDITOR
-        
+
 
         internal override string Info =>
             "Ray Manager is a control and orchestration component that automatically detects and manages all RaycastCore components in its child hierarchy.\n\n" +
             "It does not perform raycasts itself. Instead, it acts as a centralized controller, allowing you to enable, disable, test, debug, and visualize multiple rays from a single Inspector panel.\n\n" +
             "Use this component when you need to coordinate or debug multiple ray-based systems together, such as layered detection, compound ray logic, or grouped ray behaviors."
             + HUtility + HDependent;
-        
+
         internal override void OnGizmos()
         { }
-        
+
         [SerializeField]
         private bool showMain = true;
         [SerializeField]
@@ -138,7 +138,7 @@ namespace RaycastPro
         }
 
         #endregion
-     
+
 
 
 internal override void EditorPanel(

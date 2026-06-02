@@ -38,9 +38,9 @@
             if (direction.y != 0)
             {
 #if UNITY_2021_2
-                mousePoint += local ? transform.up * direction.y : Vector2.up * direction.y;  
+                mousePoint += local ? transform.up * direction.y : Vector2.up * direction.y;
 #else
-                mousePoint += local ? transform.up * direction.y : Vector3.up * direction.y;  
+                mousePoint += local ? transform.up * direction.y : Vector3.up * direction.y;
 #endif
 
             }
@@ -94,7 +94,7 @@
             if (hasEvents) EventField(_so);
             if (hasInfo) HitInformationField();
         }
-        
+
         private new static bool InEditMode => IsSceneView || !Application.isPlaying;
 #endif
 

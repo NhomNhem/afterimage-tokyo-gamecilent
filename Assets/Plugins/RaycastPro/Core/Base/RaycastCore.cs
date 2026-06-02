@@ -13,7 +13,7 @@ namespace RaycastPro
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Rendering;
-    
+
 #if UNITY_EDITOR
     using Editor;
     using UnityEditor;
@@ -26,7 +26,7 @@ namespace RaycastPro
     internal interface IRadius
     {
         /// <summary>
-        /// Radius area control as well as all radii use the "IRadius" interface. 
+        /// Radius area control as well as all radii use the "IRadius" interface.
         /// </summary>
         float Radius { get; set; }
     }
@@ -34,12 +34,12 @@ namespace RaycastPro
     {
         void OnSceneGUI();
     }
-    
+
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class IsNewAttribute : Attribute { }
-    
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public abstract class RaycastCore : MonoBehaviour
     {
@@ -82,7 +82,7 @@ namespace RaycastPro
             /// The free amount that can be included beyond the enclosure.
             /// </summary>
             Distance,
-            
+
             /// <summary>
             /// Adjust target Offset.
             /// </summary>
@@ -139,7 +139,7 @@ namespace RaycastPro
             public bool syncAxis;
             [SerializeField]
             public bool flipAxis;
-            
+
             public void SyncAxis(Transform _t, Vector3 forward)
             {
                 switch (axis)
@@ -155,7 +155,7 @@ namespace RaycastPro
                         break;
                 }
             }
-            
+
             /// <summary>
             /// Damped Sync Only Support forward for now
             /// </summary>
@@ -165,14 +165,14 @@ namespace RaycastPro
             /// <param name="deltaTime"></param>
             public void DampedSyncAxis(Transform _t, Vector3 forward, float dampSharpness = 15, in float deltaTime = .02f)
             {
-                _t.rotation = Quaternion.Lerp(_t.rotation, 
+                _t.rotation = Quaternion.Lerp(_t.rotation,
                     Quaternion.LookRotation(forward.normalized * (flipAxis ? -1 : 1), _t.up)
                     , 1 - Mathf.Exp(-dampSharpness * deltaTime));
             }
 
 
 #if UNITY_EDITOR
-            
+
             private static GUIContent[] tips = new GUIContent[] {"X".ToContent(), "Y".ToContent(), "Z".ToContent()};
             internal void EditorPanel(SerializedProperty axisRunProperty, bool withBox = false)
             {
@@ -196,7 +196,7 @@ namespace RaycastPro
             }
 #endif
         }
-        
+
         protected static Vector3 GetPointOnLine(Vector3 p1, Vector3 p2, Vector3 point)
         {
             return p1 + Vector3.ClampMagnitude(Vector3.Project(point - p1, p2 - p1), (p2 - p1).magnitude);
@@ -215,7 +215,7 @@ namespace RaycastPro
         }
 
         #region Public Methods
-        
+
         public void RCProLog(string message)
         {
 #if UNITY_EDITOR
@@ -226,7 +226,7 @@ namespace RaycastPro
         public void SetInfluence(float value) => Influence = value;
 
         public void AddInfluence(float value) => Influence += value;
-        
+
         /// <summary>
         /// Add influence based on fixed deltaTime
         /// </summary>
@@ -265,7 +265,7 @@ namespace RaycastPro
 
         protected bool InLayer(GameObject obj) => detectLayer == (detectLayer | (1 << obj.layer));
         protected bool InLayer(GameObject obj, LayerMask layerMask) => layerMask == (layerMask | (1 << obj.layer));
-        
+
         protected abstract void OnCast();
 
         public void DestroySelf(float delay) => Destroy(gameObject, delay);
@@ -302,7 +302,7 @@ namespace RaycastPro
             float MaxDepth)
         {
             output.Clear();
-            
+
             if (radius > 0)
             {
                 for (var i = 0; i < path.Count - 1; i++)
@@ -324,7 +324,7 @@ namespace RaycastPro
         protected void PathCastAll(List<Vector3> path, ref List<RaycastHit> output, float radius = 0)
         {
             output.Clear();
-            
+
             if (radius > 0)
             {
                 for (var i = 0; i < path.Count - 1; i++)
@@ -348,7 +348,7 @@ namespace RaycastPro
             var points = new Vector3[closed ? count + 1 : count];
 
             var step = 360f / count;
-            
+
             for (var i = 0; i < count; i++)
             {
                 var pos = Quaternion.AngleAxis(step * i, normal) * (tangent * radius) + _p;
@@ -360,7 +360,7 @@ namespace RaycastPro
 
             return points;
         }
-        
+
         protected static void CircularPointsNonAllocator(Vector3[] points, Vector3 position, float radius, Vector3 forward, Vector3 right)
         {
             var count = points.Length;
@@ -441,7 +441,7 @@ namespace RaycastPro
 
             return dst;
         }
-        
+
 #if UNITY_EDITOR
         internal bool information;
         /// <summary>
@@ -450,7 +450,7 @@ namespace RaycastPro
         protected internal bool IsManuelMode => !enabled && IsPlaying;
 
         internal virtual string Info { get; } = "None";
-        
+
         internal static string GetInfo(Type type)
         {
             var prop = type.GetProperty(
@@ -464,16 +464,16 @@ namespace RaycastPro
             var instance = FormatterServices.GetUninitializedObject(type);
             return prop.GetValue(instance) as string ?? "no Information";
         }
-        
-        
+
+
         protected bool EventFoldout = false;
 
         #region Const
 
         #region Strings
-        
+
         internal static bool DarkMode => EditorGUIUtility.isProSkin;
-        
+
         protected static string HAccurate => RCProPanel.DarkMode ? " <color=#2BC6D2>#Accurate</color>" : " <color=#19838C>#Accurate</color>";
         protected static string HUtility => RCProPanel.DarkMode ? " <color=#CB83FF>#Utility</color>" : " <color=#875CB8>#Utility</color>";
         protected static string HDirectional => RCProPanel.DarkMode ? " <color=#D571FF>#Directional</color>": " <color=#985DBF>#Directional</color>";
@@ -491,7 +491,7 @@ namespace RaycastPro
         protected static string HINonAllocator => RCProPanel.DarkMode ? " <color=#87B06F>#NonAllocator</color>" : " <color=#5B7E47>#NonAllocator</color>";
         protected static string HScalable => RCProPanel.DarkMode ? " <color=#B1976C>#Scalable</color>" : " <color=#87704D>#Scalable</color>";
         protected static string HRotatable => RCProPanel.DarkMode ? " <color=#D18EC0>#Rotatable</color>" : " <color=#7A4E69>#Rotatable</color>";
-        
+
 
         //private Color col = new Color(0.53f, 0.69f, 0.44f);
 
@@ -515,8 +515,8 @@ namespace RaycastPro
 
         protected const string CCheckLineOfSight = "Check Line Of Sight";
         protected const string TCheckLineOfSight = "With this option active, the line of sight and blocking objects will be checked. Turning it off will help increase performance.";
-        
-        
+
+
         protected const string CBlockSolverOffset = "Block Solver Offset";
         protected const string TBlockSolverOffset =
             "If your view is different from the center point of the detector, you can change its offset and see the result.";
@@ -556,10 +556,10 @@ namespace RaycastPro
 
         protected const string CSequenceOnTip = "Sequence On Tip";
         protected const string TSequenceOnTip = "This option causes the chain of rays to be placed behind each other. Be sure to click this option after combining the Rays and making sure they are not duplicated.";
-        
+
         protected const string CPathCast = "Path Cast";
         protected const string TPathCast = "This option forces Ray to perform Raycast physical calculations, if you only need Path, it is better to keep it off just to improve performance.";
-            
+
         protected const string CSpace = "Space";
         protected const string TSpace = "\nWorld: The world location accepts general directions and rotation has no effect on it." +
                                         "\nLocal: The local position will change depending on the rotation of the object.";
@@ -572,16 +572,16 @@ namespace RaycastPro
         protected const string CRemove = "R";
         protected const string TRemove = "Remove";
 
-        
+
         protected const string COuter = "Outer";
         protected const string TOuter = "It will clone ray same as received ray if this param null.";
 
         protected const string CBaseDirection = "Base Dircetion";
         protected const string TBaseDirection = "The output angle of Planar can be selected according to one of the following formulas.";
-        
+
         protected const string CPoolManager = "Pool Manager";
         protected const string TPoolManager = "Automatically instantiate into this object.";
-        
+
         protected const string CArrayCasting = "Array Casting";
         protected const string TArrayCasting = "This option keeps the number of bullets produced in a limited volume of the array to prevent the continuous production of Garbage. You will also have access to the array of bullets fired. To change the bullets of a different type, just use a different and desired Bullet ID so that they are automatically changed.";
 
@@ -612,13 +612,13 @@ namespace RaycastPro
 
         protected const string CRadius = "Radius";
         protected const string TRadius = "Radius";
-        
+
 
         protected const string CClump = "Clump";
         protected const string CClumpX = "ClumpX";
         protected const string CClumpY = "ClumpY";
         protected const string CClumpZ = "ClumpZ";
-        
+
         protected const string CDigitStep = "DigitStep";
 
         protected const string CMinRadius = "Min Radius";
@@ -635,7 +635,7 @@ namespace RaycastPro
 
         protected const string CRefreshTime = "Refresh Time";
         protected const string CCacheTime = "Cache Time";
-        
+
         protected const string CExtents = "Extents";
 
         protected const string CGizmos = "Gizmos Update";
@@ -717,7 +717,7 @@ namespace RaycastPro
         protected static float LineSize = .4f;
 
         #endregion
-        
+
         internal enum GizmosMode
         {
             Auto,
@@ -725,7 +725,7 @@ namespace RaycastPro
             Fix,
             Off,
         }
-        
+
         public RCPROColorProfile colorProfile;
 
         [SerializeField] internal GizmosMode gizmosUpdate = GizmosMode.Auto;
@@ -761,7 +761,7 @@ namespace RaycastPro
         {
             set => Gizmos.color = Handles.color = value.Alpha(alphaCharge);
         }
-        
+
         /// <summary>
         /// Set Gizmo And Handles Color Together;
         /// </summary>
@@ -780,7 +780,7 @@ namespace RaycastPro
         protected void DrawCross(Vector3 point, Vector3 normal)
         {
             var cross = Vector3.Cross(point - transform.position+new Vector3(0.01f,0.01f,0.01f), normal).normalized;
-            
+
             Handles.DrawLine(point - cross * DotSize, point + cross * DotSize);
             var angleAxis = Quaternion.AngleAxis(90f ,normal) * cross;
             Handles.DrawLine(point - angleAxis * DotSize, point + angleAxis * DotSize);
@@ -788,7 +788,7 @@ namespace RaycastPro
         protected void DrawNormal(Vector3 point, Vector3 normal, string label = "",  float offset = .1f, float radius = .4f)
         {
             Handles.color = HelperColor;
-            
+
             Handles.DrawWireDisc(point, normal, radius > 0 ? radius : DiscSize);
             Handles.DrawLine(point, point + normal * DiscSize);
             if (RCProPanel.ShowLabels && label != "")
@@ -796,7 +796,7 @@ namespace RaycastPro
                 Handles.Label(point, label, RCProEditor.HeaderStyle);
             }
         }
-        
+
         protected void DrawNormal2D(RaycastHit2D Hit, float depth)
         {
             if (!Hit) return;
@@ -869,7 +869,7 @@ namespace RaycastPro
                 Transform = hit.transform
             };
         }
-        
+
         protected static BlockContext From(NavMeshHit hit)
         {
             return new BlockContext
@@ -946,8 +946,8 @@ namespace RaycastPro
         }
 
         #endregion
-  
-        
+
+
         protected static void DrawCapsuleLine(Vector3 p1, Vector3 p2, float radius, float height = 0f, bool dotted = false, bool forwardS = true, bool backS = true, Transform _t = default)
         {
             var direction = (p2 - p1).normalized;
@@ -997,13 +997,13 @@ namespace RaycastPro
 
                     DrawLine(p1 + heightUp - projectDirection * radius, p1 - heightUp - projectDirection * radius, dotted);
                     DrawLine(p2 + heightUp + projectDirection * radius, p2 - heightUp + projectDirection * radius, dotted);
-                
+
                     if (backS)
                     {
                         Handles.DrawWireArc(p1 + heightUp, direction, tRight, 180, radius);
                         Handles.DrawWireArc(p1 + heightUp, height > 0 ? up : -up, tRight, 180, radius);
                         Handles.DrawWireArc(p1 + heightUp, dotZ ? tRight : -tRight, -projectDirection, cAngle, radius);
-                        //     
+                        //
                         Handles.DrawWireArc(p1 - heightUp, direction, tRight, -180, radius);
                         Handles.DrawWireArc(p1 - heightUp, height > 0 ? up : -up, tRight, 180, radius);
                         Handles.DrawWireArc(p1 - heightUp, dotZ ? tRight : -tRight, -projectDirection,
@@ -1075,9 +1075,9 @@ namespace RaycastPro
         }
         protected void DrawCircleRay(Vector3 p1, Vector3 _dir, Vector3 _lDir,bool local,  float radius = 0, float height = 0)
         {
-            
+
             _lDir = _lDir.To2D().normalized * _dir.magnitude;
-            
+
             var p2 = (p1 + _lDir);
             Vector3 up;
 
@@ -1088,9 +1088,9 @@ namespace RaycastPro
                 if (local && Vector3.Dot(up, Vector3.up) < 0) up = -up;
 
                 var halfHeight = height / 2;
-                
+
                 var side = Vector3.Dot(transform.right, Vector3.right) > 0 && _dir.x > 0 ? 1:-1;
-                
+
                 var right = (local ? Vector3.Cross(up, Vector3.forward) : Vector3.right) * radius*side;
 
                 var ATAN = -Vector2.SignedAngle(_dir, Vector3.right * _dir.x);
@@ -1102,35 +1102,35 @@ namespace RaycastPro
                 var pFT = p2 + right + up * halfHeight;
 
                 DrawLineZTest(pBB, pBT);
-                
+
                 DrawLineZTest(pFB, pFT);
 
                 var angleOffsetPointUp = Quaternion.AngleAxis(Angle, Vector3.forward) * up * radius;
                 var angleOffsetPointDown = Quaternion.AngleAxis(Angle, Vector3.forward) * -up * radius;
-                
+
                 var HH = up*halfHeight;
-                
+
                 DrawLineZTest(p1+angleOffsetPointUp+HH, p2+angleOffsetPointUp+HH);
                 DrawLineZTest(p1+angleOffsetPointDown-HH, p2+angleOffsetPointDown-HH);
 
 
                 Handles.DrawWireArc(p1 + HH, Vector3.forward, -right, -90*side + Angle, radius);
                 Handles.DrawWireArc(p1 - HH, Vector3.forward, -right, 90*side + Angle, radius);
-                
+
                 Handles.DrawWireArc(p2 + HH, Vector3.forward, right, 90*side + Angle, radius);
                 Handles.DrawWireArc(p2 - HH, Vector3.forward, right, -90*side + Angle, radius);
             }
             else
-            {   
+            {
                 up = Vector3.Cross(_lDir, Vector3.forward).normalized * radius;
-                
+
                 DrawLineZTest(p1+up, p2+up);
-            
+
                 DrawLineZTest(p1-up, p2-up);
-                
+
                 Handles.DrawWireArc(p1, Vector3.forward, -_lDir, 90, radius);
                 Handles.DrawWireArc(p1, Vector3.forward, -_lDir, -90, radius);
-                
+
                 Handles.DrawWireArc(p2, Vector3.forward, _lDir, 90, radius);
                 Handles.DrawWireArc(p2, Vector3.forward, _lDir, -90, radius);
             }
@@ -1160,7 +1160,7 @@ namespace RaycastPro
             Handles.zTest = CompareFunction.LessEqual;
 
             draw();
-            
+
             Handles.zTest = CompareFunction.Always;
         }
         protected static void DrawZTest(Action draw)
@@ -1188,7 +1188,7 @@ namespace RaycastPro
                 DrawZTest(() => Handles.DrawLine(p1, p2), Handles.color.Alpha(RCProPanel.alphaAmount), Handles.color);
             }
         }
-        
+
         protected static void DrawEllipse(Vector3 center, Vector3 forwardDirection, Vector3 up, float xAxis = 3f, float yAxis = 3f, int resolution = 30)
         {
             var ellipsePoints = new Vector3[resolution];
@@ -1199,7 +1199,7 @@ namespace RaycastPro
                 var angle = i * Mathf.PI * 2 / resolution; // زاویه
                 var x = xAxis * Mathf.Cos(angle); // محاسبه مختصات x
                 var y = yAxis * Mathf.Sin(angle); // محاسبه مختصات y
-            
+
                 // تنظیم نقطه در راستای محور Forward
                 var point = center + Quaternion.LookRotation(forwardDirection, up) * new Vector3(x, y);
                 ellipsePoints[i] = point;
@@ -1223,13 +1223,13 @@ namespace RaycastPro
                 Handles.DrawLine(p1, p2);
             }
         }
-        
+
         protected internal static void DrawThickLine(Vector3 p1, Vector3 p2, float thickness = 0f) => Handles.DrawLine(p1, p2, thickness);
         protected internal static void DrawDottedLine(Vector3 p1, Vector3 p2) => Handles.DrawDottedLine(p1, p2, StepSizeLine);
         protected static void DrawBox(Transform _t, Vector3 size, float zOffset = 0, bool local = true)
         {
             var pos = _t.position;
-            
+
             var right = local ? _t.right : Vector3.right;
             var forward = local ? _t.forward : Vector3.forward;
             var up = local ? _t.up : Vector3.up;
@@ -1253,22 +1253,22 @@ namespace RaycastPro
             var right = local ? Vector3.ProjectOnPlane(p.right, Vector3.forward).normalized : Vector3.right;
             var forward = Vector3.forward;
             var up = Vector3.Cross(right, forward);
-            
+
             var rightSize = right * size.x;
             var sizeX = rightSize / 2;
             var upSize = up * size.y;
             var sizeY = upSize / 2;
-            
+
             Gizmos.DrawRay((pos - sizeX - sizeY).ToDepth(minDepth), upSize.ToDepth());
             Gizmos.DrawRay((pos - sizeX - sizeY).ToDepth(minDepth), rightSize.ToDepth());
             Gizmos.DrawRay((pos + sizeX + sizeY).ToDepth(minDepth), -upSize.ToDepth());
             Gizmos.DrawRay((pos + sizeX + sizeY).ToDepth(minDepth), -rightSize.ToDepth());
-            
+
             Gizmos.DrawRay((pos - sizeX - sizeY).ToDepth(maxDepth), upSize.ToDepth());
             Gizmos.DrawRay((pos - sizeX - sizeY).ToDepth(maxDepth), rightSize.ToDepth());
             Gizmos.DrawRay((pos + sizeX + sizeY).ToDepth(maxDepth), -upSize.ToDepth());
             Gizmos.DrawRay((pos + sizeX + sizeY).ToDepth(maxDepth), -rightSize.ToDepth());
-            
+
             DrawLineZTest((pos - sizeX - sizeY).ToDepth(minDepth), (pos - sizeX - sizeY).ToDepth(maxDepth), true);
             DrawLineZTest((pos + sizeX - sizeY).ToDepth(minDepth), (pos + sizeX - sizeY).ToDepth(maxDepth), true);
             DrawLineZTest((pos - sizeX + sizeY).ToDepth(minDepth), (pos - sizeX + sizeY).ToDepth(maxDepth), true);
@@ -1300,19 +1300,19 @@ namespace RaycastPro
             if (boxes)
             {
                 var matrix = Gizmos.matrix;
-                
+
                 Gizmos.matrix = Matrix4x4.TRS(p1, transform.rotation, Vector3.one);
                 Gizmos.DrawWireCube(Vector3.zero, extents);
-            
+
                 Gizmos.matrix = Matrix4x4.TRS(p2, transform.rotation, Vector3.one);
                 Gizmos.DrawWireCube(Vector3.zero, extents);
-            
+
                 Gizmos.matrix = matrix;
             }
 
             DrawLineZTest(p1 - halfExtentsX + halfExtentsY - halfExtentsZ,
                 p2 - halfExtentsX + halfExtentsY - halfExtentsZ, dotted);
-            
+
             DrawLineZTest(p1 + halfExtentsX + halfExtentsY - halfExtentsZ,
                 p2 + halfExtentsX + halfExtentsY - halfExtentsZ, dotted);
             DrawLineZTest(p1 - halfExtentsX - halfExtentsY + halfExtentsZ,
@@ -1323,12 +1323,12 @@ namespace RaycastPro
                 p2 - halfExtentsX - halfExtentsY - halfExtentsZ, dotted);
             DrawLineZTest(p1 + halfExtentsX - halfExtentsY - halfExtentsZ,
                 p2 + halfExtentsX - halfExtentsY - halfExtentsZ, dotted);
-                
+
             DrawLineZTest(p1 - halfExtentsX + halfExtentsY + halfExtentsZ,
                 p2 - halfExtentsX + halfExtentsY + halfExtentsZ, dotted);
             DrawLineZTest(p1 + halfExtentsX + halfExtentsY + halfExtentsZ,
                 p2 + halfExtentsX + halfExtentsY + halfExtentsZ, dotted);
-            
+
             //Advanced Box Ray not Supporting for now
             //
             // var dir = p2 - p1;
@@ -1371,17 +1371,17 @@ namespace RaycastPro
             //         p2 - halfExtentsX - halfExtentsY - halfExtentsZ, dotted);
             //     DrawLine(p1 + halfExtentsX - halfExtentsY - halfExtentsZ,
             //         p2 + halfExtentsX - halfExtentsY - halfExtentsZ, dotted);
-            //     
+            //
             //     DrawLine(p1 - halfExtentsX + halfExtentsY + halfExtentsZ,
             //         p2 - halfExtentsX + halfExtentsY + halfExtentsZ, dotted);
             //     DrawLine(p1 + halfExtentsX + halfExtentsY + halfExtentsZ,
             //         p2 + halfExtentsX + halfExtentsY + halfExtentsZ, dotted);
-            //     
+            //
             //     if (dotX > 0)
             //     {
             //         DrawLine(p1 + halfExtentsX + halfExtentsY - halfExtentsZ,
             //             p2 + halfExtentsX + halfExtentsY - halfExtentsZ, dotted);
-            //         
+            //
             //         DrawLine(p1 - halfExtentsX - halfExtentsY + halfExtentsZ,
             //             p2 - halfExtentsX - halfExtentsY + halfExtentsZ, dotted);
             //
@@ -1390,7 +1390,7 @@ namespace RaycastPro
             //     {
             //         DrawLine(p1 - halfExtentsX + halfExtentsY - halfExtentsZ,
             //             p2 - halfExtentsX + halfExtentsY - halfExtentsZ, dotted);
-            //         
+            //
             //         DrawLine(p1 + halfExtentsX - halfExtentsY + halfExtentsZ,
             //             p2 + halfExtentsX - halfExtentsY + halfExtentsZ, dotted);
             //     }
@@ -1404,7 +1404,7 @@ namespace RaycastPro
             Handles.DrawLine(p1 + right, p1 - right);
             Handles.DrawLine(p2 + right, p2 - right);
         }
-      
+
         protected void DrawAdvancePath(List<Vector3> path, RaycastHit breakHit = default, float startRadius = 0, float radius = 0f,
             bool coneCap = false, bool dotted = false, bool drawSphere = false, int detectIndex = -1, Color color = default)
         {
@@ -1413,7 +1413,7 @@ namespace RaycastPro
             for (var i = 0; i < path.Count - 1; i++)
             {
                 var _tRad = Mathf.Lerp(startRadius, radius, (float) i / (path.Count-2));
-                
+
                 if (detectIndex != i) // in break index
                 {
                     if (detectIndex > -1) // with line detection
@@ -1503,9 +1503,9 @@ namespace RaycastPro
                         GizmoColor = DetectColor.Alpha(alphaCharge);
                         var breakOn = radius > 0 ? GetPointOnLine(path[i], path[i + 1], breakPoint) : breakPoint;
                         breakOn = breakOn.ToDepth(z);
-                        
+
                         DrawCircleLine(path[i], breakOn, radius, forawrdHemi: false);
-                        
+
                         GizmoColor = BlockColor.Alpha(alphaCharge);
                         DrawCircleLine(breakOn, path[i + 1], radius, backHemi: false);
                     }
@@ -1520,7 +1520,7 @@ namespace RaycastPro
             Handles.color = HelperColor.Alpha(alphaCharge);
             DrawCap(path.Last(), radius > 0 ? radius : DotSize * 2, path.LastDirection(Vector3.right));
         }
-        
+
         protected void DrawAdvancePath2D(List<Vector3> path, Vector3 breakPoint, bool isDetect = false,
             float startRadius = 0f, float radius = 0f, bool pointLabel = false, bool drawDisc = false, bool coneCap = false,
             bool dotted = false, int detectIndex = -1, float z = 0, Color _color = default)
@@ -1548,9 +1548,9 @@ namespace RaycastPro
                         GizmoColor = DetectColor.Alpha(alphaCharge);
                         var breakOn = radius > 0 || startRadius > 0 ? GetPointOnLine(path[i], path[i + 1], breakPoint) : breakPoint;
                         breakOn = breakOn.ToDepth(z);
-                        
+
                         DrawCircleLine(path[i], breakOn, _tRad, forawrdHemi: false);
-                        
+
                         GizmoColor = BlockColor.Alpha(alphaCharge);
                         DrawCircleLine(breakOn, path[i + 1], _tRad, backHemi: false);
                     }
@@ -1626,7 +1626,7 @@ namespace RaycastPro
         internal static void PropertyMaxIntField(SerializedProperty property,GUIContent label , int max = 0)
         {
             EditorGUILayout.PropertyField(property, label);
-            
+
             property.intValue = Mathf.Max(property.intValue, max);
         }
         internal static void PropertySliderField(SerializedProperty property, float leftValue, float rightValue, GUIContent label)
@@ -1658,11 +1658,11 @@ namespace RaycastPro
 
             EditorGUI.BeginChangeCheck();
             var newValue = EditorGUI.IntSlider(rect, label, property.intValue, leftValue, rightValue);
-   
+
             if (EditorGUI.EndChangeCheck())
             {
                 property.intValue = newValue;
-                
+
                 onChange?.Invoke(newValue);
             }
             EditorGUI.EndProperty();
@@ -1694,7 +1694,7 @@ namespace RaycastPro
             if (property.prefabOverride)
             {
                 var guiStyle = RCProEditor.HeaderStyle;
-                
+
                 guiStyle.fontStyle = FontStyle.Bold;
                 guiStyle.alignment = TextAnchor.UpperCenter;
 
@@ -1703,7 +1703,7 @@ namespace RaycastPro
             else
             {
                 var guiStyle = RCProEditor.HeaderStyle;
-                
+
                 guiStyle.fontStyle = FontStyle.Normal;
                 guiStyle.alignment = TextAnchor.UpperCenter;
 
@@ -1731,7 +1731,7 @@ namespace RaycastPro
                 style.fontStyle = FontStyle.Normal;
                 EditorGUILayout.LabelField(content, style, GUILayout.Width(15f));
             }
-            
+
             EditorGUILayout.PropertyField(localProp, GUIContent.none,
                 true, GUILayout.Width(15f));
         }
@@ -1752,7 +1752,7 @@ namespace RaycastPro
         {
             var h = _so.FindProperty("height");
             EditorGUILayout.PropertyField(h, CHeight.ToContent(CHeight));
-            h.floatValue = Mathf.Max(0, h.floatValue); 
+            h.floatValue = Mathf.Max(0, h.floatValue);
         }
         protected void ExtentsField(SerializedObject _so) => EditorGUILayout.PropertyField(_so.FindProperty("extents"), CExtents.ToContent(CExtents));
         // ReSharper disable Unity.PerformanceAnalysis
@@ -1794,7 +1794,7 @@ namespace RaycastPro
                     "Auto".ToContent("Show Gizmos when current 'Core' are running"), "Select".ToContent("Only Show gizmos when select object."),
                     "Fix".ToContent("Always show gizmos except when component is collapsed."), "Off".ToContent("Off")
                 };
-                
+
                 PropertyEnumField(_so.FindProperty("gizmosUpdate"), 4, label, tips);
                 EndVertical();
 
@@ -1829,7 +1829,7 @@ namespace RaycastPro
 #if UNITY_EDITOR
             alphaCharge = AlphaLifeTime;
 #endif
-            
+
             if (this is RaySensor rS)
             {
                 rS.RuntimeUpdate();
@@ -1852,7 +1852,7 @@ namespace RaycastPro
         protected void DirectionField(SerializedObject _so, string directionReference)
         {
             BeginHorizontal();
-            
+
             EditorGUILayout.PropertyField(_so.FindProperty(directionReference), CDirection.ToContent(TDirection),
                 true);
 
@@ -1863,7 +1863,7 @@ namespace RaycastPro
         protected static void WeightField(SerializedProperty weightType, SerializedProperty _weight, SerializedProperty distance, SerializedProperty offset)
         {
             BeginVerticalBox();
-            
+
             PropertyEnumField(weightType, 3, "Weight Type".ToContent(), new [] {"Clamp".ToContent(), CDistance.ToContent(CDistance), COffset.ToContent(COffset)});
 
             switch (weightType.enumValueIndex)
@@ -1885,9 +1885,9 @@ namespace RaycastPro
         internal static void InLabelWidth(Action layout, int width = 0)
         {
             var originalValue = EditorGUIUtility.labelWidth;
-            
+
             EditorGUIUtility.labelWidth = width;
-                    
+
             layout.Invoke();
 
             EditorGUIUtility.labelWidth = originalValue;
@@ -1985,15 +1985,15 @@ namespace RaycastPro
         private bool CheckParent(Transform current)
         {
             if (Selection.activeTransform == current) return true;
-            
+
             if (current.parent) return CheckParent(current.parent);
-            
+
             return false;
         }
         internal void OnDrawGizmosSelected()
         {
             if (!gameObject.activeInHierarchy) return;
-            
+
             if (gizmosUpdate == GizmosMode.Select)
             {
                 alphaCharge = 1;
@@ -2002,7 +2002,7 @@ namespace RaycastPro
         }
 
         #endregion
-        
+
         internal abstract void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true, bool hasEvents = true, bool hasInfo = true);
 #endif
     }

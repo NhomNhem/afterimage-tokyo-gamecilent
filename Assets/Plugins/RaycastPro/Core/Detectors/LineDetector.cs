@@ -19,7 +19,7 @@ namespace RaycastPro.Detectors
         public bool local = true;
 
         public Vector3 direction = Vector3.forward;
-        
+
         public override bool Performed
         {
             get => DetectedHits.Count > 0;
@@ -56,26 +56,26 @@ namespace RaycastPro.Detectors
             get => radius;
             set => radius = Mathf.Max(0,value);
         }
-        
+
         [SerializeField] private float height;
         public float Height
         {
             get => height;
             set => height = Mathf.Max(0, value);
         }
-        
+
         public Vector3 extents = new Vector3(.4f, .4f, 0f);
 
 #if UNITY_EDITOR
         private new void OnValidate()
         {
             nonAllocatedHits = new RaycastHit[limitCount];
-        }  
+        }
 #else
         private void OnEnable()
         {
             nonAllocatedHits = new RaycastHit[limitCount];
-        }  
+        }
 #endif
 
         public Vector3 LocalDirection => transform.TransformDirection(direction);
@@ -112,12 +112,12 @@ namespace RaycastPro.Detectors
                         }
                         break;
                     case RayType.Box:
-                        hitCount = Physics.BoxCastNonAlloc(transform.position, extents / 2, Direction.normalized, 
+                        hitCount = Physics.BoxCastNonAlloc(transform.position, extents / 2, Direction.normalized,
                             nonAllocatedHits, transform.rotation, direction.magnitude, detectLayer.value,
                             triggerInteraction);
                         break;
                 }
-                    
+
                 DetectedHits.Clear();
                 for (int i = 0; i < hitCount; i++)
                 {
@@ -177,12 +177,12 @@ namespace RaycastPro.Detectors
             {
                 foreach (var _member in PreviousHits.Except(DetectedHits)) onLostHit.Invoke(_member);
             }
-            
+
             foreach (var detectedHit in DetectedHits)
             {
                 DetectedColliders.Add(detectedHit.collider);
             }
-            
+
             EventPass();
             #endregion
         }
@@ -202,9 +202,9 @@ namespace RaycastPro.Detectors
             EditorUpdate();
 
             // === Gizmo Gate Are Written Here because of avoiding #IF UNITY EDITOR check in main class
-            
+
             GizmoColor = Performed ? DetectColor : DefaultColor;
-            
+
             switch (rayType)
             {
                 case RayType.Ray:
@@ -239,7 +239,7 @@ namespace RaycastPro.Detectors
                     "Pipe".ToContent("Pipe"),
                     "Box".ToContent("Box"),
                 });
-                
+
                 switch (prop.enumValueIndex)
                 {
                     case 1:
@@ -250,7 +250,7 @@ namespace RaycastPro.Detectors
                         ExtentsField(_so);
                         break;
                 }
-                
+
                 if (EditorGUI.EndChangeCheck())
                 {
                     Texture2D texture2D = null;
@@ -266,12 +266,12 @@ namespace RaycastPro.Detectors
                             texture2D = IconManager.GetIconFromName("Icon_LineDetectorBox");
                             break;
                     }
-                    
+
                     if (texture2D) MonoScript.FromMonoBehaviour(this).SetIcon(texture2D);
                 }
-                
+
                 EndVertical();
-                
+
                 NonAllocatorField(_so, ref nonAllocatedHits, i=> nonAllocatedHits = new RaycastHit[i]);
             }
 
@@ -299,7 +299,7 @@ namespace RaycastPro.Detectors
                         GUILayout.BeginHorizontal();
                         GUILayout.Box(D.name, RCProEditor.LabelStyle);
                         GUILayout.Box("<color=#3DED33>Detect</color>",  RCProEditor.BoxStyle, GUILayout.Width(50));
-                        
+
                         GUILayout.EndHorizontal();
                     }
                     EndVertical();

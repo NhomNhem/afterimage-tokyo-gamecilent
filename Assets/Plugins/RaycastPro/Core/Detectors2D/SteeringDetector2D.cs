@@ -8,7 +8,7 @@
 
     [AddComponentMenu("RaycastPro/Detectors/" + nameof(SteeringDetector2D))]
     public sealed class SteeringDetector2D : Detector2D
-    {  
+    {
         [Tooltip("Destination location, a Transform that Solver detects obstacles in the way as much as possible and goes towards it.")]
         public Transform destination;
         [Tooltip("The volume of the follower, which plays a role in path selection calculations and makes it avoid passing into small openings.")]

@@ -1424,7 +1424,7 @@
         <member name="M:Sirenix.Utilities.TypeExtensions.GetEqualityComparerDelegate``1">
              <summary>
              Gets an equality comparer delegate used to compare the equality of values of a given type. In order, this will be:
-            
+
              1. The == operator, if one is defined on the type.
              2. A delegate that uses <see cref="T:System.IEquatable`1"/>, if the type implements that interface.
              3. .NET's own <see cref="P:System.Collections.Generic.EqualityComparer`1.Default"/>
@@ -2297,7 +2297,7 @@
              {
                  public int MyGlobalVariable;
              }
-            
+
              void SomeMethod()
              {
                  int value = MyGlobalConfig.Instance.MyGlobalVariable;
@@ -2392,7 +2392,7 @@
              <code>
              // Generates garbage:
              GUILayout.Label(label, GUILayout.Label(label, GUILayout.Width(20), GUILayout.ExpandHeight(), GUILayout.MaxWidth(300)));
-            
+
              // Does not generate garbage:
              GUILayout.Label(label, GUILayout.Label(label, GUILayoutOptions.Width(20).ExpandHeight().MaxWidth(300)));
              </code>

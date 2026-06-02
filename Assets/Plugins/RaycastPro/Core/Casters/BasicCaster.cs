@@ -8,14 +8,14 @@
     using Editor;
     using UnityEditor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Casters/" + nameof(BasicCaster))]
     public sealed class BasicCaster : GunCaster<Bullet, Collider, RaySensor>
     {
         [SerializeField]
         [Tooltip("Automatically, this ray will shoot along the LocalDirection and source BasePoint location.")]
         public RaySensor raySource;
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         public override void Cast(int _bulletIndex)
         {
@@ -49,12 +49,12 @@
             if (hasMain)
             {
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(raySource)));
-                
+
                 GunField(_so);
             }
             if (hasGeneral) GeneralField(_so);
 
-            if (hasEvents) 
+            if (hasEvents)
             {
                 EventFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(EventFoldout, CEvents.ToContent(TEvents),
                     RCProEditor.HeaderFoldout);

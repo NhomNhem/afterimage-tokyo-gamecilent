@@ -109,7 +109,7 @@ namespace RaycastPro.RaySensors
             return found ? 0 : -1;
         }
 
-        
+
 #if UNITY_EDITOR
         internal override string Info => "Performs a hybrid directional cast by automatically combining Unity's native CapsuleCast and SphereCast, and returns the corresponding hit information." + HAccurate + HDirectional + HIRadius + HScalable;
         /// <summary>
@@ -119,11 +119,11 @@ namespace RaycastPro.RaySensors
         private async void ConvertToBasicRay()
         {
             var _ray = Undo.AddComponent<BasicRay>(gameObject);
-            
+
             _ray.direction = direction;
-            
+
             await Task.Delay(1);
-            
+
             Undo.DestroyObjectImmediate (this);
         }
         /// <summary>
@@ -133,12 +133,12 @@ namespace RaycastPro.RaySensors
         private async void ConvertToBoxRay()
         {
             var _ray = Undo.AddComponent<BoxRay>(gameObject);
-            
+
             _ray.direction = direction;
             _ray.extents = new Vector3(radius, height+radius, radius);
 
             await Task.Delay(1);
-            
+
             Undo.DestroyObjectImmediate (this);
         }
 
@@ -161,7 +161,7 @@ namespace RaycastPro.RaySensors
             {
                 DirectionField(_so);
                 RadiusField(_so);
-                
+
                 BeginHorizontal();
                 HeightField(_so);
                 ScaleField(_so.FindProperty(nameof(scalable)));
@@ -177,9 +177,9 @@ namespace RaycastPro.RaySensors
 #endif
         private Vector3 radiusVector => Direction.normalized * radius;
         public override Vector3 Tip => RawTip + radiusVector;
-        
+
         public override Vector3 RawTip => transform.position + Direction;
-        
+
         public Vector3 RadiusBase => Base - radiusVector;
 
         public override float RayLength => direction.magnitude + radius;

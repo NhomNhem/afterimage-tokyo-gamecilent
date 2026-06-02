@@ -5,13 +5,13 @@
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Bullets/" + nameof(BasicBullet))]
 
     public sealed class BasicBullet : Bullet
     {
         protected override void OnCast() { }
-        
+
         private float delta;
         private Vector3 _forward;
 
@@ -23,7 +23,7 @@
             UpdateLifeProcess(delta);
             if (collisionRay) CollisionRun(delta);
         }
-        
+
         protected override void CollisionBehaviour()
         {
             transform.position = collisionRay.cloneRaySensor.Base;

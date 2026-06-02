@@ -13,17 +13,17 @@ namespace RaycastPro.RaySensors
     {
         private Vector3 currentDirection;
         private Vector2 random;
-        
+
         [Tooltip("It will pulse (change ray direction) before casting the ray, suggest to off pulse time for using it.")]
         public bool pulseWhenCast;
         public bool onUnitCircle;
-        
+
         public Vector2 noiseRange = new Vector2(.2f, .2f);
 
         [Tooltip("Automatic refresh ray changing direction Time.")]
         public float pulse = .4f;
         private float currentTime;
-        
+
         public VectorEvent onPulse;
 
         private void Reset()
@@ -39,10 +39,10 @@ namespace RaycastPro.RaySensors
         public void OnPulse()
         {
             random = onUnitCircle ? Random.insideUnitCircle.normalized : Random.insideUnitCircle;
-            
+
             random.x *= noiseRange.x;
             random.y *= noiseRange.y;
-            
+
             if (local)
             {
                 currentDirection = LocalDirection + transform.TransformDirection(random);
@@ -55,7 +55,7 @@ namespace RaycastPro.RaySensors
         }
         protected override void OnCast()
         {
-            
+
             if (pulse > 0)
             {
                 currentTime += Time.deltaTime;
@@ -70,7 +70,7 @@ namespace RaycastPro.RaySensors
             {
                 OnPulse();
             }
-            
+
             // Cone Shape
             Physics.Linecast(transform.position, transform.position + currentDirection, out hit, detectLayer.value, triggerInteraction);
         }
@@ -84,13 +84,13 @@ namespace RaycastPro.RaySensors
             EditorUpdate();
             _p = transform.position;
             GizmoColor = Performed ? DetectColor : DefaultColor;
-            
+
             DrawLineZTest(_p, _p + Direction, true, HelperColor);
-            
+
             Gizmos.color = HelperColor;
             DrawEllipse(transform.position + Direction, Direction, transform.up, noiseRange.x, noiseRange.y);
 
-            
+
             if (IsManuelMode)
             {
                 Gizmos.DrawRay(transform.position, currentDirection);
@@ -115,12 +115,12 @@ namespace RaycastPro.RaySensors
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(onUnitCircle)));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(pulseWhenCast)));
                 BeginHorizontal();
-                
+
                 PropertyMaxField(_so.FindProperty(nameof(pulse)), -1);
                 if (GUILayout.Button("Pulse", GUILayout.Width(60))) OnPulse();
                 EndHorizontal();
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(noiseRange)));
-                
+
 
             }
             if (hasGeneral) GeneralField(_so);
@@ -129,7 +129,7 @@ namespace RaycastPro.RaySensors
 
         }
 #endif
-        
+
 
 
         public override Vector3 Tip => transform.position + currentDirection;

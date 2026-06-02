@@ -10,7 +10,7 @@ namespace RaycastPro.RaySensors
 #endif
 
     using UnityEngine;
-    
+
     public sealed class NavMeshRay : RaySensor
     {
         private NavMeshHit navHit;
@@ -40,7 +40,7 @@ namespace RaycastPro.RaySensors
         internal override string Info =>
             "" + HAccurate +
             HDirectional;
-        
+
 
         internal override void OnGizmos() => EditorUpdate();
 

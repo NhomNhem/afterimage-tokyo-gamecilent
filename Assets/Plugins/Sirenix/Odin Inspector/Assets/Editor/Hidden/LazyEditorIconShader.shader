@@ -41,7 +41,7 @@ Shader "Hidden/Sirenix/Editor/GUIIcon"
                 // drop shadow:
                 // float texelSize = 1.0 / 34.0;
                 // float2 shadowUv = clamp(i.uv + float2(-texelSize, texelSize * 2), float2(0, 0), float2(1, 1));
-                // fixed4 shadow = fixed4(0, 0, 0, tex2D(_MainTex, shadowUv).a); 
+                // fixed4 shadow = fixed4(0, 0, 0, tex2D(_MainTex, shadowUv).a);
 
                 fixed4 col = _Color;
                 col.a *= tex2D(_MainTex, i.uv).a;

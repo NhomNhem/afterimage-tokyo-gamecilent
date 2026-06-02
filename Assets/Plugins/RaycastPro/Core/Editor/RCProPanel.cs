@@ -168,7 +168,7 @@ namespace RaycastPro.Editor
 
             randomColor = Color.HSVToRGB(time % 1f, 1f, 1f);
             ColorHash = ColorUtility.ToHtmlStringRGB(randomColor);
-            
+
             Repaint();
         }
 
@@ -176,7 +176,7 @@ namespace RaycastPro.Editor
         private GUIStyle _boxStyle;
         private GUIStyle _labelStyle;
         private GUIStyle _buttonStyle;
-        
+
         private void InitContext()
         {
             lineColor = DarkMode ? RCProEditor.Aqua : Color.violet;
@@ -374,7 +374,7 @@ namespace RaycastPro.Editor
         {
             InitContext();
             InitStyles();
-            
+
             DrawHeader();
             DrawModeSelector();
             DrawCoreIcons();
@@ -546,7 +546,7 @@ namespace RaycastPro.Editor
 
         private static readonly Dictionary<MonoScript, GUIContent> _guiContentCache
             = new Dictionary<MonoScript, GUIContent>();
-        
+
         private static GUIContent GetCachedContent(MonoScript script)
         {
             if (script == null)
@@ -580,7 +580,7 @@ namespace RaycastPro.Editor
             var content = EditorGUIUtility.ObjectContent(script, typeof(MonoScript));
             return content.image as Texture2D;
         }
-        
+
         static bool IsNew(MonoScript script)
         {
             if (!script)

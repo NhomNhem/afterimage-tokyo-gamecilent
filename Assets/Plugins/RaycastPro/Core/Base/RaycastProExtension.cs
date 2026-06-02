@@ -26,12 +26,12 @@ namespace RaycastPro
             if (firstIndex == secondIndex) return;
             if (firstIndex < 0 || secondIndex < 0) return;
             if (firstIndex > list.Count-1 || secondIndex > list.Count-1) return;
-            
+
             (list[firstIndex], list[secondIndex]) = (list[secondIndex], list[firstIndex]);
         }
     }
-  
-    
+
+
     public static class RaycastProExtension
     {
         internal static void CloneDestroy(this RaySensor2D sensor)
@@ -39,20 +39,20 @@ namespace RaycastPro
             if (!(sensor && sensor.gameObject)) return;
 
             if (sensor.cloneRaySensor) CloneDestroy(sensor.cloneRaySensor);
-            
+
             Object.Destroy(sensor.gameObject);
         }
 
         internal static Quaternion ToRotation2D(this Vector2 direction)
         {
             var angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
-            
+
             return Quaternion.AngleAxis(angle, Vector3.forward);
         }
         internal static Quaternion ToRotation2D(this Vector3 direction)
         {
             var angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
-            
+
             return Quaternion.AngleAxis(angle, Vector3.forward);
         }
         internal static Quaternion ToRotation3D(this Vector3 direction, Vector3 up) => Quaternion.LookRotation(direction, up);
@@ -90,29 +90,29 @@ namespace RaycastPro
         internal static Vector3[] ToDepth(this Vector2[] points, float depth)
         {
             var newPoints = new Vector3[points.Length];
-            
+
             for (var i = 0; i < points.Length; i++)  newPoints[i] = new Vector3(points[i].x, points[i].y, depth);
-            
+
             return newPoints;
         }
         internal static Vector3[] ToDepth(this Vector3[] points, float depth = 0)
         {
             for (var i = 0; i < points.Length; i++)  points[i] = new Vector3(points[i].x, points[i].y, depth);
-            
+
             return points;
         }
         internal static List<Vector3> ToDepth(this List<Vector3> points, float depth = 0)
         {
             for (var i = 0; i < points.Count; i++)  points[i] = new Vector3(points[i].x, points[i].y, depth);
-            
+
             return points;
         }
         internal static List<Vector3> ToDepth(this List<Vector2> points, float depth = 0)
         {
             var newPoints = new List<Vector3>();
-            
+
             for (var i = 0; i < points.Count; i++)  newPoints.Add(new Vector3(points[i].x, points[i].y, depth));
-            
+
             return newPoints;
         }
         internal static Vector2[] To2D(this Vector3[] points)
@@ -120,7 +120,7 @@ namespace RaycastPro
             var newPoints = new Vector2[points.Length];
 
             for (var i = 0; i < points.Length; i++)  newPoints[i] = new Vector2(points[i].x, points[i].y);
-            
+
             return newPoints;
         }
         internal static Vector3 ToUp(this Vector3 points, float up) => new Vector3(points.x, points.y + up, points.z);
@@ -135,15 +135,15 @@ namespace RaycastPro
         internal static Vector2[] ToLocal(this Vector2[] points, Transform _t)
         {
             var newPoints = new Vector2[points.Length];
-            
+
             for (var i = 0; i < points.Length; i++)  newPoints[i] = _t.TransformPoint(points[i]);
-            
+
             return newPoints;
         }
         internal static Vector3[] ToRelative(this Vector3[] points)
         {
             var newPoints = new Vector3[points.Length];
-            
+
             for (var i = 0; i < points.Length; i++)
             {
                 var sum = Vector3.zero;
@@ -158,7 +158,7 @@ namespace RaycastPro
         internal static Vector2[] ToRelative(this Vector2[] points)
         {
             var newPoints = new Vector2[points.Length];
-            
+
             for (var i = 0; i < points.Length; i++)
             {
                 var sum = Vector2.zero;
@@ -227,7 +227,7 @@ namespace RaycastPro
                 var z = Mathf.FloorToInt(splatPos.z * terrain.terrainData.alphamapHeight);
 
                 var alphaMaps = terrain.terrainData.GetAlphamaps(x, z, 1, 1);
-                
+
                 for (var i = 0; i < alphaMaps.Length; i++) alphasValues[i] = alphaMaps[0, 0, i];
             }
         }
@@ -257,7 +257,7 @@ namespace RaycastPro
             var subMeshIndex = RaySensor.GetSubMeshIndex(mesh, index);
             return materials[subMeshIndex];
         }
-        
+
         /// <summary>
         /// Returns the material of the exact sub-mesh hit by the ray using cached mesh data.
         /// Functionally equivalent to GetMaterial, but optimized for performance.
@@ -289,7 +289,7 @@ namespace RaycastPro
 
             return entry.materials[subMeshIndex];
         }
-        
+
         /// <summary>
         /// Samples the exact pixel color from a specified material texture
         /// at the raycast hit point.
@@ -320,7 +320,7 @@ namespace RaycastPro
                     pixelUV.y *= tex.height*scale.y;
                     offset.x *= tex.width;
                     offset.y *= tex.height;
-                        
+
                     return tex.GetPixel((int) (offset.x + pixelUV.x), (int) (offset.y + pixelUV.y)) * material.color;
                 }
 #if UNITY_EDITOR
@@ -330,7 +330,7 @@ namespace RaycastPro
             }
             return material.color;
         }
-        
+
         /// <summary>
         /// Returns the effective surface color at the raycast hit point.
         /// For opaque materials, this simply returns the material color.
@@ -391,7 +391,7 @@ namespace RaycastPro
             // fallback: بدون تکسچر یا غیر readable → فقط color
             return baseColor;
         }
-        
+
         /// <summary>
         /// Returns the effective surface color at the raycast hit point
         /// using cached material lookup.
@@ -573,7 +573,7 @@ namespace RaycastPro
 
             return tex.GetPixel(x, y) * sr.color;
         }
-  
+
         static Color SampleSliced(
             SpriteRenderer sr,
             Sprite sprite,
@@ -662,7 +662,7 @@ namespace RaycastPro
             return tex.GetPixel(x, y) * sr.color;
         }
         #endregion
-    
+
         public static bool CompareWith(this RaycastHit currenHit, RaycastHit hit) =>
             currenHit.transform == hit.transform;
 
@@ -675,11 +675,11 @@ namespace RaycastPro
         internal static Vector3 LastDirection(this List<Vector3> points, Vector3 defaultDir) => points.Count > 1 ?
             points[points.Count - 1] - points[points.Count - 2] : defaultDir;
         internal static Vector2 LastDirection(this List<Vector2> points, Vector2 defaultDir) => points.Count > 1 ?
-            points[points.Count - 1] - points[points.Count - 2] : defaultDir; 
+            points[points.Count - 1] - points[points.Count - 2] : defaultDir;
         internal static T LastOrBase<T>(this List<T> objects, T baseObject) => objects.Count > 0 ? objects[objects.Count - 1] : baseObject;
-        
+
         internal static T LastOrBase<T>(this List<T> objects, T baseObject, int lastIndex = 0) => objects.Count > lastIndex ? objects[objects.Count - (1 + lastIndex)] : baseObject;
-        
+
         internal static string ToRegex(this string text) => Regex.Replace(text, "(\\B[A-Z])", " $1").Replace("2 D", "2D");
         internal static void RemoveChildren(this Transform t) { foreach (Transform child in t) Object.Destroy(child.gameObject);}
         internal static bool InLayer(this LayerMask mask, GameObject obj) => mask == (mask | (1 << obj.layer));
@@ -699,12 +699,12 @@ namespace RaycastPro
             }
             return distance;
         }
-        
+
         internal static float GetPathLength(this IEnumerable<Vector3> points, int index)
         {
             var enumerable = points.ToList();
             var distance = 0f;
-    
+
             // اگر اندیس کمتر از 1 باشد، مسیر ندارد
             if (index < 1 || enumerable.Count < 2)
                 return 0f;
@@ -725,17 +725,17 @@ namespace RaycastPro
             var distance = 0f;
 
             var enumerable = points.ToList();
-            
+
             for (var i = 0; i < enumerable.Count-1; i++)
             {
                 distance += (enumerable[i+1] - enumerable[i]).magnitude;
             }
-            
+
             return distance;
         }
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="points"></param>
         /// <param name="index">Index 1 mean (point[1] - point[0]).magnitude</param>
@@ -758,7 +758,7 @@ namespace RaycastPro
             {
                 distance += (list[i+1] - list[i]).magnitude;
             }
-            
+
             return distance;
         }
         internal static Vector3 GetPathInfo(this IEnumerable<Vector3> points, float pos)
@@ -781,7 +781,7 @@ namespace RaycastPro
             for (var i = 1; i < path.Count; i++)
             {
                 var lineDistance = path.GetEdgeLength(i);
-                
+
                 if (posM <= lineDistance) return (Vector3.Lerp(path[i - 1], path[i], posM / lineDistance), i);
 
                 posM -= lineDistance;
@@ -843,7 +843,7 @@ namespace RaycastPro
 
             return contents;
         }
-        
+
         internal static GUIContent[] ToContent(this string[] label, string[] tooltip)
         {
             var contents = new GUIContent[label.Length];

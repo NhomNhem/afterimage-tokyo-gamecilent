@@ -44,7 +44,7 @@ namespace RaycastPro
         [Tooltip("Clones no longer continue RayCasting when disabled. This option has no effect on Line Renderer (except CutOnHit) and can help to optimize and secure cloning.")]
         public bool clonePathCast = true;
         protected override void OnCast() { } // NOTHING FOR NOW
-        
+
 #if UNITY_EDITOR
 
         protected static void RenameClone(RaycastCore sensor, string key = "C")
@@ -58,16 +58,16 @@ namespace RaycastPro
         protected void OuterField(SerializedProperty property, SerializedProperty _outerRay)
         {
             BeginVerticalBox();
-            
+
             PropertyEnumField(property, 3, "Outer Type".ToContent("Outer Type"), new GUIContent[]
             {
                 "Auto".ToContent("Auto"),
                 "Reference".ToContent("Reference"),
                 "Clone".ToContent("Clone"),
             });
-            
+
             if (outerType == OuterType.Reference) EditorGUILayout.PropertyField(_outerRay);
-            
+
             EndVertical();
         }
         protected void BaseDirectionField(SerializedObject _so)
@@ -80,7 +80,7 @@ namespace RaycastPro
                 "-Hit Normal".ToContent("-Hit Normal"),
                 "Hit Direction".ToContent("Hit Direction"),
             });
-            
+
             EndVertical();
         }
 

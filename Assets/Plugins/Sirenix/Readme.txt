@@ -14,7 +14,7 @@ Issue Tracker:      https://bitbucket.org/sirenix/odin-inspector
 
 --------------------------------- Community and Support ---------------------------------
 
-If you have any issues, suggestions or want advice, then you're more than welcome 
+If you have any issues, suggestions or want advice, then you're more than welcome
 to join us on Discord, or reach out to us by any other means.
 
 Support:            https://odininspector.com/support

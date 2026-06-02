@@ -28,6 +28,6 @@ namespace Plugins.RaycastPro.Demo.Scripts
                 _neonMaterial.SetNeonColor(false);
             }
         }
-        
+
     }
 }

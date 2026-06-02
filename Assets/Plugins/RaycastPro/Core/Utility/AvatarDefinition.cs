@@ -59,7 +59,7 @@ namespace RaycastPro.Sensor
                     bodyBones.Add(HumanBodyBones.RightHand);
                     bodyBones.Add(HumanBodyBones.LeftFoot);
                     bodyBones.Add(HumanBodyBones.RightFoot);
-                    
+
                     SyncBones();
                 }
                 RCProEditor.DrawSerializedList(_so.FindProperty(nameof(bodyBones)));
@@ -73,4 +73,3 @@ namespace RaycastPro.Sensor
 #endif
 }
 }
-

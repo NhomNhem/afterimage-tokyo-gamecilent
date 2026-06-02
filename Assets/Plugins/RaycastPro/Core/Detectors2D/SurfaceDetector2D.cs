@@ -22,7 +22,7 @@ namespace RaycastPro.Detectors2D
 
 
         [SerializeField] private Collider2D[] colliders = Array.Empty<Collider2D>();
-        
+
 
         private Vector3 _pos, forward;
         private float step;
@@ -35,11 +35,11 @@ namespace RaycastPro.Detectors2D
         protected override void OnCast()
         {
             PreviousColliders = DetectedColliders.ToArray();
-            
+
 #if UNITY_EDITOR
             CleanGate();
 #endif
-            
+
             pos2D = transform.position.To2D();
             var contactFilter2D = new ContactFilter2D
             {
@@ -52,7 +52,7 @@ namespace RaycastPro.Detectors2D
             };
 
             Clear();
-            
+
             if (limited)
             {
                 for (var i = 0; i < colliders.Length; i++) colliders[i] = null;
@@ -97,11 +97,11 @@ namespace RaycastPro.Detectors2D
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
             if (polygonCollider)
             {
                 var points = new Vector2[polygonCollider.points.Length + 1];
-                
+
                 for (var i = 0; i < polygonCollider.points.Length; i++)
                 {
                     points[i] = polygonCollider.points[i];
@@ -110,7 +110,7 @@ namespace RaycastPro.Detectors2D
                 points[polygonCollider.points.Length] = points[0];
 
                 points = points.ToLocal(transform);
-                
+
                 Handles.color = (Performed ? DetectColor : DefaultColor);
 
                 Handles.DrawPolyLine(points.ToDepth(MinDepth));
@@ -119,9 +119,9 @@ namespace RaycastPro.Detectors2D
                 var col = Handles.color;
                 col.ToAlpha(RCProPanel.alphaAmount);
                 Handles.color = col;
-                
+
                 Handles.DrawAAConvexPolygon(points.ToDepth(z));
-                
+
                 DrawFocusLine();
             }
 

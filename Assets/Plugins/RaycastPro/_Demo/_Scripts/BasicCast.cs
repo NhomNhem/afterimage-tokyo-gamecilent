@@ -13,7 +13,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
             {
                 Debug.Log($"On Begin Detect <color=#7AFF4D>{_hit.transform.name}</color>");
             });
-        
+
             // Add manually Event actions
             raySensor.onEndDetect.AddListener(_hit =>
             {
@@ -33,4 +33,3 @@ namespace Plugins.RaycastPro.Demo.Scripts
         }
     }
 }
-

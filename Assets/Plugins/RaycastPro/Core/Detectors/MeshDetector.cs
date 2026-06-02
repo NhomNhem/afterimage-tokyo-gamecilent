@@ -63,7 +63,7 @@
 
         private float _vDis;
         private Vector3 _vDir;
-        
+
         // Example method to draw the convex mesh wire gizmo
 
         private RaycastHit _hit, _hitA, _hitR;
@@ -75,7 +75,7 @@
                 if (_hitA.transform == transform) hitCount += 1;
             }
             //Debug.DrawLine(point, to, Color.cyan, 1f);
-            
+
             if (Physics.Linecast(point, to, out _hitA, raycastMask, QueryTriggerInteraction.Collide))
             {
                 Pass();
@@ -100,16 +100,16 @@
             {
                 colliders = Physics.OverlapBox(meshCollider.bounds.center, meshCollider.bounds.extents, transform.rotation, detectLayer.value, triggerInteraction);
             }
-            
+
             Clear();
-            
+
             var _t = Physics.queriesHitBackfaces;
             Physics.queriesHitBackfaces = true;
             if (IsIgnoreSolver)
             {
                 foreach (var c in colliders)
                 {
-                    
+
                     if (c.transform != transform && TagPass(c))
                     {
                         if (accurate)
@@ -149,11 +149,11 @@
                     {
                         DetectedColliders.Add(c);
                     }
-                    
+
                 }
             }
             Physics.queriesHitBackfaces = _t;
-            
+
             EventPass();
         }
 #if UNITY_EDITOR
@@ -163,7 +163,7 @@
         {
             EditorUpdate();
             GizmoColor = Performed ? DetectColor : DefaultColor;
-            
+
             if (meshCollider)
             {
                 Gizmos.DrawWireMesh(meshCollider.sharedMesh, transform.position, transform.rotation, transform.lossyScale);
@@ -186,7 +186,7 @@
                 MiniField(_so.FindProperty(nameof(accurate)), "A".ToContent("Accurate: Forces to check nearest and furthest side of collider for more performance cost."));
 
                 GUI.enabled = true;
-                EndHorizontal();                
+                EndHorizontal();
 
 
             }

@@ -9,9 +9,9 @@ namespace RaycastPro.RaySensors
 #endif
     using UnityEngine;
     using Random = UnityEngine.Random;
-    
+
    [AddComponentMenu("RaycastPro/Rey Sensors/"+nameof(CurveRay))]
-  
+
     public sealed class CurveRay : PathRay, IRadius
     {
         public int segments = 8;
@@ -21,11 +21,11 @@ namespace RaycastPro.RaySensors
             get => radius;
             set => radius = Mathf.Max(0,value);
         }
-        
+
         public AnimationCurve clumpY = AnimationCurve.EaseInOut(0, 0, 1, 1);
         public AnimationCurve clumpX = AnimationCurve.EaseInOut(0, 0, 1, 0);
         public AnimationCurve clumpZ = AnimationCurve.Linear(0, 0, 1, 1);
-        
+
 
         protected override void OnCast()
         {
@@ -36,7 +36,7 @@ namespace RaycastPro.RaySensors
         private float step;
         private Vector3 curve;
 
-        
+
         protected override void UpdatePath()
         {
             PathPoints.Clear();

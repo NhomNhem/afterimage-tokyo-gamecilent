@@ -7,7 +7,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
     {
         private RaySensor2D raySensor;
         [SerializeField] private MeshRenderer[] meshRenderers;
-    
+
         private static readonly int EmissiveColor = Shader.PropertyToID("_EmissionColor");
         private static readonly int Color = Shader.PropertyToID("_Color");
 

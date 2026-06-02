@@ -21,14 +21,14 @@ namespace RaycastPro.Planers2D
     {
         public RaySensor2D outerRay;
         public override bool Performed { get; protected set; }
-        
+
         public float z => transform.position.z;
 
         public RaySensor2DEvent onReceiveRay;
         public RaySensor2DEvent onCloneRay;
         public RaySensor2DEvent onBeginReceiveRay;
         public RaySensor2DEvent onEndReceiveRay;
-        
+
         protected void ApplyLengthControl(RaySensor2D raySensor)
         {
             switch (lengthControl)
@@ -45,7 +45,7 @@ namespace RaycastPro.Planers2D
                     break;
             }
         }
-        
+
         protected Vector3 GetForward(RaySensor2D innerRay, Vector2 _default)
         {
             switch (baseDirection)
@@ -93,7 +93,7 @@ namespace RaycastPro.Planers2D
             switch (outerType)
             {
                 case OuterType.Auto:
-                    
+
                     if (raySensor is PathRay2D)
                     {
                         InstantiateClone(raySensor);
@@ -115,16 +115,16 @@ namespace RaycastPro.Planers2D
 
             OnReceiveRay(raySensor);
         }
-        
+
         private void InstantiateReference(RaySensor2D raySensor)
         {
             // Double supported Clone Sensors
             raySensor.cloneRaySensor = Instantiate(outerRay ? outerRay : raySensor);
-            
+
 #if UNITY_EDITOR
            RenameClone(raySensor.cloneRaySensor);
 #endif
-            
+
             raySensor.cloneRaySensor.baseRaySensor = raySensor;
         }
 
@@ -137,7 +137,7 @@ namespace RaycastPro.Planers2D
             SceneManager.MoveGameObjectToScene(_tObj, raySensor.gameObject.scene);
             cloneRay = _tObj.AddComponent<CloneRay2D>();
             cloneRay.transform.parent = poolManager;
-            
+
 #if UNITY_EDITOR
             RenameClone(cloneRay);
 #endif
@@ -159,7 +159,7 @@ namespace RaycastPro.Planers2D
         public virtual void OnBeginReceiveRay(RaySensor2D sensor)
         {
             if (this is BlockPlanar2D) return;
-            
+
             CloneInstantiate(sensor);
             sensor.cloneRaySensor?.transform.RemoveChildren();
 
@@ -173,10 +173,10 @@ namespace RaycastPro.Planers2D
                 Destroy(sensor.cloneRaySensor.gameObject);
             }
 
-                
+
             return true;
         }
-        
+
                 void CloneDestroy(RaySensor sensor)
                 {
                     if (sensor.cloneRaySensor)

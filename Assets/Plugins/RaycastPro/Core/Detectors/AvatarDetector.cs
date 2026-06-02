@@ -6,7 +6,7 @@
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Detectors/" + nameof(AvatarDetector))]
     public sealed class AvatarDetector : Detector, IPulse
     {
@@ -20,14 +20,14 @@
 
         public List<AvatarDefinition> avatarSensors = new List<AvatarDefinition>();
         public readonly Dictionary<AvatarDefinition, float> viewPercentage = new Dictionary<AvatarDefinition, float>();
-        
+
         public override bool Performed
         {
             get => avatarFinder.DetectedColliders.Count > 0;
             protected set { }
         }
-        
-        
+
+
         public TimeMode timeMode = TimeMode.DeltaTime;
 
         #region Public Methods
@@ -57,13 +57,13 @@
             avatarFinder?.UnSyncDetection(avatarSensors);
         }
 
-        
+
         protected override void OnCast()
         {
 #if UNITY_EDITOR
             GizmoGate = PanelGate = null;
 #endif
-            
+
             foreach (var avatarSensor in avatarSensors)
             {
                 if (!viewPercentage.ContainsKey(avatarSensor))
@@ -119,7 +119,7 @@
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(changingRate)));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(iteration)));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(blockLayer)));
-                
+
                 PropertyTimeModeField(_so.FindProperty(nameof(timeMode)));
             }
 

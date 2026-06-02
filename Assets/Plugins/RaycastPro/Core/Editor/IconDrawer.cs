@@ -3,7 +3,7 @@ namespace RaycastPro.Editor
 {
     using UnityEditor;
     using UnityEngine;
-    
+
     [InitializeOnLoad]
     internal class IconDrawer
     {

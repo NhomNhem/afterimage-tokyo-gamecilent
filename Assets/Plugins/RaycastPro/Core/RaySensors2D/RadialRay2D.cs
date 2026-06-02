@@ -21,20 +21,20 @@ namespace RaycastPro.RaySensors2D
 
         [SerializeField]
         private int cuts = 5;
-        
+
         public List<RaycastHit2D> raycastHits = new List<RaycastHit2D>();
         private Vector3 _pos, tip;
         private float step, length;
         private Vector3 _l;
         private int trueHit;
-        
+
         /// <summary>
         /// Get number of rays on hit.
         /// </summary>
         public int TrueHit => trueHit;
 
         private RaycastHit2D _hit;
-        protected override void OnCast() 
+        protected override void OnCast()
         {
 #if UNITY_EDITOR
             GizmoGate = null;
@@ -42,7 +42,7 @@ namespace RaycastPro.RaySensors2D
             _pos = transform.position;
             step = arcAngle / cuts;
             _l = Direction;
-            
+
             RaycastHit2D LineCast(int stepIndex)
             {
 
@@ -65,7 +65,7 @@ namespace RaycastPro.RaySensors2D
             length = Length;
             trueHit = 0;
             raycastHits.Clear();
-            
+
             for (var i = 1; i <= cuts/2f; i += 1)
             {
                 RaycastHit2D _THit;
@@ -77,7 +77,7 @@ namespace RaycastPro.RaySensors2D
                         trueHit++;
                     }
                     raycastHits?.Add(_THit);
-                    
+
                     if (_THit)
                     {
                         hit = _THit;
@@ -90,7 +90,7 @@ namespace RaycastPro.RaySensors2D
                     trueHit++;
                 }
                 raycastHits?.Add(_THit);
-                
+
                 if (_THit && _THit.distance < length)
                 {
                     hit = _THit;
@@ -121,16 +121,16 @@ namespace RaycastPro.RaySensors2D
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
             DrawDepthLine(transform.position, Tip);
             DrawNormal2D(hit, z);
-            
+
             Handles.color = (Performed ? DetectColor : HelperColor).Alpha(Mathf.Min(AlphaAmount, .4f));
 
             Handles.DrawSolidArc(transform.position, Vector3.forward, radialDir, arcAngle / 2, radialDir.magnitude);
             Handles.DrawSolidArc(transform.position, Vector3.forward, radialDir, -arcAngle / 2, radialDir.magnitude);
             DrawNormalFilter();
-            
+
             if (RCProPanel.ShowLabels && raycastHits != null)
             {
                 for (var index = 0; index < raycastHits.Count; index++)

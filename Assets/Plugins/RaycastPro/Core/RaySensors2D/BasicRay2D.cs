@@ -48,7 +48,7 @@
         public override Vector3 Tip => transform.position + Direction.ToDepth();
 
         public override Vector3 RawTip => Tip;
-        
+
         public override float RayLength => direction.magnitude;
         public override Vector3 Base => transform.position;
     }

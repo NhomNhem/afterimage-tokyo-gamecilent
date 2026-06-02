@@ -17,7 +17,7 @@ namespace RaycastPro.RaySensors2D
         public override float RayLength => PathPoints.GetPathLength();
         public override Vector3 Base => PathPoints.Count > 0 ? PathPoints[0].ToDepth(z) : transform.position;
         public override Vector2 HitDirection => PathPoints.LastDirection(LocalDirection);
-        
+
         /// <summary>
         /// The length traveled from Ray to reach the target point
         /// </summary>
@@ -43,7 +43,7 @@ namespace RaycastPro.RaySensors2D
         }
         public override void GetPath2D(ref List<Vector2> path) => path = PathPoints;
         public override void GetPath(ref List<Vector3> path) => path = PathPoints.ToDepth(z);
-        
+
         public List<Vector2> PathPoints = new List<Vector2>();
         public override float ContinuesDistance
         {
@@ -78,7 +78,7 @@ namespace RaycastPro.RaySensors2D
                 {
                     hit = Physics2D.Linecast(PathPoints[i], PathPoints[i + 1], detectLayer.value, MinDepth, MaxDepth);
                     if (hit) return i;
-                    
+
                 }
             }
             else
@@ -122,7 +122,7 @@ namespace RaycastPro.RaySensors2D
                 {
                     hit = Physics2D.Linecast(PathPoints[i], PathPoints[i + 1], detectLayer.value, MinDepth, MaxDepth);
                     if (hit) return i;
-                    
+
                 }
             }
             return -1;
@@ -130,7 +130,7 @@ namespace RaycastPro.RaySensors2D
         protected abstract void UpdatePath();
 
         public float startRadius;
-        
+
         private Queue<Vector3> path;
         public override void UpdateLiner()
         {
@@ -209,21 +209,21 @@ namespace RaycastPro.RaySensors2D
         {
             RadiusField(_so, nameof(startRadius), "StartRadius".ToContent());
         }
-        
+
         protected void FullPathDraw(float radius = 0f, bool cap = false)
         {
             if (InEditMode) UpdatePath();
-            
+
             DrawDepthLine(PathPoints[0],  PathPoints.Last());
-            
+
             DrawPath2D(PathPoints.ToDepth(z), isDetect: isDetect, breakPoint: HitPointZ, radius: radius, detectIndex: DetectIndex, z: z, drawDisc: true, coneCap: cap);
         }
         protected void AdvancePathDraw(float radius = 0f, bool cap = false)
         {
             if (InEditMode) UpdatePath();
-            
+
             DrawDepthLine(PathPoints[0],  PathPoints.Last());
-            
+
             DrawAdvancePath2D(PathPoints.ToDepth(z), isDetect: isDetect, breakPoint: HitPointZ,startRadius: startRadius, radius: radius, detectIndex: DetectIndex, z: z, drawDisc: true, coneCap: cap);
         }
         protected void PathRayGeneralField(SerializedObject _so)

@@ -10,7 +10,7 @@
     public abstract class BaseSensor : RaycastCore
     {
         public UnityEvent onDetect;
-        
+
 #if UNITY_EDITOR
         protected void EventsField(SerializedObject _so)
         {

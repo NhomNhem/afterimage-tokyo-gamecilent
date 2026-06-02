@@ -8,7 +8,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
         private RaySensor raySensor; // Use "RaySensor" base for define any 3D Ray
 
         public bool autoRayDetect = true;
-        
+
         [SerializeField] private NeonMaterial[] neon;
         private void Start()
         {
@@ -35,7 +35,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
                     {
                         _neon.SetNeonColor(false);
                     }
-                
+
                     foreach (var neonMaterial in neon) neonMaterial.SetNeonColor(false);
                 }
             });
@@ -45,19 +45,19 @@ namespace Plugins.RaycastPro.Demo.Scripts
         {
             foreach (var neonMaterial in neon) neonMaterial.SetNeonColor(perform);
         }
-        
+
         [SerializeField] private bool clonePerform;
-    
+
         private bool lastClonePerformed;
         private void Update()
         {
             if (!clonePerform) return;
-            
+
             if (raySensor.CloneHit.transform != lastClonePerformed)
             {
                 foreach (var neonMaterial in neon) neonMaterial.SetNeonColor(raySensor.CloneHit.transform);
             }
-            
+
             lastClonePerformed = raySensor.CloneHit.transform;
         }
     }

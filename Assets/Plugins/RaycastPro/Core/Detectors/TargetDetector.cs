@@ -15,7 +15,7 @@ namespace RaycastPro.Detectors
     public sealed class TargetDetector : Detector, IRadius, IPulse
     {
         public Transform[] targets = Array.Empty<Transform>();
-        
+
         private float value;
 
         /// <summary>
@@ -55,11 +55,11 @@ namespace RaycastPro.Detectors
             get => radius;
             set => radius = Mathf.Max(0,value);
         }
-        
+
         public TransformEvent onDetectTransform;
         public TransformEvent onBeginBlocked;
         public TransformEvent onBeginDetected;
-        
+
         private Vector3 _dir;
 
         public float CastFrom(ColliderDetector cDetector)
@@ -139,7 +139,7 @@ namespace RaycastPro.Detectors
 
 #if UNITY_EDITOR
         internal override string Info => "Determines the line-of-sight visibility for a target by casting multiple rays, returning a score (0-1) based on the percentage of unblocked paths." + HAccurate + HIRadius;
-        internal override void OnGizmos() 
+        internal override void OnGizmos()
         {
             EditorUpdate();
             if (IsLabel)
@@ -148,7 +148,7 @@ namespace RaycastPro.Detectors
                     $"<color=#60FFF5>{name}</color> TD: <color=#3EFF3A>{value:P}</color>", RCProEditor.LabelStyle);
             }
         }
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         internal override void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true,
             bool hasEvents = true, bool hasInfo = true)
@@ -167,7 +167,7 @@ namespace RaycastPro.Detectors
                 GeneralField(_so, layerField: false);
                 BaseField(_so);
             }
-            
+
             if (hasEvents)
             {
                 EventField(_so);

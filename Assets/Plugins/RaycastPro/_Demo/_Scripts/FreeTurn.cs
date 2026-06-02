@@ -19,7 +19,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
                 Random.value * randomRotate.z);
         }
 
-        
+
         private void Update()
         {
             if (periodTime > 0)

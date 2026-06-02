@@ -376,7 +376,7 @@ namespace RaycastPro.Detectors
                 }
             }
         }
-        
+
         /// <summary>
         /// Resolves a single obstacle hit during sampling.
         /// Computes avoidance influence based on hit distance,
@@ -521,7 +521,7 @@ namespace RaycastPro.Detectors
             RunObstacleSolver();
             ApplyFreeMoveRelax();
         }
-        
+
 #if UNITY_EDITOR
         internal override string Info =>
             "An advanced, context-aware steering agent that computes a smooth navigation path. It avoids obstacles by probabilistically sampling the environment and leverages a positional memory to resolve complex blockages." +

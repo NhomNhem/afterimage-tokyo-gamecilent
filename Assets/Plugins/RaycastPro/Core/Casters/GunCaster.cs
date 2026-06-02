@@ -12,7 +12,7 @@ namespace RaycastPro
     using Casters2D;
     using System.Collections;
     using UnityEngine.Events;
-    
+
 #if UNITY_EDITOR
     using UnityEditor;
     using Editor;
@@ -20,7 +20,7 @@ namespace RaycastPro
 
     [Serializable]
     public class BulletEvent : UnityEvent<Bullet> { }
-    
+
     [Serializable]
     public class BulletEvent2D : UnityEvent<Bullet2D> { }
     public abstract class GunCaster<B, C, R> : BaseCaster where B : BaseBullet where C : UnityEngine.Object
@@ -39,13 +39,13 @@ namespace RaycastPro
         public int bulletIndex;
 
         [SerializeField] protected int cloneIndex;
-        
+
         [Tooltip("Using Ammo quickly provides a classic weapon system that you will benefit from the amount of bullets, magazine capacity and reload speed, if it is necessary for your weapon to have a custom form, you can write a separate code and use the Cast() method.")]
         public bool usingAmmo = true;
 
         [SerializeField] private bool arrayCasting;
         [SerializeField] protected int arrayCapacity = 6;
-        
+
         /// <summary>
         /// Performed in Caster only works with Array Casting
         /// </summary>
@@ -81,7 +81,7 @@ namespace RaycastPro
         }
 
         private B tempBullet;
-        
+
         public UnityEvent onCast;
 
         protected override void OnCast()
@@ -123,10 +123,10 @@ namespace RaycastPro
                 cloneBullets[cloneIndex] = tempBullet;
                 BulletSetup(tempBullet);
             }
-            
+
             tempBullet.transform.position = _base;
             tempBullet.transform.forward = _dir;
-            
+
             // Revive Again
             tempBullet.ended = false;
             // Go To Next Clone
@@ -147,7 +147,7 @@ namespace RaycastPro
             tempBullet.transform.forward = _dir;
             BulletSetup(tempBullet);
         }
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         private void Refresh_ArrayCasting_Clone(B _bullet)
         {
@@ -160,7 +160,7 @@ namespace RaycastPro
         private B _bulletObject;
 
         #region Public Methods
-        
+
         /// <summary>
         /// Safe Reload
         /// </summary>
@@ -169,13 +169,13 @@ namespace RaycastPro
             StartCoroutine(ammo.IReload());
             onReload?.Invoke();
         }
-        
+
         public void SetBulletIndex(int _i) => bulletIndex = _i;
 
         public void RandomBulletIndex() => bulletIndex = UnityEngine.Random.Range(0, bullets.Length);
 
         public void NextBulletIndex() => bulletIndex = (bulletIndex + 1) % bullets.Length;
-        
+
         public void BackBulletIndex()
         {
             bulletIndex = (bulletIndex - 1);
@@ -201,11 +201,11 @@ namespace RaycastPro
         public bool AmmoCheck(int count = 1) => !usingAmmo || ammo.Use(this, count);
 
         #endregion
-        
+
         private void OnEnable()
         {
             if (ammo == null) return;
-            
+
             if (autoReload && ammo.magazineAmount == 0 && !ammo.IsReloading) Reload();
         }
 
@@ -226,14 +226,14 @@ namespace RaycastPro
             else OnNormalCast(_bulletObject, _base, _dir);
             _bulletObject.ownerReference = gameObject;
         }
-        
+
         protected bool BulletCast(int _index, R _raySensor = default)
         {
 #if UNITY_EDITOR
             alphaCharge = AlphaLifeTime;
 #endif
             _bulletObject = bullets[_index];
-            
+
             if (_raySensor is RaySensor r)
             {
                 AutoCast(r.Base, r.TipDirection);
@@ -242,7 +242,7 @@ namespace RaycastPro
             {
                 AutoCast(r2D.Base, r2D.TipDirection);
             }
-            
+
             tempBullet?.Cast(this, _raySensor);
             return true;
         }
@@ -253,7 +253,7 @@ namespace RaycastPro
             alphaCharge = AlphaLifeTime;
 #endif
             _bulletObject = bullets[_index];
-            
+
             foreach (var detectedTarget in _cDetector.DetectedColliders)
             {
                 if (_bulletObject is Bullet _B)
@@ -264,10 +264,10 @@ namespace RaycastPro
                 }
 
             }
-            
+
             return true;
         }
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         private void BulletSetup(B _bullet)
         {
@@ -286,8 +286,8 @@ namespace RaycastPro
                     IgnoreCollider(bulletColliders, Array.ConvertAll(ignoreColliders, i => i as Collider2D));
                 }
             }
-                
-            // Add Track Target 
+
+            // Add Track Target
             if (trackTarget)
             {
                 if (_bullet is TrackerBullet _trB)
@@ -301,7 +301,7 @@ namespace RaycastPro
                 }
             }
         }
-        
+
         protected Coroutine multiCast;
         protected IEnumerator IMultiCast(int _index, int count)
         {
@@ -322,7 +322,7 @@ namespace RaycastPro
         public void MultipleCast(int _index, int count)
         {
             if (multiCast != null) StopCoroutine(multiCast);
-            
+
             multiCast = StartCoroutine(IMultiCast(_index, count));
         }
 
@@ -334,13 +334,13 @@ namespace RaycastPro
 
 
         protected const string CTogether = "Together";
-        protected const string CSequence = "Sequence"; 
-        protected const string CRandom = "Random"; 
+        protected const string CSequence = "Sequence";
+        protected const string CRandom = "Random";
         protected const string CPingPong = "PingPong";
-        
+
         protected const string TTogether = "Shooting the index bullet in all RaySensors Together.";
-        protected const string TSequence = "Shooting in sequence of RaySensors index in wait of ammo reload Time and In Between."; 
-        protected const string TRandom = "Random Shooting in any RaySensor."; 
+        protected const string TSequence = "Shooting in sequence of RaySensors index in wait of ammo reload Time and In Between.";
+        protected const string TRandom = "Random Shooting in any RaySensor.";
         protected const string TPingPong = "Shooting bullets back and forth on the RaySensor index.";
         /// <summary>
         /// This Script worked but No using for now
@@ -382,12 +382,12 @@ namespace RaycastPro
                 }
                 else cloneBullets = null;
             }
-            
+
             GUI.enabled = true;
             EndHorizontal();
             #endregion
             BeginVerticalBox();
-            
+
             var bulletsProp = _so.FindProperty(nameof(bullets));
             RCProEditor.DrawSerializedList(bulletsProp);
             PropertySliderField(_so.FindProperty(nameof(bulletIndex)), 0,  bullets != null ? Mathf.Max(bulletsProp.arraySize-1,0) : 0 , "Index".ToContent(),
@@ -395,7 +395,7 @@ namespace RaycastPro
             EndVertical();
 
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(trackTarget)));
-            
+
             BeginVerticalBox();
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(usingAmmo)));
             if (usingAmmo)
@@ -403,7 +403,7 @@ namespace RaycastPro
                 if (ammo == null) ammo = new Ammo();
                 var ammoProp = _so.FindProperty(nameof(ammo));
                 ammo?.EditorPanel(ammoProp);
-                
+
                 BeginHorizontal();
                 if (GUILayout.Button("Cast"))
                 {
@@ -417,9 +417,9 @@ namespace RaycastPro
 
                 EditorUtility.SetDirty(this);
 
-                
+
                 EndHorizontal();
-                
+
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(autoReload)));
             }
             else ammo = null;
@@ -429,7 +429,7 @@ namespace RaycastPro
         protected void GeneralField(SerializedObject _so)
         {
             BaseField(_so, hasInteraction: false);
-            
+
             BeginVerticalBox();
             RCProEditor.DrawSerializedList(_so.FindProperty(nameof(ignoreColliders)));
             EndVertical();
@@ -437,7 +437,7 @@ namespace RaycastPro
         protected void InformationField()
         {
             if (!IsPlaying || cloneBullets == null) return;
-            
+
             InformationField(() =>
             {
                 for (var i = 0; i < cloneBullets.Length; i++)

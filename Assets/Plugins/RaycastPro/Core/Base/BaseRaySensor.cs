@@ -17,7 +17,7 @@
         Transform,
         Point,
     }
-    
+
     public enum ArcType
     {
         /// <summary>
@@ -30,7 +30,7 @@
         /// </summary>
         Target
     }
-    
+
     [Serializable]
     public class RaycastEvent : UnityEvent<RaycastHit> { }
     [Serializable]
@@ -38,7 +38,7 @@
     [Serializable]
     public class VectorEvent : UnityEvent<Vector3> {}
 
-    
+
     /// <summary>
     /// This class is placed above the RaySensor2D and RaySensor classes and includes their common features.
     /// </summary>
@@ -56,16 +56,16 @@
         /// Returns Hit on previous Cast.
         /// </summary>
         public R PreviousHit { protected set; get; }
-        
+
         [Tooltip("In short of line renderer, that full follow the ray path")]
         public LineRenderer liner;
 
         [Tooltip("When true, you can setup liner end position manually.")]
         public bool linerClamped;
-        
+
         [Tooltip("Try to cut line on hit point.")]
         public bool linerCutOnHit;
-        
+
         [Tooltip("Project had been cutting liner to solid direction Line. (It's work on IRadius rays. Disable it if you using no radius or extended Ray.")]
         public bool linerFixCut = true;
 
@@ -76,7 +76,7 @@
         /// </summary>
         public float linerEndPosition = 1f;
         public float linerBasePosition;
-        
+
         [Tooltip("A Transform handler on ray body with controlling option")]
         public Transform stamp;
 
@@ -91,7 +91,7 @@
         public bool stampOnHit;
         public bool stampAutoHide;
         public float stampOffset;
-        
+
         [SerializeField]
         internal AxisRun syncStamp = new AxisRun();
 
@@ -99,22 +99,22 @@
         /// When true, ray will affect and clone by planers, just make sure your planar detect layer includes the ray layer.
         /// </summary>
         public bool planarSensitive;
-        
+
         /// <summary>
         /// Current Planar Detected in "AnyPlanar" mode.
         /// </summary>
         [SerializeField] protected P _planar;
-        
+
         /// <summary>
         /// Planers supported for reaction.
         /// </summary>
         [SerializeField] public P[] planers = Array.Empty<P>();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [SerializeField] internal bool anyPlanar = true;
-        
+
         #region Events
         /// <summary>
         /// Invoke when ray is activate and does casting.
@@ -137,9 +137,9 @@
         /// Called first frame when Hit detection lost. (Output: PreviousHit)
         /// </summary>
         public E onEndDetect;
-        
+
         #endregion
-        
+
         /// <summary>
         /// Tip without regardless of Radius or extent
         /// </summary>
@@ -193,7 +193,7 @@
             stamp = newStamp;
             UpdateStamp();
         }
-        
+
         public Vector3 GetPositionOnPath(float pos, ref List<Vector3> path, out Vector3 forward)
         {
             forward = path.LastDirection(Vector3.up);
@@ -225,7 +225,7 @@
             RuntimeUpdate();
             return Performed;
         }
-        
+
         /// <summary>
         /// suitable for cast on unity events.
         /// </summary>
@@ -236,7 +236,7 @@
 #endif
             RuntimeUpdate();
         }
-        
+
         protected void Update()
         {
             if (autoUpdate != UpdateMode.Normal) return;
@@ -301,7 +301,7 @@
         protected void DirectionField(SerializedObject _so, bool _local = true)
         {
             if (_local) BeginHorizontal();
-            
+
             EditorGUILayout.PropertyField(_so.FindProperty("direction"));
             if (_local)
             {
@@ -396,24 +396,24 @@
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(linerCutOnHit)));
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(linerFixCut)));
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(linerClamped)));
-            
+
             GUI.enabled = linerClamped;
             PropertyMinMaxField(_so.FindProperty(nameof(linerBasePosition)), _so.FindProperty(nameof(linerEndPosition)), ref linerBasePosition, ref linerEndPosition, 0, 1);
             GUI.enabled = true;
-            
+
             liner.startWidth = EditorGUILayout.Slider(CStartWidth, liner.startWidth, 0f, RCProPanel.linerMaxWidth);
             liner.endWidth = EditorGUILayout.Slider(CEndWidth, liner.endWidth, 0f, RCProPanel.linerMaxWidth);
-            
+
             BeginHorizontal();
             if (GUILayout.Button("Bake Collider"))
             {
                 var go = gameObject;
                 var mesh = new Mesh();
                 mesh.name = $"Baked Liner {gameObject.GetInstanceID().ToString()}";
-                
+
                 liner.BakeMesh(mesh, IsPlaying ? Camera.main : SceneCamera, true);
                 var vertices = mesh.vertices;
-                
+
                 for (var i = 0; i < mesh.vertices.Length; i++)
                 {
                     vertices[i] = transform.InverseTransformPoint(vertices[i]);
@@ -434,12 +434,12 @@
             EndHorizontal();
             liner.numCapVertices = EditorGUILayout.IntField(CCap, liner.numCapVertices);
             liner.numCornerVertices = EditorGUILayout.IntField(CCorner, liner.numCornerVertices);
-            
+
             GUI.backgroundColor = Color.white;
             // liner.material = (Material) EditorGUILayout.ObjectField("Liner Material".ToContent(), liner.material, typeof(Material));
             liner.colorGradient = EditorGUILayout.GradientField(CGradient, liner.colorGradient);
             GUI.backgroundColor = RCProEditor.Violet;
-            
+
             EndVertical();
 
             #endregion
@@ -467,7 +467,7 @@
             return _defaultLinerMat;
         }
 
-        
+
 /// <summary>
 /// Main Event names
 /// </summary>
@@ -481,18 +481,18 @@
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
         protected void EventField(SerializedObject _so) => EventField(_so, CEventNames);
-        
+
         protected static void ArcTypeField(ref ArcType arcType, Action value, ref Transform target, ref float velocityPower)
         {
             BeginVerticalBox();
             arcType = RCProEditor.EnumLabelField(arcType, "Arc Type".ToContent(), new[] {"A", "B"});
-            
+
             switch (arcType)
             {
                 case ArcType.Trajectory:
                 {
                     value?.Invoke();
-                    
+
                     // velocitySpace = RaycastProEditor.EnumLabelField(velocitySpace,
                     //     "Velocity Space".ToContent("Velocity Space"), new[] {"Local", "World"});
 

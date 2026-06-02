@@ -30,8 +30,8 @@ namespace Plugins.RaycastPro.Demo.Scripts
             if (movable)
             {
                 var inArriveDistance = Vector3.Distance(transform.position, detector.destination.position) < arriveDistance;
-                
-                rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, inArriveDistance ? Vector3.zero : detector.SteeringDirection * speed, 
+
+                rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, inArriveDistance ? Vector3.zero : detector.SteeringDirection * speed,
                     1 - Mathf.Exp(-accelerationSpeed * Time.deltaTime));
             }
 

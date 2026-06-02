@@ -23,7 +23,7 @@ namespace RaycastPro.RaySensors
         }
 
         /// <summary>
-        /// This method will Update and calculate ray depth by flip flop casting. 
+        /// This method will Update and calculate ray depth by flip flop casting.
         /// </summary>
         /// <returns></returns>
         public float GetDepth()
@@ -88,7 +88,7 @@ namespace RaycastPro.RaySensors
         }
 
         #endregion
-      
+
 
 #if UNITY_EDITOR
         internal override string Info =>

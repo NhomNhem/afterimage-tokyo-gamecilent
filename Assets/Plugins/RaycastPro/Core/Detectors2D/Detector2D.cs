@@ -39,7 +39,7 @@
         /// Return Min Depth as World space. Form : transform.position.z + minDepth
         /// </summary>
         public float MinDepth => transform.position.z + minDepth;
-        
+
         /// <summary>
         /// Return Max Depth as World space. Form : transform.position.z + maxDepth
         /// </summary>
@@ -48,7 +48,7 @@
         public float z => transform.position.z;
 
 #if UNITY_EDITOR
-        
+
         protected void PassGate(Collider2D c, Vector3 point, RaycastHit2D blockHit = default)
         {
             GizmoGate += () =>
@@ -71,7 +71,7 @@
         protected void DrawFocusLine()
         {
             if (!RCProPanel.DrawGuide) return;
-            
+
             if (RCProPanel.ShowLabels)  Handles.Label(transform.position, "Block Solver Point");
 
             if (!IsFocusedSolver) return;

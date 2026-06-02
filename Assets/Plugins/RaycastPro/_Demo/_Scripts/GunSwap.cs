@@ -12,7 +12,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
     public class GunSwap : MonoBehaviour
     {
         public static GunSwap singleton;
-    
+
         public GameObject[] guns;
 
         private int index;
@@ -86,7 +86,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
             yield return new WaitForSeconds(delay);
             enemy.Revive();
         }
-    
+
         public void SetTimeScale(float value)
         {
             Time.timeScale = value;

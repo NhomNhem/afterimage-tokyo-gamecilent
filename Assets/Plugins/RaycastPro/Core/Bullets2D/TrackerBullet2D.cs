@@ -14,16 +14,16 @@ namespace RaycastPro.Bullets2D
     public sealed class TrackerBullet2D : Bullet2D
     {
         public Transform target;
-        
+
         public Vector3 targetPoint;
 
         public float distanceThreshold = .2f;
         public float drag = 2;
         public Vector3 trackOffset;
         public float turnSharpness = 15;
-        
+
         public float force = 10;
-        
+
         public enum TrackType
         {
             PositionLerp,
@@ -31,7 +31,7 @@ namespace RaycastPro.Bullets2D
         }
 
         public TrackType trackType = TrackType.PositionLerp;
-        
+
         [SerializeField]
         private AxisRun axisRun = new AxisRun();
 
@@ -63,9 +63,9 @@ namespace RaycastPro.Bullets2D
             {
                 targetPoint = raySource.TipTarget;
             }
-            
+
             currentForce = force;
-            _t = transform; 
+            _t = transform;
         }
 
         private Transform _t;
@@ -78,7 +78,7 @@ namespace RaycastPro.Bullets2D
             UpdateLifeProcess(_dt);
 
             targetPoint = target ? target.position + trackOffset : _t.position;
-            
+
             _dis = Vector3.Distance(_t.position, targetPoint);
             if (currentForce <= .1f)
             {
@@ -92,7 +92,7 @@ namespace RaycastPro.Bullets2D
             }
             _dt = GetDelta(timeMode);
             _dir = targetPoint - _t.position;
-            
+
             switch (trackType)
             {
                 case TrackType.PositionLerp:
@@ -122,7 +122,7 @@ namespace RaycastPro.Bullets2D
                     CPositionLerp.ToContent(TPositionLerp),
                     CRotationLerp.ToContent(TRotationLerp),
                 });
-                
+
                 if (trackType == TrackType.RotationLerp)
                 {
                     EditorGUILayout.PropertyField(_so.FindProperty(nameof(force)));
@@ -137,15 +137,15 @@ namespace RaycastPro.Bullets2D
 
 
                 axisRun.EditorPanel(_so.FindProperty(nameof(axisRun)));
-                
+
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(distanceThreshold)));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(trackOffset)));
             }
-            
+
             if (hasGeneral) GeneralField(_so);
 
             if (hasEvents) EventField(_so);
-            
+
             if (hasInfo) InformationField();
         }
 #endif

@@ -8,7 +8,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
         private WaveRay _waveRay;
         void Update()
         {
-        
+
         }
     }
 }

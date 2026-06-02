@@ -17,10 +17,10 @@ namespace RaycastPro.Detectors
 
         [SerializeField] private bool limited;
         [SerializeField] private int limitCount = 3;
-        
+
         [SerializeField] public bool local = true;
 
-        
+
         public bool Limited
         {
             get => limited;
@@ -62,9 +62,9 @@ namespace RaycastPro.Detectors
                 colliders = Physics.OverlapBox(TDP, extents / 2, local ? transform.rotation : Quaternion.identity, detectLayer.value,
                     triggerInteraction);
             }
-            
+
             Clear();
-            
+
             if (IsIgnoreSolver)
             {
                 foreach (var c in colliders)
@@ -89,7 +89,7 @@ namespace RaycastPro.Detectors
                     if (new Bounds(Vector3.zero, extents).Contains(boundPoint) && LOSPass(TDP, c)) DetectedColliders.Add(c);
                 }
             }
-            
+
             EventPass();
         }
 

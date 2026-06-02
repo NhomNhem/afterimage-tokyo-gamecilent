@@ -12,7 +12,7 @@
     public sealed class ChainRay2D : PathRay2D, IRadius
     {
         public ChainReference chainReference = ChainReference.Point;
-        
+
         [SerializeField] private float radius = .1f;
         public float Radius
         {
@@ -23,7 +23,7 @@
         public Transform[] targets = Array.Empty<Transform>();
 
         public bool relative;
-        
+
         private Vector2 sum;
         private int i, j;
         internal void ToRelative()
@@ -67,14 +67,14 @@
                         }
                     }
                     break;
-                
+
                 case ChainReference.Transform:
-                    
+
                     PathPoints.Clear();
                     foreach (var t in targets)
                     {
                         if (t) PathPoints.Add(t.position.To2D());
-                        
+
                     }
                     break;
             }
@@ -116,7 +116,7 @@
 
 
             if (hasGeneral) PathRayGeneralField(_so);
-            
+
             if (hasEvents) EventField(_so);
 
             if (hasInfo) HitInformationField();

@@ -8,7 +8,7 @@ namespace RaycastPro
     using UnityEditor;
     using Editor;
     using System.Reflection;
-    
+
     [InitializeOnLoad]
     public class Autorun
     {
@@ -24,7 +24,7 @@ namespace RaycastPro
         {
             // need scriptable object System
             RCProPanel.LoadPreferences(false);
-            
+
             var firstTime = EditorPrefs.GetBool(FIRST_TIME, true);
             if (firstTime)
             {

@@ -17,7 +17,7 @@
         Duration,
         Curve,
     }
-    
+
     [Serializable]
     public class CasterEvent : UnityEvent<BaseCaster> { }
 
@@ -52,14 +52,14 @@
             _trail.Clear();
         }
         #endregion
-        
+
         public override bool Performed { get => false; protected set {} }
-        
+
         public TimeMode timeMode = TimeMode.DeltaTime;
 
         [Tooltip("If CollisionRay is used, it is good to create a break between each detection so that the Hit calculation process does not face many repetition problems.")]
         [SerializeField] protected float baseIgnoreTime = .1f;
-        
+
         [Tooltip("If you are using ArrayCasting, this option will help the caster to separate the bullets and respawn them if needed.")]
         public string bulletID;
 
@@ -98,7 +98,7 @@
         /// Use this variable to carry owner object reference
         /// </summary>
         public GameObject ownerReference;
-        
+
         [SerializeField] public float damage = 10;
         public float speed = 6;
 
@@ -144,16 +144,16 @@
         }
         #endregion
         internal abstract void Cast<R>(BaseCaster _caster, R raySensor);
-        
+
         internal bool ended;
         protected void OnEndCast<B>(B _caster) where B : BaseCaster// Review
         {
             if (ended) return;
             ended = true;
-            
+
             position = 1;
             onEndCast?.Invoke(_caster);
-            
+
             StartCoroutine(DelayRun(endDelay, () =>
             {
                 if (endFunction == EndType.Destroy) // In Normal Casting
@@ -167,7 +167,7 @@
                 onEnd?.Invoke(_caster);
             }));
         }
-        
+
         /// <summary>
         /// This Script need to be divided for more optimizing.
         /// </summary>
@@ -177,7 +177,7 @@
 
             if (messageUpward)
             {
-                if (this is Bullet _blt)    
+                if (this is Bullet _blt)
                 {
                     target.SendMessageUpwards(callMethod, _blt, SendMessageOptions.DontRequireReceiver);
                 }
@@ -186,7 +186,7 @@
                     target.SendMessageUpwards(callMethod, this as Bullet2D, SendMessageOptions.DontRequireReceiver);
                 }
             }
-            
+
             else
             {
                 if (this is Bullet _blt)
@@ -199,7 +199,7 @@
                 }
             }
         }
-        
+
         /// <summary>
         /// Optimized if delta is calculated before run this method
         /// </summary>
@@ -230,7 +230,7 @@
             SerializedProperty _curve)
         {
             BeginVerticalBox();
-            
+
             PropertyEnumField(_moveType, 3, CMoveType.ToContent(TMoveType), new GUIContent[]
             {
                 CSpeed.ToContent("By Speed"),
@@ -248,14 +248,14 @@
                     break;
                 case MoveType.Curve:
                     BeginHorizontal();
-                    
+
 
                     InLabelWidth(() =>
                     {
                         EditorGUILayout.CurveField(_curve, RCProEditor.Aqua, new Rect(0, 0, 1, 1), CCurve.ToContent(CCurve));
 
                     }, 80);
-                    
+
                     EditorGUILayout.PropertyField(_duration, GUIContent.none, GUILayout.Width(30));
 
                     EndHorizontal();

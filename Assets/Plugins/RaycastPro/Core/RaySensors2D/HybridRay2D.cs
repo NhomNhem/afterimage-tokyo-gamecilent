@@ -8,7 +8,7 @@
     using Editor;
     using UnityEditor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Rey Sensors/"+nameof(HybridRay2D))]
     public sealed class HybridRay2D : PathRay2D, IRadius
     {
@@ -51,7 +51,7 @@
                     break;
                 }
             }
-            
+
             isDetect = FilterCheck(hit);
 
         }
@@ -102,7 +102,7 @@
                 GizmoColor = DetectColor;
                 hitDepth = hit.point.ToDepth(z);
                 DrawCross(hitDepth, Vector3.forward);
-                
+
                 DrawNormal(hitDepth+hit.normal.ToDepth()*DotSize, hit.normal);
             }
             DrawNormalFilter();
@@ -117,7 +117,7 @@
                 BeginVerticalBox();
                 RCProEditor.DrawSerializedList(_so.FindProperty(nameof(raySensors)));
                 EndVertical();
-                
+
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(sequenceOnTip)),
                     "Sequence On Tip".ToContent());
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(sequenceCast)));
@@ -125,11 +125,11 @@
                 RadiusField(_so);
                 GUI.enabled = true;
             }
-            
+
             if (hasGeneral) PathRayGeneralField(_so);
 
             if (hasEvents) EventField(_so);
-            
+
             if (hasInfo) InformationField();
         }
 #endif

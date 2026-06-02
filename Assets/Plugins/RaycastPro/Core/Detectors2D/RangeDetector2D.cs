@@ -46,7 +46,7 @@
         }
 
         [SerializeField] private Collider2D[] colliders = Array.Empty<Collider2D>();
-        
+
         private Collider2D nearestMember;
         private Collider2D furthestMember;
 
@@ -60,7 +60,7 @@
         protected override void OnCast()
         {
             PreviousColliders = DetectedColliders.ToArray();
-            
+
 #if UNITY_EDITOR
             CleanGate();
 #endif
@@ -69,7 +69,7 @@
             if (limited)
             {
                 for (var i = 0; i < colliders.Length; i++) colliders[i] = null;
-                Physics2D.OverlapCircleNonAlloc(_tPos, radius, colliders, detectLayer.value, MinDepth, MaxDepth);    
+                Physics2D.OverlapCircleNonAlloc(_tPos, radius, colliders, detectLayer.value, MinDepth, MaxDepth);
             }
             else
             {
@@ -89,7 +89,7 @@
                     PassColliderGate(c);
 #endif
                     DetectedColliders.Add(c);
-                    
+
                     continue;
                 }
                 TDP = DetectFunction(c);
@@ -99,7 +99,7 @@
                 if (_distance > radius*radius) continue;
                 if (_distance < minRadius*minRadius) continue;
                 _blockHit = Physics2D.Linecast(_tPos, TDP, blockLayer.value, MinDepth, MaxDepth);
-                
+
                 Debug.Log(_blockHit);
 #if UNITY_EDITOR
                 PassGate(c, TDP, _blockHit);
@@ -120,7 +120,7 @@
 
         private float _distance, angle;
         private Vector3 tempAngle;
-        
+
 #if UNITY_EDITOR
         internal override string Info => "A sophisticated 2D arc sector sensor that defines a detection area shaped like an annular wedge (a slice of a donut). It operates using a highly-efficient, two-phase process: a broad-phase OverlapCircle to gather potential candidates, followed by a meticulous narrow-phase that filters targets based on three criteria: if they fall within the specified 'arcAngle', if they are located between the 'minRadius' and 'maxRadius', and if they have a clear line-of-sight (unobstructed by the 'blockLayer'). Beyond just providing a list of valid targets, it also identifies the single nearest member. This component is further enhanced with a performance-optimizing non-allocating mode and support for both world-space and local-space orientation."
                                          +HAccurate+HCDetector+HLOS_Solver+HIRadius+HIPulse+HINonAllocator;

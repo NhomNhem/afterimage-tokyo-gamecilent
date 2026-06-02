@@ -4,7 +4,7 @@
     using RaySensors2D;
     using UnityEngine;
     using System;
-    
+
 #if UNITY_EDITOR
     using Editor;
     using UnityEditor;
@@ -13,7 +13,7 @@
     public sealed class AdvanceCaster2D : GunCaster<Bullet2D, Collider2D, RaySensor2D>
     {
         public RaySensor2D[] raySensors = Array.Empty<RaySensor2D>();
-        
+
         public int currentIndex;
 
         [SerializeField]
@@ -39,7 +39,7 @@
                     }
                     break;
                 case CastType.Sequence:
-                    
+
                     if (AmmoCheck() && BulletCast(_bulletIndex, raySensors[currentIndex]))
                     {
                         currentIndex = ++currentIndex % raySensors.Length;
@@ -89,13 +89,13 @@
                     CRandom.ToContent(TRandom),
                     CPingPong.ToContent(TPingPong),
                 });
-                
+
                 GunField(_so);
             }
 
             if (hasGeneral) GeneralField(_so);
-            
-            if (hasEvents) 
+
+            if (hasEvents)
             {
                 EventFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(EventFoldout, CEvents.ToContent(TEvents),
                     RCProEditor.HeaderFoldout);

@@ -2156,7 +2156,7 @@
              // Register your tabs before starting BeginGroup.
              var tab1 = tabGroup.RegisterTab("tab 1");
              var tab2 = tabGroup.RegisterTab("tab 2");
-            
+
              tabGroup.BeginGroup(drawToolbar: true);
              {
                  if (tab1.BeginPage())
@@ -2164,7 +2164,7 @@
                      // Draw GUI for the first tab page;
                  }
                  tab1.EndPage();
-            
+
                  if (tab2.BeginPage())
                  {
                      // Draw GUI for the second tab page;
@@ -2172,13 +2172,13 @@
                  tab2.EndPage();
              }
              tabGroup.EndGroup();
-            
+
              // Control the animation speed.
              tabGroup.AnimationSpeed = 0.2f;
-            
+
              // If true, the tab group will have the height equal to the biggest page. Otherwise the tab group will animate in height as well when changing page.
              tabGroup.FixedHeight = true;
-            
+
              // You can change page by calling:
              tabGroup.GoToNextPage();
              tabGroup.GoToPreviousPage();
@@ -2267,11 +2267,11 @@
              <para>Creating a matrix table for a two-dimentional array.</para>
              <code>
              private GUITable table;
-            
+
              private void Init()
              {
                  bool[,] boolArr = new bool[20,20];
-            
+
                  this.table = GUITable.Create(
                      twoDimArray: boolArr,
                      drawElement: (rect, x, y) => boolArr[x, y] = EditorGUI.Toggle(rect, boolArr[x, y]),
@@ -2281,7 +2281,7 @@
                      rowLabels: (rect, x) => GUI.Label(rect, x.ToString())       // rowLabels is optional and can be null.
                  );
              }
-            
+
              private void OnGUI()
              {
                  this.table.DrawTable();
@@ -2292,11 +2292,11 @@
              <para>Creating a table for a list.</para>
              <code>
              private GUITable table;
-            
+
              private void Init()
              {
                  Listt&lt;SomeClasst&gt; someList = new List&lt;SomeClass&gt;() { new SomeClass(), new SomeClass(), new SomeClass() };
-            
+
                  this.table = GUITable.Create(someList, "Optional Title",
                      new GUITableColumn()
                      {
@@ -2319,12 +2319,12 @@
                      }
                  );
              }
-            
+
              private void OnGUI()
              {
                  this.table.DrawTable();
              }
-            
+
              private class SomeClass
              {
                  public string A;
@@ -2350,7 +2350,7 @@
              guiTable[x - 1,y] = null;
              guiTable[x,y].SpanX = true;
              guiTable[x + 1,y] = null;
-            
+
              // Span vertically:
              guiTable[x,y - 2] = null;
              guiTable[x,y - 1] = null;
@@ -2548,7 +2548,7 @@
         </member>
         <member name="P:Sirenix.Utilities.Editor.GUITableRowLayoutGroup.ContentRect">
             <summary>
-            Gets the rect containing all rows. 
+            Gets the rect containing all rows.
             </summary>
         </member>
         <member name="P:Sirenix.Utilities.Editor.GUITableRowLayoutGroup.RowIndexFrom">
@@ -6691,21 +6691,21 @@
             Type containing the necessary components to use C# expressions in fields.
             </summary>
             <example>
-            // Creating and using a context with for a static type. 
+            // Creating and using a context with for a static type.
             FieldExpressionContext context = FieldExpressionContext.StaticExpression(typeof(MyStaticType));
-            
+
             SirenixEditorFields.SmartIntField(context, ...);
             </example>
             <example>
             // Creating and using a context with an instanced type.
             FieldExpressionContext context = FieldExpressionContext.InstanceContext(myInstance);
-            
+
             SirenixEditorFields.SmartIntField(context, ...);
             </example>
             <example>
             // Creating and using context with an InspectorProperty, for example, in a custom Odin drawer.
             FieldExpressionContext context = property.ToFieldExpressionContext();
-            
+
             SirenixEditorFields.SmartIntField(context, ...);
             </example>
         </member>
@@ -9122,9 +9122,9 @@
         <member name="M:Sirenix.Utilities.Editor.TextureUtilities.LoadImage(System.Int32,System.Int32,System.Byte[])">
             <summary>
             Creates a new texture with no mimapping, linier colors, and calls texture.LoadImage(bytes), DontDestroyOnLoad(tex) and sets hideFlags = DontUnloadUnusedAsset | DontSaveInEditor.
-            
+
             Old description no longer relevant as we've moved past version 2017.
-            Loads an image from bytes with the specified width and height. Use this instead of someTexture.LoadImage() if you're compiling to an assembly. Unity has moved the method in 2017, 
+            Loads an image from bytes with the specified width and height. Use this instead of someTexture.LoadImage() if you're compiling to an assembly. Unity has moved the method in 2017,
             and Unity's assembly updater is not able to fix it for you. This searches for a proper LoadImage method in multiple locations, and also handles type name conflicts.
             </summary>
         </member>
@@ -9419,7 +9419,7 @@
             </para>
             <para>
             At build time, Odin's assemblies are IL post-processed to redirect all relevant calls with shims into the implementations
-            here instead of using the Unity versions of these APIs, such that Odin's pre-built assemblies work across a wide 
+            here instead of using the Unity versions of these APIs, such that Odin's pre-built assemblies work across a wide
             range of Unity versions.
             </para>
             </summary>
@@ -9576,7 +9576,7 @@
         </member>
         <member name="T:Sirenix.Utilities.MemberFinder">
             <summary>
-            MemberFinder is obsolete, and has been replacted by <see cref="!:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver" /> and <see cref="!:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver" />. 
+            MemberFinder is obsolete, and has been replacted by <see cref="!:Sirenix.OdinInspector.Editor.ValueResolvers.ValueResolver" /> and <see cref="!:Sirenix.OdinInspector.Editor.ActionResolvers.ActionResolver" />.
             Use cases that do not fit those utlities should use manual reflection that is hand-optimized for the best performance in the given case.
             <para />
             MemberFinder was a utility class often used by Odin drawers to find fields, methods, and
@@ -9793,10 +9793,10 @@
         </member>
         <member name="M:Sirenix.OdinInspector.Editor.UnityEditorEventUtility.DelayActionThreadSafe(System.Action)">
             <summary>
-            Sometimes, someone accidentally overrides a delay action subscription to <see cref="F:UnityEditor.EditorApplication.delayCall"/> 
+            Sometimes, someone accidentally overrides a delay action subscription to <see cref="F:UnityEditor.EditorApplication.delayCall"/>
             by setting the value instead of using the += operator as should be done,
-            which can be done because in many versions of Unity it is a field, and not an event. 
-            (In some versions of Unity it is an event, though, and in this case, this method acts as a wrapper 
+            which can be done because in many versions of Unity it is a field, and not an event.
+            (In some versions of Unity it is an event, though, and in this case, this method acts as a wrapper
             to subscribe reliably, no matter the nature of the backing event.)
             This method subscribes to a lot of different callbacks, in the hopes of catching at least one.
             <para />
@@ -9825,7 +9825,7 @@
         </member>
         <member name="E:Sirenix.OdinInspector.Editor.UnityEditorEventUtility.EditorApplication_delayCall">
             <summary>
-            In 2020.1, Unity changed EditorApplication.delayCall from a field to an event, meaning 
+            In 2020.1, Unity changed EditorApplication.delayCall from a field to an event, meaning
             we now have to use reflection to access it consistently across all versions of Unity.
             </summary>
         </member>

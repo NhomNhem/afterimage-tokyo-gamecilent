@@ -34,10 +34,10 @@ namespace Plugins.RaycastPro.Demo.Scripts
         {
             if (waveRay.Influence > 0 && Input.GetMouseButton(0))
             {
-                
+
                 waveRay.linerEndPosition += Time.deltaTime / linerSetupTime;
                 waveRay.Cast();
-                
+
                 foreach (var detectedEnemy in detectedEnemies)
                 {
                     detectedEnemy.TakeDamage(Time.deltaTime*DPS);
@@ -53,7 +53,7 @@ namespace Plugins.RaycastPro.Demo.Scripts
             {
                 StartCoroutine(WaveTween(0, .4f));
             }
-        
+
             // Optimized Way
 
         }

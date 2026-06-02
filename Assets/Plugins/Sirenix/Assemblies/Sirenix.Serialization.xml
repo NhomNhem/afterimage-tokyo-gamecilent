@@ -4525,7 +4525,7 @@
             This will be false on some ARM architectures, such as ARMv7.
             In these cases, we will have to perform slower but safer int-by-int read/writes of data.
             <para />
-            Since this value will never change at runtime, performance hits from checking this 
+            Since this value will never change at runtime, performance hits from checking this
             everywhere should hopefully be negligible, since branch prediction from speculative
             execution will always predict it correctly.
             </summary>
@@ -4685,18 +4685,18 @@
              <code>
              [assembly: OdinSerializer.BindTypeNameToType("Namespace.OldTypeName", typeof(Namespace.NewTypeName))]
              //[assembly: OdinSerializer.BindTypeNameToType("Namespace.OldTypeName, OldFullAssemblyName", typeof(Namespace.NewTypeName))]
-            
+
              namespace Namespace
              {
                  public class SomeComponent : SerializedMonoBehaviour
                  {
                      public IInterface test; // Contains an instance of OldTypeName;
                  }
-            
+
                  public interface IInterface { }
-            
+
                  public class NewTypeName : IInterface { }
-            
+
                  //public class OldTypeName : IInterface { }
              }
              </code>
@@ -5350,7 +5350,7 @@
         <member name="T:Sirenix.Serialization.PreviouslySerializedAsAttribute">
              <summary>
              Indicates that an instance field or auto-property was previously serialized with a different name, so that values serialized with the old name will be properly deserialized into this member.
-            
+
              This does the same as Unity's FormerlySerializedAs attribute, except it can also be applied to properties.
              </summary>
              <seealso cref="T:System.Attribute" />
@@ -5574,12 +5574,12 @@
         <member name="F:Sirenix.Serialization.SerializationConfig.AllowDeserializeInvalidData">
             <summary>
             <para>
-            Setting this member to true indicates that in the case where, when expecting to deserialize an instance of a certain type, 
-            but encountering an incompatible, uncastable type in the data being read, the serializer should attempt to deserialize an 
+            Setting this member to true indicates that in the case where, when expecting to deserialize an instance of a certain type,
+            but encountering an incompatible, uncastable type in the data being read, the serializer should attempt to deserialize an
             instance of the expected type using the stored, possibly invalid data.
             </para>
             <para>
-            This is equivalent to applying the <see cref="F:Sirenix.Serialization.SerializationConfig.AllowDeserializeInvalidData"/> attribute, except global 
+            This is equivalent to applying the <see cref="F:Sirenix.Serialization.SerializationConfig.AllowDeserializeInvalidData"/> attribute, except global
             instead of specific to a single type. Note that if this member is set to false, individual types may still be deserialized
             with invalid data if they are decorated with the <see cref="F:Sirenix.Serialization.SerializationConfig.AllowDeserializeInvalidData"/> attribute.
             </para>
@@ -7554,7 +7554,7 @@
         </member>
         <member name="E:Sirenix.Serialization.UnitySerializationUtility.EditorApplication_delayCall_Alias">
             <summary>
-            In 2020.1, Unity changed EditorApplication.delayCall from a field to an event, meaning 
+            In 2020.1, Unity changed EditorApplication.delayCall from a field to an event, meaning
             we now have to use reflection to access it consistently across all versions of Unity.
             </summary>
         </member>
@@ -8095,7 +8095,7 @@
         <member name="M:Sirenix.Serialization.Utilities.TypeExtensions.GetEqualityComparerDelegate``1">
              <summary>
              Gets an equality comparer delegate used to compare the equality of values of a given type. In order, this will be:
-            
+
              1. The == operator, if one is defined on the type.
              2. A delegate that uses <see cref="T:System.IEquatable`1"/>, if the type implements that interface.
              3. .NET's own <see cref="P:System.Collections.Generic.EqualityComparer`1.Default"/>
@@ -8539,7 +8539,7 @@
             <para />
             Cached types which implement the <see cref="T:Sirenix.Serialization.Utilities.ICacheNotificationReceiver"/> interface will receive notifications when they are claimed and freed.
             <para />
-            Only one thread should be holding a given cache instance at a time if <see cref="T:Sirenix.Serialization.Utilities.ICacheNotificationReceiver"/> is implemented, since the invocation of 
+            Only one thread should be holding a given cache instance at a time if <see cref="T:Sirenix.Serialization.Utilities.ICacheNotificationReceiver"/> is implemented, since the invocation of
             <see cref="M:Sirenix.Serialization.Utilities.ICacheNotificationReceiver.OnFreed"/> is not thread safe, IE, weird stuff might happen if multiple different threads are trying to free
             the same cache instance at the same time. This will practically never happen unless you're doing really strange stuff, but the case is documented here.
             </summary>

@@ -26,7 +26,7 @@
     {
         public LayerMask blockLayer;
 
-        
+
         public enum SolverType { Ignore, Nearest, Pivot, Furthest, Focused, Dodge, }
         protected bool IsIgnoreSolver => solverType == SolverType.Ignore;
         protected bool IsFocusedSolver => solverType == SolverType.Focused;
@@ -34,7 +34,7 @@
         protected bool IsPivotSolver => solverType == SolverType.Pivot;
         protected bool IsFurthestSolver => solverType == SolverType.Furthest;
         protected bool IsDodgeSolver => solverType == SolverType.Dodge;
-        
+
         public abstract Vector3 FocusPoint { get; }
 
         public SolverType solverType;
@@ -51,7 +51,7 @@
         public UnityEvent onDetect;
 
         #endregion
-        
+
         // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         /// Suitable for manual ray casting.
@@ -92,7 +92,7 @@
         protected void Update() { if (autoUpdate == UpdateMode.Normal) OnPulse(); }
         protected void LateUpdate() { if (autoUpdate == UpdateMode.Late) OnPulse(); }
         protected void FixedUpdate() { if (autoUpdate == UpdateMode.Fixed) OnPulse(); }
-        
+
         /// <summary>
         /// Its an optimized foreach OnEnter/Exit callback event system.
         /// </summary>
@@ -116,23 +116,23 @@
             }
             #endregion
         }
-        
+
         /// <summary>
         /// CleanGate Outside of #IF Unity_Editor Because of processing in OnCast()
         /// </summary>
 
-        
+
 #if UNITY_EDITOR
         protected Action PanelGate;
-        
+
         protected const string TIgnore = "This solver works very fast and avoids spending unnecessary performance to check the detection point.";
         protected const string TNearest = "This solver sets the closest point of the Collider to SolverPoint as the criterion for being in the area and detecting the line of sight.";
         protected const string TPivot = "Pivot works as fast as Ignore. This option is very useful when you want to have the speed and detection point at the same time.";
         protected const string TCenter = "Detect Point on center of collider bounds.";
         protected const string TFurthest = "This reverse option works the closest point and is similar to it in terms of speed, it will be the best option when you want the collider to be located entirely in the range area.";
-        protected const string TFocused = "With this option, you can custom move the focus point so use it if you want the detection point to stare at a certain point.";    
+        protected const string TFocused = "With this option, you can custom move the focus point so use it if you want the detection point to stare at a certain point.";
         protected const string TDodge = "The dodge option is based on pivot at default, will find the best way to escape blocking by using multiple checks. Although the performance of using this option is slightly higher than others, it simulates a smart line of sight.";
-        
+
         protected bool PassHit(RaycastHit hit)
         {
             PanelGate += () => HitInfoField(hit);
@@ -143,7 +143,7 @@
             } };
             return true;
         }
-        
+
         protected void PassColliderGate(Collider c)
         {
             PanelGate += () => DetectorInfoField(c.transform, c.bounds.center, false);
@@ -160,7 +160,7 @@
         protected void PassColliderGate(Collider2D c)
         {
             PanelGate += () => DetectorInfoField(c.transform, c.transform.position, false);
-            
+
             GizmoGate += () =>
             {
                 if (IsLabel) Handles.Label(c.bounds.center, $"<color=#34FF5F>{c.name}</color>", RCProEditor.LabelStyle);
@@ -171,7 +171,7 @@
                 }
             };
         }
-        
+
         /// <summary>
         /// Panel and Gizmo gate clean (Without IF #UnityEditor)
         /// </summary>
@@ -189,7 +189,7 @@
             Transform blockedTransform, RaycastHit2D blockHit = default)
         {
             if (!blockHit) return;
-            
+
             if (IsBlockLine)
             {
                 Handles.color = BlockColor;
@@ -256,7 +256,7 @@
             PropertyEnumField(_so.FindProperty(nameof(solverType)), 3, CSolverType.ToContent(TSolverType)
             ,new[] {"Ignore".ToContent(TIgnore),"Nearest".ToContent(TNearest),"Pivot".ToContent(TPivot),"Furthest".ToContent(TFurthest),"Focused".ToContent(TFocused), "Dodge".ToContent(TDodge)}
             );
-            
+
             inBox?.Invoke();
             EndVertical();
             GUI.enabled = true;
@@ -269,7 +269,7 @@
                 PropertyMaxField(_so.FindProperty(nameof(pulseTime)), "Pulse Time".ToContent("It creates a time gap between each process, which is used to a large extent in process optimization."));
             }
         }
-        
+
         protected void EventField(SerializedObject _so)
         {
             EventFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(EventFoldout, CEvents.ToContent(TEvents),
@@ -283,7 +283,7 @@
         protected void TagField(SerializedObject _so)
         {
             BeginHorizontal();
-            
+
             var usingTagFilterProp = _so.FindProperty(nameof(usingTagFilter));
             EditorGUILayout.PropertyField(usingTagFilterProp, "Tag Filter".ToContent());
             GUI.enabled = usingTagFilter;

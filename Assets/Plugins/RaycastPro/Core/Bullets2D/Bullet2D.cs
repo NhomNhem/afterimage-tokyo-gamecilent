@@ -6,29 +6,29 @@
     using UnityEditor;
 
 #endif
-    
+
     public abstract class Bullet2D : BaseBullet
     {
         public BaseCaster caster;
         public RaySensor2D raySource;
         public RaySensor2D collisionRay;
         public float Z => transform.position.z;
-        
+
         internal override void Cast<R>(BaseCaster _caster, R raySensor)
         {
 #if UNITY_EDITOR
             alphaCharge = AlphaLifeTime;
 #endif
             caster = _caster;
-            
+
             raySource = raySensor as RaySensor2D;
-            
+
             if (!raySource)
             {
                 transform.position = caster.transform.position;
                 transform.forward = caster.transform.right;
             }
-            
+
             OnCast(); // Auto Setup 3D Bullet
             onCast?.Invoke(caster);
             if (collisionRay)
@@ -70,7 +70,7 @@
         }
 
 #if UNITY_EDITOR
-        
+
         protected override void CollisionRayField(SerializedObject _so)
         {
             EditorGUILayout.PropertyField(_so.FindProperty(nameof(collisionRay)));

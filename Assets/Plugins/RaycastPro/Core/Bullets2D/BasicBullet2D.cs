@@ -4,7 +4,7 @@
     using Planers2D;
     using RaySensors2D;
 
-    
+
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
@@ -45,7 +45,7 @@
             {
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(speed)), CSpeed.ToContent(CSpeed));
             }
-            
+
             if (hasGeneral) GeneralField(_so);
 
             if (hasEvents) EventField(_so);

@@ -4,7 +4,7 @@
     using RaySensors2D;
     using Bullets2D;
     using UnityEngine.Events;
-    
+
 #if UNITY_EDITOR
     using UnityEditor;
     using Editor;
@@ -15,7 +15,7 @@
     {
         [Tooltip("Automatically, this ray will shoot along the LocalDirection and source BasePoint location.")]
         public RaySensor2D raySource;
-        
+
         public override void Cast(int _bulletIndex)
         {
 #if UNITY_EDITOR
@@ -44,12 +44,12 @@
             if (hasMain)
             {
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(raySource)));
-                
+
                 GunField(_so);
             }
             if (hasGeneral) GeneralField(_so);
 
-            if (hasEvents) 
+            if (hasEvents)
             {
                 EventFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(EventFoldout, CEvents.ToContent(TEvents),
                     RCProEditor.HeaderFoldout);

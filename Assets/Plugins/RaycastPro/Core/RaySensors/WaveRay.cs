@@ -10,7 +10,7 @@ namespace RaycastPro.RaySensors
 
     using UnityEngine;
     using Random = UnityEngine.Random;
-    
+
     [AddComponentMenu("RaycastPro/Rey Sensors/"+nameof(WaveRay))]
     public sealed class WaveRay : PathRay, IRadius
     {

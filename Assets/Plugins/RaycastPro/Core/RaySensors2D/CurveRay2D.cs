@@ -20,7 +20,7 @@ namespace RaycastPro.RaySensors2D
         }
         public AnimationCurve clumpX = AnimationCurve.Linear(0, 0, 1, 1);
         public AnimationCurve clumpY = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        
+
         protected override void OnCast()
         {
             UpdatePath();
@@ -31,7 +31,7 @@ namespace RaycastPro.RaySensors2D
             }
         }
         private float step;
-        
+
         private Vector3 curve;
 
         protected override void UpdatePath()

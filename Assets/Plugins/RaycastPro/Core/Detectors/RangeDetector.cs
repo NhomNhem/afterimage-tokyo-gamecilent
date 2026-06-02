@@ -13,7 +13,7 @@ namespace RaycastPro.Detectors
     public sealed class RangeDetector : ColliderDetector, IRadius, IPulse
     {
         [SerializeField] private float radius = 2f;
-        
+
         public float Radius
         {
             get => radius;
@@ -29,10 +29,10 @@ namespace RaycastPro.Detectors
             get => height;
             set => height = Mathf.Max(0, value);
         }
-        
+
         [SerializeField] private bool limited;
         [SerializeField] private int limitCount = 3;
-        
+
         public bool Limited
         {
             get => limited;
@@ -85,7 +85,7 @@ namespace RaycastPro.Detectors
         }
 
         #endregion
-        
+
         protected override void OnCast()
         {
             CachePrevious();
@@ -96,7 +96,7 @@ namespace RaycastPro.Detectors
             if (limited)
             {
                 for (var i = 0; i < colliders.Length; i++) colliders[i] = null;
-                
+
                 if (height > 0)
                 {
                     cylinderH = height - radius;
@@ -124,9 +124,9 @@ namespace RaycastPro.Detectors
                     colliders = Physics.OverlapSphere(_t.position, radius, detectLayer.value, triggerInteraction);
                 }
             }
-            
+
             Clear();
-            
+
             if (IsIgnoreSolver)
             {
                 foreach (var c in colliders)
@@ -147,7 +147,7 @@ namespace RaycastPro.Detectors
                     if (!TagPass(c)) continue;
                     TDP = DetectFunction(c); // 1: Get Detect Point
                     if (collectLOSPoints) directLOSPoints.Add(c, TDP);
-                    
+
                     if (height > 0)
                     {
                         if (HeightCheck(TDP) && LOSPass(TDP, c))
@@ -177,7 +177,7 @@ namespace RaycastPro.Detectors
             EventPass();
         }
 #if UNITY_EDITOR
-        
+
         internal override string Info => "A versatile volumetric sensor that identifies all line-of-sight targets within a spherical detection area, which can be extended into a capsule by defining a height." + HAccurate + HCDetector + HLOS_Solver + HIRadius + HRotatable + HINonAllocator;
         internal override void OnGizmos()
         {
@@ -204,7 +204,7 @@ namespace RaycastPro.Detectors
                 RadiusField(_so);
                 LocalField(_so.FindProperty(nameof(local)));
                 EndHorizontal();
-                
+
                 HeightField(_so);
             }
             if (hasGeneral) ColliderDetectorGeneralField(_so);
@@ -236,7 +236,7 @@ namespace RaycastPro.Detectors
                 Handles.color = HelperColor;
                 Handles.DrawWireArc(_t.position, cross, direct, 20f, radius);
                 Handles.DrawWireArc(_t.position, cross, direct, -20f, radius);
-                
+
                 Handles.color = HelperColor;
                 Handles.DrawDottedLine(point, _t.position + direct.normalized * radius, StepSizeLine);
             }

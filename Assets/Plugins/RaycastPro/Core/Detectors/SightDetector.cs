@@ -17,7 +17,7 @@
             Quaternion.AngleAxis(-angleY / 2, transform.right) * transform.forward * radius;
         private Vector3 ArcYEndPoint => Quaternion.AngleAxis(angleY / 2, transform.right) * transform.forward * radius;
 #endif
-        
+
         public float angleX = 120f;
         public float angleY = 90f;
 
@@ -52,7 +52,7 @@
                 colliders = new Collider[limitCount];
             }
         }
-        
+
         public float minRadius = 1f;
         public float fullAwareness = 2f;
 
@@ -69,11 +69,11 @@
 #endif
             _t = transform;
             _p = _t.position;
-            
+
             if (limited)
             {
                 for (var i = 0; i < colliders.Length; i++) colliders[i] = null;
-                Physics.OverlapSphereNonAlloc(_p, radius, colliders, detectLayer.value, triggerInteraction);    
+                Physics.OverlapSphereNonAlloc(_p, radius, colliders, detectLayer.value, triggerInteraction);
             }
             else
             {
@@ -81,14 +81,14 @@
             }
 
             Clear();
-            
+
             foreach (var c in colliders)
             {
                 if (!TagPass(c)) continue;
-                
+
                 TDP = DetectFunction(c);
                 if (collectLOSPoints) directLOSPoints.Add(c, TDP);
-                
+
 // مقدار بردار جهت دید (نرمال‌شده)
                 Vector3 forward = _t.forward;
                 Vector3 up = _t.up;
@@ -115,7 +115,7 @@
                         continue;
                 }
 
-                
+
                 if (IsIgnoreSolver)
                 {
 #if UNITY_EDITOR
@@ -146,7 +146,7 @@
             _p = _t.position;
             up = _t.up;
             right = _t.right;
-            
+
             GizmoColor = DetectedColliders.Count > 0 ? DetectColor : DefaultColor;
 
             void Draw()
@@ -156,7 +156,7 @@
                 arcXStartPoint = ArcXStartPoint;
                 arcYStartPoint = ArcYStartPoint;
                 arcYEndPoint = ArcYEndPoint;
-                
+
                 if (fullAwareness > 0)
                 {
                     if (fullAwareness > minRadius)
@@ -168,7 +168,7 @@
                         Handles.DrawWireDisc(_p, Vector3.up, fullAwareness);
                     }
                 }
-                
+
                 s1 = Vector3.Lerp(_p, _p + arcXEndPoint, lerp);
                 s2 = Vector3.Lerp(_p, _p + arcXStartPoint, lerp);
                 s3 = Vector3.Lerp(_p, _p + arcYStartPoint, lerp);
@@ -181,7 +181,7 @@
                 sinY = Mathf.Sin(angleY / 2 * Mathf.Deg2Rad);
                 upSinYMin = up * (sinY * minRadius);
                 rightSinXMin = right * (sinX * minRadius);
-                
+
                 upSinY = up * (sinY * radius);
                 rightSinX = right * (sinX * radius);
                 Handles.DrawWireArc(_p, up, arcXStartPoint, angleX, radius);
@@ -196,7 +196,7 @@
                     _p + arcYEndPoint - rightSinX, Handles.color, Texture2D.whiteTexture, BezierWidth);
                 Handles.DrawBezier(_p + arcXEndPoint, _p + arcYEndPoint, _p + arcXEndPoint - upSinY,
                     _p + arcYEndPoint + rightSinX, Handles.color, Texture2D.whiteTexture, BezierWidth);
-                
+
                 // === MIN RADIUS ===
                 if (minRadius > 0)
                 {
@@ -204,7 +204,7 @@
                     Handles.DrawBezier(s1, s3, s1 + upSinYMin, s3 + rightSinXMin, Handles.color, Texture2D.whiteTexture, BezierWidth);
                     Handles.DrawBezier(s2, s4, s2 - upSinYMin, s4 - rightSinXMin, Handles.color, Texture2D.whiteTexture, BezierWidth);
                     Handles.DrawBezier(s1, s4, s1 - upSinYMin, s4 + rightSinXMin, Handles.color, Texture2D.whiteTexture, BezierWidth);
-                    
+
                     Handles.DrawWireArc(_p, up, arcXStartPoint, angleX, minRadius);
                     Handles.DrawWireArc(_p, right, arcYStartPoint, angleY, minRadius);
                 }
@@ -220,11 +220,11 @@
             {
                 RadiusField(_so);
                 RadiusField(_so, nameof(minRadius), "Min Radius".ToContent());
-                
+
                 var fullAwarenessProp = _so.FindProperty(nameof(fullAwareness));
                 EditorGUILayout.PropertyField(fullAwarenessProp, fullAwarenessProp.displayName.ToContent("The range of full awareness will always be detected regardless of the viewing angle."));
                 fullAwarenessProp.floatValue = Mathf.Clamp(fullAwarenessProp.floatValue, 0, radius);
-                
+
                 PropertySliderField(_so.FindProperty(nameof(angleX)), 0f, 360f, CArcHorizontal.ToContent("The horizontal range of vision, which is counted in Degress units."));
                 PropertySliderField(_so.FindProperty(nameof(angleY)), 0f, 180, CArcVertical.ToContent("The vertical range of vision, which is counted in Degress units."));
                 GUI.enabled = true;
@@ -241,7 +241,7 @@
             }
 
             if (hasInfo) InformationField(PanelGate);
-            
+
         }
         protected override void DrawDetectorGuide(Vector3 point) { }
 #endif

@@ -13,20 +13,20 @@
     public sealed class PathBullet2D : Bullet2D, IPath<Vector2>
     {
         public List<Vector2> Path { get; internal set; } = new List<Vector2>();
-        
+
         public float duration = 1;
         public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
-        
+
         [SerializeField]
         private AxisRun axisRun = new AxisRun();
-        
+
         [SerializeField]
         private Rigidbody2D rigidBody;
-        
+
         private float pathLength;
 
         [SerializeField] private bool local;
-        
+
         // Cached Variables
         private Vector3 _pos, _dir;
         private float _dt;
@@ -57,9 +57,9 @@
                     Path.Add(raySensor.Base);
                     Path.Add(raySensor.TipTarget);
                 }
-                
+
                 raySensor = raySensor.cloneRaySensor;
-                
+
             } while (raySensor);
 
             pathLength = Path.GetPathLength();
@@ -127,7 +127,7 @@
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(rigidBody)));
                 CastTypeField(
                     _so.FindProperty(nameof(moveType)),
-                    _so.FindProperty(nameof(speed)), 
+                    _so.FindProperty(nameof(speed)),
                     _so.FindProperty(nameof(duration)),
                     _so.FindProperty(nameof(curve)));
                 axisRun.EditorPanel(_so.FindProperty(nameof(axisRun)));

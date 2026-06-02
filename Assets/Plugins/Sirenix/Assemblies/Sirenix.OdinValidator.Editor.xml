@@ -27,7 +27,7 @@
             </para>
             <para>
             Only use this to register types derived from Validator! It is important to understand
-            that a rule is simply a serialized Validator instance that can be enabled, disabled, 
+            that a rule is simply a serialized Validator instance that can be enabled, disabled,
             and have its contained values modified from the rules management GUI in the Odin Validator
             window.
             </para>

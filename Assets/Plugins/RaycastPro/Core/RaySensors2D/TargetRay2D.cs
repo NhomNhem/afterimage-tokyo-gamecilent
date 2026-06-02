@@ -16,7 +16,7 @@ namespace RaycastPro.RaySensors2D
         public Transform target;
 
         public float radius = .4f;
-        
+
         public float Radius
         {
             get => radius;
@@ -51,12 +51,12 @@ namespace RaycastPro.RaySensors2D
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
             if (!target) return;
             p1 = transform.position;
             _targetPosition = target.position.ToDepth(z);
             p2 = Tip.ToDepth(z);
-            
+
             if (radius > 0)
             {
                 Handles.DrawWireDisc(_targetPosition, Vector3.forward, radius);
@@ -73,7 +73,7 @@ namespace RaycastPro.RaySensors2D
                 DrawCapLine(p1, p2);
             }
             DrawDepthLine(p1, p2);
-            
+
             if (Hit) DrawNormal2D(Hit, z);
             DrawNormalFilter();
         }

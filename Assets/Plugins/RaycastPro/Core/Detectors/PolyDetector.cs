@@ -17,7 +17,7 @@ namespace RaycastPro.Detectors
 
         public float height = 2f;
         [SerializeField] private int edgeCount = 5;
-        
+
         [SerializeField] private bool limited;
         [SerializeField] private int limitCount = 3;
 
@@ -48,11 +48,11 @@ namespace RaycastPro.Detectors
             internal set
             {
                 edgeCount = value;
-                
+
                 Resize();
             }
         }
-        
+
         [SerializeField] private Vector3[] worldPointsNear = new Vector3[6];
         [SerializeField] private Vector3[] worldPointsFar = new Vector3[6];
         [SerializeField] private Vector3[] upPointsNear = new Vector3[6];
@@ -86,7 +86,7 @@ namespace RaycastPro.Detectors
             forward = Vector3.ProjectOnPlane(transform.forward, up);
             h = height / 2 * up;
             step = 360f / edgeCount;
-            
+
             for (i = 0; i <= edgeCount; i++)
             {
                 if (i < edgeCount)
@@ -116,9 +116,9 @@ namespace RaycastPro.Detectors
                 upPointsFar[i] = worldPointsFar[i] + h;
                 downPointsFar[i] = worldPointsFar[i] - h;
             }
-            
+
             Clear();
-            
+
             if (limited)
             {
                 for (var i = 0; i < colliders.Length; i++) colliders[i] = null;
@@ -130,7 +130,7 @@ namespace RaycastPro.Detectors
                 colliders = Physics.OverlapBox(position, new Vector3(maxRadius, height / 2, maxRadius),
                     Quaternion.identity, detectLayer.value, triggerInteraction);
             }
-            
+
             if (IsIgnoreSolver)
             {
                 foreach (var c in colliders)
@@ -167,7 +167,7 @@ namespace RaycastPro.Detectors
             EditorUpdate();
 
             GizmoColor = (minRadius > maxRadius ? BlockColor : DefaultColor);
-            
+
             for (var i = 0; i < edgeCount; i++)
             {
                 if (minRadius > 0)

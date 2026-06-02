@@ -17,14 +17,14 @@
         /// </summary>
         public readonly List<RaycastHit> reflectHits = new List<RaycastHit>();
         public LayerMask reflectLayer;
-        
+
         [SerializeField] private float radius;
         public float Radius
         {
             get => radius;
             set => radius = Mathf.Max(0,value);
         }
-        
+
         public Axis planeAxis;
         public bool hasFreezeAxis;
 
@@ -74,7 +74,7 @@
                 else
                     Physics.Raycast(point, _direction, out _tHit, distance, reflectLayer.value | detectLayer.value,
                         triggerInteraction);
-                    
+
                 if(_tHit.transform)
                 {
                     reflectHits.Add(_tHit);

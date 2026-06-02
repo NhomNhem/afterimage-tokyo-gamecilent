@@ -37,27 +37,27 @@ namespace RaycastPro.RaySensors
         }
 #endif
     }
-    
 
-    
+
+
     [AddComponentMenu("RaycastPro/Rey Sensors/" + nameof(RadialRay))]
     public sealed class RadialRay : RaySensor, IRadius
     {
         public float arcAngle = 60f;
         public Vector3 ArcStartPoint => Quaternion.AngleAxis(-arcAngle / 2, transform.up) * Direction;
         public Vector3 ArcEndPoint => Quaternion.AngleAxis(arcAngle / 2, transform.up) * Direction;
-        
+
         [SerializeField] private float radius;
         public float Radius
         {
             get => radius;
             set => radius = Mathf.Max(0,value);
         }
-        
+
         [SerializeField]
         private float value;
         public float Value => value;
-        
+
         [SerializeField] private int subdivide = 3;
         public int Subdivide
         {
@@ -73,7 +73,7 @@ namespace RaycastPro.RaySensors
 
         public int Count => Pow + 1;
         private int Pow => (int) Mathf.Pow(2, subdivide);
-        
+
         private RaycastHit _raycastHit;
         private Vector3 _pos, _angledDir;
         private float total, step;
@@ -152,19 +152,19 @@ namespace RaycastPro.RaySensors
 
         private RaycastHit[] _hits;
 
-        private Vector3 ASP; 
+        private Vector3 ASP;
 
         internal override void OnGizmos()
         {
             EditorUpdate();
 
             DrawNormal(hit);
-            
+
             Handles.color = (Performed ? DetectColor : HelperColor).Alpha(Mathf.Min(ClampedAlphaCharge, .4f));
 
             DrawZTest(() => Handles.DrawSolidArc(transform.position, transform.up, ASP, arcAngle, DirectionLength));
 ;
-            
+
             if (RCProPanel.ShowLabels)
             {
                 _hits = raycastHits.ToArray();
@@ -177,7 +177,7 @@ namespace RaycastPro.RaySensors
                 }
             }
         }
-        
+
         internal override void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true,
             bool hasEvents = true,
             bool hasInfo = true)

@@ -26,7 +26,7 @@ namespace RaycastPro.Detectors2D
             set
             {
                 edgeCount = value;
-                
+
                 Resize();
             }
         }
@@ -43,7 +43,7 @@ namespace RaycastPro.Detectors2D
             set => maxRadius = Mathf.Max(minRadius, value);
             //refresh = true;
         }
-        
+
         [SerializeField] private bool limited;
         [SerializeField] private int limitCount = 3;
         public bool Limited
@@ -69,7 +69,7 @@ namespace RaycastPro.Detectors2D
         }
 
         [SerializeField] private Collider2D[] colliders = Array.Empty<Collider2D>();
-        
+
         private void Resize()
         {
             worldPointsNear = new Vector2[edgeCount + 1];
@@ -90,7 +90,7 @@ namespace RaycastPro.Detectors2D
                 if (minRadius > 0) worldPointsNear[i] = Q * (forward * minRadius) + _pos;
                 worldPointsFar[i] = Q * (forward * maxRadius) + _pos;
             }
-            
+
             worldPointsNear[edgeCount] = worldPointsNear[0];
             worldPointsFar[edgeCount] = worldPointsFar[0];
         }
@@ -100,7 +100,7 @@ namespace RaycastPro.Detectors2D
         protected override void OnCast()
         {
             PreviousColliders = DetectedColliders.ToArray();
-            
+
 #if UNITY_EDITOR
             CleanGate();
 #endif
@@ -110,18 +110,18 @@ namespace RaycastPro.Detectors2D
             if (limited)
             {
                 for (var i = 0; i < colliders.Length; i++) colliders[i] = null;
-                
-                Physics2D.OverlapCircleNonAlloc(pos2D, maxRadius, colliders, detectLayer.value, MinDepth, MaxDepth);    
+
+                Physics2D.OverlapCircleNonAlloc(pos2D, maxRadius, colliders, detectLayer.value, MinDepth, MaxDepth);
             }
             else
             {
                 colliders = Physics2D.OverlapCircleAll(pos2D, maxRadius, detectLayer.value, MinDepth, MaxDepth);
             }
-            
+
             Clear();
-            
+
             CalculatePoints();
-            
+
             foreach (var c in colliders)
             {
                 if (!TagPass(c)) continue;
@@ -153,9 +153,9 @@ namespace RaycastPro.Detectors2D
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
              if (edgeCount == 0 || worldPointsFar == null) return;
-             
+
                 for (var i = 0; i < edgeCount; i++)
                 {
                     GizmoColor = DefaultColor;

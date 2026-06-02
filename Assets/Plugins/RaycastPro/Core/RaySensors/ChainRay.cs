@@ -95,7 +95,7 @@
             if (hit.transform) DrawNormal(hit.point, hit.normal, hit.transform.name);
 
             AdvancePathDraw(startRadius, radius);
-            
+
             if (RCProPanel.DrawGuide)
             {
                 Handles.color = Gizmos.color = HelperColor;
@@ -121,7 +121,7 @@
                 if (chainReference == ChainReference.Point)
                 {
                     RCProEditor.DrawSerializedList(_so.FindProperty(nameof(chainPoints)));
-                    
+
                     EditorGUILayout.PropertyField(_so.FindProperty(nameof(relative)),
                         CRelative.ToContent(TRelative), relative);
                 }
@@ -129,7 +129,7 @@
                 {
                     RCProEditor.DrawSerializedList(_so.FindProperty(nameof(targets)));
                 }
-                
+
                 EndVertical();
                 StartRadiusField(_so);
 
@@ -138,7 +138,7 @@
                 LocalField(_so.FindProperty(nameof(local)));
                 EndHorizontal();
             }
-            
+
             if (hasGeneral) PathRayGeneralField(_so);
 
             if (hasEvents) EventField(_so);

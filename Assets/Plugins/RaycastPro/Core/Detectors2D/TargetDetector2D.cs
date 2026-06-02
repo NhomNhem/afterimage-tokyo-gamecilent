@@ -23,7 +23,7 @@ namespace RaycastPro.Detectors2D
             get => radius;
             set => radius = Mathf.Max(0,value);
         }
-        
+
         public TransformEvent onDetectTransform;
         public TransformEvent onBeginBlocked;
         public TransformEvent onBeginDetected;
@@ -87,7 +87,7 @@ namespace RaycastPro.Detectors2D
 #endif
                 if (pass) BlockedTargets.Add(_t);
             }
-            
+
             CallEvents(BlockedTargets, PreviousBlockedTargets, onDetectTransform, onBeginDetected, onBeginBlocked);
 
         }
@@ -114,7 +114,7 @@ namespace RaycastPro.Detectors2D
                 RadiusField(_so);
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(detectLayer)), CBlockLayer.ToContent(TBlockLayer));
             }
-            
+
             if (hasGeneral)
             {
                 PulseField(_so);

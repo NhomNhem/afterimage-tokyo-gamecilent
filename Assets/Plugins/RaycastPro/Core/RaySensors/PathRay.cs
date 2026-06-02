@@ -207,7 +207,7 @@
         }
 
         /// <summary>
-        /// List of path points in world position. 
+        /// List of path points in world position.
         /// </summary>
         public List<Vector3> PathPoints = new List<Vector3>();
 

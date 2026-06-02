@@ -15,7 +15,7 @@ namespace RaycastPro.Bullets
 
         [Tooltip("When the bullet misses, it executes the end function to prevent the bullet remaining in the tips of the rays.")]
         public bool endOnMiss = true;
-        
+
         [Tooltip("If the desired object is not fixed, you can activate this option so that the parenting action is performed and the bullet remains move along with that object.")]
         public bool forceToParentHit;
 
@@ -26,17 +26,17 @@ namespace RaycastPro.Bullets
 
         private RaySensor lastRay;
         private Vector3 hitDirection;
-        
+
         protected override void OnCast()
         {
             lastRay = throughClones && raySource.planarSensitive ? raySource.LastClone : raySource;
-            
+
             if (lastRay.hit.transform)
             {
                 hitDirection = lastRay.HitDirection.normalized;
                 transform.position = lastRay.TipTarget - hitDirection * hitOffset;
                 transform.forward = hitDirection;
-                
+
                 if (forceToParentHit) transform.SetParent(lastRay.hit.transform, true);
                     InvokeDamageEvent(raySource.hit.transform);
             }

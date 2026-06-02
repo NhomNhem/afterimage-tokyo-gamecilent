@@ -15,8 +15,8 @@
         public Transform outer;
 
         private float radius;
-        
-        // Non Allocation 
+
+        // Non Allocation
         private readonly List<Vector3> _tPath = new List<Vector3>();
         private Vector3 forward;
         internal void CopyFrom(RaySensor raySensor, Planar _getter, Transform _outer)
@@ -105,7 +105,7 @@
         }
 
 #if UNITY_EDITOR
-        internal override string Info => 
+        internal override string Info =>
             "Projects a fixed copy of the input ray onto a planar surface." + HAccurate + HVirtual;
 
         [SerializeField] private bool showGizmos = true;

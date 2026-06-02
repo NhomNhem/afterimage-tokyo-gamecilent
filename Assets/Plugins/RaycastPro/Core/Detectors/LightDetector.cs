@@ -11,25 +11,25 @@ namespace RaycastPro.Detectors
     using Editor;
     using UnityEditor;
 #endif
-    
+
     public sealed class LightDetector : Detector, IPulse
     {
         [Tooltip("Collider your sounds on the specified layer and assign a special Collider Detector to automatically feed the sounds to the filtering source.")]
         public ColliderDetector lightFinder;
-        
+
         [Tooltip("Already support Directional and point lights")]
         public List<Light> sources = new List<Light>();
-        
+
         public UnityEvent onFullShadow;
         public UnityEvent onFullLight;
-        
-                
+
+
         public float raycastRadius = 2f;
-        
+
         public TimeMode timeMode = TimeMode.DeltaTime;
 
         public float changeSharpness = 15;
-        
+
         private Color currentColor, sumColor, lerpColor;
         public override bool Performed {
             get => value > 0;
@@ -41,7 +41,7 @@ namespace RaycastPro.Detectors
         private int hits;
 
         private RaycastHit _hit;
-        
+
         private void Start() // Refreshing
         {
             Sync();
@@ -88,7 +88,7 @@ namespace RaycastPro.Detectors
             CleanGate();
 #endif
             lastValue = value;
-            
+
             value = 1;
             foreach (var _l in sources)
             {
@@ -115,7 +115,7 @@ namespace RaycastPro.Detectors
 #if UNITY_EDITOR
                         PanelGate += () =>
                         {
-                            
+
                         };
 #endif
                     }
@@ -133,15 +133,15 @@ namespace RaycastPro.Detectors
                     {
                         Physics.SphereCast(transform.position, raycastRadius, _dir, out _h, _dir.magnitude, blockLayer.value, triggerInteraction);
                     }
-                    
+
                     if (_h.transform)
                     {
                         value -= _l.intensity / total;
-                        
+
 #if UNITY_EDITOR
                         PanelGate += () =>
                         {
-                            
+
                         };
 #endif
                     }
@@ -153,7 +153,7 @@ namespace RaycastPro.Detectors
                 GizmoColor = Color.Lerp(Color.black, Color.white, value);
                 if (lightFinder && lightFinder is IRadius iRadius)
                 {
-                    
+
                     DrawSphere(transform.position, transform.up, iRadius.Radius+RCProPanel.elementDotSize);
                     DrawSphere(transform.position, transform.up, iRadius.Radius);
                 }

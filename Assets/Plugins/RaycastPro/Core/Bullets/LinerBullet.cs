@@ -8,18 +8,18 @@ namespace RaycastPro.Bullets
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
-    
-    [AddComponentMenu("RaycastPro/Bullets/" + nameof(LinerBullet))] 
+
+    [AddComponentMenu("RaycastPro/Bullets/" + nameof(LinerBullet))]
     public sealed class LinerBullet : Bullet, IPath<Vector3>
     {
         public List<Vector3> Path { get; internal set; } = new List<Vector3>();
-        
+
         public float duration = 1;
         public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
-        
+
         [SerializeField]
         private Rigidbody rigidBody;
-        
+
         [SerializeField]
         private AxisRun axisRun = new AxisRun();
 
@@ -57,9 +57,9 @@ namespace RaycastPro.Bullets
                     Path.Add(raySensor.Base);
                     Path.Add(raySensor.TipTarget);
                 }
-                
+
                 raySensor = raySensor.cloneRaySensor;
-                
+
             } while (raySensor);
 
             pathLength = Path.GetPathLength();
@@ -80,7 +80,7 @@ namespace RaycastPro.Bullets
             }
             _dt = GetDelta(timeMode);
             UpdateLifeProcess(_dt);
-                
+
             switch (moveType)
             {
                 case MoveType.Speed:
@@ -93,12 +93,12 @@ namespace RaycastPro.Bullets
                     position += _dt / duration;
                     break;
             }
-            
+
             if (position >= 1)
             {
                 OnEndCast(caster);
             }
-            
+
             for (var i = 1; i < Path.Count; i++)
             {
                 lineDistance = Path.GetEdgeLength(i);
@@ -131,7 +131,7 @@ namespace RaycastPro.Bullets
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(rigidBody)));
                 CastTypeField(
                     _so.FindProperty(nameof(moveType)),
-                    _so.FindProperty(nameof(speed)), 
+                    _so.FindProperty(nameof(speed)),
                     _so.FindProperty(nameof(duration)),
                     _so.FindProperty(nameof(curve)));
                 axisRun.EditorPanel(_so.FindProperty(nameof(axisRun)));

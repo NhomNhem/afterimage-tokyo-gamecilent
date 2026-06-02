@@ -14,13 +14,13 @@ namespace RaycastPro.Bullets
     {
         public Transform target;
         public Rigidbody body;
-        
+
         public Vector3 targetPoint;
 
         public float force = 10f;
         public float drag = 10;
         public Vector3 trackOffset;
-        
+
         public float distanceThreshold = .2f;
 
         public float turnSharpness = 15;
@@ -30,7 +30,7 @@ namespace RaycastPro.Bullets
             RotationLerp,
         }
         public TrackType trackType = TrackType.PositionLerp;
-        
+
 
         protected override void OnCast()
         {
@@ -55,7 +55,7 @@ namespace RaycastPro.Bullets
             {
                 targetPoint = raySource.TipTarget;
             }
-            
+
             currentForce = force;
             _t = transform;
         }
@@ -69,7 +69,7 @@ namespace RaycastPro.Bullets
         {
             _dt = GetDelta(timeMode);
             UpdateLifeProcess(_dt);
-            
+
             targetPoint = target ? target.position + trackOffset : _t.position;
             _dis = Vector3.Distance(_t.position, targetPoint);
             if (currentForce <= .1f)
@@ -84,9 +84,9 @@ namespace RaycastPro.Bullets
             }
             _dt = GetDelta(timeMode);
             _dir = targetPoint - _t.position;
-            
+
             if (collisionRay)  CollisionRun(_dt);
-            
+
             switch (trackType)
             {
                 case TrackType.PositionLerp:
@@ -101,7 +101,7 @@ namespace RaycastPro.Bullets
                     }
                     break;
                 case TrackType.RotationLerp:
-                    
+
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_dir, transform.up), 1 - Mathf.Exp(-turnSharpness * _dt));
                     currentForce = Mathf.Lerp(currentForce, 0, 1 - Mathf.Exp(-drag * _dt));
                     if (body)
@@ -116,7 +116,7 @@ namespace RaycastPro.Bullets
                     break;
             }
         }
-        
+
         protected override void CollisionBehaviour()
         {
             transform.position = collisionRay.cloneRaySensor.Base;
@@ -131,14 +131,14 @@ namespace RaycastPro.Bullets
             if (hasMain)
             {
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(body)));
-                
+
                 BeginVerticalBox();
                 PropertyEnumField(_so.FindProperty(nameof(trackType)), 2, "Track Type".ToContent(), new GUIContent[]
                 {
                     CPositionLerp.ToContent(TPositionLerp),
                     CRotationLerp.ToContent(TRotationLerp),
                 });
-                
+
                 if (trackType == TrackType.RotationLerp)
                 {
                     EditorGUILayout.PropertyField(_so.FindProperty(nameof(force)));

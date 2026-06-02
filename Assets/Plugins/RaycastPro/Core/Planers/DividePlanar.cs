@@ -34,13 +34,13 @@ namespace RaycastPro.Planers
         internal override void OnGizmos()
         {
             points = CircularPoints(transform.position+transform.forward*forward, radius, transform.forward, transform.up, count, true);
-            
+
             for (i = 0; i < points.Length-1; i++)
             {
                 Gizmos.DrawLine(points[i], points[i+1]);
                 Gizmos.DrawLine(transform.position,points[i]);
             }
-            
+
             DrawPlanar();
         }
         internal override void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true,
@@ -69,7 +69,7 @@ namespace RaycastPro.Planers
             if (!clone) return;
             // // TEMP BASE RAY SENSOR DEBUG..
             if (!clone.baseRaySensor) RaySensor.CloneDestroy(clone);
-            
+
             GetForward(sensor, out _forward);
 
             point = sensor.hit.point;
@@ -83,11 +83,11 @@ namespace RaycastPro.Planers
 
 
 
-            
+
             // Switch it to non Allocator Later
             points = CircularPoints(_forward*forward, radius, _forward, _cloneT.up, cloneCount);
 
-            
+
             if (_cloneT)
             {
                 var _dir = clone.direction;
@@ -103,7 +103,7 @@ namespace RaycastPro.Planers
                         _dir = sensor.direction.normalized * (sensor.ContinuesDistance * length);
                         break;
                 }
-                
+
                 if (!(clone is CloneRay))
                 {
                     foreach (var _c in CloneProfile[clone])
@@ -114,8 +114,8 @@ namespace RaycastPro.Planers
             }
 
 
-            
-            
+
+
             for (int j = 0; j < _cloneT.childCount; j++)
             {
                 _cloneT.GetChild(j).transform.rotation = Quaternion.LookRotation(points[j]);

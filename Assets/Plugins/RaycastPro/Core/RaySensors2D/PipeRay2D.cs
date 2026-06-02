@@ -7,13 +7,13 @@ namespace RaycastPro.RaySensors2D
 #endif
 
     using UnityEngine;
-    
+
     [HelpURL("https://www.youtube.com/watch?v=D-C4J_zpkbQ")]
     [AddComponentMenu("RaycastPro/Rey Sensors/"+nameof(PipeRay2D))]
     public sealed class PipeRay2D : RaySensor2D, IRadius
     {
         [SerializeField] private float radius = .4f;
-        
+
         [SerializeField] private float height;
 
         public float Height
@@ -21,7 +21,7 @@ namespace RaycastPro.RaySensors2D
             get => height;
             set => height = Mathf.Max(0, value);
         }
-        
+
         public float Radius
         {
             get => radius;
@@ -62,7 +62,7 @@ namespace RaycastPro.RaySensors2D
             DrawNormal(hit.point.ToDepth(z), hit.normal);
             DrawNormalFilter();
         }
-        
+
         internal override void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true,
             bool hasEvents = true,
             bool hasInfo = true)

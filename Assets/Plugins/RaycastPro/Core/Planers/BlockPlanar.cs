@@ -36,7 +36,7 @@
             {
                 BaseField(_so, hasInteraction: false, hasUpdateMode: false);
             }
-            
+
             if (hasEvents)
             {
                 EventFoldout =

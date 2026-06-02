@@ -8,33 +8,33 @@
     using Editor;
     using UnityEditor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Detectors/"+nameof(RadarDetector2D))]
     public sealed class RadarDetector2D : ColliderDetector2D, IRadius
     {
         private float currentAngle;
-        
+
         public float loopTime = 6f;
 
         [SerializeField] public float radius = 2f;
-        
+
         public bool local = true;
         public float Radius
         {
             get => radius;
             set => radius = Mathf.Max(0, value);
         }
-        
+
         public TimeMode timeMode;
 
         public float cacheTime = 4f;
 
         public Transform graphicShape;
-        
+
         public float shapeScale;
         public float shapeAngleOffset;
         public float speed => 360 / loopTime;
-        
+
         public readonly Dictionary<Collider2D, float> DetectProfile = new Dictionary<Collider2D, float>();
 
         private float delta, _distance;
@@ -42,7 +42,7 @@
         private Collider2D tCollider;
         private HashSet<Collider2D> _colliders = new HashSet<Collider2D>();
         private Vector3 direction;
-        
+
         protected override void OnCast()
         {
 #if UNITY_EDITOR
@@ -50,7 +50,7 @@
 #endif
             PreviousColliders = DetectedColliders.ToArray();
             delta = GetDelta(timeMode);
-            
+
 #if UNITY_EDITOR
             if (IsSceneView && !IsPlaying) currentAngle = Time.realtimeSinceStartup * speed;
             else currentAngle += delta * speed;
@@ -67,22 +67,22 @@
 
             direction = Quaternion.AngleAxis(currentAngle, Vector3.forward) * (local ? _t.right : Vector3.right);
             _colliders.Clear();
-            
+
             var _hits2D = Physics2D.RaycastAll(_t.position, direction, radius, detectLayer.value, MinDepth, MaxDepth);
             foreach (var _h in _hits2D)
             {
                 tCollider = _h.collider;
                 if (!TagPass(tCollider)) continue;
-                
+
                 if (IsIgnoreSolver)
                 {
                     _colliders.Add(tCollider);
                     continue;
                 }
-                
-                
+
+
                 TDP = DetectFunction(tCollider);
-                
+
                 _distance = Vector2.Distance(transform.position, TDP);
                 if (_distance > radius) continue;
                 _blockHit = Physics2D.Linecast(transform.position, TDP, blockLayer.value, MinDepth, MaxDepth);
@@ -91,7 +91,7 @@
                 PassGate(tCollider, TDP, _blockHit);
 #endif
                 if (_blockHit && _blockHit.transform != tCollider.transform) continue;
-                
+
                 _colliders.Add(tCollider);
             }
 
@@ -116,7 +116,7 @@
                 }
             }
             #endregion
-            
+
             #region Refresh Time and out Colliders
             DetectedColliders = DetectProfile.Keys.ToList();
             foreach (var col in DetectedColliders)
@@ -141,16 +141,16 @@
         internal override void OnGizmos()
         {
             EditorUpdate();
-            
+
             DrawDepthCircle(radius);
-            
+
             foreach (var key in DetectProfile.Keys.ToArray())
             {
                 Gizmos.color = DetectColor.Alpha(DetectProfile[key] / cacheTime);
                 Gizmos.DrawWireCube(key.bounds.center, key.bounds.size);
             }
         }
-        
+
         private readonly string[] events = new []{nameof(onDetectCollider), nameof(onNewCollider), nameof(onLostCollider)};
         internal override void EditorPanel(SerializedObject _so, bool hasMain = true, bool hasGeneral = true,
             bool hasEvents = true,

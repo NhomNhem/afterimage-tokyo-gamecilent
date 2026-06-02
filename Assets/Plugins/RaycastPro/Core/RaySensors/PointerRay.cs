@@ -12,7 +12,7 @@ namespace RaycastPro.RaySensors
     using Editor;
     using UnityEditor;
 #endif
-    
+
     [AddComponentMenu("RaycastPro/Rey Sensors/"+nameof(PointerRay))]
     public sealed class PointerRay : RaySensor, IRadius
     {
@@ -24,17 +24,17 @@ namespace RaycastPro.RaySensors
             "This camera is used to convert the mouse position into a world-space ray."
         )]
         public Camera mainCamera;
-        
-        
+
+
         [SerializeField]
         private float radius = 0.4f;
-        
+
         public float Radius
         {
             get => radius;
             set => radius = Mathf.Max(0,value);
         }
-        
+
         [Tooltip(
             "When enabled, the ray origin is taken from the camera position instead of the component transform.\n\n" +
             "Example:\n" +
@@ -43,7 +43,7 @@ namespace RaycastPro.RaySensors
             "This only affects the ray origin, not the hit direction."
         )]
         public bool cameraBase = false;
-        
+
         [Tooltip(
             "Enables a two-step raycasting process.\n\n" +
             "Step 1:\n" +
@@ -57,7 +57,7 @@ namespace RaycastPro.RaySensors
             "Useful when camera and object are not in the same position."
         )]
         public bool parallaxCorrectedCast = true;
-        
+
         public Camera.MonoOrStereoscopicEye eyeType = Camera.MonoOrStereoscopicEye.Mono;
         private Ray mouseRay;
 
@@ -80,17 +80,17 @@ namespace RaycastPro.RaySensors
         private Vector3 secondDir;
         private Vector3 p1, p2;
         private Vector3 pos;
-        
+
         private void Reset()
         {
             mainCamera = Camera.main;
-            
+
             if (!mainCamera)
             {
                 mainCamera = FindObjectOfType<Camera>();
             }
         }
-        
+
         protected override void OnCast()
         {
             if (!mainCamera)
@@ -107,7 +107,7 @@ namespace RaycastPro.RaySensors
                 RegisterGizmos();
 #endif
         }
-        
+
         Vector3 CalculateSecondDirection()
         {
             if (parallaxCorrectedCast &&
@@ -220,12 +220,12 @@ namespace RaycastPro.RaySensors
                 EndHorizontal();
                 DirectionField(_so);
                 RadiusField(_so);
-                
+
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(cameraBase)));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(parallaxCorrectedCast)));
                 EditorGUILayout.PropertyField(_so.FindProperty(nameof(eyeType)));
             }
-            
+
             if (hasGeneral) GeneralField(_so);
             if (hasEvents) EventField(_so);
             if (hasInfo) InformationField();

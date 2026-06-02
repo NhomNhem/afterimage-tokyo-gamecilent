@@ -8,15 +8,15 @@ namespace RaycastPro.RaySensors2D
     public sealed class NoiseRay2D : RaySensor2D
     {
         private Vector3 currentDirection;
-        
+
         private float random;
-        
+
         [Tooltip("radius of Noise")]
         public float noiseRange;
 
         public float pulse = .4f;
         private float currentTime;
-        
+
         public VectorEvent onPulse;
 
         private void Reset()
@@ -32,7 +32,7 @@ namespace RaycastPro.RaySensors2D
         private void OnPulse()
         {
             random = Random.Range(-noiseRange/2, noiseRange/2);
-            
+
             currentDirection = direction;
             currentDirection.y += random;
             if (local)
@@ -57,10 +57,10 @@ namespace RaycastPro.RaySensors2D
         internal override string Info => "A periodic, 'noisy' 2D sensor that operates in pulses. At each pulse interval, it takes a base direction and applies a random vertical offset ('noise'), creating a jittery output. This new, jittery direction is then broadcast via an event, allowing it to act as a rhythmic controller for other components. Concurrently, it performs its own linecast using this noisy direction to check for immediate obstructions. This makes it ideal for simulating effects like erratic sensor sweeps, biological pulses, or any system requiring a periodic, slightly unpredictable directional output."+ HIPulse + HAccurate + HDirectional;
 
         private Vector3 p1, p2;
-        
+
         private static readonly string[] eventsName = new string[]
             {"onDetect", "onPulse", "onBeginDetect", "onEndDetect", "onChange", "onCast"};
-        
+
         internal override void OnGizmos()
         {
             EditorUpdate();
@@ -77,7 +77,7 @@ namespace RaycastPro.RaySensors2D
             }
             DrawNormal2D(hit, z);
             DrawDepthLine(p1, p2);
-            
+
             //DrawDepthLine(, HelperColor);
             DrawNormalFilter();
         }
@@ -98,7 +98,7 @@ namespace RaycastPro.RaySensors2D
         }
 #endif
         public override Vector3 Tip => transform.position + currentDirection.ToDepth();
-        
+
         public override Vector3 RawTip => transform.position + currentDirection.ToDepth();
         public override float RayLength => direction.magnitude;
         public override Vector3 Base => transform.position;

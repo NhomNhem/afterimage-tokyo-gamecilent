@@ -18,7 +18,7 @@ namespace RaycastPro.Planers
             }
             forward = transform.forward;
         }
-        
+
 #if UNITY_EDITOR
         internal override string Info => "A reflective planar modifier for the 'Planar Sensitive' ray system. Upon contact, it calculates a new direction based on the Law of Reflection, simulating a mirror-like surface. The resulting reflected ray is then emitted from the point of impact, continuing the path's propagation with its new trajectory."
                                          +HDependent+HAccurate;
@@ -32,7 +32,7 @@ namespace RaycastPro.Planers
             if (hasEvents) EventField(_so);
         }
 #endif
-        
+
         private Vector3 forward, look;
         private RaySensor clone;
 
@@ -41,7 +41,7 @@ namespace RaycastPro.Planers
             clone = sensor.cloneRaySensor;
             if (!clone) return;
             if (clone.liner) clone.liner.enabled = sensor.liner.enabled;
-            
+
             GetForward(sensor, out forward);
             clone.transform.forward = Vector3.Reflect(sensor.TipDirection, forward).normalized;
             clone.transform.position = sensor.hit.point - forward * offset;
