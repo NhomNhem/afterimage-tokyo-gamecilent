@@ -139,9 +139,11 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void VContainerScopeRemainsManualWiring() {
             string scopeSource = File.ReadAllText("Assets/_Project/Code/Bootstrap/ProjectRootLifetimeScope.cs");
-            Assert.That(scopeSource.Contains("Manual VContainer skeleton"), Is.True);
+            Assert.That(scopeSource.Contains("Manual VContainer composition root"), Is.True);
+            Assert.That(scopeSource.Contains("RegisterLogging(builder);"), Is.True);
+            Assert.That(scopeSource.Contains("RegisterDebugOverlay(builder);"), Is.True);
             Assert.That(scopeSource.Contains("RegisterGeneratedFor<"), Is.False);
-            Assert.That(scopeSource.Contains("NhemDangFugBixs.Attributes"), Is.False);
+            Assert.That(scopeSource.Contains("builder.RegisterGeneratedFor<"), Is.False);
         }
 
         private static RevealRequestContext CreateValidRequest() {

@@ -15,7 +15,7 @@ Shader "Hidden/Outlines/Wide Outline/Mask"
         Pass // 0: MASK
         {
             Name "MASK"
-            
+
             HLSLPROGRAM
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
@@ -46,7 +46,7 @@ Shader "Hidden/Outlines/Wide Outline/Mask"
                 Varyings OUT;
                 UNITY_SETUP_INSTANCE_ID(IN);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT); // VR support
-                
+
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
 
                 return OUT;

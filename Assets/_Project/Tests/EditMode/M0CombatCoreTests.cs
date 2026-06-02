@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;
@@ -31,8 +32,8 @@ namespace GlassRefrain.Tests.EditMode {
             // Advance through CounterWindow state if open, otherwise just back to Neutral.
             if (core.Snapshot.CounterWindow.IsOpen) {
                 core.AdvanceState("window");
-                core.AdvanceState("back to neutral");
             }
+            core.AdvanceState("back to neutral");
 
             // Story 1-6: Counter now requires CounterWindow open. Open it manually then test.
             core.OpenCounterWindow("test", 0.5f);
@@ -64,6 +65,78 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(core.Snapshot.Recovery.RecoveryActive, Is.True);
 
             core.AdvanceState("neutral");
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
+        }
+
+        [Test]
+        public void LightAttackTickProgressionReturnsToNeutralAndAcceptsAgain() {
+            var core = new M0CombatCore();
+
+            AssertAccepted(core, CombatActionType.LightAttack);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup));
+
+            core.Tick(0.2f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackActive));
+
+            core.Tick(0.25f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackRecovery));
+
+            core.Tick(0.35f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
+
+            AssertAccepted(core, CombatActionType.LightAttack);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup));
+        }
+
+        [Test]
+        public void LockedStatesRejectHeavyAttackDodgeAndParryDuringTickProgression() {
+            var core = new M0CombatCore();
+
+            AssertAccepted(core, CombatActionType.LightAttack);
+            AssertRejected(core, CombatActionType.HeavyAttack, CombatCoreState.AttackStartup);
+
+            core.Tick(0.2f);
+            AssertRejected(core, CombatActionType.Dodge, CombatCoreState.AttackActive);
+
+            core.Tick(0.25f);
+            AssertRejected(core, CombatActionType.Parry, CombatCoreState.AttackRecovery);
+        }
+
+        [Test]
+        public void DodgeAndParryTickProgressionReturnToNeutral() {
+            var core = new M0CombatCore();
+
+            AssertAccepted(core, CombatActionType.Dodge);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeStartup));
+            core.Tick(0.15f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeActive));
+            core.Tick(0.25f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeRecovery));
+            core.Tick(0.35f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
+
+            AssertAccepted(core, CombatActionType.Parry);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryStartup));
+            core.Tick(0.15f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryActive));
+            core.Tick(0.25f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryRecovery));
+            core.Tick(0.35f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
+        }
+
+        [Test]
+        public void CounterWindowStillExpiresFromTick() {
+            var core = new M0CombatCore();
+
+            core.OpenCounterWindow("test", 0.5f);
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True);
+
+            core.Tick(0.25f);
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True);
+
+            core.Tick(0.25f);
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.False);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
         }
 
@@ -117,7 +190,7 @@ namespace GlassRefrain.Tests.EditMode {
             core.OpenCounterWindow("test", 0.5f);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral), "OpenCounterWindow should not change state");
             Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True, "CounterWindow should be open");
-            
+
             AssertAccepted(core, CombatActionType.Counter);
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.CounterActive));
 
@@ -126,6 +199,18 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(wasEmitted, Is.True);
             Assert.That(emitted.RequestSourceType, Is.EqualTo(CombatRequestSourceType.CombatCore));
             Assert.That(emitted.CombatResultSourceLabel, Is.EqualTo("CounterToRevealPlaceholder"));
+        }
+
+        [Test]
+        public void RejectedCounterDoesNotEmitRevealRequestContext() {
+            var core = new M0CombatCore();
+            var emittedCount = 0;
+            core.RevealRequestEmitted += _ => emittedCount++;
+
+            // Counter without an open window must reject and emit nothing.
+            var result = core.RequestAction(CreateRequest(CombatActionType.Counter));
+            Assert.That(result.Accepted, Is.False);
+            Assert.That(emittedCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -181,10 +266,155 @@ namespace GlassRefrain.Tests.EditMode {
             }
         }
 
+        [Test]
+        public void ResetForEncounter_ForcesNeutralAndClearsTransients() {
+            var core = new M0CombatCore();
+            AssertAccepted(core, CombatActionType.Dodge);
+            core.AdvanceState("to active");
+            core.OpenCounterWindow("test", 0.5f);
+
+            core.ResetForEncounter("Reset");
+
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.False);
+            Assert.That(core.Snapshot.ActionLock.LockActive, Is.False);
+            Assert.That(core.Snapshot.Recovery.RecoveryActive, Is.False);
+        }
+
+        [Test]
+        public void TickProgression_UsesProvidedTimingSettings() {
+            var settings = new M0CombatTimingSettings(
+                attackStartupSeconds: 0.30f,
+                attackActiveSeconds: 0.40f,
+                attackRecoverySeconds: 0.50f,
+                dodgeStartupSeconds: 0.22f,
+                dodgeActiveSeconds: 0.33f,
+                dodgeRecoverySeconds: 0.44f,
+                parryStartupSeconds: 0.25f,
+                parryActiveSeconds: 0.35f,
+                parryRecoverySeconds: 0.45f,
+                counterWindowDurationSeconds: 1.0f,
+                recoveryDurationSeconds: 0.44f);
+            var core = new M0CombatCore(settings);
+
+            AssertAccepted(core, CombatActionType.Dodge);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeStartup));
+
+            const float startupTick = 0.21f;
+            const float startupBoundaryTick = 0.01f;
+            const float activeTick = 0.32f;
+            const float recoveryBoundaryTick = 0.05f;
+
+            core.Tick(startupTick);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeStartup), "Should still be in startup before configured threshold");
+
+            core.Tick(startupBoundaryTick);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeActive));
+
+            core.Tick(activeTick);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeActive), "Should still be active before configured threshold");
+
+            // Advance clearly beyond the configured active boundary to avoid edge rounding ambiguity.
+            core.Tick(recoveryBoundaryTick);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeRecovery));
+            Assert.That(core.Snapshot.Recovery.RemainingSeconds, Is.EqualTo(0.44f));
+        }
+
+        [Test]
+        public void AttackTickProgression_UsesProvidedTimingSettings() {
+            var settings = new M0CombatTimingSettings(
+                attackStartupSeconds: 0.31f,
+                attackActiveSeconds: 0.41f,
+                attackRecoverySeconds: 0.51f,
+                dodgeStartupSeconds: 0.10f,
+                dodgeActiveSeconds: 0.20f,
+                dodgeRecoverySeconds: 0.30f,
+                parryStartupSeconds: 0.10f,
+                parryActiveSeconds: 0.20f,
+                parryRecoverySeconds: 0.30f,
+                counterWindowDurationSeconds: 1.0f,
+                recoveryDurationSeconds: 0.51f);
+            var core = new M0CombatCore(settings);
+
+            AssertAccepted(core, CombatActionType.LightAttack);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup));
+
+            core.Tick(0.30f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup), "Startup should hold until configured threshold");
+
+            core.Tick(0.01f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackActive));
+
+            core.Tick(0.40f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackActive), "Active should hold until configured threshold");
+
+            core.Tick(0.01f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.AttackRecovery));
+            Assert.That(core.Snapshot.Recovery.RemainingSeconds, Is.EqualTo(0.51f));
+        }
+
+        [Test]
+        public void ParryTickProgression_UsesProvidedTimingSettings_AndPreservesCombatCoreCounterAuthority() {
+            var settings = new M0CombatTimingSettings(
+                attackStartupSeconds: 0.10f,
+                attackActiveSeconds: 0.20f,
+                attackRecoverySeconds: 0.30f,
+                dodgeStartupSeconds: 0.10f,
+                dodgeActiveSeconds: 0.20f,
+                dodgeRecoverySeconds: 0.30f,
+                parryStartupSeconds: 0.29f,
+                parryActiveSeconds: 0.39f,
+                parryRecoverySeconds: 0.49f,
+                counterWindowDurationSeconds: 1.25f,
+                recoveryDurationSeconds: 0.49f);
+            var core = new M0CombatCore(settings);
+
+            AssertAccepted(core, CombatActionType.Parry);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryStartup));
+
+            core.Tick(0.28f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryStartup), "Startup should hold until configured threshold");
+
+            core.Tick(0.01f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryActive));
+
+            core.Tick(0.38f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryActive), "Active should hold until configured threshold");
+
+            core.Tick(0.01f);
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryRecovery));
+            Assert.That(core.Snapshot.Recovery.RemainingSeconds, Is.EqualTo(0.49f));
+
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.False, "CounterWindow must remain closed without CombatCore eligibility path");
+        }
+
+        [Test]
+        public void CombatTimingSettings_RejectsNonPositiveValues() {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new M0CombatTimingSettings(
+                attackStartupSeconds: 0f,
+                attackActiveSeconds: 0.2f,
+                attackRecoverySeconds: 0.2f,
+                dodgeStartupSeconds: 0.1f,
+                dodgeActiveSeconds: 0.2f,
+                dodgeRecoverySeconds: 0.2f,
+                parryStartupSeconds: 0.1f,
+                parryActiveSeconds: 0.2f,
+                parryRecoverySeconds: 0.2f,
+                counterWindowDurationSeconds: 1f,
+                recoveryDurationSeconds: 0.2f));
+        }
+
         private static void AssertAccepted(M0CombatCore core, CombatActionType actionType) {
             var result = core.RequestAction(CreateRequest(actionType));
             Assert.That(result.Accepted, Is.True, actionType + " should be accepted in Neutral");
             Assert.That(result.Result, Is.EqualTo(CombatActionResult.Accepted));
+        }
+
+        private static void AssertRejected(M0CombatCore core, CombatActionType actionType, CombatCoreState expectedState) {
+            var result = core.RequestAction(CreateRequest(actionType));
+            Assert.That(result.Accepted, Is.False, actionType + " should be rejected during " + expectedState);
+            Assert.That(result.Result, Is.EqualTo(CombatActionResult.Rejected));
+            Assert.That(core.Snapshot.State, Is.EqualTo(expectedState));
         }
 
         private static CombatActionRequest CreateRequest(CombatActionType actionType) {

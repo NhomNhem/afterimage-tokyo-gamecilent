@@ -16,7 +16,7 @@ namespace Linework.WideOutline
         [SerializeField] private InjectionPoint injectionPoint = InjectionPoint.AfterRenderingPostProcessing;
         [SerializeField] private bool showInSceneView = true;
         [SerializeField] private List<Outline> outlines = new(10);
-        
+
         // Shared settings.
         public MaterialType materialType;
         public Material customMaterial;
@@ -31,11 +31,11 @@ namespace Linework.WideOutline
         public bool scaleWithResolution = false;
         public Resolution referenceResolution = Resolution._1080;
         public float customResolution;
-        
+
         public InjectionPoint InjectionPoint => injectionPoint;
         public bool ShowInSceneView => showInSceneView;
         public List<Outline> Outlines => outlines;
-        
+
         public void Changed()
         {
             foreach (var outline in outlines)
@@ -45,7 +45,7 @@ namespace Linework.WideOutline
             }
             OnSettingsChanged?.Invoke();
         }
-        
+
         private void OnValidate()
         {
 #if UNITY_EDITOR
@@ -60,7 +60,7 @@ namespace Linework.WideOutline
             OnSettingsChanged = null;
             outlines = null;
         }
-        
+
         public void SetActive(bool active)
         {
             foreach (var outline in outlines)
@@ -68,7 +68,7 @@ namespace Linework.WideOutline
                 outline.SetActive(active);
             }
         }
-        
+
 #if UNITY_EDITOR
         private class OnDestroyProcessor: AssetModificationProcessor
         {

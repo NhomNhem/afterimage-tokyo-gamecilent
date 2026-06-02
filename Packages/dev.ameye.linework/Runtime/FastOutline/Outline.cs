@@ -11,7 +11,7 @@ namespace Linework.FastOutline
         [SerializeField, HideInInspector] public Material material;
         [SerializeField, HideInInspector] public Material materialInstanced;
         [SerializeField, HideInInspector] private bool isActive = true;
-        
+
 #if UNITY_6000_0_OR_NEWER
         public RenderingLayerMask RenderingLayer = RenderingLayerMask.defaultRenderingLayerMask;
 #else
@@ -37,12 +37,12 @@ namespace Linework.FastOutline
         public float customResolution;
         public MaterialType materialType;
         public Material customMaterial;
-        
+
         private void OnEnable()
         {
             EnsureMaterialsAreInitialized();
         }
-        
+
         private void EnsureMaterialsAreInitialized()
         {
             if (material == null)
@@ -56,7 +56,7 @@ namespace Linework.FastOutline
                     };
                 }
             }
-            
+
             if (materialInstanced == null)
             {
                 var shader = Shader.Find(ShaderPath.OutlineInstanced);
@@ -70,16 +70,16 @@ namespace Linework.FastOutline
                 }
             }
         }
-        
+
         public void AssignMaterials(Material copyFrom, Material copyFromInstanced)
         {
             EnsureMaterialsAreInitialized();
-            
+
             material.CopyPropertiesFromMaterial(copyFrom);
             materialInstanced.CopyPropertiesFromMaterial(copyFromInstanced);
             materialInstanced.enableInstancing = gpuInstancing;
         }
-        
+
         public bool IsActive()
         {
             return isActive;
@@ -89,7 +89,7 @@ namespace Linework.FastOutline
         {
             isActive = active;
         }
-        
+
         public void Cleanup()
         {
             if (material != null)
@@ -97,7 +97,7 @@ namespace Linework.FastOutline
                 DestroyImmediate(material);
                 material = null;
             }
-            
+
             if (materialInstanced != null)
             {
                 DestroyImmediate(materialInstanced);

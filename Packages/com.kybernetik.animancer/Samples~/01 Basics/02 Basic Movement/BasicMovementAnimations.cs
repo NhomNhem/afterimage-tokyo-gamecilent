@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -10,15 +10,15 @@ namespace Animancer.Samples.Basics
     /// Plays a movement animation while the user holds W or Up Arrow.
     /// Otherwise plays an idle animation.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/basics/movement">
     /// Basic Movement</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Basics/BasicMovementAnimations
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Basics - Basic Movement Animations")]
     [AnimancerHelpUrl(typeof(BasicMovementAnimations))]
     public class BasicMovementAnimations : MonoBehaviour

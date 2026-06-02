@@ -6,13 +6,6 @@ labels:
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293524
-  packageName: Animancer Lite v8
-  packageVersion: 8.3.1
-  assetPath: Packages/com.kybernetik.animancer/Samples~/04 Layers/01 Basic Layers/Humanoid-UpperBody.mask
-  uploadId: 895130
+  userData:
+  assetBundleName:
+  assetBundleVariant:

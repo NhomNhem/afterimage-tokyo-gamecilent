@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -12,15 +12,15 @@ namespace Animancer.Samples.Sprites
     /// A more complex version of the <see cref="DirectionalBasics"/> which adds
     /// running and pushing animations as well as the ability to actually move around.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/sprites/character">
     /// Directional Character</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Sprites/DirectionalCharacter
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Sprites - Directional Character")]
     [AnimancerHelpUrl(typeof(DirectionalCharacter))]
     public class DirectionalCharacter : MonoBehaviour

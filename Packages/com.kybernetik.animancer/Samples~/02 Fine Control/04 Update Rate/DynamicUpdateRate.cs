@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -11,15 +11,15 @@ namespace Animancer.Samples.FineControl
     /// Demonstrates how to save some performance by updating Animancer at a lower frequency
     /// when the character is far away from the camera.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/fine-control/update-rate">
     /// Update Rate</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.FineControl/DynamicUpdateRate
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Fine Control - Dynamic Update Rate")]
     [AnimancerHelpUrl(typeof(DynamicUpdateRate))]
     public class DynamicUpdateRate : MonoBehaviour

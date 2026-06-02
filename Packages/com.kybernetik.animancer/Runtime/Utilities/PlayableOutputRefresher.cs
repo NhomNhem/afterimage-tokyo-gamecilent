@@ -1,11 +1,11 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using UnityEngine.Playables;
 
 namespace Animancer
 {
     /// <summary>A utility for re-assigning Animancer's <see cref="PlayableOutput"/>.</summary>
-    /// 
+    ///
     /// <remarks>
     /// This should be totally useless, but for some reason it seems to fix an issue with Unity's
     /// Animation Rigging package. Normally, all of the Rig's parameters get reset to their
@@ -19,29 +19,29 @@ namespace Animancer
     /// {
     ///     [SerializeField] private AnimancerComponent _Animancer;
     ///     [SerializeField] private Rig _Rig;
-    /// 
+    ///
     ///     // A field to store it in.
     ///     private PlayableOutputRefresher _OutputRefresher;
-    /// 
+    ///
     ///     protected virtual void OnEnable()
     ///     {
     ///         // Initialize on startup.
     ///         _OutputRefresher = new(_Animancer);
     ///     }
-    /// 
+    ///
     ///     public void SetWeight(float weight)
     ///     {
     ///         // Change something that would be reset.
     ///         _Rig.weight = weight;
-    ///         
+    ///
     ///         // Then call this afterwards.
     ///         _OutputRefresher.Refresh();
     ///     }
     /// }
     /// </code></remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/PlayableOutputRefresher
-    /// 
+    ///
     public struct PlayableOutputRefresher
     {
         /************************************************************************************************************************/
@@ -84,4 +84,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

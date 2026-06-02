@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 
@@ -8,7 +8,7 @@ namespace Animancer
     /// A callback to be triggered after an <see cref="AnimancerNode"/>
     /// either starts or finishes fading out to 0 <see cref="AnimancerNode.EffectiveWeight"/>.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// The <see cref="AnimancerNode.EffectiveWeight"/> is only checked at the end of the animation update
     /// so if it's set multiple times in the same frame then the callback might not be triggered.
@@ -19,9 +19,9 @@ namespace Animancer
     /// <para></para>
     /// <strong>Example:</strong> see the <see cref="ExitEvent(AnimancerNode, Action, bool)"/> constructor.
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/ExitEvent
-    /// 
+    ///
     public class ExitEvent : Updatable
     {
         /************************************************************************************************************************/
@@ -74,29 +74,29 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>Creates a new <see cref="ExitEvent"/>.</summary>
-        /// 
+        ///
         /// <remarks>
         /// <strong>Example:</strong><code>
         /// private ExitEvent _OnStateExited;
-        /// 
+        ///
         /// void ExitEventExample(AnimancerComponent animancer, AnimationClip clip)
         /// {
         ///     var state = animancer.Play(clip);
-        ///     
+        ///
         ///     // One line initialization:
         ///     (_OnStateExited ??= new(state, OnStateExited)).Enable();
-        ///     
+        ///
         ///     // Or two lines:
         ///     _OnStateExited ??= new(state, OnStateExited);
         ///     _OnStateExited.Enable();
         /// }
-        /// 
+        ///
         /// private void OnStateExited()
         /// {
         ///     Debug.Log(_OnStateExited.State + " Exited");
         /// }
         /// </code></remarks>
-        /// 
+        ///
         public ExitEvent(
             AnimancerNode node,
             Action callback,
@@ -163,4 +163,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

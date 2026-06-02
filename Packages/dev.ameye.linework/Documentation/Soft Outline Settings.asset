@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61913a156ea0417aa894f46ab63dad06, type: 3}
   m_Name: Outline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   active: 1
   disableColor: 0
   RenderingLayer:
@@ -31,7 +31,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5eff1c8ed1641c38476a8e6907dca3e, type: 3}
   m_Name: Soft Outline Settings
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   injectionPoint: 550
   showInSceneView: 1
   clearStencil: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61913a156ea0417aa894f46ab63dad06, type: 3}
   m_Name: Outline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   active: 1
   disableColor: 0
   RenderingLayer:
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61913a156ea0417aa894f46ab63dad06, type: 3}
   m_Name: Outline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   active: 1
   disableColor: 0
   RenderingLayer:

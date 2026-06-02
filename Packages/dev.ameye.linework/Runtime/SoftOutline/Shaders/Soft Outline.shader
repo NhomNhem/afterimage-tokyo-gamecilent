@@ -51,7 +51,7 @@ Shader "Hidden/Outlines/Soft Outline/Outline"
             {
                 #if defined(HARD_OUTLINE)
                 half value = SAMPLE_TEXTURE2D(_BlitTexture, sampler_PointClamp, IN.texcoord).r;
-               
+
                 float outline = step(0.05, value) - step(1.05 - _OutlineGap, value);
                 float blendedAlpha = lerp(value, outline, _OutlineHardness);
                 return float4(_OutlineColor.rgb * blendedAlpha, saturate(blendedAlpha)) * _OutlineIntensity;

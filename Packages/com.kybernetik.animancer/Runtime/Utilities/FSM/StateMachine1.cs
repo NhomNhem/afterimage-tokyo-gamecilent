@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections;
@@ -14,7 +14,7 @@ namespace Animancer.FSM
     /// Finite State Machines</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.FSM/IStateMachine
-    /// 
+    ///
     public interface IStateMachine
     {
         /************************************************************************************************************************/
@@ -120,7 +120,7 @@ namespace Animancer.FSM
     /// Finite State Machines</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.FSM/StateMachine_1
-    /// 
+    ///
     [HelpURL(StateExtensions.APIDocumentationURL + nameof(StateMachine<TState>) + "_1")]
     [Serializable]
     public partial class StateMachine<TState> : IStateMachine
@@ -176,7 +176,7 @@ namespace Animancer.FSM
         /// {
         ///     [SerializeField]
         ///     private StateMachine&lt;MyState&gt; _StateMachine;
-        ///     
+        ///
         ///     protected virtual void Awake()
         ///     {
         ///         _StateMachine.InitializeAfterDeserialize();
@@ -468,4 +468,3 @@ namespace Animancer.FSM
         /************************************************************************************************************************/
     }
 }
-

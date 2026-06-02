@@ -2,7 +2,8 @@
   "name": "GlassRefrain.DebugOverlay",
   "rootNamespace": "GlassRefrain.DebugOverlay",
   "references": [
-    "GlassRefrain.Core"
+    "GlassRefrain.Core",
+    "NhemDangFugBixs.Attributes"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

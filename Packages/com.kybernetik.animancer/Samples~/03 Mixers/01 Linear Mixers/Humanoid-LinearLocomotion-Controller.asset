@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-LinearLocomotion-Controller
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 5660167345261248513
   references:
@@ -30,7 +30,7 @@ MonoBehaviour:
         _ParameterBindings:
           _Mode: 1
           _Bindings: []
-        _ActionsOnStop: 
+        _ActionsOnStop:
 --- !u!206 &206771759363972004
 BlendTree:
   m_ObjectHideFlags: 1
@@ -99,11 +99,11 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 206771759363972004}
-  m_Tag: 
+  m_Tag:
   m_SpeedParameter: MovementSpeed
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_MirrorParameter:
+  m_CycleOffsetParameter:
+  m_TimeParameter:
 --- !u!1107 &1107240474225256196
 AnimatorStateMachine:
   serializedVersion: 6

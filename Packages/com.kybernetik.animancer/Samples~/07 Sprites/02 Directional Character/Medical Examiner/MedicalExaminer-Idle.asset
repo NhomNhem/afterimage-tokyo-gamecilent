@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eceeb59a892d074db28203df8e4cd3a, type: 3}
   m_Name: MedicalExaminer-Idle
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Up: {fileID: 74424515554164972}
   _Right: {fileID: 74026379752776120}
   _Down: {fileID: 74183885162648080}
@@ -40,7 +40,7 @@ AnimationClip:
     - time: 1
       value: {fileID: 21300026, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 1
@@ -109,7 +109,7 @@ AnimationClip:
     - time: 1
       value: {fileID: 21300050, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 1
@@ -178,7 +178,7 @@ AnimationClip:
     - time: 1
       value: {fileID: 21300074, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 1
@@ -247,7 +247,7 @@ AnimationClip:
     - time: 1
       value: {fileID: 21300002, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 1

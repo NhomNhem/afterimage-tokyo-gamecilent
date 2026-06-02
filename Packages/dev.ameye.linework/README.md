@@ -26,7 +26,7 @@ After importing the asset into Unity, you will be greeted by the support window.
 
 If the result is showing only green checkmarks, you are good to go! If not, see the [Troubleshooting and Known Limitations](https://linework.ameye.dev/known-limitations/) section.
 
-To get started, open the *Universal Renderer Data* asset, click on *Add Renderer Feature* and select the outline/fill effect that you would like to add. Each outline effect stores its settings in a separate object that you can create somewhere in your Assets folder, by right-clicking and selecting *Create > Linework > Outline Settings*. 
+To get started, open the *Universal Renderer Data* asset, click on *Add Renderer Feature* and select the outline/fill effect that you would like to add. Each outline effect stores its settings in a separate object that you can create somewhere in your Assets folder, by right-clicking and selecting *Create > Linework > Outline Settings*.
 
 Drag the created settings into the object slot of the renderer feature. You can now click the *Open* button to open the settings.
 

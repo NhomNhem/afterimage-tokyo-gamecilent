@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Animancer
     /// An <see cref="AnimancerComponent"/> which uses the <see cref="Object.name"/>s of <see cref="AnimationClip"/>s
     /// so they can be referenced using strings as well as the clips themselves.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// It also has fields to automatically register animations on startup and play the first one automatically without
     /// needing another script to control it, much like Unity's Legacy <see cref="Animation"/> component.
@@ -25,23 +25,15 @@ namespace Animancer
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/fine-control/named">
     /// Named Character</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/NamedAnimancerComponent
-    /// 
+    ///
     [AddComponentMenu(Strings.MenuPrefix + "Named Animancer Component")]
     [AnimancerHelpUrl(typeof(NamedAnimancerComponent))]
     public class NamedAnimancerComponent : AnimancerComponent
     {
         /************************************************************************************************************************/
         #region Fields and Properties
-        /************************************************************************************************************************/
-
-        /// <summary>[Internal] Field names for the custom Inspector.</summary>
-        public const string
-            PlayAutomaticallyField = nameof(_PlayAutomatically),
-            NamesField = nameof(_Names),
-            AnimationsField = nameof(_Animations);
-
         /************************************************************************************************************************/
 
         [SerializeField, Tooltip("If true, the 'Default Animation' will be automatically played by " + nameof(OnEnable))]
@@ -52,37 +44,6 @@ namespace Animancer
         /// <see cref="OnEnable"/>.
         /// </summary>
         public ref bool PlayAutomatically => ref _PlayAutomatically;
-
-        /************************************************************************************************************************/
-
-        [SerializeField, Tooltip(
-            "Optional names for the Animations." +
-            " If not set, they will use their Animation Clip names.")]
-        private StringAsset[] _Names;
-
-        /// <summary>[<see cref="SerializeField"/>]
-        /// Optional names for the <see cref="Animations"/>.
-        /// If not set, they will use their <see cref="Object.name"/>.
-        /// </summary>
-        public StringAsset[] Names
-        {
-            get => _Names;
-            set
-            {
-                _Names = value;
-
-                Debug.Assert(
-                    !IsGraphInitialized,
-                    $"{nameof(NamedAnimancerComponent)}.{nameof(Names)}" +
-                    $" doesn't support being changed after it has already initialized." +
-                    $"\nIf any names aren't specified, they will use their Animation Clip name.",
-                    this);
-
-                // This could potentially be supported by trying to look up the states based on their old names
-                // and changing their keys, but that doesn't seem like a common use case
-                // so it's probably not worth the effort.
-            }
-        }
 
         /************************************************************************************************************************/
 
@@ -171,26 +132,7 @@ namespace Animancer
             if (!TryGetAnimator())
                 return;
 
-            if (_Names == null || _Names.Length == 0)
-            {
-                States.CreateIfNew(_Animations);
-            }
-            else
-            {
-                var nameCount = _Names.Length;
-                var clipCount = _Animations.Length;
-                for (int i = 0; i < clipCount; i++)
-                {
-                    var clip = _Animations[i];
-                    if (clip != null)
-                    {
-                        var key = i < nameCount ? (object)(StringReference)_Names[i] : null;
-                        key ??= GetKey(clip);
-                        States.GetOrCreate(key, clip);
-                    }
-                }
-            }
-
+            States.CreateIfNew(_Animations);
         }
 
         /************************************************************************************************************************/
@@ -237,4 +179,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

@@ -80,7 +80,7 @@ namespace Linework.Editor.Common
                     nameProperty.stringValue = "_MyFloatProperty";
                     floatValueProperty.floatValue = 1.0f;
                     break;
-                
+
                 case ShaderPropertyType.Vector:
                     typeProperty.enumValueIndex = (int)ShaderPropertyType.Vector;
                     nameProperty.stringValue = "_MyVectorProperty";
@@ -100,7 +100,7 @@ namespace Linework.Editor.Common
         {
             var typeProperty = element.FindPropertyRelative(nameof(ShaderPropertyOverride.type));
             var nameProperty = element.FindPropertyRelative(nameof(ShaderPropertyOverride.propertyName));
-            
+
             var typeWidth = 100;
             var nameWidth = rect.width - typeWidth - 5;
 
@@ -126,7 +126,7 @@ namespace Linework.Editor.Common
                     var floatProperty = element.FindPropertyRelative(nameof(ShaderPropertyOverride.floatValue));
                     EditorGUI.PropertyField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), floatProperty, new GUIContent("Float Value"));
                     break;
-                
+
                 case ShaderPropertyType.Int:
                     var intProperty = element.FindPropertyRelative(nameof(ShaderPropertyOverride.intValue));
                     EditorGUI.PropertyField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), intProperty, new GUIContent("Int Value"));
@@ -136,7 +136,7 @@ namespace Linework.Editor.Common
                     var colorProperty = element.FindPropertyRelative(nameof(ShaderPropertyOverride.colorValue));
                     EditorGUI.PropertyField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), colorProperty, new GUIContent("Color Value"));
                     break;
-                
+
                 case ShaderPropertyType.Vector:
                     var vectorProperty = element.FindPropertyRelative(nameof(ShaderPropertyOverride.vectorValue));
                     var vectorValue = vectorProperty.vector4Value;
@@ -173,12 +173,12 @@ namespace Linework.Editor.Common
                     nameProperty.stringValue = "_MyColorProperty";
                     colorValueProperty.colorValue = Color.white;
                     break;
-                
+
                 case ShaderPropertyType.Vector:
                     nameProperty.stringValue = "_MyVectorProperty";
                     vectorValueProperty.vector4Value = Vector4.one;
                     break;
-                
+
                 case ShaderPropertyType.Int:
                     nameProperty.stringValue = "_MyIntProperty";
                     intValueProperty.intValue = 1;

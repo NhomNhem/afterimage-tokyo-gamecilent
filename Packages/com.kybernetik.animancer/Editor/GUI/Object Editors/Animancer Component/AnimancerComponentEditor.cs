@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -9,7 +9,7 @@ namespace Animancer.Editor
 {
     /// <summary>[Editor-Only] A custom Inspector for <see cref="AnimancerComponent"/>s.</summary>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/AnimancerComponentEditor
-    /// 
+    ///
     [CustomEditor(typeof(AnimancerComponent), true), CanEditMultipleObjects]
     public class AnimancerComponentEditor : BaseAnimancerComponentEditor
     {
@@ -239,4 +239,3 @@ namespace Animancer.Editor
 }
 
 #endif
-

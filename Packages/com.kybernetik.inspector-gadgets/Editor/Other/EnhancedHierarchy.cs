@@ -484,4 +484,3 @@ namespace InspectorGadgets.Editor
 }
 
 #endif
-

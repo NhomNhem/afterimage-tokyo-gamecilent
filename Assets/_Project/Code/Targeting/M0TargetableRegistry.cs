@@ -9,8 +9,7 @@ namespace GlassRefrain.Targeting {
     /// M0 implementation of the targetable registry.
     /// Manages exactly one duel enemy for the one-on-one encounter.
     /// </summary>
-    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
-    [As<ITargetableRegistry>()]
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Scoped)]
     public sealed class M0TargetableRegistry : ITargetableRegistry {
         private readonly Dictionary<string, ITargetable> registeredTargets;
         private string currentDuelEnemyId;

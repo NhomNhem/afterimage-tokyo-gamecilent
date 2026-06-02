@@ -1,7 +1,5 @@
 using System;
-using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
-using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Memory {
     public interface IM0MemoryState {
@@ -11,8 +9,7 @@ namespace GlassRefrain.Memory {
         RevealRequestResult EvaluateRequestedReveal();
         MemoryStateSnapshot AdvancePhase(string reason, float cooldownSeconds = 0.25f);
     }
-    
-    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+
     public sealed class M0MemoryState : IM0MemoryState {
         private const float DefaultCooldownSeconds = 0.25f;
 

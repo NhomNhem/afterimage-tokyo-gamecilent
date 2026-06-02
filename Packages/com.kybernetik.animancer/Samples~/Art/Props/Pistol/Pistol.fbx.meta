@@ -48,12 +48,12 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
-    animationImportErrors: 
-    animationImportWarnings: 
-    animationRetargetingWarnings: 
+    motionNodeName:
+    rigImportErrors:
+    rigImportWarnings:
+    animationImportErrors:
+    animationImportWarnings:
+    animationRetargetingWarnings:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -124,7 +124,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 0.8
-    rootMotionBoneName: 
+    rootMotionBoneName:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
@@ -137,13 +137,6 @@ ModelImporter:
   importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293524
-  packageName: Animancer Lite v8
-  packageVersion: 8.3.1
-  assetPath: Packages/com.kybernetik.animancer/Samples~/Art/Props/Pistol/Pistol.fbx
-  uploadId: 895130
+  userData:
+  assetBundleName:
+  assetBundleVariant:

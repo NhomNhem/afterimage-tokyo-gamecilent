@@ -653,7 +653,7 @@ namespace Linework.Editor.Common.Windows
                     "MSAA is enabled. This might introduce rendering artifacts. You can enable/disable MSAA on your active Render Pipeline Asset.")
                 : new CheckResult(ResultEnum.Pass, "Disabled", "MSAA is disabled.");
         }
-        
+
         private CheckResult CheckSRPBatcher()
         {
 #if UNITY_6000_4_OR_NEWER
@@ -673,7 +673,7 @@ namespace Linework.Editor.Common.Windows
                 ResultEnum.Pass,
                 "Compatible",
                 "No outline overrides were found in the scene that break SRP batching."
-            ); 
+            );
         }
 
         private CheckResult CheckActiveRenderPipelineAsset()
@@ -682,7 +682,7 @@ namespace Linework.Editor.Common.Windows
             if (activeRenderPipelineAsset == null) return new CheckResult(ResultEnum.Fail, "Not found", NoActiveRendererFoundDescription);
             return new CheckResult(ResultEnum.Info, activeRenderPipelineAsset.name, $"You currently active pipeline asset is {activeRenderPipelineAsset.name}. Make sure that you are adding outlines to the renderer of that pipeline asset.");
         }
-        
+
         private CheckResult CheckSTP()
         {
 #if UNITY_6000_0_OR_NEWER
@@ -696,7 +696,7 @@ namespace Linework.Editor.Common.Windows
             return new CheckResult(ResultEnum.Info, "Not Available", "Spatial-Temporal Post-processing is a Unity 6 feature.");
 #endif
         }
-        
+
         private class Check
         {
             public string Name { get; }

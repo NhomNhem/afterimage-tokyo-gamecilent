@@ -4,6 +4,8 @@ using GlassRefrain.Core;
 using GlassRefrain.Input;
 using GlassRefrain.Targeting;
 
+#pragma warning disable ND005 // Test-only containers intentionally validate isolated manual wiring.
+
 namespace GlassRefrain.Tests.EditMode {
     /// <summary>
     /// Tests for manual VContainer DI registration of Target Context services.
@@ -87,3 +89,5 @@ namespace GlassRefrain.Tests.EditMode {
         }
     }
 }
+
+#pragma warning restore ND005

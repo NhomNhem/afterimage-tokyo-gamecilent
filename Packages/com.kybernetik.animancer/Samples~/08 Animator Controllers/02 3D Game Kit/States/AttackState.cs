@@ -1,8 +1,5 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
-#if ! UNITY_EDITOR
-#pragma warning disable CS0618 // Type or member is obsolete (for NormalizedEndTime in Animancer Lite).
-#endif
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
 using Animancer.Units;
@@ -11,15 +8,15 @@ using UnityEngine;
 namespace Animancer.Samples.AnimatorControllers.GameKit
 {
     /// <summary>A <see cref="CharacterState"/> which plays a series of "attack" animations.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/animator-controllers/3d-game-kit/attack">
     /// 3D Game Kit/Attack</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.AnimatorControllers.GameKit/AttackState
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Attack State")]
     [AnimancerHelpUrl(typeof(AttackState))]
     public class AttackState : CharacterState

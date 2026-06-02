@@ -13,15 +13,15 @@ using UnityEngine.Animations;
 namespace Animancer.Samples.Jobs
 {
     /// <summary>An <see cref="IAnimationJob"/> which executes a simple damping effect.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/damping">
     /// Damping</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/DampingJob
-    /// 
+    ///
     public struct DampingJob : IAnimationJob
     {
         public TransformStreamHandle rootHandle;

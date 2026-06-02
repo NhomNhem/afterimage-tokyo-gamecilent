@@ -17,7 +17,7 @@ namespace Linework.Common
         public ShaderPropertyType type;
         public string propertyName;
         [HideInInspector] public int propertyId;
-        
+
         public float floatValue;
         public int intValue;
         public Vector4 vectorValue;

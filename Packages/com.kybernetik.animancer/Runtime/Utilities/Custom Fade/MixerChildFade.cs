@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace Animancer
     /// Fades the child weights of a <see cref="MixerState{TParameter}"/>
     /// to a new parameter value instead of fading the actual parameter.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <para></para>
     /// <strong>Documentation:</strong>
@@ -24,18 +24,15 @@ namespace Animancer
     /// <code>
     /// [SerializeField] private AnimancerComponent _Animancer;
     /// [SerializeField] private LinearMixerTransition _Mixer;
-    /// 
+    ///
     /// public void FadeMixerTo(float parameter, float fadeDuration)
     /// {
     ///     _Mixer.State.FadeChildWeights(parameter, fadeDuration);
     /// }
     /// </code></remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/MixerChildFade
-    /// 
-#if !UNITY_EDITOR
-    [System.Obsolete(Validate.ProOnlyMessage)]
-#endif
+    ///
     public static class MixerChildFade
     {
         /************************************************************************************************************************/
@@ -78,4 +75,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

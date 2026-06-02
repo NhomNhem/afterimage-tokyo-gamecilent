@@ -47,7 +47,7 @@ namespace Linework.Editor.FastOutline
                     serializedObject.ApplyModifiedProperties();
                 }
             }
-            else 
+            else
             {
                 if (GUILayout.Button("Open", EditorStyles.miniButton, GUILayout.Width(70.0f)))
                 {

@@ -2,7 +2,8 @@
   "name": "GlassRefrain.Encounter",
   "rootNamespace": "GlassRefrain.Encounter",
   "references": [
-    "GlassRefrain.Core"
+    "GlassRefrain.Core",
+    "NhemDangFugBixs.Attributes"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

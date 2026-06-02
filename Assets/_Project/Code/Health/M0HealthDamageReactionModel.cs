@@ -1,7 +1,5 @@
 using System;
-using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
-using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Health {
     public interface IM0HealthDamageReactionModel {
@@ -11,8 +9,7 @@ namespace GlassRefrain.Health {
         void EnterRecovery(string reason, float suppressionSeconds);
         void EnterLiving(string reason);
     }
-    
-    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+
     public sealed class M0HealthDamageReactionModel : IM0HealthDamageReactionModel {
         private readonly float maxHealth;
         private float currentHealth;
@@ -40,6 +37,13 @@ namespace GlassRefrain.Health {
             if (state == HealthState.Disabled || defeat.IsDefeated) {
                 lastDamageResult = new DamageApplicationResult(DamageApplicationResultType.Ignored,
                     "Target is already disabled", 0f);
+                RefreshSnapshot();
+                return lastDamageResult;
+            }
+
+            if (!IsResolvedCombatOutcome(request)) {
+                lastDamageResult = new DamageApplicationResult(DamageApplicationResultType.Rejected,
+                    "Damage rejected: unresolved or invalid combat outcome", 0f);
                 RefreshSnapshot();
                 return lastDamageResult;
             }
@@ -96,6 +100,21 @@ namespace GlassRefrain.Health {
 
             var handler = SnapshotChanged;
             if (handler != null) handler(latestSnapshot);
+        }
+
+        private static bool IsResolvedCombatOutcome(DamageApplicationContext request) {
+            if (string.IsNullOrWhiteSpace(request.SourceId)) return false;
+            if (string.IsNullOrWhiteSpace(request.ContextLabel)) return false;
+
+            var label = request.ContextLabel.Trim();
+            if (label.Equals("Rejected", StringComparison.OrdinalIgnoreCase)) return false;
+            if (label.Equals("Invalid", StringComparison.OrdinalIgnoreCase)) return false;
+            if (label.Equals("Blocked", StringComparison.OrdinalIgnoreCase)) return false;
+            if (label.IndexOf("Rejected", StringComparison.OrdinalIgnoreCase) >= 0) return false;
+            if (label.IndexOf("Invalid", StringComparison.OrdinalIgnoreCase) >= 0) return false;
+            if (label.IndexOf("Blocked", StringComparison.OrdinalIgnoreCase) >= 0) return false;
+
+            return true;
         }
     }
 }

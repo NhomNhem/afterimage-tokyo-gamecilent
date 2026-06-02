@@ -3,7 +3,7 @@ Shader "Hidden/Outlines/Soft Outline/Silhouette Instanced"
     Properties
     {
         _OutlineColor ("_OutlineColor", Color) = (1, 1, 1, 1)
-        
+
         [Toggle(ALPHA_CUTOUT)] _AlphaCutout ("_AlphaCutout", Float) = 0
         _AlphaCutoutTexture ("_AlphaCutoutTexture", 2D) = "white" {}
         _AlphaCutoutThreshold ("_AlphaCutoutThreshold", Float) = 0.5
@@ -45,12 +45,12 @@ Shader "Hidden/Outlines/Soft Outline/Silhouette Instanced"
             #else
                 #pragma target 4.5 DOTS_INSTANCING_ON
             #endif
-            
+
             #pragma multi_compile_local _ ALPHA_CUTOUT
 
             TEXTURE2D(_AlphaCutoutTexture);
             SAMPLER(sampler_AlphaCutoutTexture);
-            
+
             UNITY_INSTANCING_BUFFER_START(InstancedProperties)
                 UNITY_DEFINE_INSTANCED_PROP(float4, _OutlineColor)
                 UNITY_DEFINE_INSTANCED_PROP(float4, _AlphaCutoutUVTransform)
@@ -60,7 +60,7 @@ Shader "Hidden/Outlines/Soft Outline/Silhouette Instanced"
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                
+
                 #if defined(ALPHA_CUTOUT)
                 float2 texcoord     : TEXCOORD0;
                 #endif
@@ -71,7 +71,7 @@ Shader "Hidden/Outlines/Soft Outline/Silhouette Instanced"
             struct Varyings
             {
                 float4 positionHCS : SV_POSITION;
-                
+
                 #if defined(ALPHA_CUTOUT)
                 float2 uv           : TEXCOORD0;
                 #endif
@@ -91,19 +91,19 @@ Shader "Hidden/Outlines/Soft Outline/Silhouette Instanced"
                 float4 uv_transform = UNITY_ACCESS_INSTANCED_PROP(InstancedProperties, _AlphaCutoutUVTransform);
                 OUT.uv = IN.texcoord * uv_transform.xy + uv_transform.zw;
                 #endif
-                
+
                 return OUT;
             }
 
             half4 frag(Varyings IN) : SV_TARGET
             {
                 UNITY_SETUP_INSTANCE_ID(IN);
-                
+
                 #if defined(ALPHA_CUTOUT)
                 float alpha = SAMPLE_TEXTURE2D(_AlphaCutoutTexture, sampler_AlphaCutoutTexture, IN.uv).a;
                 clip(alpha - UNITY_ACCESS_INSTANCED_PROP(InstancedProperties, _AlphaCutoutThreshold));
                 #endif
-                
+
                 return UNITY_ACCESS_INSTANCED_PROP(InstancedProperties, _OutlineColor);
             }
             ENDHLSL

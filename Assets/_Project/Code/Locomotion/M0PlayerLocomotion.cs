@@ -1,20 +1,18 @@
 using System;
 using System.Collections.Generic;
-using _Project.Code.Shared.DI;
 using UnityEngine;
 using GlassRefrain.Core;
-using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Locomotion {
     /// <summary>
     /// M0PlayerLocomotion — Pure C# gameplay truth owner for camera-relative movement.
-    /// 
+    ///
     /// Ownership:
     /// - Owns position, rotation (facing), velocity, and movement state
     /// - Processes input intents from Input System
     /// - Reads camera movement basis (read-only snapshot)
     /// - Expresses movement to adapters via read-only snapshot
-    /// 
+    ///
     /// Story 1-2 Scope:
     /// - Camera-relative movement and free-movement facing
     /// - No lock-on facing (deferred to Story 1-3)
@@ -22,20 +20,22 @@ namespace GlassRefrain.Locomotion {
     /// - No animator authority (FSM is Pure C# only, adapters observe)
     /// - No root motion (Locomotion owns movement truth)
     /// </summary>
-    
+
     public interface IM0PlayerLocomotion {
         LocomotionStateSnapshot Snapshot { get; }
+        event Action<LocomotionStateSnapshot> SnapshotChanged;
         LocomotionMovementSnapshot GetMovementSnapshot();
         void ConsumeInputIntent(InputIntentSnapshot inputIntent);
         void SetMovementRestriction(MovementRestrictionContext restriction);
         void SetRecoveryContext(RecoveryContext recovery);
         void SetCameraMovementBasis(CameraMovementBasisSnapshot cameraBasis);
+        bool TryBeginDodgeDisplacement();
+        void ResetForEncounter(Vector3 startPosition, Vector3 startFacing);
         void ProcessMovementInput(float deltaTime);
         void UpdatePosition(float deltaTime);
         LocomotionDebugSnapshot CreateDebugSnapshot();
     }
-    
-    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+
     public sealed class M0PlayerLocomotion : IM0PlayerLocomotion {
         private InputIntentSnapshot currentInput;
         private MovementRestrictionContext movementRestriction;
@@ -55,10 +55,53 @@ namespace GlassRefrain.Locomotion {
         // Cached camera movement basis vectors (projected to world space)
         private Vector3 cachedCameraForward = Vector3.forward;
         private Vector3 cachedCameraRight = Vector3.right;
+        private bool dodgeDisplacementActive;
+        private Vector3 dodgeDisplacementDirection = Vector3.forward;
+        private float dodgeDisplacementRemainingDistance;
+        private float dodgeDisplacementRemainingSeconds;
 
-        public M0PlayerLocomotion() : this(new M0LocomotionSettings()) { }
+        public M0PlayerLocomotion() : this(new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 1.5f, 10.0f, 0.2f)) { }
 
         public M0PlayerLocomotion(M0LocomotionSettings settings) {
+            if (settings.MoveSpeed <= 0f) {
+                throw new ArgumentOutOfRangeException(
+                    nameof(settings),
+                    settings.MoveSpeed,
+                    "M0LocomotionSettings.MoveSpeed must be > 0. Check DI registration/wiring.");
+            }
+
+            if (settings.InputDeadzone < 0f || settings.InputDeadzone >= 1f) {
+                throw new ArgumentOutOfRangeException(
+                    nameof(settings),
+                    settings.InputDeadzone,
+                    "M0LocomotionSettings.InputDeadzone must be in [0, 1).");
+            }
+
+            if (settings.FacingLerpSpeed <= 0f) {
+                throw new ArgumentOutOfRangeException(
+                    nameof(settings),
+                    settings.FacingLerpSpeed,
+                    "M0LocomotionSettings.FacingLerpSpeed must be > 0.");
+            }
+            if (settings.DodgeDistance <= 0f) {
+                throw new ArgumentOutOfRangeException(
+                    nameof(settings),
+                    settings.DodgeDistance,
+                    "M0LocomotionSettings.DodgeDistance must be > 0.");
+            }
+            if (settings.DodgeSpeed <= 0f) {
+                throw new ArgumentOutOfRangeException(
+                    nameof(settings),
+                    settings.DodgeSpeed,
+                    "M0LocomotionSettings.DodgeSpeed must be > 0.");
+            }
+            if (settings.DodgeDurationSeconds <= 0f) {
+                throw new ArgumentOutOfRangeException(
+                    nameof(settings),
+                    settings.DodgeDurationSeconds,
+                    "M0LocomotionSettings.DodgeDurationSeconds must be > 0.");
+            }
+
             this.settings = settings;
 
             currentInput = new InputIntentSnapshot(
@@ -117,7 +160,7 @@ namespace GlassRefrain.Locomotion {
 
         public void SetCameraMovementBasis(CameraMovementBasisSnapshot cameraBasis) {
             cameraMovementBasis = cameraBasis;
-            
+
             // Cache projected camera vectors to avoid repeated construction in ProcessMovementInput
             if (cameraBasis.IsValid) {
                 cachedCameraForward = new Vector3(cameraBasis.Forward.X, 0f, cameraBasis.Forward.Y);
@@ -126,7 +169,53 @@ namespace GlassRefrain.Locomotion {
                 cachedCameraForward = Vector3.forward;
                 cachedCameraRight = Vector3.right;
             }
-            
+
+            RefreshSnapshot();
+        }
+
+        public bool TryBeginDodgeDisplacement() {
+            if (dodgeDisplacementActive) {
+                return false;
+            }
+
+            dodgeDisplacementDirection = ResolveDodgeDirection();
+            dodgeDisplacementRemainingDistance = settings.DodgeDistance;
+            dodgeDisplacementRemainingSeconds = settings.DodgeDurationSeconds;
+            dodgeDisplacementActive = true;
+            return true;
+        }
+
+        public void ResetForEncounter(Vector3 startPosition, Vector3 startFacing) {
+            position = startPosition;
+
+            if (startFacing.sqrMagnitude > 0.000001f) {
+                facing = startFacing.normalized;
+            } else {
+                facing = Vector3.forward;
+            }
+
+            velocity = Vector3.zero;
+            dodgeDisplacementActive = false;
+            dodgeDisplacementDirection = facing;
+            dodgeDisplacementRemainingDistance = 0f;
+            dodgeDisplacementRemainingSeconds = 0f;
+
+            currentInput = new InputIntentSnapshot(
+                new Axis2(0f, 0f),
+                new Axis2(0f, 0f),
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true);
+            hasReceivedInput = true;
+
+            movementRestriction = new MovementRestrictionContext(true, true, 0f, string.Empty);
+            recoveryContext = new RecoveryContext(RecoverySource.CombatCore, false, 0f, string.Empty);
             RefreshSnapshot();
         }
 
@@ -135,6 +224,10 @@ namespace GlassRefrain.Locomotion {
         /// Should be called once per frame before UpdatePosition.
         /// </summary>
         public void ProcessMovementInput(float deltaTime) {
+            if (dodgeDisplacementActive) {
+                return;
+            }
+
             if (!currentInput.InputEnabled || !movementRestriction.CanTranslate) {
                 velocity = Vector3.zero;
                 return;
@@ -155,8 +248,14 @@ namespace GlassRefrain.Locomotion {
             }
 
             // Use cached camera basis vectors (projected to world space)
-            // Combine camera forward and right by input axis
-            Vector3 desiredDirection = (cachedCameraForward * inputAxis.Y + cachedCameraRight * inputAxis.X).normalized;
+            // Combine camera forward and right by input axis.
+            Vector3 desiredDirectionRaw = cachedCameraForward * inputAxis.Y + cachedCameraRight * inputAxis.X;
+            if (desiredDirectionRaw.sqrMagnitude <= 0.000001f) {
+                velocity = Vector3.zero;
+                return;
+            }
+
+            Vector3 desiredDirection = desiredDirectionRaw.normalized;
 
             // Calculate velocity
             float speed = settings.MoveSpeed * inputMagnitude;
@@ -174,6 +273,30 @@ namespace GlassRefrain.Locomotion {
         /// Should be called once per frame after ProcessMovementInput.
         /// </summary>
         public void UpdatePosition(float deltaTime) {
+            if (dodgeDisplacementActive) {
+                if (deltaTime <= 0f) {
+                    return;
+                }
+
+                float frameDistance = Mathf.Min(
+                    settings.DodgeSpeed * deltaTime,
+                    dodgeDisplacementRemainingDistance);
+
+                position += dodgeDisplacementDirection * frameDistance;
+                velocity = dodgeDisplacementDirection * (frameDistance / deltaTime);
+                facing = dodgeDisplacementDirection;
+
+                dodgeDisplacementRemainingDistance = Mathf.Max(0f, dodgeDisplacementRemainingDistance - frameDistance);
+                dodgeDisplacementRemainingSeconds = Mathf.Max(0f, dodgeDisplacementRemainingSeconds - deltaTime);
+
+                if (dodgeDisplacementRemainingDistance <= 0f || dodgeDisplacementRemainingSeconds <= 0f) {
+                    dodgeDisplacementActive = false;
+                    velocity = Vector3.zero;
+                }
+
+                return;
+            }
+
             position += velocity * deltaTime;
         }
 
@@ -254,6 +377,23 @@ namespace GlassRefrain.Locomotion {
 
         private static bool HasMoveIntent(Axis2 move) {
             return move.X != 0f || move.Y != 0f;
+        }
+
+        private Vector3 ResolveDodgeDirection() {
+            Axis2 inputAxis = currentInput.Move;
+            float inputMagnitude = Mathf.Sqrt(inputAxis.X * inputAxis.X + inputAxis.Y * inputAxis.Y);
+            if (inputMagnitude >= settings.InputDeadzone && cameraMovementBasis.IsValid) {
+                Vector3 direction = cachedCameraForward * inputAxis.Y + cachedCameraRight * inputAxis.X;
+                if (direction.sqrMagnitude > 0.000001f) {
+                    return direction.normalized;
+                }
+            }
+
+            if (facing.sqrMagnitude > 0.000001f) {
+                return facing.normalized;
+            }
+
+            return Vector3.forward;
         }
     }
 }

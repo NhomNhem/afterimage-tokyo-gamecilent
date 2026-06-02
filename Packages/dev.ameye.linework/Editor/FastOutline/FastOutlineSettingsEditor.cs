@@ -10,7 +10,7 @@ namespace Linework.Editor.FastOutline
     {
         private SerializedProperty injectionPoint;
         private SerializedProperty showInSceneView;
-        
+
         private SerializedProperty outlines;
         private EditorList<Outline> outlineList;
 
@@ -18,7 +18,7 @@ namespace Linework.Editor.FastOutline
         {
             injectionPoint = serializedObject.FindProperty("injectionPoint");
             showInSceneView = serializedObject.FindProperty("showInSceneView");
-            
+
             outlines = serializedObject.FindProperty("outlines");
             outlineList = new EditorList<Outline>(this, outlines, ForceSave, "Add Outline", "No outlines added.");
         }
@@ -33,14 +33,14 @@ namespace Linework.Editor.FastOutline
             if (outlines == null) OnEnable();
 
             serializedObject.Update();
-            
+
             EditorGUILayout.LabelField("Fast Outline", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(injectionPoint, EditorUtils.CommonStyles.InjectionPoint);
             EditorGUILayout.PropertyField(showInSceneView, EditorUtils.CommonStyles.ShowInSceneView);
             EditorGUILayout.Space();
             CoreEditorUtils.DrawSplitter();
             serializedObject.ApplyModifiedProperties();
-            
+
             EditorGUILayout.LabelField(EditorUtils.CommonStyles.Outlines, EditorStyles.boldLabel);
             outlineList.Draw();
         }

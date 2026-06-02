@@ -1,8 +1,5 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
-#if ! UNITY_EDITOR
-#pragma warning disable CS0618 // Type or member is obsolete (for ControllerState in Animancer Lite).
-#endif
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
 using Animancer.Units;
@@ -14,15 +11,15 @@ namespace Animancer.Samples.AnimatorControllers.GameKit
     /// A <see cref="CharacterState"/> which moves the character according to their
     /// <see cref="CharacterBrain.Movement"/>.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/animator-controllers/3d-game-kit/locomotion">
     /// 3D Game Kit/Locomotion</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.AnimatorControllers.GameKit/LocomotionState
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Locomotion State")]
     [AnimancerHelpUrl(typeof(LocomotionState))]
     public class LocomotionState : CharacterState

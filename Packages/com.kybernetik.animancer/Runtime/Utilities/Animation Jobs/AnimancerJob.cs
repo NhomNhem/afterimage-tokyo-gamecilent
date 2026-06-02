@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using UnityEngine.Animations;
 
@@ -7,15 +7,15 @@ namespace Animancer
     /// <summary>[Pro-Only]
     /// A base class that allows Animation Jobs to be easily inserted into an Animancer graph.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Documentation:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/manual/ik#animated-properties">
     /// Animated Properties</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/AnimancerJob_1
-    /// 
+    ///
     public abstract class AnimancerJob<T> where T : struct, IAnimationJob
     {
         /************************************************************************************************************************/
@@ -51,4 +51,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

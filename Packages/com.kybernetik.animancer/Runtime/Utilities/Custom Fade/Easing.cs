@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using static UnityEngine.Mathf;
@@ -21,7 +21,7 @@ namespace Animancer
     /// </list>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/Easing
-    /// 
+    ///
     public static class Easing
     {
         /************************************************************************************************************************/
@@ -41,7 +41,7 @@ namespace Animancer
         /// <summary>The name of an easing function.</summary>
         /// <remarks>The <see cref="Easing"/> class contains various extension methods for this enum.</remarks>
         /// https://kybernetik.com.au/animancer/api/Animancer/Function
-        /// 
+        ///
         public enum Function
         {
             /// <summary><see cref="Easing.Linear(float)"/></summary>
@@ -423,7 +423,7 @@ namespace Animancer
 
         /// <summary>Functions based on quadratic equations (<c>x^2</c>).</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Quadratic
-        /// 
+        ///
         public static class Quadratic
         {
             /************************************************************************************************************************/
@@ -508,7 +508,7 @@ namespace Animancer
 
         /// <summary>Functions based on cubic equations (<c>x^3</c>).</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Cubic
-        /// 
+        ///
         public static class Cubic
         {
             /************************************************************************************************************************/
@@ -597,7 +597,7 @@ namespace Animancer
 
         /// <summary>Functions based on quartic equations (<c>x^4</c>).</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Quartic
-        /// 
+        ///
         public static class Quartic
         {
             /************************************************************************************************************************/
@@ -686,7 +686,7 @@ namespace Animancer
 
         /// <summary>Functions based on quintic equations (<c>x^5</c>).</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Quintic
-        /// 
+        ///
         public static class Quintic
         {
             /************************************************************************************************************************/
@@ -775,7 +775,7 @@ namespace Animancer
 
         /// <summary>Functions based on sinusoidal equations.</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Sine
-        /// 
+        ///
         public static class Sine
         {
             /************************************************************************************************************************/
@@ -832,7 +832,7 @@ namespace Animancer
 
         /// <summary>Functions based on exponential equations (<c>2^(10(x))</c>).</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Exponential
-        /// 
+        ///
         public static class Exponential
         {
             /************************************************************************************************************************/
@@ -913,7 +913,7 @@ namespace Animancer
 
         /// <summary>Functions based on circular equations.</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Circular
-        /// 
+        ///
         public static class Circular
         {
             /************************************************************************************************************************/
@@ -1002,7 +1002,7 @@ namespace Animancer
 
         /// <summary>Functions based on equations which go out of bounds then come back.</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Back
-        /// 
+        ///
         public static class Back
         {
             /************************************************************************************************************************/
@@ -1093,7 +1093,7 @@ namespace Animancer
 
         /// <summary>Functions based on equations with sharp bounces.</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Bounce
-        /// 
+        ///
         public static class Bounce
         {
             /************************************************************************************************************************/
@@ -1212,7 +1212,7 @@ namespace Animancer
 
         /// <summary>Functions based on equations with soft bounces.</summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/Elastic
-        /// 
+        ///
         public static class Elastic
         {
             /************************************************************************************************************************/
@@ -1321,4 +1321,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

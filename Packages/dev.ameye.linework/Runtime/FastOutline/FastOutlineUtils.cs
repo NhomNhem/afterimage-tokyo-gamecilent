@@ -7,7 +7,7 @@ namespace Linework.FastOutline
     {
         public static readonly string SmoothNormalsLabel = "SmoothNormals";
     }
-    
+
     [Serializable]
     public sealed class ShaderResources
     {
@@ -25,7 +25,7 @@ namespace Linework.FastOutline
             return this;
         }
     }
-    
+
     static class ShaderPath
     {
         public const string Mask = "Hidden/Outlines/Fast Outline/Mask";
@@ -33,7 +33,7 @@ namespace Linework.FastOutline
         public const string OutlineInstanced = "Hidden/Outlines/Fast Outline/Outline Instanced";
         public const string Clear = "Hidden/Clear Stencil";
     }
-    
+
     static class ShaderPassName
     {
         public const string Mask = "Mask (Fast Outline)";
@@ -86,7 +86,7 @@ namespace Linework.FastOutline
         ConstantScreenSize,
         ScaleWithDistance
     }
-    
+
     public enum Resolution
     {
         [InspectorName("480px")]

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +16,7 @@ namespace Animancer
     /// Directional Animation Sets</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/DirectionalAnimationSet8
-    /// 
+    ///
     [CreateAssetMenu(
         menuName = Strings.MenuPrefix + "Directional Animation Set/8 Directions",
         order = Strings.AssetMenuOrder + 6)]
@@ -33,4 +33,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

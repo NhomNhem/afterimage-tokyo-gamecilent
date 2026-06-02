@@ -8,7 +8,7 @@ Shader "Hidden/Outlines/Fast Outline/Outline"
         _MinimumOutlineWidth ("Minimum Outline Width", Range (0, 1)) = 0.5
         [Toggle(SCALE_WITH_RESOLUTION)] _ResolutionDependent ("Resolution Dependent", Float) = 0
         _ReferenceResolution ("Reference Resolution", Float) = 1080
-        
+
         _SrcBlend ("_SrcBlend", Int) = 0
         _DstBlend ("_DstBlend", Int) = 0
         [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 0.0
@@ -458,7 +458,7 @@ Shader "Hidden/Outlines/Fast Outline/Outline"
                 float3 bitangentOS = normalize(cross(normalOS, tangentOS) * IN.tangentOS.w);
                 float3x3 tbn = float3x3(tangentOS, bitangentOS, normalOS);
                 float3 bakedDirection = TransformTBN(IN.bakedDirection, tbn);
-            
+
                 float4 positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
                 float Set_OutlineWidth = positionHCS.w * _OutlineWidth;
                 Set_OutlineWidth = min(Set_OutlineWidth, _OutlineWidth);
@@ -466,7 +466,7 @@ Shader "Hidden/Outlines/Fast Outline/Outline"
                 Set_OutlineWidth = min(Set_OutlineWidth, _OutlineWidth) * 0.1;
 
                 IN.positionOS.xyz += bakedDirection * Set_OutlineWidth;
-            
+
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
 
                 return OUT;

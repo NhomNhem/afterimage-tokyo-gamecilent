@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -10,15 +10,15 @@ namespace Animancer.Samples.Basics
     /// Implements the same behaviour as <see cref="BasicCharacterAnimations"/>
     /// using <see cref="TransitionAsset"/>s.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/basics/library">
     /// Library Basics</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Basics/LibraryCharacterAnimations
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Basics - Library Character Animations")]
     [AnimancerHelpUrl(typeof(LibraryCharacterAnimations))]
     public class LibraryCharacterAnimations : MonoBehaviour

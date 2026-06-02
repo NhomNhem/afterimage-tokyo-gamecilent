@@ -18,7 +18,7 @@ Shader "Hidden/Outlines/Soft Outline/Dilate"
         #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
 
         #pragma multi_compile_local _ SCALE_WITH_RESOLUTION
-        
+
         CBUFFER_START(UnityPerMaterial)
             float _KernelSize;
             float _ReferenceResolution;
@@ -43,7 +43,7 @@ Shader "Hidden/Outlines/Soft Outline/Dilate"
                 float3 nearestActivePixelColor = float3(0, 0, 0);
 
                 float scale = 1;
-                
+
                 #if defined(SCALE_WITH_RESOLUTION)
                 scale = 1 * _ScreenParams.y / _ReferenceResolution;
                 #endif
@@ -84,7 +84,7 @@ Shader "Hidden/Outlines/Soft Outline/Dilate"
                 float brightestWeightedAlpha = 0;
 
                 float scale = 1;
-                
+
                 #if defined(SCALE_WITH_RESOLUTION)
                 scale = 1 * _ScreenParams.y / _ReferenceResolution;
                 #endif

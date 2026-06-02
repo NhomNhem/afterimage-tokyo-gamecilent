@@ -16,7 +16,7 @@ namespace Linework.SurfaceFill
             return this;
         }
     }
-    
+
     static class ShaderPath
     {
         public const string Mask = "Hidden/Outlines/Surface Fill/Mask";
@@ -27,13 +27,13 @@ namespace Linework.SurfaceFill
     {
         public const int Mask = 0;
     }
-    
+
     static class ShaderPassName
     {
         public const string Mask = "Mask (Surface Fill)";
         public const string Fill = "Fill (Surface Fill)";
     }
-    
+
     static class ShaderPropertyId
     {
         public static readonly int PrimaryColor = Shader.PropertyToID("_PrimaryColor");
@@ -55,12 +55,12 @@ namespace Linework.SurfaceFill
     static class ShaderFeature
     {
         public const string AlphaCutout = "ALPHA_CUTOUT";
-        
+
         public const string ChannelR = "CHANNEL_R";
         public const string ChannelG = "CHANNEL_G";
         public const string ChannelB = "CHANNEL_B";
         public const string ChannelA = "CHANNEL_A";
-        
+
         public const string PatternSolid = "_PATTERN_SOLID";
         public const string PatternCheckerboard = "_PATTERN_CHECKERBOARD";
         public const string PatternDots = "_PATTERN_DOTS";
@@ -69,7 +69,7 @@ namespace Linework.SurfaceFill
         public const string PatternGlow = "_PATTERN_GLOW";
         public const string PatternTexture = "_PATTERN_TEXTURE";
     }
-    
+
     public enum Pattern
     {
         Solid,
@@ -80,7 +80,7 @@ namespace Linework.SurfaceFill
         Glow,
         Texture
     }
-    
+
     public enum DebugStage
     {
         None,

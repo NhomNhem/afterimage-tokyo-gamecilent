@@ -32,7 +32,8 @@ namespace GlassRefrain.Core {
         Counter = 7,
         LockOn = 8,
         ResetEncounter = 9,
-        ToggleDebugOverlay = 10
+        ToggleDebugOverlay = 10,
+        Interact = 11
     }
 
     public enum InputRoutingDisposition {
@@ -551,13 +552,13 @@ namespace GlassRefrain.Core {
 
     /// <summary>
     /// LocomotionMovementSnapshot — read-only snapshot of M0PlayerLocomotion movement truth.
-    /// 
+    ///
     /// Adapters and presentation systems read this snapshot to observe:
     /// - Current world-space position
     /// - Current world-space facing direction
     /// - Current velocity
     /// - Current FSM state and detail
-    /// 
+    ///
     /// This snapshot is owned entirely by M0PlayerLocomotion.
     /// Adapters must NOT mutate these values.
     /// </summary>

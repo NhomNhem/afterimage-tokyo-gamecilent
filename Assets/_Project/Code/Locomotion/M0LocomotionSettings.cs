@@ -22,10 +22,34 @@ namespace GlassRefrain.Locomotion {
         /// </summary>
         public float FacingLerpSpeed { get; }
 
-        public M0LocomotionSettings(float moveSpeed = 5.0f, float inputDeadzone = 0.1f, float facingLerpSpeed = 8.0f) {
+        /// <summary>
+        /// Total dodge displacement distance in meters.
+        /// </summary>
+        public float DodgeDistance { get; }
+
+        /// <summary>
+        /// Dodge displacement speed in meters per second.
+        /// </summary>
+        public float DodgeSpeed { get; }
+
+        /// <summary>
+        /// Maximum dodge displacement duration in seconds.
+        /// </summary>
+        public float DodgeDurationSeconds { get; }
+
+        public M0LocomotionSettings(
+            float moveSpeed = 5.0f,
+            float inputDeadzone = 0.1f,
+            float facingLerpSpeed = 8.0f,
+            float dodgeDistance = 1.5f,
+            float dodgeSpeed = 10.0f,
+            float dodgeDurationSeconds = 0.2f) {
             MoveSpeed = moveSpeed;
             InputDeadzone = inputDeadzone;
             FacingLerpSpeed = facingLerpSpeed;
+            DodgeDistance = dodgeDistance;
+            DodgeSpeed = dodgeSpeed;
+            DodgeDurationSeconds = dodgeDurationSeconds;
         }
     }
 }

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_PLAYABLE_DIRECTOR
 
@@ -16,7 +16,7 @@ namespace Animancer
     /// Exposed References</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/ExposedPropertyTable
-    /// 
+    ///
     [AddComponentMenu(Strings.MenuPrefix + "Exposed Property Table")]
     [AnimancerHelpUrl(typeof(ExposedPropertyTable))]
     [DefaultExecutionOrder(-10000)]// Initialize before anything else might need to use the table.
@@ -63,4 +63,3 @@ namespace Animancer
 }
 
 #endif
-

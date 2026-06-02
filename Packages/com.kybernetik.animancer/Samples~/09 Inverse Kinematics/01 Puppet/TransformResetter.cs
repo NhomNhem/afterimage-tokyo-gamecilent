@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -7,15 +7,15 @@ using UnityEngine;
 namespace Animancer.Samples.InverseKinematics
 {
     /// <summary>Records the positions and rotations of a set of objects so they can be returned later on.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/ik/puppet">
     /// Puppet</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.InverseKinematics/TransformResetter
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Inverse Kinematics - Transform Resetter")]
     [AnimancerHelpUrl(typeof(TransformResetter))]
     public class TransformResetter : MonoBehaviour

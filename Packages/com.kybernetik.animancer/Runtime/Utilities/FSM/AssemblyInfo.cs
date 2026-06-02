@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -7,8 +7,8 @@ using System.Reflection;
 [assembly: AssemblyDescription("A Finite State Machine system for Unity.")]
 [assembly: AssemblyProduct("Animancer")]
 [assembly: AssemblyCompany("Kybernetik")]
-[assembly: AssemblyCopyright("Copyright © Kybernetik 2018-2026")]
-[assembly: AssemblyVersion("8.3.1.37")]
+[assembly: AssemblyCopyright("Copyright © Kybernetik 2018-2025")]
+[assembly: AssemblyVersion("8.2.2.34")]
 
 #if UNITY_EDITOR
 
@@ -65,4 +65,3 @@ using System.Reflection;
     Justification = "UnityEngine.Object is serializable by Unity.")]
 
 #endif
-

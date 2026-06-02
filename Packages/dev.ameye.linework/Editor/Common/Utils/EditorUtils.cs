@@ -39,7 +39,7 @@ namespace Linework.Editor.Common.Utils
             public static readonly GUIContent ScaleWithResolution = EditorGUIUtility.TrTextContent("Scale With Resolution", "Scale the thickness of the outline with the resolution of the screen.");
             public static readonly GUIContent VertexAnimation = EditorGUIUtility.TrTextContent("Vertex Animation", "Make the outline follow the vertex animation of the mesh.");
             public static readonly GUIContent GpuInstancing = EditorGUIUtility.TrTextContent("GPU Instancing", "Use GPU instancing to render this outline layer.");
-            
+
             // Surface fill.
             public static readonly GUIContent Fills = EditorGUIUtility.TrTextContent("Fills", "The list of fills to render.");
             public static readonly GUIContent FillLayer = EditorGUIUtility.TrTextContent("Layer", "The rendering layer(s) which will get a fill rendered for them.");
@@ -83,7 +83,7 @@ namespace Linework.Editor.Common.Utils
             public static readonly GUIContent CustomMaterial = EditorGUIUtility.TrTextContent("Material", "The alpha clip threshold.");
             public static readonly GUIContent WidthControl = EditorGUIUtility.TrTextContent("Width Control", "Use a shared width or a width per outline.");
             public static readonly GUIContent SilhouetteBufferFormat = EditorGUIUtility.TrTextContent("Silhouette Buffer Format", "The format of the silhouette buffer. Use R16G16B16A16_SFloat if you need to support HDR outline colors.");
-            
+
             // Edge detection.
             public static readonly GUIContent DiscontinuityInput = EditorGUIUtility.TrTextContent("Sources", "Which inputs to use as discontinuity sources for the edge detection.");
             public static readonly GUIContent Sensitivity = EditorGUIUtility.TrTextContent("Sensitivity", "The sensitivity used to detect this type of discontinuity.");

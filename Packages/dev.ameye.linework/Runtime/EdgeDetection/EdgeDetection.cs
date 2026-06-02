@@ -323,7 +323,7 @@ namespace Linework.EdgeDetection
 
                 return true;
             }
-            
+
             private static GraphicsFormat GetSectionBufferFormat(SectionMapPrecision precision, bool multicolor)
             {
                 switch (precision)
@@ -645,7 +645,7 @@ namespace Linework.EdgeDetection
                 cameraDepthRTHandle = null;
             }
 #endif
-            
+
             public void Dispose()
             {
                 settings = null; // de-reference settings to allow them to be freed from memory

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -9,15 +9,15 @@ namespace Animancer.Samples.Basics
     /// <summary>
     /// Starts with an idle animation and performs an action when the user clicks the mouse, then returns to idle.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/basics/action">
     /// Basic Action</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Basics/PlayAnimationOnClick
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Basics - Play Animation On Click")]
     [AnimancerHelpUrl(typeof(PlayAnimationOnClick))]
     public class PlayAnimationOnClick : MonoBehaviour

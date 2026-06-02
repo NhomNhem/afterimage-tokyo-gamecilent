@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eceeb59a892d074db28203df8e4cd3a, type: 3}
   m_Name: Spider-Walk
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Up: {fileID: 74319991301167464}
   _Right: {fileID: 74284300698796242}
   _Down: {fileID: 74800690151445176}
@@ -44,7 +44,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300246, guid: 5b54aaa7498024e438d906b1a29048ee, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -119,7 +119,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300254, guid: 5b54aaa7498024e438d906b1a29048ee, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -194,7 +194,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300238, guid: 5b54aaa7498024e438d906b1a29048ee, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -269,7 +269,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300230, guid: 5b54aaa7498024e438d906b1a29048ee, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4

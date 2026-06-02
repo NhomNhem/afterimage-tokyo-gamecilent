@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using Animancer.Units;
 using System;
@@ -12,9 +12,6 @@ namespace Animancer
     /// <inheritdoc/>
     /// https://kybernetik.com.au/animancer/api/Animancer/PlayableAssetTransition
     [Serializable]
-#if ! UNITY_EDITOR
-    [System.Obsolete(Validate.ProOnlyMessage)]
-#endif
     public class PlayableAssetTransition : Transition<PlayableAssetState>,
         IAnimationClipCollection,
         ICopyable<PlayableAssetTransition>
@@ -88,11 +85,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override bool IsValid
-#if UNITY_EDITOR
             => _Asset != null;
-#else
-            => false;
-#endif
 
         /************************************************************************************************************************/
 
@@ -123,11 +116,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override Transition<PlayableAssetState> Clone(CloneContext context)
-        {
-            var clone = new PlayableAssetTransition();
-            clone.CopyFrom(this, context);
-            return clone;
-        }
+            => new PlayableAssetTransition();
 
         /// <inheritdoc/>
         public sealed override void CopyFrom(Transition<PlayableAssetState> copyFrom, CloneContext context)
@@ -138,9 +127,9 @@ namespace Animancer
         {
             base.CopyFrom(copyFrom, context);
 
-            _Asset = context.GetCloneOrOriginal(copyFrom._Asset);
+            _Asset = copyFrom._Asset;
             _NormalizedStartTime = copyFrom._NormalizedStartTime;
-            context.CloneArray(copyFrom._Bindings, ref _Bindings);
+            AnimancerUtilities.CopyExactArray(copyFrom._Bindings, ref _Bindings);
         }
 
         /************************************************************************************************************************/
@@ -175,4 +164,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

@@ -181,6 +181,15 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugForceParryEligibleActive"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7d8e1f3-6a92-4f7f-9d8f-7a8f2c0d0e3f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -447,6 +456,17 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleDebugOverlay"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8e9f2d8-5e0e-4f09-8e73-67b2d0f5f0ab"",
+                    ""path"": ""<Keyboard>/f6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""DebugForceParryEligibleActive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -493,6 +513,7 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
         m_Gameplay_LockOn = m_Gameplay.FindAction("LockOn", throwIfNotFound: true);
         m_Gameplay_ResetEncounter = m_Gameplay.FindAction("ResetEncounter", throwIfNotFound: true);
         m_Gameplay_ToggleDebugOverlay = m_Gameplay.FindAction("ToggleDebugOverlay", throwIfNotFound: true);
+        m_Gameplay_DebugForceParryEligibleActive = m_Gameplay.FindAction("DebugForceParryEligibleActive", throwIfNotFound: true);
     }
 
     ~@M0InputActions()
@@ -583,6 +604,7 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_LockOn;
     private readonly InputAction m_Gameplay_ResetEncounter;
     private readonly InputAction m_Gameplay_ToggleDebugOverlay;
+    private readonly InputAction m_Gameplay_DebugForceParryEligibleActive;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -634,6 +656,10 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/ToggleDebugOverlay".
         /// </summary>
         public InputAction @ToggleDebugOverlay => m_Wrapper.m_Gameplay_ToggleDebugOverlay;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/DebugForceParryEligibleActive".
+        /// </summary>
+        public InputAction @DebugForceParryEligibleActive => m_Wrapper.m_Gameplay_DebugForceParryEligibleActive;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -690,6 +716,9 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
             @ToggleDebugOverlay.started += instance.OnToggleDebugOverlay;
             @ToggleDebugOverlay.performed += instance.OnToggleDebugOverlay;
             @ToggleDebugOverlay.canceled += instance.OnToggleDebugOverlay;
+            @DebugForceParryEligibleActive.started += instance.OnDebugForceParryEligibleActive;
+            @DebugForceParryEligibleActive.performed += instance.OnDebugForceParryEligibleActive;
+            @DebugForceParryEligibleActive.canceled += instance.OnDebugForceParryEligibleActive;
         }
 
         /// <summary>
@@ -731,6 +760,9 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
             @ToggleDebugOverlay.started -= instance.OnToggleDebugOverlay;
             @ToggleDebugOverlay.performed -= instance.OnToggleDebugOverlay;
             @ToggleDebugOverlay.canceled -= instance.OnToggleDebugOverlay;
+            @DebugForceParryEligibleActive.started -= instance.OnDebugForceParryEligibleActive;
+            @DebugForceParryEligibleActive.performed -= instance.OnDebugForceParryEligibleActive;
+            @DebugForceParryEligibleActive.canceled -= instance.OnDebugForceParryEligibleActive;
         }
 
         /// <summary>
@@ -867,5 +899,12 @@ public partial class @M0InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleDebugOverlay(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugForceParryEligibleActive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugForceParryEligibleActive(InputAction.CallbackContext context);
     }
 }

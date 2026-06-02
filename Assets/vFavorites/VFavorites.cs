@@ -957,7 +957,7 @@ namespace VFavorites
 
 
 
-                if (origBrowserOnGUIDelegate.GetMethodInfo().IsStatic) // wrapped by vFolders 
+                if (origBrowserOnGUIDelegate.GetMethodInfo().IsStatic) // wrapped by vFolders
                     origBrowserOnGUIDelegate.GetMethodInfo().Invoke(null, new[] { wrappedBrowser });
                 else
                     origBrowserOnGUIDelegate.GetMethodInfo().Invoke(wrappedBrowser, null);
@@ -1175,7 +1175,7 @@ namespace VFavorites
 
 
 
-        static void UpdateMouseState() // called from WrappedOnGUI 
+        static void UpdateMouseState() // called from WrappedOnGUI
         {
             if (!shortcutPressed && !isWrappedBrowserLocked) { setDefaultState(); return; }
             if (!totalRect_browserSpace.IsHovered()) { setDefaultState(); return; }
@@ -1377,7 +1377,7 @@ namespace VFavorites
 
 
 
-        static void UpdateDragging() // called from WrappedOnGUI 
+        static void UpdateDragging() // called from WrappedOnGUI
         {
             void initFromOutside()
             {
@@ -1605,7 +1605,7 @@ namespace VFavorites
 
 
 
-        static void UpdateGUIWrapping() // called from EditorApplicaton.update 
+        static void UpdateGUIWrapping() // called from EditorApplicaton.update
         {
             void wrap()
             {
@@ -1730,7 +1730,7 @@ namespace VFavorites
 
 
 
-        static void UpdateLocking() // called from EditorApplicaton.update 
+        static void UpdateLocking() // called from EditorApplicaton.update
         {
             void unsetWrappedBrowser()
             {
@@ -1901,7 +1901,7 @@ namespace VFavorites
 
 
 
-        static void RepaintOnAltUp() // Update 
+        static void RepaintOnAltUp() // Update
         {
             var lastEvent = typeof(Event).GetFieldValue<Event>("s_Current");
 

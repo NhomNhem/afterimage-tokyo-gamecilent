@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 namespace Animancer.FSM
 {
@@ -9,7 +9,7 @@ namespace Animancer.FSM
         /// try to enter it every time <see cref="StateMachine{TState}.InputBuffer{TStateMachine}.Update(float)"/> is
         /// called until the <see cref="StateMachine{TState}.InputBuffer{TStateMachine}.TimeOut"/> expires.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// <para></para>
         /// <strong>Documentation:</strong>
@@ -18,9 +18,9 @@ namespace Animancer.FSM
         /// <para></para>
         /// See <see cref="StateMachine{TState}.InputBuffer{TStateMachine}"/> for example usage.
         /// </remarks>
-        /// 
+        ///
         /// https://kybernetik.com.au/animancer/api/Animancer.FSM/InputBuffer
-        /// 
+        ///
         public new class InputBuffer : InputBuffer<StateMachine<TKey, TState>>
         {
             /************************************************************************************************************************/
@@ -85,4 +85,3 @@ namespace Animancer.FSM
         }
     }
 }
-

@@ -21,7 +21,7 @@ namespace Linework.EdgeDetection
 
         [SerializeField] private InjectionPoint injectionPoint = InjectionPoint.AfterRenderingPostProcessing;
         [SerializeField] private bool showInSceneView = true;
-        
+
         // Debugging
         [SerializeField] private DebugView debugView;
         public DebugSectionsChannels debugSectionsChannels = DebugSectionsChannels.R | DebugSectionsChannels.G | DebugSectionsChannels.B;
@@ -36,7 +36,7 @@ namespace Linework.EdgeDetection
         [Range(1.0f, 30.0f)] public float grazingAngleMaskHardness = 1.0f;
         [Range(0.0f, 1.0f)] public float normalSensitivity = 0.4f;
         [Range(0.0f, 1.0f)] public float luminanceSensitivity = 0.3f;
-        
+
         // Section map.
         public bool objectId = true;
         public bool particles = false;
@@ -73,7 +73,7 @@ namespace Linework.EdgeDetection
         [ShaderKeywordFilter.SelectIf(MaskInfluence.Luminance, keywordNames: ShaderFeature.LuminanceMask)]
 #endif
         public MaskInfluence maskInfluence = MaskInfluence.Depth | MaskInfluence.Normals | MaskInfluence.Luminance;
-        
+
         // Sampling.
 #if UNITY_EDITOR
         [ShaderKeywordFilter.SelectIf(Kernel.RobertsCross, keywordNames: new[] { ShaderFeature.OperatorCross })]
@@ -96,7 +96,7 @@ namespace Linework.EdgeDetection
         public bool scaleWithResolution;
         public Resolution referenceResolution;
         public float customResolution;
-        
+
         // Distortion.
 #if UNITY_EDITOR
         [ShaderKeywordFilter.SelectIf(true, overridePriority: true, keywordNames: ShaderFeature.Distortion)]
@@ -107,7 +107,7 @@ namespace Linework.EdgeDetection
         [Range(0.0f, 0.2f)] public float distortionScale = 0.2f;
         [Range(0.0f, 1.0f)] public float distortionStrength = 0.1f;
         [Range(0.0f, 10.0f)] public float distortionThicknessInfluence = 0.0f;
-        
+
         // Break up.
 #if UNITY_EDITOR
         [ShaderKeywordFilter.SelectIf(true, overridePriority: true, keywordNames: ShaderFeature.Breakup)]
@@ -115,7 +115,7 @@ namespace Linework.EdgeDetection
         public bool breakUpEdges = false;
         [Range(0.0f, 20.0f)] public float breakUpNoiseScale = 10.0f;
         [Range(0.0f, 1.0f)] public float breakUpNoiseAmount = 0.0f;
-        
+
         // Colors.
         [ColorUsage(true, true)] public Color backgroundColor = Color.clear;
         [ColorUsage(true, true)] public Color outlineColor = Color.black;
@@ -144,7 +144,7 @@ namespace Linework.EdgeDetection
         [Range(0.0f, 2.0f)] public float heightFadeStart = 1.0f;
         [Range(0.01f, 2.0f)] public float heightFadeDistance = 0.5f;
         public BlendingMode blendMode;
-        
+
         public InjectionPoint InjectionPoint => injectionPoint;
         public bool ShowInSceneView => showInSceneView;
         public DebugView DebugView => debugView;

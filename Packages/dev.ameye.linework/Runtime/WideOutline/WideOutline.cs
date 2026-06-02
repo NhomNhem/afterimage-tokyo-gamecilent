@@ -340,7 +340,7 @@ namespace Linework.WideOutline
                             // width *= cameraData.camera.pixelHeight / Mathf.Max(settings.customResolution, 1.0f);
                             #endif
                         }
-                      
+
                         var numberOfMips = Mathf.CeilToInt(Mathf.Log(width + 1.0f, 2.0f));
 
                         for (var i = numberOfMips - 1; i >= 0; i--)
@@ -991,7 +991,7 @@ namespace Linework.WideOutline
                         // NOTE: Disabled for now, might not be needed and also gives performance issues because number of steps in JFA becomes excessive.
                         // width *= renderingData.cameraData.cameraTargetDescriptor.height / Mathf.Max(settings.customResolution, 1.0f);
                     }
-                    
+
                     var numberOfMips = Mathf.CeilToInt(Mathf.Log(width + 1.0f, 2f));
 
                     for (var passIndex = numberOfMips - 1; passIndex >= 0; passIndex--)
@@ -1044,7 +1044,7 @@ namespace Linework.WideOutline
                 cameraDepthRTHandle = null;
             }
 #endif
-            
+
             public void Dispose()
             {
                 settings = null; // de-reference settings to allow them to be freed from memory
@@ -1125,7 +1125,7 @@ namespace Linework.WideOutline
         }
         #pragma warning restore 618, 672
 #endif
-        
+
         /// <summary>
         /// Clean up resources allocated to the Scriptable Renderer Feature such as materials.
         /// </summary>

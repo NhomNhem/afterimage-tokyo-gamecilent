@@ -15,7 +15,7 @@ namespace Linework.FastOutline
         [SerializeField] private InjectionPoint injectionPoint = InjectionPoint.AfterRenderingPostProcessing;
         [SerializeField] private bool showInSceneView = true;
         [SerializeField] private List<Outline> outlines = new(10);
-        
+
         public InjectionPoint InjectionPoint => injectionPoint;
         public bool ShowInSceneView => showInSceneView;
         public List<Outline> Outlines => outlines;
@@ -39,7 +39,7 @@ namespace Linework.FastOutline
             OnSettingsChanged = null;
             outlines = null;
         }
-        
+
         public void SetActive(bool active)
         {
             foreach (var outline in outlines)
@@ -47,7 +47,7 @@ namespace Linework.FastOutline
                 outline.SetActive(active);
             }
         }
-        
+
 #if UNITY_EDITOR
         private class OnDestroyProcessor: AssetModificationProcessor
         {

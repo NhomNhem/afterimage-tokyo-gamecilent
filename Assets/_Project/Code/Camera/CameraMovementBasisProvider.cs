@@ -4,12 +4,12 @@ using GlassRefrain.Core;
 namespace GlassRefrain.Camera {
     /// <summary>
     /// CameraMovementBasisProvider — provides read-only camera movement basis snapshot.
-    /// 
+    ///
     /// Responsibility:
     /// - Observes camera transform
     /// - Projects camera forward and right onto the ground plane (Y=0)
     /// - Exposes basis via CameraMovementBasisSnapshot (read-only)
-    /// 
+    ///
     /// Scope:
     /// - Story 1-2: Camera basis provision only
     /// - Locomotion reads this basis to calculate world-projected movement direction
@@ -21,11 +21,19 @@ namespace GlassRefrain.Camera {
 
         private CameraMovementBasisSnapshot currentBasis;
         private bool isValid = false;
+        private const float MinProjectedSqrMagnitude = 0.000001f;
+
+        private void Awake() {
+            if (targetCamera == null) {
+                targetCamera = UnityEngine.Camera.main;
+            }
+        }
 
         private void OnEnable() {
             if (targetCamera == null) {
                 targetCamera = UnityEngine.Camera.main;
             }
+            UpdateMovementBasis();
         }
 
         private void LateUpdate() {
@@ -51,15 +59,30 @@ namespace GlassRefrain.Camera {
             Vector3 forward = targetCamera.transform.forward;
             Vector3 right = targetCamera.transform.right;
 
-            // Project forward onto ground plane by zeroing Y component, then normalize
-            Vector3 projectedForward = new Vector3(forward.x, 0f, forward.z).normalized;
-            if (float.IsNaN(projectedForward.x) || float.IsNaN(projectedForward.z)) {
+            // Project forward onto ground plane by zeroing Y component.
+            // Guard both NaN and near-zero magnitude to avoid zero basis vectors.
+            Vector3 projectedForwardRaw = new Vector3(forward.x, 0f, forward.z);
+            Vector3 projectedForward = projectedForwardRaw.sqrMagnitude > MinProjectedSqrMagnitude
+                ? projectedForwardRaw.normalized
+                : Vector3.forward;
+            if (float.IsNaN(projectedForward.x) || float.IsNaN(projectedForward.z) || projectedForward.sqrMagnitude <= MinProjectedSqrMagnitude) {
                 projectedForward = Vector3.forward;
             }
 
-            // Project right onto ground plane by zeroing Y component, then normalize
-            Vector3 projectedRight = new Vector3(right.x, 0f, right.z).normalized;
-            if (float.IsNaN(projectedRight.x) || float.IsNaN(projectedRight.z)) {
+            // Build a ground-plane orthonormal right axis from projected forward.
+            // This keeps movement basis stable/readable even when camera roll introduces right-axis skew.
+            Vector3 projectedRight = Vector3.Cross(Vector3.up, projectedForward);
+            if (float.IsNaN(projectedRight.x) || float.IsNaN(projectedRight.z) || projectedRight.sqrMagnitude <= MinProjectedSqrMagnitude) {
+                // Fallback to projected camera right if forward-based cross is degenerate.
+                Vector3 projectedRightRaw = new Vector3(right.x, 0f, right.z);
+                projectedRight = projectedRightRaw.sqrMagnitude > MinProjectedSqrMagnitude
+                    ? projectedRightRaw.normalized
+                    : Vector3.right;
+            } else {
+                projectedRight = projectedRight.normalized;
+            }
+
+            if (float.IsNaN(projectedRight.x) || float.IsNaN(projectedRight.z) || projectedRight.sqrMagnitude <= MinProjectedSqrMagnitude) {
                 projectedRight = Vector3.right;
             }
 
@@ -79,6 +102,11 @@ namespace GlassRefrain.Camera {
         /// Returns the current movement basis snapshot for locomotion to consume.
         /// </summary>
         public CameraMovementBasisSnapshot GetMovementBasis() {
+            // Keep basis fresh for callers that tick in Update and cannot wait for LateUpdate.
+            if (targetCamera == null || !targetCamera.isActiveAndEnabled) {
+                targetCamera = UnityEngine.Camera.main;
+            }
+            UpdateMovementBasis();
             return currentBasis;
         }
 

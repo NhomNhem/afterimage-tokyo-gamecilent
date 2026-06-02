@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Input {
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Scoped)]
     public sealed class M0InputRouter : IInputIntentSource {
         private Axis2 move;
         private Axis2 look;
@@ -14,13 +17,16 @@ namespace GlassRefrain.Input {
         private bool lockOnPressed;
         private bool resetEncounterPressed;
         private bool toggleDebugOverlayPressed;
+        private bool interactPressed;
         private bool inputEnabled;
         private InputIntentSnapshot latestSnapshot;
         private readonly List<InputRoutingResult> routingHistory;
+        private readonly List<InputActionIntent> triggeredActions;
 
         public M0InputRouter() {
             this.inputEnabled = true;
             routingHistory = new List<InputRoutingResult>();
+            triggeredActions = new List<InputActionIntent>();
             RefreshSnapshot();
         }
 
@@ -85,6 +91,9 @@ namespace GlassRefrain.Input {
                 case InputActionIntent.ToggleDebugOverlay:
                     changed = UpdateButton(ref toggleDebugOverlayPressed, pressed);
                     break;
+                case InputActionIntent.Interact:
+                    changed = UpdateButton(ref interactPressed, pressed);
+                    break;
                 default:
                     return false;
             }
@@ -108,6 +117,23 @@ namespace GlassRefrain.Input {
             if (handler != null) handler(result);
         }
 
+        public void RecordTriggeredAction(InputActionIntent action) {
+            if (action == InputActionIntent.None) return;
+
+            triggeredActions.Add(action);
+        }
+
+        public int DrainTriggeredActions(List<InputActionIntent> buffer) {
+            if (buffer == null) return 0;
+
+            if (triggeredActions.Count == 0) return 0;
+
+            buffer.AddRange(triggeredActions);
+            var drainedCount = triggeredActions.Count;
+            triggeredActions.Clear();
+            return drainedCount;
+        }
+
         public InputDebugSnapshot CreateDebugSnapshot() {
             var details = new string[] {
                 "InputEnabled: " + inputEnabled,
@@ -119,6 +145,7 @@ namespace GlassRefrain.Input {
                 "Dodge: " + dodgePressed,
                 "Counter: " + counterPressed,
                 "LockOn: " + lockOnPressed,
+                "Interact: " + interactPressed,
                 "ResetEncounter: " + resetEncounterPressed,
                 "ToggleDebugOverlay: " + toggleDebugOverlayPressed,
                 "RoutingCount: " + routingHistory.Count

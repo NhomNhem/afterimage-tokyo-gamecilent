@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -10,15 +10,15 @@ namespace Animancer.Samples.AnimatorControllers.GameKit
     /// <summary>
     /// Base class for the various states a <see cref="GameKit.Character"/> can be in and actions they can perform.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/animator-controllers/3d-game-kit">
     /// 3D Game Kit</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.AnimatorControllers.GameKit/CharacterState
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Character State")]
     [AnimancerHelpUrl(typeof(CharacterState))]
     public abstract class CharacterState : StateBehaviour, IOwnedState<CharacterState>

@@ -50,7 +50,7 @@ Shader "Hidden/Outlines/Soft Outline/Gaussian Blur"
             {
                 float4 sum = 0;
                 float scale = 1;
-                
+
                 #if defined(SCALE_WITH_RESOLUTION)
                 scale = 1 * _ScreenParams.y / _ReferenceResolution;
                 #endif
@@ -78,7 +78,7 @@ Shader "Hidden/Outlines/Soft Outline/Gaussian Blur"
             {
                 float4 sum = 0;
                 float scale = 1;
-                
+
                 #if defined(SCALE_WITH_RESOLUTION)
                 scale = 1 * _ScreenParams.y / _ReferenceResolution;
                 #endif

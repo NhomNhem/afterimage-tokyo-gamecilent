@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 
@@ -21,13 +21,13 @@ namespace Animancer
         /// {
         ///     // Start fading the animation normally.
         ///     AnimancerState state = animancer.Play(clip, 0.25f);
-        ///     
+        ///
         ///     // Then a custom Easing delegate to modify it.
         ///     state.FadeGroup.SetEasing(t => t * t);// Square the 0-1 value to start slow and end fast.
-        ///     
+        ///
         ///     // The Easing class has lots of standard mathematical curve functions.
         ///     state.FadeGroup.SetEasing(Easing.Sine.InOut);
-        ///     
+        ///
         ///     // Or you can use the Easing.Function enum.
         ///     state.FadeGroup.SetEasing(Easing.Function.SineInOut);
         /// }
@@ -53,13 +53,13 @@ namespace Animancer
         /// {
         ///     // Start fading the animation normally.
         ///     AnimancerState state = animancer.Play(clip, 0.25f);
-        ///     
+        ///
         ///     // Then a custom Easing delegate to modify it.
         ///     state.FadeGroup.SetEasing(t => t * t);// Square the 0-1 value to start slow and end fast.
-        ///     
+        ///
         ///     // The Easing class has lots of standard mathematical curve functions.
         ///     state.FadeGroup.SetEasing(Easing.Sine.InOut);
-        ///     
+        ///
         ///     // Or you can use the Easing.Function enum.
         ///     state.FadeGroup.SetEasing(Easing.Function.SineInOut);
         /// }
@@ -74,4 +74,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

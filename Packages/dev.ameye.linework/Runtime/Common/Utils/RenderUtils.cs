@@ -26,7 +26,7 @@ namespace Linework.Common.Utils
         WhenOccluded,
         WhenNotOccluded
     }
-    
+
     public enum CullingMode
     {
         Back,
@@ -48,7 +48,7 @@ namespace Linework.Common.Utils
         B,
         A
     }
-    
+
     public enum Resolution
     {
         [InspectorName("480px")]
@@ -60,7 +60,7 @@ namespace Linework.Common.Utils
         [InspectorName("Custom")]
         Custom
     }
-    
+
     public enum MaterialType
     {
         Basic,
@@ -75,13 +75,13 @@ namespace Linework.Common.Utils
         [InspectorName("R16G16B16A16_SFloat")]
         R16
     }
-    
+
     public enum WidthControl
     {
         Shared,
         PerOutline
     }
-    
+
     public enum OutlineRenderQueue
     {
         Opaque,
@@ -89,7 +89,7 @@ namespace Linework.Common.Utils
         [InspectorName("Opaque + Transparent")]
         OpaqueAndTransparent
     }
-    
+
     public static class CommonShaderPropertyId
     {
         public static readonly int ZTest = Shader.PropertyToID("_ZTest");
@@ -97,7 +97,7 @@ namespace Linework.Common.Utils
         public static readonly int CullMode = Shader.PropertyToID("_Cull");
         public static readonly int BlendModeSource = Shader.PropertyToID("_SrcBlend");
         public static readonly int BlendModeDestination = Shader.PropertyToID("_DstBlend");
-    
+
         public static readonly int StencilRef = Shader.PropertyToID("_StencilRef");
         public static readonly int StencilComp = Shader.PropertyToID("_StencilComp");
         public static readonly int StencilReadMask = Shader.PropertyToID("_StencilReadMask");
@@ -111,7 +111,7 @@ namespace Linework.Common.Utils
         public static readonly int FullScreenStencilReadMask = Shader.PropertyToID("_Fullscreen_StencilReadMask");
         public static readonly int FullScreenStencilPass = Shader.PropertyToID("_Fullscreen_StencilPass");
         public static readonly int FullScreenStencilFail = Shader.PropertyToID("_Fullscreen_StencilFail");
-        
+
         public static readonly int OutlineColor = Shader.PropertyToID("_OutlineColor");
         public static readonly int AlphaCutoutTexture = Shader.PropertyToID("_AlphaCutoutTexture");
         public static readonly int AlphaCutoutThreshold = Shader.PropertyToID("_AlphaCutoutThreshold");
@@ -157,7 +157,7 @@ namespace Linework.Common.Utils
         private class PassData
         {
         }
-        
+
         public static void ClearStencil(RenderGraph renderGraph, UniversalResourceData resourceData, Material clear)
         {
             using var builder = renderGraph.AddRasterRenderPass<PassData>("Clear Stencil (Fast Outline)", out _);
@@ -167,7 +167,7 @@ namespace Linework.Common.Utils
             builder.SetRenderFunc((PassData _, RasterGraphContext context) => { context.cmd.DrawProcedural(Matrix4x4.identity, clear, 0, MeshTopology.Triangles, 3, 1); });
         }
 #endif
-        
+
         public static (int, int) GetSrcDstBlend(BlendingMode blendMode)
         {
             var blending = (0, 0);

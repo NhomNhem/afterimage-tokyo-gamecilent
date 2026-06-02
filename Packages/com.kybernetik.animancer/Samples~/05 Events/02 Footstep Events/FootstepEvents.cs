@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -7,15 +7,15 @@ using UnityEngine;
 namespace Animancer.Samples.Events
 {
     /// <summary>Uses Animancer Events to play a sound randomly selected from an array.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/events/footsteps">
     /// Footstep Events</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Events/FootstepEvents
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Footstep Events - Footstep Events")]
     [AnimancerHelpUrl(typeof(FootstepEvents))]
     public class FootstepEvents : MonoBehaviour

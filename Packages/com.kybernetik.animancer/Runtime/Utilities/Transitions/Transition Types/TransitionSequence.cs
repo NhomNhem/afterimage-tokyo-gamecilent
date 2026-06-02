@@ -1,8 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
-
-#if ! UNITY_EDITOR
-#pragma warning disable CS0618 // Type or member is obsolete (for Animancer Events in Animancer Lite).
-#endif
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using Animancer.Units;
 using System;
@@ -14,7 +10,7 @@ namespace Animancer
     /// <inheritdoc/>
     /// <summary>A group of transitions which play one after the other.</summary>
     /// https://kybernetik.com.au/animancer/api/Animancer/TransitionSequence
-    /// 
+    ///
     [Serializable]
     public class TransitionSequence : Transition<SequenceState>,
         IAnimationClipCollection,
@@ -149,11 +145,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override Transition<SequenceState> Clone(CloneContext context)
-        {
-            var clone = new TransitionSequence();
-            clone.CopyFrom(this, context);
-            return clone;
-        }
+            => new TransitionSequence();
 
         /// <inheritdoc/>
         public sealed override void CopyFrom(Transition<SequenceState> copyFrom, CloneContext context)
@@ -165,10 +157,9 @@ namespace Animancer
             base.CopyFrom(copyFrom, context);
 
             _NormalizedStartTime = copyFrom._NormalizedStartTime;
-            context.CloneArray(copyFrom._Transitions, ref _Transitions);
+            AnimancerUtilities.CopyExactArray(copyFrom._Transitions, ref _Transitions);
         }
 
         /************************************************************************************************************************/
     }
 }
-

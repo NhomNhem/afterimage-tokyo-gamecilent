@@ -1,6 +1,5 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
-#pragma warning disable CS0618 // Type or member is obsolete.
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
 using UnityEngine;
@@ -11,15 +10,15 @@ namespace Animancer.Samples.AnimatorControllers
     /// Implements the same behaviour as <see cref="BasicCharacterAnimations"/>
     /// using a <see cref="HybridAnimancerComponent"/>.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/animator-controllers/character">
     /// Hybrid Character</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.AnimatorControllers/HybridCharacterAnimations
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Animator Controllers - Hybrid Character Animations")]
     [AnimancerHelpUrl(typeof(HybridCharacterAnimations))]
     // Awake before Animancer to disable the OptionalWarnings before it triggers them.

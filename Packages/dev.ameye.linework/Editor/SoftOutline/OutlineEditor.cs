@@ -47,7 +47,7 @@ namespace Linework.Editor.SoftOutline
             EditorGUILayout.PropertyField(layerMask, EditorUtils.CommonStyles.LayerMask);
             EditorGUILayout.PropertyField(renderQueue, EditorUtils.CommonStyles.RenderQueue);
             EditorGUILayout.Space();
-            
+
             EditorGUILayout.LabelField("Render", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(occlusion, EditorUtils.CommonStyles.OutlineOcclusion);
             if((Occlusion) occlusion.intValue == Occlusion.WhenNotOccluded)
@@ -59,7 +59,7 @@ namespace Linework.Editor.SoftOutline
             if (alphaCutout.boolValue)
             {
                 EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(alphaCutoutTexture, EditorUtils.CommonStyles.AlphaCutoutTexture); 
+                EditorGUILayout.PropertyField(alphaCutoutTexture, EditorUtils.CommonStyles.AlphaCutoutTexture);
                 EditorGUILayout.PropertyField(alphaCutoutThreshold, EditorUtils.CommonStyles.AlphaCutoutThreshold);
                 alphaCutoutUVTransform.vector4Value = EditorGUILayout.Vector4Field(EditorUtils.CommonStyles.AlphaCutoutUVTransform, alphaCutoutUVTransform.vector4Value);
                 EditorGUI.indentLevel--;
@@ -76,7 +76,7 @@ namespace Linework.Editor.SoftOutline
                 EditorGUILayout.HelpBox("With vertex animation enabled, the outline color should be set by your object's shader. See the documentation for details.", MessageType.Warning);
             }
             EditorGUILayout.Space();
-            
+
             if ((SoftOutlineOcclusion) occlusion.intValue != SoftOutlineOcclusion.AsMask)
             {
                 EditorGUILayout.LabelField("Outline", EditorStyles.boldLabel);
@@ -89,7 +89,7 @@ namespace Linework.Editor.SoftOutline
             {
                 EditorGUILayout.HelpBox("The mask mode is used to mask out the other outlines where they are not needed.", MessageType.Info);
             }
-           
+
             EditorGUILayout.Space();
             serializedObject.ApplyModifiedProperties();
         }

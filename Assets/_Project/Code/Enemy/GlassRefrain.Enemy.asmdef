@@ -2,7 +2,8 @@
   "name": "GlassRefrain.Enemy",
   "rootNamespace": "GlassRefrain.Enemy",
   "references": [
-    "GlassRefrain.Core"
+    "GlassRefrain.Core",
+    "NhemDangFugBixs.Logging"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

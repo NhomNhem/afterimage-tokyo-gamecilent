@@ -26,6 +26,7 @@ namespace GlassRefrain.Tests.EditMode {
             string[] files = {
                 "Assets/_Project/Code/Input/M0InputFoundation.cs",
                 "Assets/_Project/Code/Input/M0InputRouter.cs",
+                "Assets/_Project/Code/Input/M0DirectPlayerInput.cs",
                 "Assets/_Project/Content/Data/Input/M0InputActions.inputactions"
             };
 

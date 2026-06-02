@@ -29,7 +29,7 @@ namespace Linework.SoftOutline
             return this;
         }
     }
-    
+
     static class ShaderPath
     {
         public const string Mask = "Hidden/Outlines/Soft Outline/Mask";
@@ -41,7 +41,7 @@ namespace Linework.SoftOutline
         public const string Dilate = "Hidden/Outlines/Soft Outline/Dilate";
         public const string Outline = "Hidden/Outlines/Soft Outline/Outline";
     }
-    
+
     static class ShaderPass
     {
         public const int Mask = 0;
@@ -71,14 +71,14 @@ namespace Linework.SoftOutline
         public static readonly int OutlineGap = Shader.PropertyToID("_OutlineGap");
         public static readonly int SilhouetteBuffer = Shader.PropertyToID("_SilhouetteBuffer");
     }
-    
+
     static class ShaderFeature
     {
         public const string AlphaCutout = "ALPHA_CUTOUT";
         public const string HardOutline = "HARD_OUTLINE";
         public const string ScaleWithResolution = "SCALE_WITH_RESOLUTION";
     }
-    
+
     static class Keyword
     {
         public static readonly GlobalKeyword OutlineColor = GlobalKeyword.Create("_OUTLINE_COLOR");
@@ -89,7 +89,7 @@ namespace Linework.SoftOutline
         public const string Silhouette = "_SilhouetteBuffer";
         public const string Blur = "_BlurBuffer";
     }
-    
+
     public enum DilationMethod
     {
         Box,
@@ -97,13 +97,13 @@ namespace Linework.SoftOutline
         Kawase,
         Dilate
     }
-    
+
     public enum OutlineType
     {
         Soft,
         Hard
     }
-    
+
     public enum SoftOutlineOcclusion
     {
         Always,

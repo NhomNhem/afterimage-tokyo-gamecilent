@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 // Compare to the original script: https://github.com/Unity-Technologies/animation-jobs-samples/blob/master/Assets/animation-jobs-samples/Samples/Scripts/TwoBoneIK/TwoBoneIK.cs
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
@@ -11,7 +11,7 @@ namespace Animancer.Samples.Jobs
     /// An sample of how to use Animation Jobs in Animancer to apply simple two bone Inverse Kinematics,
     /// even to Generic Rigs which are not supported by Unity's inbuilt IK system.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// This sample is based on Unity's
     /// <see href="https://github.com/Unity-Technologies/animation-jobs-samples">Animation Jobs Samples</see>.
@@ -20,7 +20,7 @@ namespace Animancer.Samples.Jobs
     /// <see href="https://github.com/Unity-Technologies/animation-jobs-samples/blob/master/Assets/animation-jobs-samples/Samples/Scripts/TwoBoneIK/TwoBoneIK.cs">
     /// TwoBoneIK.cs</see>.
     /// <para></para>
-    /// The <see cref="TwoBoneIKJob"/> script is almost identical to the original 
+    /// The <see cref="TwoBoneIKJob"/> script is almost identical to the original
     /// <see href="https://github.com/Unity-Technologies/animation-jobs-samples/blob/master/Assets/animation-jobs-samples/Runtime/AnimationJobs/TwoBoneIKJob.cs">
     /// TwoBoneIKJob.cs</see>.
     /// <para></para>
@@ -31,9 +31,9 @@ namespace Animancer.Samples.Jobs
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/two-bone-ik">
     /// Two Bone IK</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/TwoBoneIK
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Jobs - Two Bone IK")]
     [AnimancerHelpUrl(typeof(TwoBoneIK))]
     public class TwoBoneIK : MonoBehaviour

@@ -1,8 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
-
-#if ! UNITY_EDITOR
-#pragma warning disable CS0618 // Type or member is obsolete (for Animancer Events in Animancer Lite).
-#endif
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -12,13 +8,13 @@ namespace Animancer
 {
     /// <summary>A group of <see cref="ClipTransition"/>s which play one after the other.</summary>
     /// https://kybernetik.com.au/animancer/api/Animancer/ClipTransitionSequence
-    /// 
+    ///
     [Serializable]
     [Obsolete("ClipTransitionSequence has been replaced by TransitionSequence" +
         " which is much more powerful and works properly with Animancer Events." +
-        " This script still works the same as it always has so if you want to" +
+        " This class still works the same as it always has so if you want to" +
         " keep using it you can simply remove this [Obsolete] attribute." +
-        " This script will be removed in a future version of Animancer.")]
+        " This class will be removed in a future version of Animancer.")]
     public class ClipTransitionSequence : ClipTransition,
         ICopyable<ClipTransitionSequence>
     {
@@ -230,11 +226,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override Transition<ClipState> Clone(CloneContext context)
-        {
-            var clone = new ClipTransitionSequence();
-            clone.CopyFrom(this, context);
-            return clone;
-        }
+            => new ClipTransitionSequence();
 
         /// <inheritdoc/>
         public sealed override void CopyFrom(ClipTransition copyFrom, CloneContext context)
@@ -245,7 +237,7 @@ namespace Animancer
         {
             base.CopyFrom(copyFrom, context);
 
-            context.CloneArray(copyFrom._Others, ref _Others);
+            AnimancerUtilities.CopyExactArray(copyFrom._Others, ref _Others);
         }
 
         /************************************************************************************************************************/
@@ -356,4 +348,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

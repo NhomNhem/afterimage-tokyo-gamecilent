@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -667,6 +667,11 @@ namespace Animancer.Editor
             "5415cf2115901c345af7680b044d4604",// PlayableAssetTransitionAsset.
         };
 
+        /// <summary>[Animancer v8.0]
+        /// Removed the classes derived from <see cref="TransitionAssetBase"/>
+        /// for each individual transition type except <see cref="TransitionAsset"/>
+        /// since its [<see cref="SerializeReference"/>] can hold any of them without changing the asset type.
+        /// </summary>
         private void MigrateTransitionAssets(ref string fileText)
         {
             const string
@@ -845,7 +850,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65baa284d24adb24b90b39482364509c, type: 3}
   m_Name: New Clip Transition Asset
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 2481247569047191554
   references:
@@ -871,7 +876,7 @@ MonoBehaviour:
                   m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
                   m_IntArgument: 0
                   m_FloatArgument: 0
-                  m_StringArgument: 
+                  m_StringArgument:
                   m_BoolArgument: 0
                 m_CallState: 2
               - m_Target: {fileID: 11400000}
@@ -925,7 +930,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65baa284d24adb24b90b39482364509c, type: 3}
   m_Name: New Clip Transition Asset
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 2481247569047191554
   references:
@@ -961,7 +966,7 @@ MonoBehaviour:
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
-              m_StringArgument: 
+              m_StringArgument:
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 11400000}
@@ -1002,4 +1007,3 @@ MonoBehaviour:
 }
 
 #endif
-

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using Animancer.Units;
 using System;
@@ -22,8 +22,8 @@ namespace Animancer
         IPolymorphic,
         ITransition<TState>,
         ITransition,
-        ICloneable<Transition<TState>>,
-        ICopyable<Transition<TState>>
+        ICopyable<Transition<TState>>,
+        ICloneable<Transition<TState>>
         where TState : AnimancerState
     {
         /************************************************************************************************************************/
@@ -129,7 +129,7 @@ namespace Animancer
         /// The state that was created by this object. Specifically, this is the state that was most recently
         /// passed into <see cref="Apply"/> (usually by <see cref="AnimancerGraph.Play(ITransition)"/>).
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// You can use <see cref="AnimancerStateDictionary.GetOrCreate(ITransition)"/> or
         /// <see cref="AnimancerLayer.GetOrCreateState(ITransition)"/>
@@ -137,7 +137,7 @@ namespace Animancer
         /// <para></para>
         /// This property is shorthand for casting the <see cref="BaseState"/> to <typeparamref name="TState"/>.
         /// </remarks>
-        /// 
+        ///
         /// <exception cref="InvalidCastException">
         /// The <see cref="BaseState"/> is not actually a <typeparamref name="TState"/>.
         /// This should only happen if a different type of state was created by something else
@@ -207,10 +207,8 @@ namespace Animancer
                     $" for every state created by the transition" +
                     $" after its {nameof(MainObject)} is changed." +
                     $" This includes {nameof(ClipTransition)}.{nameof(ClipTransition.Clip)}," +
-#pragma warning disable CS0618 // Type or member is obsolete.
                     $" {nameof(ControllerTransition)}.{nameof(ControllerTransition.Controller)}, and" +
                     $" {nameof(PlayableAssetTransition)}.{nameof(PlayableAssetTransition.Asset)}" +
-#pragma warning restore CS0618
                     $"\n• State: {state}" +
                     $"\n• State.{nameof(MainObject)}: {state.MainObject}" +
                     $"\n• Transition.{nameof(MainObject)}: {MainObject}" +
@@ -326,7 +324,7 @@ namespace Animancer
             {
                 var layer = state.Layer;
                 state = CreateState();
-                state.Key = Key;
+                state._Key = Key;
                 state.SetParent(layer);
             }
 
@@ -351,4 +349,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

@@ -6,7 +6,7 @@ using GlassRefrain.Locomotion;
 namespace GlassRefrain.Tests.EditMode {
     /// <summary>
     /// LocomotionBasis_test — EditMode tests for Story 1-2 camera-relative movement.
-    /// 
+    ///
     /// Coverage:
     /// - AC-1: Camera movement basis projection onto ground plane
     /// - AC-2: Camera provides read-only movement basis
@@ -14,7 +14,7 @@ namespace GlassRefrain.Tests.EditMode {
     /// - AC-4: Facing supports movement direction when not locked-on
     /// </summary>
     public class LocomotionBasis_test {
-        private M0PlayerLocomotion locomotion;
+        private M0PlayerLocomotion locomotion = null!;
 
         [SetUp]
         public void Setup() {
@@ -223,10 +223,10 @@ namespace GlassRefrain.Tests.EditMode {
                 new Axis2(0f, 0f),
                 false, false, false, false, false, false, false, false,
                 true);
-            
+
             locomotionThreshold.ConsumeInputIntent(justBelowDeadzone);
             LocomotionStateSnapshot snapshotBelow = locomotionThreshold.Snapshot;
-            Assert.AreEqual(LocomotionState.Idle, snapshotBelow.State, 
+            Assert.AreEqual(LocomotionState.Idle, snapshotBelow.State,
                 "Just below deadzone should remain Idle");
 
             // Test just above threshold: (0.0708, 0.0708) magnitude = 0.1001... > 0.1
@@ -235,7 +235,7 @@ namespace GlassRefrain.Tests.EditMode {
                 new Axis2(0f, 0f),
                 false, false, false, false, false, false, false, false,
                 true);
-            
+
             locomotionThreshold.ConsumeInputIntent(justAboveDeadzone);
             LocomotionStateSnapshot snapshotAbove = locomotionThreshold.Snapshot;
             Assert.AreEqual(LocomotionState.Moving, snapshotAbove.State,
@@ -256,7 +256,7 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             locomotion.ConsumeInputIntent(moveInput);
-            
+
             // Verify we can move without restriction
             LocomotionStateSnapshot beforeRestriction = locomotion.Snapshot;
             Assert.AreEqual(LocomotionState.Moving, beforeRestriction.State);
@@ -299,7 +299,7 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             locomotion.ConsumeInputIntent(moveInput);
-            
+
             // Verify we're in Moving state
             LocomotionStateSnapshot beforeRecovery = locomotion.Snapshot;
             Assert.AreEqual(LocomotionState.Moving, beforeRecovery.State);
@@ -414,14 +414,14 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             locomotion.ConsumeInputIntent(moveRight);
-            
+
             // Get initial facing
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
-            
+
             // Process movement for one frame (1/60 sec)
             float deltaTime = 1.0f / 60.0f;
             locomotion.ProcessMovementInput(deltaTime);
-            
+
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 
             // Assert: Facing should have moved toward right (1, 0, 0), but NOT 100% there
@@ -489,7 +489,7 @@ namespace GlassRefrain.Tests.EditMode {
             // Act
             locomotion.ConsumeInputIntent(moveRight);
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
-            
+
             locomotion.ProcessMovementInput(1.0f / 60.0f);
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 
@@ -497,7 +497,7 @@ namespace GlassRefrain.Tests.EditMode {
             // Dot product between facing delta and desired direction should be positive
             Vector3 facingDelta = after.Facing - before.Facing;
             Vector3 desiredDirection = new Vector3(1f, 0f, 0f);  // Right
-            
+
             float dotProduct = Vector3.Dot(facingDelta.normalized, desiredDirection);
             Assert.Greater(dotProduct, 0f, "Facing delta should have positive component toward desired direction");
         }
@@ -525,7 +525,7 @@ namespace GlassRefrain.Tests.EditMode {
                 new Axis2(1f, 0f),
                 false,  // IsValid = false
                 "Camera missing");
-            
+
             locomotion.SetCameraMovementBasis(invalidBasis);
             locomotion.ConsumeInputIntent(moveInput);
 

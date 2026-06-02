@@ -100,18 +100,10 @@ TextureImporter:
     bones: []
     spriteID: d84022555d9674949b57a4e98886527d
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
-  spritePackingTag: 
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293524
-  packageName: Animancer Lite v8
-  packageVersion: 8.3.1
-  assetPath: Packages/com.kybernetik.animancer/Samples~/07 Sprites/02 Directional
-    Character/Environment/Wall.png
-  uploadId: 895130
+  spritePackingTag:
+  userData:
+  assetBundleName:
+  assetBundleVariant:

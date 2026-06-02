@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace Animancer
     /// A system for synchronizing the <see cref="AnimancerState.NormalizedTime"/>
     /// of animations within the same "group".
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <list type="number">
     /// <item>Store a <see cref="TimeSynchronizer{T}"/> in a field.</item>
@@ -27,32 +27,32 @@ namespace Animancer
     ///     None,
     ///     Movement,
     /// }
-    /// 
+    ///
     /// [SerializeField] private AnimancerComponent _Animancer;
-    /// 
+    ///
     /// // 2. Store a TimeSynchronizer in a field.
     /// private readonly TimeSynchronizer&lt;AnimationGroup&gt;
     ///     TimeSynchronizer = new();
-    /// 
+    ///
     /// public AnimancerState Play(AnimationClip clip, AnimationGroup group)
     /// {
     ///     // 3. Call one of the StoreTime methods before playing a new animation.
     ///     TimeSynchronizer.StoreTime(_Animancer);
-    ///     
+    ///
     ///     // 4. Play an animation.
     ///     var state = _Animancer.Play(clip);
-    ///     
+    ///
     ///     // 5. Call one of the SyncTime methods after playing the animation.
     ///     // If the `group` was the same as the value from last time you called it,
     ///     // then the state's NormalizedTime will be set to the stored value.
     ///     TimeSynchronizer.SyncTime(state, group);
-    ///     
+    ///
     ///     return state;
     /// }
     /// </code></remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/TimeSynchronizer_1
-    /// 
+    ///
     public class TimeSynchronizer<T>
     {
         /************************************************************************************************************************/
@@ -156,4 +156,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

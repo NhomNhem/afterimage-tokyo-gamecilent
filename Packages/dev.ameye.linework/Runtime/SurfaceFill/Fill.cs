@@ -32,7 +32,7 @@ namespace Linework.SurfaceFill
         public Texture2D alphaCutoutTexture;
         [Range(0.0f, 1.0f)] public float alphaCutoutThreshold = 0.5f;
         public bool vertexAnimation;
-        
+
         public MaterialType materialType;
         public Material customMaterial;
         public Pattern pattern = Pattern.Dots;
@@ -56,7 +56,7 @@ namespace Linework.SurfaceFill
         {
             EnsureMaterialInitialized();
         }
-        
+
         private void EnsureMaterialInitialized()
         {
             if (material == null)
@@ -71,23 +71,23 @@ namespace Linework.SurfaceFill
                 }
             }
         }
-        
+
         public void AssignMaterial(Material copyFrom)
         {
             EnsureMaterialInitialized();
             material.CopyPropertiesFromMaterial(copyFrom);
         }
-        
+
         public bool IsActive()
         {
             return isActive;
         }
-        
+
         public void SetActive(bool active)
         {
             isActive = active;
         }
-        
+
         public void Cleanup()
         {
             if (material != null)

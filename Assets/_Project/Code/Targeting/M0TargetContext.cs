@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
-using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Targeting {
     public interface IM0TargetContext {
@@ -11,12 +9,13 @@ namespace GlassRefrain.Targeting {
         bool ConsumeInputIntent(InputIntentSnapshot inputIntent);
         TargetAcquireResult RequestAcquire(TargetAcquireRequest request);
         bool RequestRelease(TargetReleaseRequest request);
+        void ResetForEncounter(string reason);
         void SetTargetValidity(TargetValidityContext validity);
         void SetTargetDirection(TargetDirectionContext direction);
         TargetDebugSnapshot CreateDebugSnapshot();
     }
-    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
     public sealed class M0TargetContext : IM0TargetContext {
+        private readonly ITargetableRegistry targetableRegistry;
         private TargetFocusState focusState;
         private string targetId;
         private bool targetValid;
@@ -26,7 +25,8 @@ namespace GlassRefrain.Targeting {
         private string invalidReason;
         private TargetContextSnapshot latestSnapshot;
 
-        public M0TargetContext() {
+        public M0TargetContext(ITargetableRegistry registry = null) {
+            targetableRegistry = registry;
             focusState = TargetFocusState.Inactive;
             targetId = string.Empty;
             targetValid = false;
@@ -44,6 +44,8 @@ namespace GlassRefrain.Targeting {
         public bool ConsumeInputIntent(InputIntentSnapshot inputIntent) {
             if (!inputIntent.LockOnPressed) return false;
 
+            RefreshValidityFromRegistry();
+
             if (focusState == TargetFocusState.Focused) {
                 RequestRelease(new TargetReleaseRequest(TargetReleaseReason.Manual, "InputMapping",
                     "LockOn toggled off"));
@@ -57,6 +59,7 @@ namespace GlassRefrain.Targeting {
 
             focusState = TargetFocusState.AcquireRequested;
             acquireReason = "LockOn request pending valid target";
+            invalidReason = GetPendingAcquireReason();
             RefreshSnapshot();
             return true;
         }
@@ -96,6 +99,17 @@ namespace GlassRefrain.Targeting {
             invalidReason = request.Reason == TargetReleaseReason.Invalid ? request.Detail : string.Empty;
             RefreshSnapshot();
             return changed;
+        }
+
+        public void ResetForEncounter(string reason) {
+            focusState = TargetFocusState.Inactive;
+            targetId = string.Empty;
+            targetValid = false;
+            targetDirection = new TargetDirectionContext(new Axis2(0f, 0f), false, string.Empty);
+            acquireReason = string.Empty;
+            releaseReason = string.IsNullOrEmpty(reason) ? "Encounter reset release" : reason;
+            invalidReason = string.Empty;
+            RefreshSnapshot();
         }
 
         public void SetTargetValidity(TargetValidityContext validity) {
@@ -150,6 +164,51 @@ namespace GlassRefrain.Targeting {
 
             var handler = SnapshotChanged;
             if (handler != null) handler(latestSnapshot);
+        }
+
+        private void RefreshValidityFromRegistry() {
+            if (targetableRegistry == null) return;
+
+            var currentDuelEnemy = targetableRegistry.GetCurrentDuelEnemy();
+            if (currentDuelEnemy == null) {
+                targetValid = false;
+                targetId = string.Empty;
+                invalidReason = "No current duel enemy";
+                return;
+            }
+
+            targetId = currentDuelEnemy.TargetId;
+            if (string.IsNullOrEmpty(targetId)) {
+                targetValid = false;
+                invalidReason = "Target id missing";
+                return;
+            }
+
+            if (!currentDuelEnemy.IsTargetable) {
+                targetValid = false;
+                invalidReason = "Target inactive";
+                return;
+            }
+
+            if (!targetableRegistry.HasRegisteredTargetable(targetId)) {
+                targetValid = false;
+                invalidReason = "Target id not registered";
+                return;
+            }
+
+            targetValid = true;
+            invalidReason = string.Empty;
+        }
+
+        private string GetPendingAcquireReason() {
+            if (targetableRegistry == null) return "Other validity fail";
+
+            var currentDuelEnemy = targetableRegistry.GetCurrentDuelEnemy();
+            if (currentDuelEnemy == null) return "No current duel enemy";
+            if (string.IsNullOrEmpty(currentDuelEnemy.TargetId)) return "Target id missing";
+            if (!currentDuelEnemy.IsTargetable) return "Target inactive";
+            if (!targetableRegistry.HasRegisteredTargetable(currentDuelEnemy.TargetId)) return "Target id not registered";
+            return "Other validity fail";
         }
     }
 }

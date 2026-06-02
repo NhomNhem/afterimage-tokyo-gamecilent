@@ -177,7 +177,7 @@ TextureImporter:
       spriteID: ecbf224e85681734986df96a8d9d04a4
       internalID: 21300040
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -198,7 +198,7 @@ TextureImporter:
       spriteID: 1875b969ee184704d9b1c8feeeff4ed9
       internalID: 21300042
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -219,7 +219,7 @@ TextureImporter:
       spriteID: dea3d02187f683043a545619162e3ea3
       internalID: 21300044
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -240,7 +240,7 @@ TextureImporter:
       spriteID: 294b24354052cfe4f857757de20a6345
       internalID: 21300046
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -261,7 +261,7 @@ TextureImporter:
       spriteID: e92e1a0c1c3b93745803a8c4f0cf6b45
       internalID: 21300056
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -282,7 +282,7 @@ TextureImporter:
       spriteID: 55487a4a69d62094fb545822a6021c6f
       internalID: 21300058
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -303,7 +303,7 @@ TextureImporter:
       spriteID: 3990afe822efb44438f9f91fc421dab4
       internalID: 21300060
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -324,7 +324,7 @@ TextureImporter:
       spriteID: dc4921a2574b0d24dba8ddf991eecec6
       internalID: 21300062
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -345,7 +345,7 @@ TextureImporter:
       spriteID: 8bfae9d7943950b438590b19c1300576
       internalID: 21300048
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -366,7 +366,7 @@ TextureImporter:
       spriteID: 078c1c5164345754d994218175310853
       internalID: 21300050
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -387,7 +387,7 @@ TextureImporter:
       spriteID: e1fa53d93a3aeca4485dfb5b862fe421
       internalID: 21300052
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -408,7 +408,7 @@ TextureImporter:
       spriteID: e48d3c2cb349a7344bab12284f83cfc0
       internalID: 21300054
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -429,7 +429,7 @@ TextureImporter:
       spriteID: 0617bffed70516148821e43b203e3b77
       internalID: 21300032
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -450,7 +450,7 @@ TextureImporter:
       spriteID: 7ee6199a20920ce43bbe995fb1501924
       internalID: 21300034
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -471,7 +471,7 @@ TextureImporter:
       spriteID: ae9afd83fc953284b88639eedc164217
       internalID: 21300036
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
@@ -492,16 +492,16 @@ TextureImporter:
       spriteID: 32448ab5e75161f42bbc8ddd8952b250
       internalID: 21300038
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID:
     internalID: 0
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
     secondaryTextures: []
@@ -522,17 +522,9 @@ TextureImporter:
       Mage-Walk-Up-3: 21300060
       Mage-Walk-Up-4: 21300062
       Mage-Walk-Up-1: 21300056
-  spritePackingTag: 
+  spritePackingTag:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293524
-  packageName: Animancer Lite v8
-  packageVersion: 8.3.1
-  assetPath: Packages/com.kybernetik.animancer/Samples~/07 Sprites/01 Directional
-    Basics/Mage/Mage.png
-  uploadId: 895130
+  userData:
+  assetBundleName:
+  assetBundleVariant:

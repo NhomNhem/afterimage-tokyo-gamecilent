@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9908c77512b988c43ba21a80226fd88f, type: 3}
+  m_Name: MemoryFragmentDefinition
+  m_EditorClassIdentifier: GlassRefrain.Memory::GlassRefrain.Memory.MemoryFragmentDefinition
+  stableId: memory-fragment
+  title: Memory Fragment
+  shortText: A fragmented trace remains here.
+  icon: {fileID: 21300000, guid: d7d34d7a33fccd944bb044ff3b29dcf0, type: 3}
+  revealSfx: {fileID: 8300000, guid: 865ea11df1cc5b0409ab851ccdce14ee, type: 3}
+  revealClip: {fileID: -4182359594842770111, guid: f43fcb3013c138a4780e7e10404c1541, type: 3}
+  presentationProfile: default

@@ -1,16 +1,11 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
-
-#if ! UNITY_EDITOR
-#pragma warning disable CS0612 // Type or member is obsolete (for Layers in Animancer Lite).
-#pragma warning disable CS0618 // Type or member is obsolete (for Layers in Animancer Lite).
-#endif
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using UnityEngine;
 
 namespace Animancer
 {
     /// <summary>An <see cref="IUpdatable"/> that cancels any fades and logs warnings when they occur.</summary>
-    /// 
+    ///
     /// <remarks>
     /// This is useful for <see cref="Sprite"/> based characters since fading does nothing for them.
     /// <para></para>
@@ -20,19 +15,19 @@ namespace Animancer
     /// <strong>Example:</strong>
     /// <code>
     /// [SerializeField] private AnimancerComponent _Animancer;
-    /// 
+    ///
     /// protected virtual void Awake()
     /// {
     ///     // To only apply it only in the Unity Editor and Development Builds:
     ///     DontAllowFade.Assert(_Animancer);
-    ///     
+    ///
     ///     // Or to apply it at all times:
     ///     _Animancer.Graph.RequireUpdate(new DontAllowFade());
     /// }
     /// </code></remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/DontAllowFade
-    /// 
+    ///
     public class DontAllowFade : Updatable
     {
         /************************************************************************************************************************/
@@ -41,10 +36,8 @@ namespace Animancer
         [System.Diagnostics.Conditional(Strings.Assertions)]
         public static void Assert(AnimancerGraph animancer)
         {
-#if UNITY_EDITOR
-            var warnings = OptionalWarning.ProOnly.DisableTemporarily();
+#if UNITY_ASSERTIONS
             animancer.RequirePreUpdate(new DontAllowFade());
-            warnings.Enable();
 #endif
         }
 
@@ -82,4 +75,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

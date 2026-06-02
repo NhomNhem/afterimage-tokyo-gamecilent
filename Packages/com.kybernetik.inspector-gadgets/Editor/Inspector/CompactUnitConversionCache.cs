@@ -28,7 +28,7 @@ namespace InspectorGadgets.Editor
     /// </example>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/CompactUnitConversionCache
     /// https://kybernetik.com.au/inspector-gadgets/api/InspectorGadgets.Editor/CompactUnitConversionCache
-    /// 
+    ///
     public class CompactUnitConversionCache
     {
         /************************************************************************************************************************/
@@ -254,4 +254,3 @@ namespace InspectorGadgets.Editor
 }
 
 #endif
-

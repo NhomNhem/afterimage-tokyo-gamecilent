@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -12,15 +12,15 @@ using UnityEngine.UI;
 namespace Animancer.Samples.Mixers
 {
     /// <summary>Uses buttons to save and load the current animation details.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/mixers/serialization">
     /// Animation Serialization</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Mixers/SaveLoadButtons
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Mixers - Save Load Buttons")]
     [AnimancerHelpUrl(typeof(SaveLoadButtons))]
     public class SaveLoadButtons : MonoBehaviour

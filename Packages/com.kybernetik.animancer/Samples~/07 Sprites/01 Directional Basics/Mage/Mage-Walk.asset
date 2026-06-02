@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eceeb59a892d074db28203df8e4cd3a, type: 3}
   m_Name: Mage-Walk
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Up: {fileID: 74411937047937708}
   _Right: {fileID: 74279595924801740}
   _Down: {fileID: 74275614080784602}
@@ -44,7 +44,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300038, guid: 92ac23722f801e64d8bcf304ece5fcc4, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -119,7 +119,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300054, guid: 92ac23722f801e64d8bcf304ece5fcc4, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -194,7 +194,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300062, guid: 92ac23722f801e64d8bcf304ece5fcc4, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -269,7 +269,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300046, guid: 92ac23722f801e64d8bcf304ece5fcc4, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4

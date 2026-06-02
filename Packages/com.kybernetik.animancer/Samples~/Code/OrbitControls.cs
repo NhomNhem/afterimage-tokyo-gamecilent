@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -14,7 +14,7 @@ namespace Animancer.Samples
     /// Orbit Controls</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples/OrbitControls
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Orbit Controls")]
     [AnimancerHelpUrl(typeof(OrbitControls))]
     [ExecuteAlways]

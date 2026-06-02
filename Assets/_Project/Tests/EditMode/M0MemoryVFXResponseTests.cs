@@ -60,6 +60,9 @@ namespace GlassRefrain.Tests.EditMode {
             response.OnAcceptedReveal(CreateAcceptedContext("M0RevealCandidate"));
             response.OnPlaybackStarted();
             response.Update(0.25f);
+            Assert.That(response.State, Is.EqualTo(MemoryVFXResponseState.CoolingDown));
+
+            response.Update(0.25f);
 
             Assert.That(response.State, Is.EqualTo(MemoryVFXResponseState.Idle));
             Assert.That(response.Snapshot.CooldownProgress, Is.EqualTo(0f));

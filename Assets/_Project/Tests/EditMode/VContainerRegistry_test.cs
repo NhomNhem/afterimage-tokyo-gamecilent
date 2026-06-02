@@ -9,6 +9,8 @@ using GlassRefrain.Health;
 using GlassRefrain.Enemy;
 using GlassRefrain.Memory;
 
+#pragma warning disable ND005 // Test-only containers intentionally mirror isolated manual VContainer wiring.
+
 namespace GlassRefrain.Tests.EditMode {
     /// <summary>
     /// Verifies that all M0 technical skeleton services resolve correctly in a manual VContainer builder.
@@ -19,7 +21,7 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayScope_CanResolveM0Skeletons() {
             // Given
             var builder = new ContainerBuilder();
-            
+
             // When (Manual registration as seen in GameplayLifetimeScope)
             builder.Register<M0CombatCore>(Lifetime.Singleton);
             builder.Register<M0PlayerLocomotion>(Lifetime.Singleton);
@@ -68,3 +70,5 @@ namespace GlassRefrain.Tests.EditMode {
         }
     }
 }
+
+#pragma warning restore ND005

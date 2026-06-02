@@ -16,6 +16,7 @@ namespace GlassRefrain.Input {
         public const string Dodge = "Dodge";
         public const string Counter = "Counter";
         public const string LockOn = "LockOn";
+        public const string Interact = "Interact";
         public const string ResetEncounter = "ResetEncounter";
         public const string ToggleDebugOverlay = "ToggleDebugOverlay";
     }

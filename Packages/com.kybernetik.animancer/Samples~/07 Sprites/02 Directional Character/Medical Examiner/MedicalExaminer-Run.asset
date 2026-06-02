@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eceeb59a892d074db28203df8e4cd3a, type: 3}
   m_Name: MedicalExaminer-Run
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Up: {fileID: 74742898778295650}
   _Right: {fileID: 74933417933372058}
   _Down: {fileID: 74628708109254634}
@@ -48,7 +48,7 @@ AnimationClip:
     - time: 0.8333333
       value: {fileID: 21300046, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 6
@@ -129,7 +129,7 @@ AnimationClip:
     - time: 0.8333333
       value: {fileID: 21300070, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 6
@@ -210,7 +210,7 @@ AnimationClip:
     - time: 0.8333333
       value: {fileID: 21300094, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 6
@@ -291,7 +291,7 @@ AnimationClip:
     - time: 0.8333333
       value: {fileID: 21300022, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 6

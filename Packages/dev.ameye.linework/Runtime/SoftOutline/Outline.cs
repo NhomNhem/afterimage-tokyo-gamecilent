@@ -12,7 +12,7 @@ namespace Linework.SoftOutline
         [SerializeField, HideInInspector] public Material materialInstanced;
         [SerializeField, HideInInspector] private bool isActive = true;
         [SerializeField, HideInInspector] private bool disableColor = true;
-        
+
 #if UNITY_6000_0_OR_NEWER
         public RenderingLayerMask RenderingLayer = RenderingLayerMask.defaultRenderingLayerMask;
 #else
@@ -30,14 +30,14 @@ namespace Linework.SoftOutline
         public Vector4 alphaCutoutUVTransform = Vector4.zero;
         public bool gpuInstancing;
         public bool vertexAnimation;
-        
+
         [ColorUsage(true, true)] public Color color = Color.green;
-        
+
         private void OnEnable()
         {
             EnsureMaterialsAreInitialized();
         }
-        
+
         private void EnsureMaterialsAreInitialized()
         {
             if (material == null)
@@ -51,7 +51,7 @@ namespace Linework.SoftOutline
                     };
                 }
             }
-            
+
             if (materialInstanced == null)
             {
                 var shader = Shader.Find(ShaderPath.SilhouetteInstanced);
@@ -69,12 +69,12 @@ namespace Linework.SoftOutline
         public void AssignMaterials(Material copyFrom, Material copyFromInstanced)
         {
             EnsureMaterialsAreInitialized();
-            
+
             material.CopyPropertiesFromMaterial(copyFrom);
             materialInstanced.CopyPropertiesFromMaterial(copyFromInstanced);
             materialInstanced.enableInstancing = gpuInstancing;
         }
-        
+
         public bool IsActive()
         {
             return isActive;
@@ -89,7 +89,7 @@ namespace Linework.SoftOutline
         {
             disableColor = type == OutlineType.Hard;
         }
-        
+
         public void Cleanup()
         {
             if (material != null)
@@ -97,7 +97,7 @@ namespace Linework.SoftOutline
                 DestroyImmediate(material);
                 material = null;
             }
-            
+
             if (materialInstanced != null)
             {
                 DestroyImmediate(materialInstanced);

@@ -50,7 +50,7 @@ namespace Linework.Editor.WideOutline
             EditorGUILayout.PropertyField(layerMask, EditorUtils.CommonStyles.LayerMask);
             EditorGUILayout.PropertyField(renderQueue, EditorUtils.CommonStyles.RenderQueue);
             EditorGUILayout.Space();
-            
+
             EditorGUILayout.LabelField("Render", EditorStyles.boldLabel);
             if (!customDepthEnabled.boolValue)
             {
@@ -81,7 +81,7 @@ namespace Linework.Editor.WideOutline
                 EditorGUILayout.HelpBox("With vertex animation enabled, the outline color should be set by your object's shader. See the documentation for details.", MessageType.Warning);
             }
             EditorGUILayout.Space();
-            
+
             if ((WideOutlineOcclusion) occlusion.intValue != WideOutlineOcclusion.AsMask)
             {
                 EditorGUILayout.LabelField("Outline", EditorStyles.boldLabel);
@@ -98,7 +98,7 @@ namespace Linework.Editor.WideOutline
             {
                 EditorGUILayout.HelpBox("The mask mode is used to mask out the other outlines where they are not needed.", MessageType.Info);
             }
-            
+
             EditorGUILayout.Space();
             serializedObject.ApplyModifiedProperties();
         }

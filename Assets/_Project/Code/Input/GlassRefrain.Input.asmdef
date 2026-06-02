@@ -3,10 +3,13 @@
   "rootNamespace": "GlassRefrain.Input",
   "references": [
     "GlassRefrain.Core",
+    "GlassRefrain.Shared",
     "GlassRefrain.Combat",
     "GlassRefrain.Locomotion",
     "GlassRefrain.Targeting",
+    "GlassRefrain.Enemy",
     "NhemDangFugBixs.Logging",
+    "NhemDangFugBixs.Attributes",
     "Unity.InputSystem"
   ],
   "includePlatforms": [],

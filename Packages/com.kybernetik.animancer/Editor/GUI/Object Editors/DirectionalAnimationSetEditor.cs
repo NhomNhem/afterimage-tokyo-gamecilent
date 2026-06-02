@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -22,7 +22,7 @@ namespace Animancer.Editor
     public class DirectionalAnimationSet8Editor : DirectionalAnimationSetEditor { }
 
     /// <summary>[Editor-Only]
-    /// A custom Inspector for 
+    /// A custom Inspector for
     /// <see cref="DirectionalAnimationSet4"/> and <see cref="DirectionalAnimationSet8"/>.
     /// </summary>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/DirectionalAnimationSetEditor
@@ -37,7 +37,6 @@ namespace Animancer.Editor
         private static void FindSimilarAnimations(MenuCommand command)
         {
             var set = (DirectionalSet<AnimationClip>)command.context;
-            var setName = set.name;
 
             var directory = AssetDatabase.GetAssetPath(set);
             directory = Path.GetDirectoryName(directory);
@@ -55,11 +54,7 @@ namespace Animancer.Editor
                     if (clip == null)
                         continue;
 
-                    var clipName = clip.name;
-                    if (clipName.StartsWith(setName))
-                        clipName = clipName[setName.Length..];
-
-                    set.SetByName(clipName, clip);
+                    set.SetByName(clip);
                 }
             }
         }
@@ -71,63 +66,7 @@ namespace Animancer.Editor
             priority = Strings.AssetMenuOrder + 7)]
         private static void CreateDirectionalAnimationSet()
         {
-            GatherSelectedAnimationClips(out var clips, out var namesLowercase);
-
-            if (clips.Count == 0)
-                throw new InvalidOperationException("No animation clips are selected");
-            else if (clips.Count == 1)
-                throw new InvalidOperationException("Only 1 animation clip is selected");
-
-            var prefix = GetCommonPrefix(namesLowercase);
-
-            var count = clips.Count;
-            DirectionalSet<AnimationClip> set
-                = count <= 2
-                ? CreateInstance<DirectionalAnimationSet2>()
-                : count <= 4
-                ? CreateInstance<DirectionalAnimationSet4>()
-                : CreateInstance<DirectionalAnimationSet8>();
-
-            set.AllowChanges();
-            for (int i = 0; i < clips.Count; i++)
-            {
-                var name = namesLowercase[i][prefix.Length..];
-                set.SetByName(name, clips[i]);
-            }
-
-            // The prefix is lowercase so get the original case from the first clip.
-            var firstClip = clips[0];
-            var setName = firstClip.name;
-            var nameLength = prefix.Length;
-            while (nameLength > 0)
-            {
-                var character = setName[nameLength - 1];
-                if (char.IsLetterOrDigit(character))
-                    break;
-
-                nameLength--;
-            }
-
-            if (nameLength <= 0)
-                nameLength = prefix.Length;
-
-            setName = setName[..nameLength];
-
-            var path = AssetDatabase.GetAssetPath(firstClip);
-            path = $"{Path.GetDirectoryName(path)}/{setName}.asset";
-            AssetDatabase.CreateAsset(set, path);
-
-            Selection.objects = new Object[] { set };
-        }
-
-        /************************************************************************************************************************/
-
-        public static void GatherSelectedAnimationClips(
-            out List<AnimationClip> clips,
-            out List<string> namesLowercase)
-        {
-            clips = new();
-            namesLowercase = new();
+            var nameToAnimations = new Dictionary<string, List<AnimationClip>>();
 
             var selection = Selection.objects;
             for (int i = 0; i < selection.Length; i++)
@@ -136,46 +75,46 @@ namespace Animancer.Editor
                 if (clip == null)
                     continue;
 
+                var name = clip.name;
+                for (Direction4 direction = 0; direction < (Direction4)4; direction++)
+                {
+                    name = name.Replace(direction.ToString(), "");
+                }
+
+                if (!nameToAnimations.TryGetValue(name, out var clips))
+                {
+                    clips = new();
+                    nameToAnimations.Add(name, clips);
+                }
+
                 clips.Add(clip);
-                namesLowercase.Add(clip.name.ToLower());
             }
-        }
 
-        /************************************************************************************************************************/
+            if (nameToAnimations.Count == 0)
+                throw new InvalidOperationException("No animation clips are selected");
 
-        /// <summary>
-        /// Returns a string containing the section from the start of each of the `strings`
-        /// which is exactly the same.
-        /// </summary>
-        public static string GetCommonPrefix(IList<string> strings)
-        {
-            if (strings == null ||
-                strings.Count == 0)
-                return "";
-
-            // Start with the first string as the candidate prefix.
-            var prefix = strings[0];
-
-            for (int i = 1; i < strings.Count; i++)
+            var sets = new List<Object>();
+            foreach (var nameAndAnimations in nameToAnimations)
             {
-                var current = strings[i];
-                var length = Math.Min(prefix.Length, current.Length);
+                var count = nameAndAnimations.Value.Count;
+                DirectionalSet<AnimationClip> set = count <= 2
+                    ? CreateInstance<DirectionalAnimationSet2>()
+                    : count <= 4
+                    ? CreateInstance<DirectionalAnimationSet4>()
+                    : CreateInstance<DirectionalAnimationSet8>();
 
-                // Find the common prefix length between the prefix and current string.
-                int j;
-                for (j = 0; j < length; j++)
-                    if (prefix[j] != current[j])
-                        break;
+                set.AllowChanges();
+                for (int i = 0; i < nameAndAnimations.Value.Count; i++)
+                    set.SetByName(nameAndAnimations.Value[i]);
 
-                // Shorten the prefix to the common part.
-                prefix = prefix[..j];
+                var path = AssetDatabase.GetAssetPath(nameAndAnimations.Value[0]);
+                path = $"{Path.GetDirectoryName(path)}/{nameAndAnimations.Key}.asset";
+                AssetDatabase.CreateAsset(set, path);
 
-                // Early exit if there's no common prefix left.
-                if (prefix.Length == 0)
-                    break;
+                sets.Add(set);
             }
 
-            return prefix;
+            Selection.objects = sets.ToArray();
         }
 
         /************************************************************************************************************************/
@@ -213,4 +152,3 @@ namespace Animancer.Editor
 }
 
 #endif
-

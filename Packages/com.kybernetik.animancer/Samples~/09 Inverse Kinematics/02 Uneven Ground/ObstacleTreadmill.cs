@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -9,15 +9,15 @@ using UnityEngine;
 namespace Animancer.Samples.InverseKinematics
 {
     /// <summary>Spawns a bunch of obstacles and randomises them each time the target moves too far away.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/ik/uneven-ground">
     /// Uneven Ground</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.InverseKinematics/ObstacleTreadmill
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Inverse Kinematics - Obstacle Treadmill")]
     [AnimancerHelpUrl(typeof(ObstacleTreadmill))]
     public class ObstacleTreadmill : MonoBehaviour

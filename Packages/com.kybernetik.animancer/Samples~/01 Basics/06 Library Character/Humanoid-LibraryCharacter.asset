@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-WalkForwards
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 4268354211475357712
   references:
@@ -39,11 +39,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f04d4a67566152e40aaa01b8b745ff6b, type: 3}
   m_Name: Editor Data
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Library: {fileID: 11400000}
-  _Data:
-    _TransitionGroups: []
-    _TransitionSortMode: 0
+  _TransitionSortMode: 0
 --- !u!114 &-364791089063896547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,7 +53,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-Idle
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 4268354211475357711
   references:
@@ -83,7 +81,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f08fdd50e79d0c4bb235a5c2696516d, type: 3}
   m_Name: Humanoid-LibraryCharacter
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Definition:
     _Transitions:
     - {fileID: -364791089063896547}
@@ -93,15 +91,12 @@ MonoBehaviour:
     - _From: 1
       _To: 2
       _Fade: 0.05
-      _NormalizedStartTime: NaN
     - _From: 2
       _To: 0
       _Fade: 1
-      _NormalizedStartTime: NaN
     - _From: 0
       _To: 0
       _Fade: 1
-      _NormalizedStartTime: NaN
     _Aliases:
     - _Name: {fileID: 11400000, guid: 8a3f80c9b8d169a42aaee8914f13f126, type: 2}
       _Index: 0
@@ -121,7 +116,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-PistolShoot
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 4268354211475357713
   references:

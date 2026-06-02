@@ -12,7 +12,7 @@ namespace Animancer
     /// Directional Animation Sets</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/DirectionalAnimationSet2
-    /// 
+    ///
     [CreateAssetMenu(
         menuName = Strings.MenuPrefix + "Directional Animation Set/2 Directions",
         order = Strings.AssetMenuOrder + 4)]
@@ -29,4 +29,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

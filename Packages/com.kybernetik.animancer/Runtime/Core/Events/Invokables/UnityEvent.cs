@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 
@@ -9,4 +9,3 @@ namespace Animancer
     [Serializable]
     public class UnityEvent : UnityEngine.Events.UnityEvent, IInvokable { }
 }
-

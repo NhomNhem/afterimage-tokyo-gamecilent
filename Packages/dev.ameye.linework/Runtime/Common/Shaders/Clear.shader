@@ -1,7 +1,7 @@
 Shader "Hidden/Clear Stencil"
 {
     Properties { }
-    
+
     SubShader
     {
         Tags
@@ -13,7 +13,7 @@ Shader "Hidden/Clear Stencil"
         ZWrite Off
         ZTest Always
         ColorMask 0
-        
+
         Stencil
         {
             Ref 0
@@ -28,7 +28,7 @@ Shader "Hidden/Clear Stencil"
             HLSLPROGRAM
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
-            
+
             #pragma vertex Vert
             #pragma fragment frag
 

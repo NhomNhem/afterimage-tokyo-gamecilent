@@ -1287,7 +1287,7 @@ namespace InspectorGadgets
 
         /// <summary>
         /// Tries various search methods in the following order until it finds something:
-        /// <see cref="GameObject.GetComponent(Type)"/>, 
+        /// <see cref="GameObject.GetComponent(Type)"/>,
         /// <see cref="GameObject.GetComponentsInParent(Type, bool)"/>,
         /// <see cref="GameObject.GetComponentsInChildren(Type, bool)"/>,
         /// <see cref="Resources.FindObjectsOfTypeAll(Type)"/>.
@@ -1459,4 +1459,3 @@ namespace InspectorGadgets
 
     }
 }
-

@@ -123,7 +123,7 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
 
             #pragma multi_compile_local _ SCALE_WITH_RESOLUTION
-            
+
             CBUFFER_START(UnityPerMaterial)
                 #if UNITY_VERSION < 202300
                 float4 _BlitTexture_TexelSize;
@@ -202,7 +202,7 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
 
             #pragma multi_compile_local _ SCALE_WITH_RESOLUTION
-            
+
             CBUFFER_START(UnityPerMaterial)
                 float _ReferenceResolution;
                 #if UNITY_VERSION < 202300
@@ -222,7 +222,7 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
             TEXTURE2D(_InformationBuffer);
             SAMPLER(sampler_InformationBuffer);
             float4 _InformationBuffer_TexelSize;
-            
+
             float SampleInformationBuffer(float2 uv)
             {
                 return SAMPLE_TEXTURE2D(_InformationBuffer, sampler_InformationBuffer, uv).r;
@@ -256,7 +256,7 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
                 #endif
 
                 half width = _OutlineWidth * scale;
-                
+
                 // integer pixel position
                 int2 uvInt = int2(IN.positionCS.xy);
 
@@ -276,7 +276,7 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
 
                 // distance in pixels to closest position
                 half dist = length(nearestPos - currentPos);
-                
+
                 // if(SampleSilhouetteDepthBuffer(IN.texcoord) > 0) {
                 //     return 0;
                 // }
@@ -285,11 +285,11 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
                 // + 1.0 is because encoded nearest position is half a pixel inset
                 // not + 0.5 because we want the anti-aliased edge to be aligned between pixels
                 // distance is already in pixels, so this is already perfectly anti-aliased!
-                
+
                 #if defined(INFORMATION_BUFFER)
                 width = SampleInformationBuffer(nearestPos / _ScreenParams.xy) * 100.0f;
                 #endif
-                
+
                 half outline = saturate(width - dist + 1.0) - saturate((_OutlineGap * width) - dist + 1.0);
 
                 #if defined(CUSTOM_DEPTH)
@@ -297,16 +297,16 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
                 half depth2 = SampleSceneDepth(IN.texcoord);
                 half depthDifference = LinearEyeDepth(depth1, _ZBufferParams) - LinearEyeDepth(depth2, _ZBufferParams);
                 half g = depthDifference > 0.001; // depth check threshold here
-                
+
                 half4 color = SampleSilhouetteBuffer(nearestPos / _ScreenParams.xy);
                 half4 col = g > 0 ? _OutlineOccludedColor : color;
-                
+
                 col *= outline;
-                
+
                 return col;
-                
+
                 #else
-                
+
                 // #if defined(VERTEX_ANIMATION)
                 // half4 color = _OutlineColor;
                 // #else
@@ -315,7 +315,7 @@ Shader "Hidden/Outlines/Wide Outline/Outline"
                 color *= outline;
 
                 return color;
-                
+
                  #endif
             }
             ENDHLSL

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,6 @@ namespace Animancer
     /// <inheritdoc/>
     /// https://kybernetik.com.au/animancer/api/Animancer/ControllerTransition_1
     [Serializable]
-#if ! UNITY_EDITOR
-    [System.Obsolete(Validate.ProOnlyMessage)]
-#endif
     public abstract class ControllerTransition<TState> : Transition<TState>,
         IAnimationClipCollection,
         ICopyable<ControllerTransition<TState>>
@@ -115,11 +112,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override bool IsValid
-#if UNITY_EDITOR
             => _Controller != null;
-#else
-            => false;
-#endif
 
         /************************************************************************************************************************/
 
@@ -158,7 +151,7 @@ namespace Animancer
         {
             base.CopyFrom(copyFrom, context);
 
-            _Controller = context.GetCloneOrOriginal(copyFrom._Controller);
+            _Controller = copyFrom._Controller;
             _ActionsOnStop = copyFrom._ActionsOnStop;
             _ParameterBindings = context.GetOrCreateClone(copyFrom._ParameterBindings);
         }
@@ -171,9 +164,6 @@ namespace Animancer
     /// <inheritdoc/>
     /// https://kybernetik.com.au/animancer/api/Animancer/ControllerTransition
     [Serializable]
-#if ! UNITY_EDITOR
-    [System.Obsolete(Validate.ProOnlyMessage)]
-#endif
     public class ControllerTransition : ControllerTransition<ControllerState>,
         ICopyable<ControllerTransition>
     {
@@ -214,11 +204,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override Transition<ControllerState> Clone(CloneContext context)
-        {
-            var clone = new ControllerTransition();
-            clone.CopyFrom(this, context);
-            return clone;
-        }
+            => new ControllerTransition();
 
         /// <inheritdoc/>
         public sealed override void CopyFrom(ControllerTransition<ControllerState> copyFrom, CloneContext context)
@@ -260,4 +246,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

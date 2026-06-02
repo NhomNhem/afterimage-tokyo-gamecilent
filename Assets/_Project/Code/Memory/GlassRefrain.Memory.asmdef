@@ -3,7 +3,13 @@
   "rootNamespace": "GlassRefrain.Memory",
   "references": [
     "GlassRefrain.Core",
-    "GlassRefrain.Shared"
+    "GlassRefrain.Shared",
+    "VContainer",
+    "NhemDangFugBixs.Logging",
+    "NhemDangFugBixs.Runtime",
+    "NhemDangFugBixs.Attributes",
+    "RaycastPro",
+    "Unity.InputSystem"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

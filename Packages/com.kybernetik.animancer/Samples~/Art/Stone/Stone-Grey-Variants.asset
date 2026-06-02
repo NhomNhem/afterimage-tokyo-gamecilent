@@ -19,7 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8231c727c20d639459e01298ffacd6c6, type: 3}
   m_Name: Stone-Grey-Variants
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Material: {fileID: 2100000, guid: 0efc3d6baa8609441bdc4f3a166c875a, type: 2}
   _Variants:
   - {fileID: 1285117319330584090}
@@ -118,7 +118,7 @@ Material:
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -244,7 +244,7 @@ Material:
   - TransparentBackface
   - RayTracingPrepass
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:

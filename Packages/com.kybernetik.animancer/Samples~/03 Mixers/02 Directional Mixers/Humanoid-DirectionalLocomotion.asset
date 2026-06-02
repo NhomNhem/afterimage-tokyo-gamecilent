@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d26ada6b8b155b4cbf61e26d6fc9a06, type: 3}
   m_Name: Movement X
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _EditorComment: A -1 to 1 float used to control a character's left/right movement
     speed in the Directional Blending sample.
 --- !u!114 &11400000
@@ -25,7 +25,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-DirectionalLocomotion
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 4268353832004616196
   references:
@@ -69,6 +69,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d26ada6b8b155b4cbf61e26d6fc9a06, type: 3}
   m_Name: Movement Y
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _EditorComment: A -1 to 1 float used to control a character's forwards/backwards
     movement speed in the Directional Blending sample.

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 // Uncomment this #define to apply this custom editor to all ScriptableObjects.
 // If you have another plugin with a custom ScriptableObject editor, you will probably want that one instead.
@@ -16,7 +16,7 @@ namespace Animancer.Editor
     /// mode will persist.
     /// </summary>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/ScriptableObjectEditor
-    /// 
+    ///
 #if ANIMANCER_SCRIPTABLE_OBJECT_EDITOR
     [CustomEditor(typeof(ScriptableObject), true, isFallback = true), CanEditMultipleObjects]
 #endif
@@ -45,4 +45,3 @@ namespace Animancer.Editor
 }
 
 #endif
-

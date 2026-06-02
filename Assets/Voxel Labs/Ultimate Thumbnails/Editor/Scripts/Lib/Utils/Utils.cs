@@ -23,7 +23,7 @@
             return false;
 #endif
         }
-        
+
         public static int GetIconSize(IconSize iconSize)
         {
             switch (iconSize)

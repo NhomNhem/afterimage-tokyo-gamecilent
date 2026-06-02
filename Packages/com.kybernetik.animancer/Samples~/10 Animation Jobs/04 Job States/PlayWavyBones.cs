@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -10,15 +10,15 @@ namespace Animancer.Samples.Jobs
     /// A sample component which demonstrates how an <see cref="AnimationJobState{T}"/>
     /// can be used to implement a procedural animation.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/job-states">
     /// Job States</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/PlayWavyBones
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Jobs - Play Wavy Bones")]
     [AnimancerHelpUrl(typeof(PlayWavyBones))]
     public class PlayWavyBones : MonoBehaviour

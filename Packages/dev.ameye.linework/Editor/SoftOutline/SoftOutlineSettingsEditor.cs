@@ -50,7 +50,7 @@ namespace Linework.Editor.SoftOutline
             scaleWithResolution = serializedObject.FindProperty(nameof(SoftOutlineSettings.scaleWithResolution));
             referenceResolution = serializedObject.FindProperty(nameof(SoftOutlineSettings.referenceResolution));
             customReferenceResolution = serializedObject.FindProperty(nameof(SoftOutlineSettings.customResolution));
-       
+
             outlines = serializedObject.FindProperty("outlines");
             outlineList = new EditorList<Outline>(this, outlines, ForceSave, "Add Outline", "No outlines added.");
         }
@@ -65,7 +65,7 @@ namespace Linework.Editor.SoftOutline
             if (outlines == null) OnEnable();
 
             serializedObject.Update();
-            
+
             var typeChanged = false;
 
             EditorGUILayout.LabelField("Soft Outline", EditorStyles.boldLabel);
@@ -129,7 +129,7 @@ namespace Linework.Editor.SoftOutline
             EditorGUILayout.EndHorizontal();
             EditorGUI.indentLevel--;
             EditorGUI.BeginChangeCheck();
-            
+
             if ((OutlineType) type.intValue == OutlineType.Hard)
             {
                 EditorGUILayout.Space();
@@ -139,12 +139,12 @@ namespace Linework.Editor.SoftOutline
             serializedObject.ApplyModifiedProperties();
             EditorGUILayout.Space();
             outlineList.Draw();
-            
+
             if (typeChanged)
             {
                 ForceSave();
             }
-            
+
             serializedObject.ApplyModifiedProperties();
         }
 

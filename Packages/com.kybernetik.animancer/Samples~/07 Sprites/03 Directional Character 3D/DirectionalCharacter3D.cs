@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -8,15 +8,15 @@ using UnityEngine;
 namespace Animancer.Samples.Sprites
 {
     /// <summary>A 3D version of the <see cref="DirectionalCharacter"/>.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/sprites/character-3d">
     /// Directional Character 3D</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Sprites/DirectionalCharacter3D
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Sprites - Directional Character 3D")]
     [AnimancerHelpUrl(typeof(DirectionalCharacter3D))]
     public class DirectionalCharacter3D : MonoBehaviour
@@ -155,7 +155,7 @@ namespace Animancer.Samples.Sprites
         {
             SampleModules.LogMissingPhysics3DModuleError(this);
         }
-        
+
         /************************************************************************************************************************/
 #endif
         /************************************************************************************************************************/

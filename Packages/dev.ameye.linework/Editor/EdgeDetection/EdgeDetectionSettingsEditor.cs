@@ -239,7 +239,7 @@ namespace Linework.Editor.EdgeDetection
                 else
                 { EditorGUILayout.HelpBox("The section map is being generated according to your current settings.", MessageType.Info);
                     EditorGUILayout.Space();
-                    
+
                 }
                 EditorGUILayout.PropertyField(sectionMapFormat, EditorUtils.CommonStyles.SectionMapFormat);
                 EditorGUILayout.PropertyField(sectionMapClearValue, EditorUtils.CommonStyles.SectionMapClearValue);

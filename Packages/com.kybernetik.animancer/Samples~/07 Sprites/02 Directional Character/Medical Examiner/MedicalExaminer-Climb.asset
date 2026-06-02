@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eceeb59a892d074db28203df8e4cd3a, type: 3}
   m_Name: MedicalExaminer-Climb
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Up: {fileID: 74460497441840540}
   _Right: {fileID: 74290416375645730}
   _Down: {fileID: 74657163618963320}
@@ -44,7 +44,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300110, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -119,7 +119,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300182, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -194,7 +194,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300134, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -269,7 +269,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300158, guid: c25c045c7a08f3e4cb1a10deaacf92cf, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4

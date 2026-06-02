@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -9,15 +9,15 @@ namespace Animancer.Samples.AnimatorControllers.GameKit
     /// <summary>
     /// A centralised group of references to the common parts of a character and a state machine for their actions.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/animator-controllers/3d-game-kit">
     /// 3D Game Kit</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.AnimatorControllers.GameKit/Character
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Character")]
     [AnimancerHelpUrl(typeof(Character))]
     public class Character : MonoBehaviour

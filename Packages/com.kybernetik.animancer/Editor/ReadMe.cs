@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 // FlexiMotion // https://kybernetik.com.au/flexi-motion // Copyright 2023-2024 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
@@ -19,7 +19,7 @@ namespace Animancer.Editor
     /// <summary>[Editor-Only] A welcome screen for an asset.</summary>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/ReadMe
     /// https://kybernetik.com.au/flexi-motion/api/FlexiMotion.Editor/ReadMe
-    /// 
+    ///
     public abstract class ReadMe : ScriptableObject
     {
         /************************************************************************************************************************/
@@ -910,4 +910,3 @@ namespace Animancer.Editor
 }
 
 #endif
-

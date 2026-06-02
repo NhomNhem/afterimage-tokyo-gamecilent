@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -13,7 +13,7 @@ namespace Animancer.Samples.Jobs
     /// A wrapper that manages an Animation Job (the <see cref="Job"/> struct nested inside this class)
     /// which rotates a set of bones to allow the character to dynamically lean over independantly of their animations.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// The axis around which the bones are rotated can be set to achieve several different effects:
     /// <list type="number">
@@ -28,9 +28,9 @@ namespace Animancer.Samples.Jobs
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/hit-impacts">
     /// Hit Impacts</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/SimpleLean
-    /// 
+    ///
     public class SimpleLean : AnimancerJob<SimpleLean.Job>, IDisposable
     {
         /************************************************************************************************************************/
@@ -139,15 +139,15 @@ namespace Animancer.Samples.Jobs
         /************************************************************************************************************************/
 
         /// <summary>An <see cref="IAnimationJob"/> that applies a lean effect to an <see cref="AnimationStream"/>.</summary>
-        /// 
+        ///
         /// <remarks>
         /// <strong>Sample:</strong>
         /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/hit-impacts">
         /// Hit Impacts</see>
         /// </remarks>
-        /// 
+        ///
         /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/Job
-        /// 
+        ///
         public struct Job : IAnimationJob
         {
             /************************************************************************************************************************/

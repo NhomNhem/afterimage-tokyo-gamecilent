@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
+using System;
 using GlassRefrain.Core;
 using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace GlassRefrain.Tests.EditMode {
     public class M0PlayerLocomotionTests {
@@ -102,6 +104,101 @@ namespace GlassRefrain.Tests.EditMode {
                 foreach (var pattern in forbiddenPatterns)
                     Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden pattern: " + pattern);
             }
+        }
+
+        [Test]
+        public void DodgeDisplacementMovesPlayerWhenTriggered() {
+            var locomotion = new M0PlayerLocomotion(new M0LocomotionSettings(
+                moveSpeed: 5f,
+                inputDeadzone: 0.1f,
+                facingLerpSpeed: 8f,
+                dodgeDistance: 1.5f,
+                dodgeSpeed: 10f,
+                dodgeDurationSeconds: 0.3f));
+
+            locomotion.SetCameraMovementBasis(new CameraMovementBasisSnapshot(
+                new Axis2(0f, 1f),
+                new Axis2(1f, 0f),
+                true,
+                "FreeLook"));
+
+            locomotion.ConsumeInputIntent(CreateInputSnapshot(1f, 0f, true));
+            locomotion.ProcessMovementInput(0.016f);
+            var before = locomotion.GetMovementSnapshot().Position;
+
+            Assert.That(locomotion.TryBeginDodgeDisplacement(), Is.True);
+            locomotion.ProcessMovementInput(0.1f);
+            locomotion.UpdatePosition(0.1f);
+
+            var after = locomotion.GetMovementSnapshot().Position;
+            Assert.That(Vector3.Distance(before, after), Is.GreaterThan(0.01f));
+        }
+
+        [Test]
+        public void DodgeDisplacementRejectsDuplicateTriggerDuringSameCycle() {
+            var locomotion = new M0PlayerLocomotion();
+
+            Assert.That(locomotion.TryBeginDodgeDisplacement(), Is.True);
+            Assert.That(locomotion.TryBeginDodgeDisplacement(), Is.False);
+        }
+
+        [Test]
+        public void InvalidDodgeSettingsFailFast() {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new M0PlayerLocomotion(
+                new M0LocomotionSettings(dodgeDistance: 0f)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new M0PlayerLocomotion(
+                new M0LocomotionSettings(dodgeSpeed: 0f)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new M0PlayerLocomotion(
+                new M0LocomotionSettings(dodgeDurationSeconds: 0f)));
+        }
+
+        [Test]
+        public void ResetForEncounter_RestoresPositionFacingAndClearsVelocity() {
+            var locomotion = new M0PlayerLocomotion();
+            locomotion.SetCameraMovementBasis(new CameraMovementBasisSnapshot(
+                new Axis2(0f, 1f),
+                new Axis2(1f, 0f),
+                true,
+                "FreeLook"));
+
+            locomotion.ConsumeInputIntent(CreateInputSnapshot(1f, 0f, true));
+            locomotion.ProcessMovementInput(0.1f);
+            locomotion.UpdatePosition(0.1f);
+            Assert.That(locomotion.GetMovementSnapshot().Position.sqrMagnitude, Is.GreaterThan(0.0001f));
+
+            var resetPosition = new Vector3(2f, 0f, -1f);
+            var resetFacing = new Vector3(0f, 0f, -1f);
+            locomotion.ResetForEncounter(resetPosition, resetFacing);
+
+            var snapshot = locomotion.GetMovementSnapshot();
+            Assert.That(snapshot.Position, Is.EqualTo(resetPosition));
+            Assert.That(snapshot.Facing, Is.EqualTo(resetFacing));
+            Assert.That(snapshot.Velocity, Is.EqualTo(Vector3.zero));
+            Assert.That(locomotion.Snapshot.State, Is.EqualTo(LocomotionState.Idle));
+        }
+
+        [Test]
+        public void ResetForEncounter_UsesProvidedAuthoredBaselineEvenWhenNonZero() {
+            var locomotion = new M0PlayerLocomotion();
+            locomotion.SetCameraMovementBasis(new CameraMovementBasisSnapshot(
+                new Axis2(0f, 1f),
+                new Axis2(1f, 0f),
+                true,
+                "FreeLook"));
+
+            locomotion.ConsumeInputIntent(CreateInputSnapshot(-1f, 0f, true));
+            locomotion.ProcessMovementInput(0.2f);
+            locomotion.UpdatePosition(0.2f);
+
+            var authoredBaselinePosition = new Vector3(4.5f, 0f, -2.75f);
+            var authoredBaselineFacing = new Vector3(0f, 0f, 1f);
+            locomotion.ResetForEncounter(authoredBaselinePosition, authoredBaselineFacing);
+
+            var snapshot = locomotion.GetMovementSnapshot();
+            Assert.That(snapshot.Position, Is.EqualTo(authoredBaselinePosition));
+            Assert.That(snapshot.Position, Is.Not.EqualTo(Vector3.zero));
+            Assert.That(snapshot.Facing, Is.EqualTo(authoredBaselineFacing));
+            Assert.That(snapshot.Velocity, Is.EqualTo(Vector3.zero));
         }
 
         private static InputIntentSnapshot CreateInputSnapshot(float moveX, float moveY, bool inputEnabled) {

@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.IO;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;
@@ -15,8 +17,8 @@ namespace GlassRefrain.Tests.EditMode {
 
         private static EnemyIntentSnapshot MakeSnapshot(
             EnemyIntentState state,
-            string[] tags = null) {
-            var tagSet = new EnemyAttackTagSet(tags);
+            string[]? tags = null) {
+            var tagSet = new EnemyAttackTagSet(tags ?? System.Array.Empty<string>());
             var attackIntent = new EnemyAttackIntentContext("atk-test", "TestAttack", 0.15f, tagSet);
             var telegraph = new TelegraphStateSnapshot(string.Empty, false, 0f);
             var punishWindow = new EnemyPunishWindowContext(false, 0f, string.Empty);
@@ -27,13 +29,13 @@ namespace GlassRefrain.Tests.EditMode {
             MakeSnapshot(EnemyIntentState.Active, new[] { "ParryEligible" });
 
         private static EnemyIntentSnapshot ActiveEmptyTags() =>
-            MakeSnapshot(EnemyIntentState.Active, null);
+            MakeSnapshot(EnemyIntentState.Active);
 
         private static EnemyIntentSnapshot ActiveNonEligible() =>
             MakeSnapshot(EnemyIntentState.Active, new[] { "DodgePunishable" });
 
         private static EnemyIntentSnapshot IdleSnapshot() =>
-            MakeSnapshot(EnemyIntentState.Idle, null);
+            MakeSnapshot(EnemyIntentState.Idle);
 
         // ──────────────────────────────────────────────────────────────────
         // Input routing tests (tasks 5.2 – 5.5)
@@ -92,7 +94,10 @@ namespace GlassRefrain.Tests.EditMode {
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
             Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True);
-            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.CounterWindow));
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryRecovery));
+            Assert.That(core.Snapshot.CounterWindow.SourceTag, Is.EqualTo("ParrySuccess"));
+            Assert.That(core.Snapshot.CounterWindow.DurationSeconds, Is.GreaterThan(0f));
+            Assert.That(core.Snapshot.CounterWindow.RemainingSeconds, Is.GreaterThan(0f));
         }
 
         [Test]
@@ -260,6 +265,35 @@ namespace GlassRefrain.Tests.EditMode {
             core.OpenCounterWindow("test", 0.5f);
             Assert.That(core.Snapshot.State, Is.EqualTo(stateBefore), "OpenCounterWindow should not change state");
             Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True);
+        }
+
+        [Test]
+        public void CounterAcceptedTransitionsToCounterActiveAndEmitsRevealRequest() {
+            var core = new M0CombatCore();
+            var revealEmitted = false;
+            core.RevealRequestEmitted += _ => revealEmitted = true;
+
+            // Parry sequence: Parry → ParryActive → ParryRecovery → CounterWindow opens
+            core.ConsumeDefensiveIntent(CombatActionType.Parry, ActiveParryEligible());
+            core.AdvanceState("parry active");
+            core.AdvanceState("parry recovery");
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True, "CounterWindow should be open after successful parry");
+
+            // ParryRecovery completes, return to Neutral (CounterWindow remains open)
+            core.AdvanceState("neutral");
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral), "State should return to Neutral after ParryRecovery");
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True, "CounterWindow should remain open in Neutral");
+
+            // Press Counter from Neutral while CounterWindow is open
+            var counterResult = core.ConsumeDefensiveIntent(CombatActionType.Counter, IdleSnapshot());
+            Assert.That(counterResult.Accepted, Is.True, "Counter should be accepted while window is open");
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.CounterActive), "State should transition to CounterActive");
+            Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.False, "CounterWindow should close after counter consumed");
+
+            // CounterActive → RevealBeat → RevealRequest emitted
+            core.AdvanceState("reveal beat");
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.RevealBeat), "State should transition to RevealBeat");
+            Assert.That(revealEmitted, Is.True, "RevealRequestContext should be emitted after counter");
         }
 
         // ──────────────────────────────────────────────────────────────────

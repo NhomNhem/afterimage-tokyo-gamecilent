@@ -49,11 +49,11 @@ Shader "Hidden/Outlines/Soft Outline/Box Blur"
             {
                 float4 sum = 0;
                 float scale = 1;
-                
+
                 #if defined(SCALE_WITH_RESOLUTION)
                 scale = 1 * _ScreenParams.y / _ReferenceResolution;
                 #endif
-                
+
                 for (float y = 0; y < _Samples; y++) {
                     float2 offset = float2(0, y - _KernelSize) * _BlitTexture_TexelSize.xy * scale;
                     sum += SAMPLE_TEXTURE2D(_BlitTexture, sampler_PointClamp, IN.texcoord + offset);

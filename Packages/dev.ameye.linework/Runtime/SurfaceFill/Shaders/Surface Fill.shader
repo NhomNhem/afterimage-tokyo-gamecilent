@@ -5,11 +5,11 @@ Shader "Hidden/Outlines/Surface Fill/Fill"
         // Colors
         _PrimaryColor("Primary Color", Color) = (1, 0, 0, 1)
         _SecondaryColor("Secondary Color", Color) = (0,  1, 0, 1)
-        
+
         // Pattern
         [KeywordEnum(Solid, Stripes, Squares, Checkerboard, Dots, Glow, Texture)] _Pattern("Pattern", int) = 0
         [KeywordEnum(R, G, B, A)] _Channel("Channel", int) = 0
-     
+
         // Pattern properties
         _Rotation("Pattern Rotation",Range(0.0, 360.0))=0.0
         _Offset("Pattern Offset",Range(0.0, 1.0))=0.0
@@ -22,11 +22,11 @@ Shader "Hidden/Outlines/Surface Fill/Fill"
         _Width("Glow Width",Range(0.0, 1.0))=0.0
         _Power("Glow Power",Range(0.0, 1.0))=0.0
         _Texture("Texture", 2D) = "white"
-        
+
         // Blend
         _SrcBlend ("_SrcBlend", Int) = 0
         _DstBlend ("_DstBlend", Int) = 0
-        
+
         // Stencil
         _StencilComp		("Stencil Comp", Float) = 8
 	    _StencilRef			("Stencil Ref", Float) = 0
@@ -42,12 +42,12 @@ Shader "Hidden/Outlines/Surface Fill/Fill"
             "RenderPipeline" = "UniversalPipeline"
             "RenderType"="Opaque"
         }
-        
+
         ZTest Always
         ZWrite Off
         Cull Off
         Blend [_SrcBlend] [_DstBlend]
-        
+
         Stencil
         {
             Ref [_StencilRef]
@@ -56,24 +56,24 @@ Shader "Hidden/Outlines/Surface Fill/Fill"
 		    Fail [_StencilFail]
 		    ReadMask [_StencilReadMask]
         }
-         
+
         Pass // 0: SURFACE FILL
         {
             Name "SURFACE FILL"
-            
+
             HLSLPROGRAM
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #ifdef _PATTERN_GLOW
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareNormalsTexture.hlsl" 
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl" 
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareNormalsTexture.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
             #endif
-            
+
             #pragma vertex vert
             #pragma fragment frag
 
             #pragma multi_compile_local _PATTERN_SOLID _PATTERN_STRIPES _PATTERN_SQUARES _PATTERN_DOTS _PATTERN_CHECKERBOARD _PATTERN_TEXTURE _PATTERN_GLOW
             #pragma multi_compile_local _CHANNEL_R _CHANNEL_G _CHANNEL_B _CHANNEL_A
-            
+
             #ifdef _PATTERN_TEXTURE
             TEXTURE2D(_Texture);
             SAMPLER(sampler_Texture);
@@ -113,34 +113,34 @@ Shader "Hidden/Outlines/Surface Fill/Fill"
                 float3 r = float3(-s, c, s);
                 return float2(dot(uv, r.yz), dot(uv, r.xy)) + center;
             }
-            
+
             struct Attributes
             {
                 uint vertexID : SV_VertexID;
             };
-            
+
             struct Varyings
             {
                 float4 positionCS : SV_POSITION;
                 float2 texcoord : TEXCOORD0;
             };
-            
+
             Varyings vert(Attributes input)
             {
                 Varyings output;
-                
+
                 // Fullscreen triangle
                 float2 uv = float2((input.vertexID << 1) & 2, input.vertexID & 2);
                 output.positionCS = float4(uv * 2.0 - 1.0, 0.0, 1.0);
                 output.texcoord = uv;
-                
+
                 #if UNITY_UV_STARTS_AT_TOP
                 output.texcoord.y = 1.0 - output.texcoord.y;
                 #endif
-                
+
                 return output;
             }
-            
+
             half4 frag(Varyings IN) : SV_TARGET
             {
                 float2 uv = IN.texcoord;
@@ -152,7 +152,7 @@ Shader "Hidden/Outlines/Surface Fill/Fill"
                 // Move + rotate uvs.
                 float2 scrolling_uvs = scroll_uvs(uv, _Direction,  _Speed);
                 float2 rotated_uvs = rotate_uvs_around_center(scrolling_uvs, _Rotation);
-               
+
                 // Pattern.
                 float pattern = 0;
                 #ifdef _PATTERN_SOLID
@@ -208,10 +208,10 @@ Shader "Hidden/Outlines/Surface Fill/Fill"
                 pattern = texture_sample.a;
                 #endif
                 #endif
-                
+
                 // Color
                 half4 color = _PrimaryColor * pattern + _SecondaryColor * (1.0 - pattern);
-                
+
                 return color;
             }
             ENDHLSL

@@ -4,7 +4,7 @@
     {
         // Debug.
         [Toggle(DEBUG_SECTIONS_PERCEPTUAL)] _DebugSectionsPerceptual ("Debug Sections Perceptual", Float) = 0
-        
+
         // Discontinuity sections.
         [Toggle(SECTIONS_MASK)] _SectionsMask ("Sections Mask", Float) = 0
 
@@ -33,7 +33,7 @@
         _DistanceScaleMin ("Distance Scale Min", Float) = 10
         [Toggle(SCALE_WITH_RESOLUTION)] _ResolutionDependent ("Resolution Dependent", Float) = 0
         _ReferenceResolution ("Reference Resolution", Float) = 1080
-        
+
         // Outline distortion.
          [Toggle(DISTORTION)] _Distortion ("Distortion", Float) = 0
         _DistortionTexture ("Distortion Texture", 3D) = "" {}
@@ -41,7 +41,7 @@
         _DistortionThicknessInfluence("Distortion Thickness Influence", Range(0,10)) = 0
         _DistortionStepRate("Distortion Step Rate", Integer) = 0
         _DistortionScale("Distortion Scale", Range(0,1)) = 1
-        
+
         // Outline colors.
         _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
         [Toggle(OVERRIDE_SHADOW)] _OverrideShadow ("Override Outline Color In Shadow", Float) = 0
@@ -93,7 +93,7 @@
         // #pragma multi_compile_local _ FADE_BY_DISTANCE
         // #pragma multi_compile_local _ FADE_BY_HEIGHT
         // #pragma multi_compile_local _ DISTORTION
-        
+
         #pragma multi_compile _ DEPTH
         #pragma multi_compile _ NORMALS
         #pragma multi_compile _ LUMINANCE
@@ -165,7 +165,7 @@
 
             #pragma vertex Vert
             #pragma fragment frag
-            
+
             float RobertsCross(float3 samples[4])
             {
                 const float3 difference_1 = samples[1] - samples[2];
@@ -193,14 +193,14 @@
                 const float3 difference_2 = samples[0].r - samples[6].r + 2 * samples[1].r - 2 * samples[7].r + samples[2].r - samples[8].r;
                 return sqrt(dot(difference_1, difference_1) + dot(difference_2, difference_2));
             }
-            
+
             float Sobel(float3 samples[9])
             {
                 const float3 difference_1 = samples[0] - samples[2] + 2 * samples[3] - 2 * samples[5] + samples[6] - samples[8];
                 const float3 difference_2 = samples[0] - samples[6] + 2 * samples[1] - 2 * samples[7] + samples[2] - samples[8];
                 return sqrt(dot(difference_1, difference_1) + dot(difference_2, difference_2));
             }
-            
+
             float Sobel(float samples[9])
             {
                 const float difference_1 = samples[0] - samples[2] + 2 * samples[3] - 2 * samples[5] + samples[6] - samples[8];
@@ -240,38 +240,38 @@
 
                 #if defined(DEPTH) || defined(OVERRIDE_SHADOW) || defined(SCALE_WITH_DISTANCE) || defined(FADE_BY_DISTANCE) || defined(FADE_BY_HEIGHT) || defined(DEBUG_DEPTH) || defined(DISTORTION) || defined(OPERATOR_CIRCULAR)
                 float center_depth = SampleSceneDepth(uv);
-                
+
                 #if !UNITY_REVERSED_Z // Transform depth from [0, 1] to [-1, 1] on OpenGL.
                 center_depth = lerp(UNITY_NEAR_CLIP_VALUE, 1.0, center_depth); // Alternatively: depth = 1.0 - depth
                 #endif
-                
+
                 float3 positionWS = ComputeWorldSpacePosition(uv, center_depth, UNITY_MATRIX_I_VP); // Calculate world position from depth.
                 #endif
 
                 ///
                 /// DISTORTION
-                /// 
-                
+                ///
+
                 #if defined(DISTORTION)
                 float steppedTime = 0;
                 if (_DistortionStepRate > 0.0) {
                     float stepIndex = floor(_Time.y * _DistortionStepRate);
                     steppedTime = stepIndex / _DistortionStepRate;
                 }
-                
+
                 // Distortion strength + scale.
                 float distortionStrength = _DistortionStrength * 0.05;
                 float distortionScale = _DistortionScale * 2;
-                
+
                 // World space distortion.
                 float3 distortionUV = positionWS * distortionScale;
                 distortionUV = float3(distortionUV.x + steppedTime, distortionUV.y, distortionUV.z);
-                
+
                 // Sample 3D noise
                 float distortionOffset = SAMPLE_TEXTURE3D(_DistortionTexture, sampler_DistortionTexture, distortionUV).r;
-                float distortionNoise = distortionOffset * 2 - 1; 
+                float distortionNoise = distortionOffset * 2 - 1;
                 _OutlineThickness *= 1 + (distortionNoise * _DistortionThicknessInfluence);
-          
+
                 // Distort UVs.
                 uv = uv + distortionNoise * distortionStrength;
                 #endif
@@ -279,7 +279,7 @@
                 ///
                 /// EDGE DETECTION
                 ///
-                
+
                 #if defined(DEPTH) || defined(DEBUG_NORMALS)
                 float3 center_normal = SampleSceneNormals(uv);
                 #endif
@@ -302,17 +302,17 @@
                 #else
                 float scaled_outline_thickness = _OutlineThickness;
                 #endif
-                
+
                 // Fade/scale by distance
                 #if defined(SCALE_WITH_DISTANCE) || defined(FADE_BY_DISTANCE)
                 float worldSpaceDistance = length(positionWS - _WorldSpaceCameraPos);
                 #endif
-                
+
                 #if defined(SCALE_WITH_DISTANCE)
                 float distance_scale = saturate((worldSpaceDistance - _DistanceScaleStart) / _DistanceScaleDistance);
                 scaled_outline_thickness *= lerp(1.0, _DistanceScaleMin, distance_scale);
                 #endif
-                
+
                 #if defined(OPERATOR_CROSS)
                 const float half_width_f = floor(scaled_outline_thickness * 0.5);
                 const float half_width_c = ceil(scaled_outline_thickness * 0.5);
@@ -323,10 +323,10 @@
                 uvs[1] = uv + texel_size * float2(half_width_c, half_width_c) * float2(1, 1);   // top right
                 uvs[2] = uv + texel_size * float2(half_width_f, half_width_f) * float2(-1, -1); // bottom left
                 uvs[3] = uv + texel_size * float2(half_width_c, half_width_f) * float2(1, -1);  // bottom right
-        
+
                 float3 normal_samples[4], section_samples[4];
                 float depth_samples[4], luminance_samples[4];
-                
+
                 for (int i = 0; i < 4; i++) {
                 #if defined(DEPTH)
                     depth_samples[i] = SampleSceneDepth(uvs[i]);
@@ -401,7 +401,7 @@
                     if(section_samples[i].r == 1) fill = true;
                     if(section_samples[i].r == 0) mask = true;
                 }
-                
+
                 #if defined(DEPTH)
                 #if defined(DEPTH_MASK)
                 edge_depth = mask ? 0 : Sobel(depth_samples);
@@ -456,14 +456,14 @@
                 float depth_threshold = 1 / _DepthSensitivity;
 
                 bool orthoCamera = unity_OrthoParams.w > 0.0; // w is 1.0 if camera is orthographic
-                
+
                 // 1. Perspective camera: the depth buffer is non-linear so two objects 1m apart close to camera will have much larger depth difference than two
                 //    objects 1m apart far away from the camera. For this, we multiply the threshold by the depth buffer so that nearby objects
                 //    will have to have a larger discontinuity in order to be detected as an 'edge'.
                 float depth = orthoCamera ? LinearEyeDepth(center_depth, _ZBufferParams) / _ProjectionParams.z // normalized linear depth
                                           : center_depth; // non-linear, perspective depth
                 depth_threshold = max(depth_threshold * 0.01, depth_threshold * _DepthDistanceModulation * depth);
-              
+
                 // 2. At small grazing angles, the depth difference will grow larger and so faces can be wrongly detected. For this, the depth threshold
                 //    can be modulated by the grazing angle, given by the dot product between the normal vector and the view direction. If the normal vector
                 //    and the view direction are almost perpendicular, the depth threshold should be increased.
@@ -471,7 +471,7 @@
                 float fresnel = pow(1.0 - dot(normalize(center_normal), normalize(viewWS)), 1.0);
                 float grazingAngleMask = _GrazingAngleMaskHardness * saturate((fresnel + _GrazingAngleMaskPower - 1) / _GrazingAngleMaskPower); // a mask between 0 and 1
                 depth_threshold = depth_threshold * (1 + grazingAngleMask);
-                
+
                 edge_depth = edge_depth > depth_threshold ? 1 : 0;
                 #endif
 
@@ -490,7 +490,7 @@
                 #endif
 
                 float edge = section_center.g == 1 ? 0 : max(edge_depth, max(edge_normal, max(edge_luminance, edge_section)));
-                
+
                 ///
                 /// DEBUG VIEWS
                 ///
@@ -538,9 +538,9 @@
                 #if defined(FILL)
                 if (fill) return _FillColor;
                 #endif
-                
+
                 float4 line_color = _OutlineColor;
-                
+
                 // Shadows.
                 #if defined(OVERRIDE_SHADOW)
                 float shadow = 1 - SampleShadowmap(

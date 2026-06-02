@@ -10,4 +10,3 @@ namespace InspectorGadgets.Attributes
     [System.Diagnostics.Conditional("UNITY_EDITOR")]
     public sealed class UniqueCollectionAttribute : PropertyAttribute { }
 }
-

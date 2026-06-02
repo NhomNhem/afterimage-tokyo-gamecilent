@@ -906,7 +906,7 @@ namespace VFavorites.Libs
         {
             if (!path.DirectoryExists()) return path;
 
-            var s = AssetDatabase.GenerateUniqueAssetPath(path); // returns empty if parent dir doesnt exist 
+            var s = AssetDatabase.GenerateUniqueAssetPath(path); // returns empty if parent dir doesnt exist
 
             return s == "" ? path : s;
 
@@ -1799,7 +1799,7 @@ namespace VFavorites.Libs
 
 
 
-        // toremove: 
+        // toremove:
 
         public static void DrawIcon(Rect rect, string icon, Color? col = null)
         {
@@ -1866,7 +1866,7 @@ namespace VFavorites.Libs
 
         #endregion
 
-        #region Other 
+        #region Other
 
         public static void MarkInteractive(this Rect rect)
         {

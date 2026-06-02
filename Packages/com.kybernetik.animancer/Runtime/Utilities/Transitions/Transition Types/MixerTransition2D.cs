@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using UnityEngine;
@@ -8,9 +8,6 @@ namespace Animancer
     /// <inheritdoc/>
     /// https://kybernetik.com.au/animancer/api/Animancer/MixerTransition2D
     [Serializable]
-#if ! UNITY_EDITOR
-    [System.Obsolete(Validate.ProOnlyMessage)]
-#endif
     public class MixerTransition2D : MixerTransition<Vector2MixerState, Vector2>,
         ICopyable<MixerTransition2D>
     {
@@ -88,11 +85,7 @@ namespace Animancer
 
         /// <inheritdoc/>
         public override Transition<Vector2MixerState> Clone(CloneContext context)
-        {
-            var clone = new MixerTransition2D();
-            clone.CopyFrom(this, context);
-            return clone;
-        }
+            => new MixerTransition2D();
 
         /// <inheritdoc/>
         public sealed override void CopyFrom(MixerTransition<Vector2MixerState, Vector2> copyFrom, CloneContext context)
@@ -111,4 +104,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

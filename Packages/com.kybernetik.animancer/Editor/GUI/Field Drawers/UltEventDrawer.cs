@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && ULT_EVENTS
 
@@ -18,4 +18,3 @@ namespace Animancer.Editor
 }
 
 #endif
-

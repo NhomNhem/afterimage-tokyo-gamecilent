@@ -12,7 +12,7 @@ namespace Linework.Editor.EdgeDetection
         {
             public static readonly GUIContent Settings = EditorGUIUtility.TrTextContent("Settings", "The settings for the Edge Detection renderer feature.");
         }
-        
+
         private SerializedProperty settings;
 
         private bool initialized;
@@ -46,7 +46,7 @@ namespace Linework.Editor.EdgeDetection
                     serializedObject.ApplyModifiedProperties();
                 }
             }
-            else 
+            else
             {
                 if (GUILayout.Button("Open", EditorStyles.miniButton, GUILayout.Width(70.0f)))
                 {

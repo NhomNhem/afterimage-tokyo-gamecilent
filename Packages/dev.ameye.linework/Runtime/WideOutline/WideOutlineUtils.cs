@@ -23,7 +23,7 @@ namespace Linework.WideOutline
             return this;
         }
     }
-    
+
     static class ShaderPath
     {
         public const string Mask = "Hidden/Outlines/Wide Outline/Mask";
@@ -32,7 +32,7 @@ namespace Linework.WideOutline
         public const string Outline = "Hidden/Outlines/Wide Outline/Outline";
         public const string Clear = "Hidden/Clear Stencil";
     }
-    
+
     static class ShaderPass
     {
         public const int Mask = 0;
@@ -42,7 +42,7 @@ namespace Linework.WideOutline
         public const int FloodJump = 2;
         public const int Outline = 3;
     }
-    
+
     static class ShaderPassName
     {
         public const string Mask = "Mask (Wide Outline)";
@@ -51,20 +51,20 @@ namespace Linework.WideOutline
         public const string Flood = "Flood (Wide Outline)";
         public const string Outline = "Outline (Wide Outline)";
     }
-    
+
     static class ShaderPropertyId
     {
         public static readonly int OutlineOccludedColor = Shader.PropertyToID("_OutlineOccludedColor");
         public static readonly int OutlineWidth = Shader.PropertyToID("_OutlineWidth");
         public static readonly int OutlineGap = Shader.PropertyToID("_OutlineGap");
         public static readonly int RenderScale = Shader.PropertyToID("_RenderScale");
-        
+
         public static readonly int AxisWidthId = Shader.PropertyToID("_AxisWidth");
         public static readonly int SilhouetteBuffer = Shader.PropertyToID("_SilhouetteBuffer");
         public static readonly int InformationBuffer = Shader.PropertyToID("_InformationBuffer");
         public static readonly int SilhouetteDepthBuffer = Shader.PropertyToID("_SilhouetteDepthBuffer");
     }
-    
+
     static class ShaderFeature
     {
         public const string AlphaCutout = "ALPHA_CUTOUT";
@@ -72,12 +72,12 @@ namespace Linework.WideOutline
         public const string InformationBuffer = "INFORMATION_BUFFER";
         public const string ScaleWithResolution = "SCALE_WITH_RESOLUTION";
     }
-    
+
     static class Keyword
     {
         public static readonly GlobalKeyword OutlineColor = GlobalKeyword.Create("_OUTLINE_COLOR");
     }
-    
+
     static class Buffer
     {
         public const string Silhouette = "_SilhouetteBuffer";

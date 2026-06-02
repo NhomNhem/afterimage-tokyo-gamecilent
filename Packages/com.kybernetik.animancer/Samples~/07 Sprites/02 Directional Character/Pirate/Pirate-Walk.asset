@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5b6ac0c7ebd7b41b307d920db7b245, type: 3}
   m_Name: Pirate-Walk
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Up: {fileID: 74400387526195064}
   _Right: {fileID: 74377679836546190}
   _Down: {fileID: 74086284825182244}
@@ -48,7 +48,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300148, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -123,7 +123,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300150, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -198,7 +198,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300152, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -273,7 +273,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300146, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -348,7 +348,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300154, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -423,7 +423,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300158, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -498,7 +498,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300144, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4
@@ -573,7 +573,7 @@ AnimationClip:
     - time: 0.75
       value: {fileID: 21300156, guid: f9b7d7c041011704e8272376a8d358c8, type: 3}
     attribute: m_Sprite
-    path: 
+    path:
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 4

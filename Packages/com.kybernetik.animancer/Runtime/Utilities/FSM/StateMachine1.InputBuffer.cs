@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace Animancer.FSM
         /// time <see cref="InputBuffer{TStateMachine}.Update(float)"/> is called until the
         /// <see cref="InputBuffer{TStateMachine}.TimeOut"/> expires.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// <strong>Documentation:</strong>
         /// <see href="https://kybernetik.com.au/animancer/docs/manual/fsm/utilities#input-buffers">
@@ -20,9 +20,9 @@ namespace Animancer.FSM
         /// <para></para>
         /// See <see cref="StateMachine{TState}.InputBuffer{TStateMachine}"/> for example usage.
         /// </remarks>
-        /// 
+        ///
         /// https://kybernetik.com.au/animancer/api/Animancer.FSM/InputBuffer
-        /// 
+        ///
         public class InputBuffer : InputBuffer<StateMachine<TState>>
         {
             /************************************************************************************************************************/
@@ -40,7 +40,7 @@ namespace Animancer.FSM
         /// A simple system that can <see cref="Buffer"/> a state then try to enter it every time
         /// <see cref="Update(float)"/> is called until the <see cref="TimeOut"/> expires.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// <strong>Documentation:</strong>
         /// <see href="https://kybernetik.com.au/animancer/docs/manual/fsm/utilities#input-buffers">
@@ -48,18 +48,18 @@ namespace Animancer.FSM
         /// <para></para>
         /// <strong>Example:</strong><code>
         /// public StateMachine&lt;CharacterState&gt; stateMachine;// Initialized elsewhere.
-        /// 
+        ///
         /// [SerializeField] private CharacterState _Attack;
         /// [SerializeField] private float _AttackInputTimeOut = 0.5f;
-        /// 
+        ///
         /// private StateMachine&lt;CharacterState&gt;.InputBuffer _InputBuffer;
-        /// 
+        ///
         /// private void Awake()
         /// {
         ///     // Initialize the buffer.
         ///     _InputBuffer = new StateMachine&lt;CharacterState&gt;.InputBuffer(stateMachine);
         /// }
-        /// 
+        ///
         /// private void Update()
         /// {
         ///     // When input is detected, buffer the desired state.
@@ -67,15 +67,15 @@ namespace Animancer.FSM
         ///     {
         ///         _InputBuffer.Buffer(_Attack, _AttackInputTimeOut);
         ///     }
-        /// 
+        ///
         ///     // At the end of the frame, Update the buffer so it tries to enter the buffered state.
         ///     // After the time out, it will clear itself so Update does nothing until something else is buffered.
         ///     _InputBuffer.Update();
         /// }
         /// </code></remarks>
-        /// 
+        ///
         /// https://kybernetik.com.au/animancer/api/Animancer.FSM/InputBuffer_1
-        /// 
+        ///
         public class InputBuffer<TStateMachine> where TStateMachine : StateMachine<TState>
         {
             /************************************************************************************************************************/
@@ -209,4 +209,3 @@ namespace Animancer.FSM
         }
     }
 }
-

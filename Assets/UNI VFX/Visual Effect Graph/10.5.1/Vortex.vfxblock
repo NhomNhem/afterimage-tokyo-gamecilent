@@ -34,7 +34,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
   m_Name: Vortex
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -71,16 +71,16 @@ MonoBehaviour:
   m_CustomAttributes: []
   m_ParameterInfo:
   - name: Vortex Plane
-    path: 
-    tooltip: 
+    path:
+    tooltip:
     space: 0
     spaceable: 1
-    sheetType: 
+    sheetType:
     realType: Plane
     defaultValue:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -119,7 +119,7 @@ MonoBehaviour:
     descendantCount: 0
   - name: Drag
     path: Drag
-    tooltip: 
+    tooltip:
     space: -1
     spaceable: 0
     sheetType: m_Float
@@ -151,7 +151,7 @@ MonoBehaviour:
     descendantCount: 0
   - name: Channel / Distance
     path: Channel / Distance
-    tooltip: 
+    tooltip:
     space: -1
     spaceable: 0
     sheetType: m_AnimationCurve
@@ -167,7 +167,7 @@ MonoBehaviour:
     descendantCount: 0
   - name: Gravity / Distance
     path: Gravity / Distance
-    tooltip: 
+    tooltip:
     space: -1
     spaceable: 0
     sheetType: m_AnimationCurve
@@ -183,7 +183,7 @@ MonoBehaviour:
     descendantCount: 0
   - name: Vortex / Distance
     path: Vortex / Distance
-    tooltip: 
+    tooltip:
     space: -1
     spaceable: 0
     sheetType: m_AnimationCurve
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d01270efd3285ea4a9d6c555cb0a8027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   groupInfos:
   - title: Distance to Axis
     position:
@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2ccbcffb53f0c14197bd55400d92b61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children:
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots: []
-  m_Label: 
+  m_Label:
   m_Data: {fileID: 5}
   m_InputFlowSlot: []
   m_OutputFlowSlot:
@@ -277,15 +277,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d78581a96eae8bf4398c282eb0b098bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
   m_UISuperCollapsed: 0
-  title: 
+  title:
   m_Owners:
   - {fileID: 4}
   dataType: 0
@@ -305,8 +305,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c079bc84df7c7e94f88c8ae0d1b0691d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 4}
   m_Children: []
@@ -330,8 +330,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -344,19 +344,19 @@ MonoBehaviour:
   m_ExposedName: Vortex Plane
   m_Exposed: 1
   m_Order: 0
-  m_Category: 
+  m_Category:
   m_Min:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_Max:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_IsOutput: 0
   m_EnumValues: []
   m_ValueFilter: 0
-  m_Tooltip: 
+  m_Tooltip:
   m_Nodes:
   - m_Id: 0
     linkedSlots:
@@ -379,8 +379,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b605c022ee79394a8a776c0869b3f9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -415,8 +415,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 18}
   m_Children:
@@ -431,8 +431,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -452,8 +452,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 19}
   m_Children: []
@@ -465,8 +465,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 19}
   m_Children: []
@@ -498,8 +498,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -518,8 +518,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 19}
   m_Children: []
@@ -531,8 +531,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -551,8 +551,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 18}
   m_Children:
@@ -567,8 +567,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: normal
@@ -588,8 +588,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 23}
   m_Children: []
@@ -601,8 +601,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -621,8 +621,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 23}
   m_Children: []
@@ -634,8 +634,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -654,8 +654,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 23}
   m_Children: []
@@ -667,8 +667,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -687,8 +687,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -723,8 +723,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 32}
   m_Children:
@@ -739,8 +739,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -759,8 +759,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 33}
   m_Children: []
@@ -772,8 +772,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -792,8 +792,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 33}
   m_Children: []
@@ -805,8 +805,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -825,8 +825,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 33}
   m_Children: []
@@ -838,8 +838,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -858,8 +858,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -893,8 +893,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -907,19 +907,19 @@ MonoBehaviour:
   m_ExposedName: Drag
   m_Exposed: 1
   m_Order: 1
-  m_Category: 
+  m_Category:
   m_Min:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_Max:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_IsOutput: 0
   m_EnumValues: []
   m_ValueFilter: 0
-  m_Tooltip: 
+  m_Tooltip:
   m_Nodes:
   - m_Id: 0
     linkedSlots:
@@ -939,8 +939,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -974,8 +974,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14b33987e048dc648922a474c517abee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -1000,8 +1000,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 955b0c175a6f3bb4582e92f3de8f0626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -1025,8 +1025,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -1044,7 +1044,7 @@ MonoBehaviour:
       m_SerializableObject: '{"position":{"x":0.0,"y":0.0,"z":0.0}}'
     m_Space: 0
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -1061,8 +1061,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 60}
   m_Children:
@@ -1077,8 +1077,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -1097,8 +1097,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 61}
   m_Children: []
@@ -1110,8 +1110,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -1130,8 +1130,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 61}
   m_Children: []
@@ -1143,8 +1143,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -1163,8 +1163,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 61}
   m_Children: []
@@ -1176,8 +1176,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -1196,8 +1196,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -1215,7 +1215,7 @@ MonoBehaviour:
       m_SerializableObject: '{"position":{"x":0.0,"y":0.0,"z":0.0}}'
     m_Space: 0
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -1232,8 +1232,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 65}
   m_Children:
@@ -1248,8 +1248,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -1268,8 +1268,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 66}
   m_Children: []
@@ -1281,8 +1281,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -1301,8 +1301,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 66}
   m_Children: []
@@ -1314,8 +1314,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -1334,8 +1334,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 66}
   m_Children: []
@@ -1347,8 +1347,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -1367,8 +1367,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 955b0c175a6f3bb4582e92f3de8f0626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -1392,8 +1392,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -1411,7 +1411,7 @@ MonoBehaviour:
       m_SerializableObject: '{"direction":{"x":0.0,"y":1.0,"z":0.0}}'
     m_Space: 0
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.DirectionType, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -1428,8 +1428,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 90}
   m_Children:
@@ -1444,8 +1444,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -1464,8 +1464,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 91}
   m_Children: []
@@ -1477,8 +1477,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -1497,8 +1497,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 91}
   m_Children: []
@@ -1510,8 +1510,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -1530,8 +1530,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 91}
   m_Children: []
@@ -1543,8 +1543,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -1563,8 +1563,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -1582,7 +1582,7 @@ MonoBehaviour:
       m_SerializableObject: '{"direction":{"x":0.0,"y":1.0,"z":0.0}}'
     m_Space: 0
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.DirectionType, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -1603,8 +1603,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 95}
   m_Children:
@@ -1619,8 +1619,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -1639,8 +1639,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 96}
   m_Children: []
@@ -1652,8 +1652,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -1672,8 +1672,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 96}
   m_Children: []
@@ -1685,8 +1685,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -1705,8 +1705,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 96}
   m_Children: []
@@ -1718,8 +1718,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -1738,8 +1738,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -1774,8 +1774,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 100}
   m_Children:
@@ -1790,8 +1790,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -1810,8 +1810,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 101}
   m_Children: []
@@ -1823,8 +1823,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -1843,8 +1843,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 101}
   m_Children: []
@@ -1856,8 +1856,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -1876,8 +1876,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 101}
   m_Children: []
@@ -1889,8 +1889,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -1909,8 +1909,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -1945,8 +1945,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 105}
   m_Children:
@@ -1961,8 +1961,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -1981,8 +1981,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 106}
   m_Children: []
@@ -1994,8 +1994,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -2014,8 +2014,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 106}
   m_Children: []
@@ -2027,8 +2027,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -2047,8 +2047,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 106}
   m_Children: []
@@ -2060,8 +2060,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -2080,8 +2080,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -2099,7 +2099,7 @@ MonoBehaviour:
       m_SerializableObject: '{"direction":{"x":0.0,"y":0.0,"z":0.0}}'
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.DirectionType, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -2117,8 +2117,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 110}
   m_Children:
@@ -2133,8 +2133,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -2153,8 +2153,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 111}
   m_Children: []
@@ -2166,8 +2166,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -2186,8 +2186,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 111}
   m_Children: []
@@ -2199,8 +2199,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -2219,8 +2219,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 111}
   m_Children: []
@@ -2232,8 +2232,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -2252,8 +2252,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0155ae97d9a75e3449c6d0603b79c2f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -2284,8 +2284,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -2300,10 +2300,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -2321,8 +2321,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 244}
   m_Children:
@@ -2337,8 +2337,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -2357,8 +2357,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 245}
   m_Children: []
@@ -2370,8 +2370,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -2390,8 +2390,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 245}
   m_Children: []
@@ -2403,8 +2403,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -2423,8 +2423,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 245}
   m_Children: []
@@ -2436,8 +2436,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -2456,8 +2456,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -2472,7 +2472,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
     name: b
@@ -2492,8 +2492,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 249}
   m_Children:
@@ -2508,8 +2508,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -2528,8 +2528,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 250}
   m_Children: []
@@ -2541,8 +2541,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -2561,8 +2561,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 250}
   m_Children: []
@@ -2574,8 +2574,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -2594,8 +2594,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 250}
   m_Children: []
@@ -2607,8 +2607,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -2627,8 +2627,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8ee8a7543fa09e42a7c8616f60d2ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -2659,8 +2659,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -2694,8 +2694,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 486e063e1ed58c843942ea4122829ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -2718,8 +2718,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -2732,15 +2732,15 @@ MonoBehaviour:
   m_ExposedName: System is World Space
   m_Exposed: 1
   m_Order: 2
-  m_Category: 
+  m_Category:
   m_Min:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_Max:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_IsOutput: 0
   m_EnumValues: []
   m_ValueFilter: 0
@@ -2764,8 +2764,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4c11ff25089a324daf359f4b0629b33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -2799,8 +2799,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9717a5f0d23f1d843aef2943f049a21d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -2826,8 +2826,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4c11ff25089a324daf359f4b0629b33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -2861,8 +2861,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -2897,8 +2897,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 364}
   m_Children:
@@ -2913,8 +2913,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -2933,8 +2933,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 365}
   m_Children: []
@@ -2946,8 +2946,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -2966,8 +2966,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 365}
   m_Children: []
@@ -2979,8 +2979,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -2999,8 +2999,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 365}
   m_Children: []
@@ -3012,8 +3012,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -3032,8 +3032,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -3068,8 +3068,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 369}
   m_Children:
@@ -3084,8 +3084,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -3104,8 +3104,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 370}
   m_Children: []
@@ -3117,8 +3117,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -3137,8 +3137,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 370}
   m_Children: []
@@ -3150,8 +3150,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -3170,8 +3170,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 370}
   m_Children: []
@@ -3183,8 +3183,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -3203,8 +3203,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -3239,8 +3239,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 374}
   m_Children:
@@ -3255,8 +3255,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -3275,8 +3275,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 375}
   m_Children: []
@@ -3288,8 +3288,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -3308,8 +3308,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 375}
   m_Children: []
@@ -3321,8 +3321,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -3341,8 +3341,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 375}
   m_Children: []
@@ -3354,8 +3354,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -3374,8 +3374,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -3390,10 +3390,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -3410,8 +3410,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 379}
   m_Children:
@@ -3426,8 +3426,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -3446,8 +3446,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 380}
   m_Children: []
@@ -3459,8 +3459,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -3479,8 +3479,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 380}
   m_Children: []
@@ -3492,8 +3492,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -3512,8 +3512,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 380}
   m_Children: []
@@ -3525,8 +3525,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -3545,8 +3545,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 955b0c175a6f3bb4582e92f3de8f0626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -3570,8 +3570,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -3589,7 +3589,7 @@ MonoBehaviour:
       m_SerializableObject: '{"vector":{"x":0.0,"y":0.0,"z":0.0}}'
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -3606,8 +3606,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 385}
   m_Children:
@@ -3622,8 +3622,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -3642,8 +3642,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 386}
   m_Children: []
@@ -3655,8 +3655,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -3675,8 +3675,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 386}
   m_Children: []
@@ -3688,8 +3688,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -3708,8 +3708,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 386}
   m_Children: []
@@ -3721,8 +3721,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -3741,8 +3741,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -3760,7 +3760,7 @@ MonoBehaviour:
       m_SerializableObject: '{"vector":{"x":0.0,"y":0.0,"z":0.0}}'
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -3778,8 +3778,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 390}
   m_Children:
@@ -3794,8 +3794,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -3814,8 +3814,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 391}
   m_Children: []
@@ -3827,8 +3827,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -3847,8 +3847,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 391}
   m_Children: []
@@ -3860,8 +3860,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -3880,8 +3880,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 391}
   m_Children: []
@@ -3893,8 +3893,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -3913,8 +3913,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6db0ee725ad10d740ac82b1118d8b228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -3939,8 +3939,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -3974,8 +3974,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8ee8a7543fa09e42a7c8616f60d2ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -4006,8 +4006,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -4041,8 +4041,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 016e81d0498fcc346ba22c57b5ca4556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -4067,8 +4067,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -4104,8 +4104,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -4120,7 +4120,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
     name: a
@@ -4140,8 +4140,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 506}
   m_Children:
@@ -4156,8 +4156,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -4176,8 +4176,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 507}
   m_Children: []
@@ -4189,8 +4189,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -4209,8 +4209,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 507}
   m_Children: []
@@ -4222,8 +4222,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -4242,8 +4242,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 507}
   m_Children: []
@@ -4255,8 +4255,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -4275,8 +4275,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5265657162cc1a241bba03a3b0476d99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -4291,7 +4291,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Position, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
     name: b
@@ -4311,8 +4311,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 511}
   m_Children:
@@ -4327,8 +4327,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: position
@@ -4347,8 +4347,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 512}
   m_Children: []
@@ -4360,8 +4360,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -4380,8 +4380,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 512}
   m_Children: []
@@ -4393,8 +4393,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -4413,8 +4413,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 512}
   m_Children: []
@@ -4426,8 +4426,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -4446,8 +4446,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -4462,7 +4462,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
     name: a
@@ -4482,8 +4482,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 520}
   m_Children:
@@ -4498,8 +4498,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -4518,8 +4518,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 521}
   m_Children: []
@@ -4531,8 +4531,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -4551,8 +4551,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 521}
   m_Children: []
@@ -4564,8 +4564,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -4584,8 +4584,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 521}
   m_Children: []
@@ -4597,8 +4597,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -4617,8 +4617,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -4633,7 +4633,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
     name: b
@@ -4653,8 +4653,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 525}
   m_Children:
@@ -4669,8 +4669,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -4689,8 +4689,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 526}
   m_Children: []
@@ -4702,8 +4702,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -4722,8 +4722,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 526}
   m_Children: []
@@ -4735,8 +4735,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -4755,8 +4755,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 526}
   m_Children: []
@@ -4768,8 +4768,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -4788,8 +4788,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -4804,7 +4804,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
     name: b
@@ -4824,8 +4824,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 530}
   m_Children:
@@ -4840,8 +4840,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -4860,8 +4860,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 531}
   m_Children: []
@@ -4873,8 +4873,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -4893,8 +4893,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 531}
   m_Children: []
@@ -4906,8 +4906,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -4926,8 +4926,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 531}
   m_Children: []
@@ -4939,8 +4939,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -4959,8 +4959,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -4975,10 +4975,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -4995,8 +4995,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 535}
   m_Children:
@@ -5011,8 +5011,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -5031,8 +5031,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 536}
   m_Children: []
@@ -5044,8 +5044,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -5064,8 +5064,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 536}
   m_Children: []
@@ -5077,8 +5077,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -5097,8 +5097,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 536}
   m_Children: []
@@ -5110,8 +5110,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -5130,8 +5130,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8bcc906a6d398c46b18826714448709, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -5153,8 +5153,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c117b74c5c58db542bffe25c78fe92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -5188,8 +5188,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -5223,8 +5223,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -5258,8 +5258,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7acf5424f3655744af4b8f63298fa0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -5295,8 +5295,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8ee8a7543fa09e42a7c8616f60d2ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -5327,8 +5327,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -5362,8 +5362,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -5378,7 +5378,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
     name: b
@@ -5398,8 +5398,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 580}
   m_Children:
@@ -5414,8 +5414,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -5434,8 +5434,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 581}
   m_Children: []
@@ -5447,8 +5447,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -5467,8 +5467,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 581}
   m_Children: []
@@ -5480,8 +5480,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -5500,8 +5500,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 581}
   m_Children: []
@@ -5513,8 +5513,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -5533,8 +5533,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -5549,10 +5549,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -5569,8 +5569,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 585}
   m_Children:
@@ -5585,8 +5585,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -5605,8 +5605,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 586}
   m_Children: []
@@ -5618,8 +5618,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -5638,8 +5638,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 586}
   m_Children: []
@@ -5651,8 +5651,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -5671,8 +5671,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 586}
   m_Children: []
@@ -5684,8 +5684,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -5704,8 +5704,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -5720,7 +5720,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
     name: channel
@@ -5740,8 +5740,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 590}
   m_Children:
@@ -5756,8 +5756,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -5776,8 +5776,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 591}
   m_Children: []
@@ -5789,8 +5789,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -5809,8 +5809,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 591}
   m_Children: []
@@ -5822,8 +5822,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -5842,8 +5842,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 591}
   m_Children: []
@@ -5855,8 +5855,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -5875,8 +5875,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -5891,10 +5891,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -5911,8 +5911,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 595}
   m_Children:
@@ -5927,8 +5927,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -5947,8 +5947,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 596}
   m_Children: []
@@ -5960,8 +5960,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -5980,8 +5980,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 596}
   m_Children: []
@@ -5993,8 +5993,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -6013,8 +6013,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 596}
   m_Children: []
@@ -6026,8 +6026,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -6046,8 +6046,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -6060,19 +6060,19 @@ MonoBehaviour:
   m_ExposedName: Channel / Distance
   m_Exposed: 1
   m_Order: 3
-  m_Category: 
+  m_Category:
   m_Min:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_Max:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_IsOutput: 0
   m_EnumValues: []
   m_ValueFilter: 0
-  m_Tooltip: 
+  m_Tooltip:
   m_Nodes:
   - m_Id: 0
     linkedSlots:
@@ -6092,8 +6092,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c117b74c5c58db542bffe25c78fe92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -6127,8 +6127,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8ee8a7543fa09e42a7c8616f60d2ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -6159,8 +6159,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -6194,8 +6194,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -6210,7 +6210,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
     name: gravity
@@ -6230,8 +6230,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 637}
   m_Children:
@@ -6246,8 +6246,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -6266,8 +6266,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 638}
   m_Children: []
@@ -6279,8 +6279,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -6299,8 +6299,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 638}
   m_Children: []
@@ -6312,8 +6312,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -6332,8 +6332,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 638}
   m_Children: []
@@ -6345,8 +6345,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -6365,8 +6365,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -6379,19 +6379,19 @@ MonoBehaviour:
   m_ExposedName: Gravity / Distance
   m_Exposed: 1
   m_Order: 4
-  m_Category: 
+  m_Category:
   m_Min:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_Max:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_IsOutput: 0
   m_EnumValues: []
   m_ValueFilter: 0
-  m_Tooltip: 
+  m_Tooltip:
   m_Nodes:
   - m_Id: 0
     linkedSlots:
@@ -6411,8 +6411,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c117b74c5c58db542bffe25c78fe92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -6446,8 +6446,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14b33987e048dc648922a474c517abee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -6472,8 +6472,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -6488,7 +6488,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
     name: b
@@ -6508,8 +6508,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 683}
   m_Children:
@@ -6524,8 +6524,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -6544,8 +6544,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 684}
   m_Children: []
@@ -6557,8 +6557,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -6577,8 +6577,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 684}
   m_Children: []
@@ -6590,8 +6590,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -6610,8 +6610,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 684}
   m_Children: []
@@ -6623,8 +6623,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -6643,8 +6643,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -6659,10 +6659,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -6679,8 +6679,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 688}
   m_Children:
@@ -6695,8 +6695,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -6715,8 +6715,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 689}
   m_Children: []
@@ -6728,8 +6728,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -6748,8 +6748,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 689}
   m_Children: []
@@ -6761,8 +6761,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -6781,8 +6781,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 689}
   m_Children: []
@@ -6794,8 +6794,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -6814,8 +6814,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8bcc906a6d398c46b18826714448709, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -6837,8 +6837,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c117b74c5c58db542bffe25c78fe92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -6872,8 +6872,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -6907,8 +6907,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -6942,8 +6942,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8bcc906a6d398c46b18826714448709, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -6965,8 +6965,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c117b74c5c58db542bffe25c78fe92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -7000,8 +7000,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -7035,8 +7035,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -7070,8 +7070,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 330e0fca1717dde4aaa144f48232aa64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -7084,19 +7084,19 @@ MonoBehaviour:
   m_ExposedName: Vortex / Distance
   m_Exposed: 1
   m_Order: 5
-  m_Category: 
+  m_Category:
   m_Min:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_Max:
     m_Type:
-      m_SerializableType: 
-    m_SerializableObject: 
+      m_SerializableType:
+    m_SerializableObject:
   m_IsOutput: 0
   m_EnumValues: []
   m_ValueFilter: 0
-  m_Tooltip: 
+  m_Tooltip:
   m_Nodes:
   - m_Id: 0
     linkedSlots:
@@ -7116,8 +7116,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c117b74c5c58db542bffe25c78fe92db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -7151,8 +7151,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -7167,7 +7167,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
     name: a
@@ -7187,8 +7187,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 732}
   m_Children:
@@ -7203,8 +7203,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -7223,8 +7223,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 733}
   m_Children: []
@@ -7236,8 +7236,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -7256,8 +7256,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 733}
   m_Children: []
@@ -7269,8 +7269,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -7289,8 +7289,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 733}
   m_Children: []
@@ -7302,8 +7302,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -7322,8 +7322,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -7338,10 +7338,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -7358,8 +7358,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 737}
   m_Children:
@@ -7374,8 +7374,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -7394,8 +7394,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 738}
   m_Children: []
@@ -7407,8 +7407,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -7427,8 +7427,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 738}
   m_Children: []
@@ -7440,8 +7440,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -7460,8 +7460,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 738}
   m_Children: []
@@ -7473,8 +7473,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -7493,8 +7493,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 955b0c175a6f3bb4582e92f3de8f0626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 2}
   m_Children: []
@@ -7518,8 +7518,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -7537,7 +7537,7 @@ MonoBehaviour:
       m_SerializableObject: '{"vector":{"x":0.0,"y":0.0,"z":0.0}}'
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -7554,8 +7554,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 743}
   m_Children:
@@ -7570,8 +7570,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -7590,8 +7590,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 744}
   m_Children: []
@@ -7603,8 +7603,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -7623,8 +7623,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 744}
   m_Children: []
@@ -7636,8 +7636,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -7656,8 +7656,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 744}
   m_Children: []
@@ -7669,8 +7669,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -7689,8 +7689,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -7708,7 +7708,7 @@ MonoBehaviour:
       m_SerializableObject: '{"vector":{"x":0.0,"y":0.0,"z":0.0}}'
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -7725,8 +7725,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 748}
   m_Children:
@@ -7741,8 +7741,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -7761,8 +7761,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 749}
   m_Children: []
@@ -7774,8 +7774,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -7794,8 +7794,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 749}
   m_Children: []
@@ -7807,8 +7807,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -7827,8 +7827,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 749}
   m_Children: []
@@ -7840,8 +7840,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -7860,8 +7860,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f9544b71b7dab44a4644b6807e8bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -7876,7 +7876,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
     name: vortex
@@ -7896,8 +7896,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 768}
   m_Children:
@@ -7912,8 +7912,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: vector
@@ -7932,8 +7932,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 769}
   m_Children: []
@@ -7945,8 +7945,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -7965,8 +7965,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 769}
   m_Children: []
@@ -7978,8 +7978,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -7998,8 +7998,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 769}
   m_Children: []
@@ -8011,8 +8011,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -8031,8 +8031,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -8047,7 +8047,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.DirectionType, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
     name: a
@@ -8067,8 +8067,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 773}
   m_Children:
@@ -8083,8 +8083,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -8103,8 +8103,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 774}
   m_Children: []
@@ -8116,8 +8116,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -8136,8 +8136,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 774}
   m_Children: []
@@ -8149,8 +8149,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -8169,8 +8169,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 774}
   m_Children: []
@@ -8182,8 +8182,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -8202,8 +8202,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -8218,7 +8218,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.DirectionType, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 0
   m_Property:
     name: b
@@ -8238,8 +8238,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 778}
   m_Children:
@@ -8254,8 +8254,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -8274,8 +8274,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 779}
   m_Children: []
@@ -8287,8 +8287,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -8307,8 +8307,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 779}
   m_Children: []
@@ -8320,8 +8320,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -8340,8 +8340,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 779}
   m_Children: []
@@ -8353,8 +8353,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -8373,8 +8373,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f2b4a846fd4c14a893cde576ad172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -8389,10 +8389,10 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.DirectionType, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: 
+      m_SerializableObject:
     m_Space: 1
   m_Property:
-    name: 
+    name:
     m_serializedType:
       m_SerializableType: UnityEditor.VFX.DirectionType, Unity.VisualEffectGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -8409,8 +8409,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 783}
   m_Children:
@@ -8425,8 +8425,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: direction
@@ -8445,8 +8445,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 784}
   m_Children: []
@@ -8458,8 +8458,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -8478,8 +8478,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 784}
   m_Children: []
@@ -8491,8 +8491,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -8511,8 +8511,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 784}
   m_Children: []
@@ -8524,8 +8524,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z
@@ -8544,8 +8544,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4c11ff25089a324daf359f4b0629b33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children: []
@@ -8578,8 +8578,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac39bd03fca81b849929b9c966f1836a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
   m_Children:
@@ -8617,8 +8617,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 789}
   m_Children: []
@@ -8630,8 +8630,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: x
@@ -8650,8 +8650,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 789}
   m_Children: []
@@ -8663,8 +8663,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: y
@@ -8683,8 +8683,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f780aa281814f9842a7c076d436932e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 789}
   m_Children: []
@@ -8696,8 +8696,8 @@ MonoBehaviour:
     m_Owner: {fileID: 0}
     m_Value:
       m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
+        m_SerializableType:
+      m_SerializableObject:
     m_Space: -1
   m_Property:
     name: z

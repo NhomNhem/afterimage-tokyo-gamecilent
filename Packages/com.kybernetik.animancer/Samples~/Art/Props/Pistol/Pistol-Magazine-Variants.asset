@@ -26,7 +26,7 @@ Material:
   - TransparentBackface
   - RayTracingPrepass
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -321,7 +321,7 @@ Material:
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -440,7 +440,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8231c727c20d639459e01298ffacd6c6, type: 3}
   m_Name: Pistol-Magazine-Variants
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Material: {fileID: 2100000, guid: c90abed22f80de548839f5b52fddfcfc, type: 2}
   _Variants:
   - {fileID: -1554229829690919223}

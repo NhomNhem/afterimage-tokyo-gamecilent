@@ -53,7 +53,7 @@ namespace GlassRefrain.Encounter {
             get { return latestSnapshot; }
         }
 
-        public event Action<EncounterLifecycleSnapshot> SnapshotChanged;
+        public event Action<EncounterLifecycleSnapshot> SnapshotChanged = delegate { };
 
         public void RegisterPlayer(EncounterParticipantRegistration registration) {
             if (playerParticipant.IsRegistered) {

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-LinearLocomotion-Mixer
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 2879811440432644098
   references:

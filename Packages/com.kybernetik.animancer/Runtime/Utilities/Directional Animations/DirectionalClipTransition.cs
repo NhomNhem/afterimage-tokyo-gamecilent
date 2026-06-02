@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace Animancer
     /// A <see cref="ClipTransition"/> which gets its clip from a
     /// <see cref="DirectionalSet{T}"/> of <see cref="AnimationClip"/>s.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <para></para>
     /// <strong>Documentation:</strong>
@@ -20,17 +20,17 @@ namespace Animancer
     /// <strong>Example:</strong><code>
     /// // Leave the Clip field empty in the Inspector and assign its AnimationSet instead.
     /// [SerializeField] private DirectionalClipTransition _Transition;
-    /// 
+    ///
     /// ...
-    /// 
+    ///
     /// // Then you can just call SetDirection and Play it like any other transition.
     /// // All of the transition's details like Fade Duration and Events will be applied to whichever clip is plays.
     /// _Transition.SetDirection(Vector2.right);
     /// _Animancer.Play(_Transition);
     /// </code></remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/DirectionalClipTransition
-    /// 
+    ///
     [Serializable]
     public class DirectionalClipTransition : ClipTransition,
         ICopyable<DirectionalClipTransition>
@@ -41,7 +41,7 @@ namespace Animancer
         [Tooltip("The animations used to determine the " + nameof(Clip))]
         private DirectionalSet<AnimationClip> _AnimationSet;
 
-        /// <summary>[<see cref="SerializeField"/>] 
+        /// <summary>[<see cref="SerializeField"/>]
         /// The <see cref="DirectionalSet{T}"/> used to determine the <see cref="ClipTransition.Clip"/>.
         /// </summary>
         public ref DirectionalSet<AnimationClip> AnimationSet
@@ -80,14 +80,6 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public override Transition<ClipState> Clone(CloneContext context)
-        {
-            var clone = new DirectionalClipTransition();
-            clone.CopyFrom(this, context);
-            return clone;
-        }
-
-        /// <inheritdoc/>
         public virtual void CopyFrom(DirectionalClipTransition copyFrom, CloneContext context)
         {
             base.CopyFrom(copyFrom, context);
@@ -98,4 +90,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

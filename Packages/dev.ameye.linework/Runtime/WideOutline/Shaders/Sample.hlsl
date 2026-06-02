@@ -36,7 +36,7 @@ void WideOutline_float(
 
     // Load encoded position.
     float2 EncodedPosition = _BlitTexture.Load(int3(uvInt, 0)).rg;
-    
+
     float2 NearestPosition = 0;
     // Early out if null position.
     if (EncodedPosition.y == -1)

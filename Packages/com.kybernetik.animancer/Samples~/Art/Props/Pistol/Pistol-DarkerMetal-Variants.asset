@@ -26,7 +26,7 @@ Material:
   - TransparentBackface
   - RayTracingPrepass
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -320,7 +320,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8231c727c20d639459e01298ffacd6c6, type: 3}
   m_Name: Pistol-DarkerMetal-Variants
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Material: {fileID: 2100000, guid: 8325bf60b3a17234f87c155a24eab5fd, type: 2}
   _Variants:
   - {fileID: 5707692439872540593}
@@ -419,7 +419,7 @@ Material:
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:

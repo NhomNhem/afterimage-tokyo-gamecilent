@@ -31,7 +31,7 @@ namespace Linework.SoftOutline
         public bool scaleWithResolution = true;
         public Resolution referenceResolution = Resolution._1080;
         public float customResolution;
-        
+
         public InjectionPoint InjectionPoint => injectionPoint;
         public bool ShowInSceneView => showInSceneView;
         public List<Outline> Outlines => outlines;
@@ -59,7 +59,7 @@ namespace Linework.SoftOutline
             OnSettingsChanged = null;
             outlines = null;
         }
-        
+
         public void SetActive(bool active)
         {
             foreach (var outline in outlines)

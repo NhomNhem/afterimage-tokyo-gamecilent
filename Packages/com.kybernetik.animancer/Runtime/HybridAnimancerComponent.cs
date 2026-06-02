@@ -1,8 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
-
-#if ! UNITY_EDITOR
-#pragma warning disable CS0618 // Type or member is obsolete (for ControllerState in Animancer Lite).
-#endif
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,10 +17,7 @@ namespace Animancer
     /// Hybrid</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/HybridAnimancerComponent
-    /// 
-#if !UNITY_EDITOR
-    [System.Obsolete(Validate.ProOnlyMessage)]
-#endif
+    ///
     [AddComponentMenu(Strings.MenuPrefix + "Hybrid Animancer Component")]
     [AnimancerHelpUrl(typeof(HybridAnimancerComponent))]
     public class HybridAnimancerComponent : NamedAnimancerComponent
@@ -688,7 +681,7 @@ namespace Animancer
 
     /// <summary>Extension methods for <see cref="HybridAnimancerComponent"/>.</summary>
     /// https://kybernetik.com.au/animancer/api/Animancer/HybridAnimancerComponentExtensions
-    /// 
+    ///
     public static class HybridAnimancerComponentExtensions
     {
         /************************************************************************************************************************/
@@ -707,4 +700,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

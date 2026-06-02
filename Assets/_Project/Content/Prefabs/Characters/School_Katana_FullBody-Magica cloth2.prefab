@@ -535,7 +535,7 @@ PrefabInstance:
     - target: {fileID: -2515852823086287158, guid: f43fcb3013c138a4780e7e10404c1541, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 789157b88d9d1c54fb4508795f7942a5, type: 2}
+      objectReference: {fileID: 2100000, guid: 33e3276122b91e44f9d25485d3cabd52, type: 2}
     - target: {fileID: -2319823373540128953, guid: f43fcb3013c138a4780e7e10404c1541, type: 3}
       propertyPath: m_RootBone
       value: 
@@ -2114,6 +2114,7 @@ MonoBehaviour:
     rotationalInterpolation: 0.5
     rootRotation: 0.5
     updateMode: 10
+    disableMode: 0
     animationPoseRatio: 0
     reductionSetting:
       simpleDistance: 0
@@ -3212,6 +3213,7 @@ MonoBehaviour:
     rotationalInterpolation: 0.5
     rootRotation: 0.5
     updateMode: 10
+    disableMode: 0
     animationPoseRatio: 0.75
     reductionSetting:
       simpleDistance: 0.023
@@ -5001,6 +5003,7 @@ MonoBehaviour:
     rotationalInterpolation: 0.5
     rootRotation: 0.5
     updateMode: 10
+    disableMode: 0
     animationPoseRatio: 0
     reductionSetting:
       simpleDistance: 0

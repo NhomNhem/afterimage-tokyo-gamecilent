@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,6 @@ namespace Animancer
     [Serializable]
     public class TransitionAssetReference :
         IAnimationClipSource,
-        ICloneable<TransitionAssetReference>,
         ICopyable<TransitionAssetReference>,
         IPolymorphic,
         ITransition,
@@ -142,17 +141,9 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public virtual TransitionAssetReference Clone(CloneContext context)
-        {
-            var clone = new TransitionAssetReference();
-            clone.CopyFrom(this, context);
-            return clone;
-        }
-
-        /// <inheritdoc/>
         public void CopyFrom(TransitionAssetReference copyFrom, CloneContext context)
         {
-            _Asset = context.GetCloneOrOriginal(copyFrom._Asset);
+            _Asset = copyFrom._Asset;
         }
 
         /************************************************************************************************************************/
@@ -164,4 +155,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

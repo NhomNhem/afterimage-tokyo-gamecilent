@@ -16,11 +16,27 @@ namespace GlassRefrain.Presentation
         private Label lastInputLabel;
         private Label lockOnTargetLabel;
 
+        private void Awake()
+        {
+            Initialize();
+        }
+
+        private void OnEnable()
+        {
+            Initialize();
+        }
+
         private void Start()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
         {
             if (uiDocument != null && uiDocument.rootVisualElement != null)
             {
                 root = uiDocument.rootVisualElement.Q<VisualElement>("debug-overlay");
+                if (root == null) return;
                 combatStateLabel = root.Q<Label>("combat-state-label");
                 enemyIntentStateLabel = root.Q<Label>("enemy-intent-label");
                 counterWindowLabel = root.Q<Label>("counter-window-label");
@@ -39,6 +55,7 @@ namespace GlassRefrain.Presentation
 
         public void UpdateCombatState(string state)
         {
+            Initialize();
             if (combatStateLabel != null)
             {
                 combatStateLabel.text = $"Combat: {state}";
@@ -47,6 +64,7 @@ namespace GlassRefrain.Presentation
 
         public void UpdateEnemyIntentState(string state)
         {
+            Initialize();
             if (enemyIntentStateLabel != null)
             {
                 enemyIntentStateLabel.text = $"Enemy: {state}";
@@ -55,6 +73,7 @@ namespace GlassRefrain.Presentation
 
         public void UpdateCounterWindowState(bool isOpen, float elapsed, float duration)
         {
+            Initialize();
             if (counterWindowLabel != null)
             {
                 if (isOpen)
@@ -70,6 +89,7 @@ namespace GlassRefrain.Presentation
 
         public void UpdateLastInputAction(string action)
         {
+            Initialize();
             if (lastInputLabel != null)
             {
                 lastInputLabel.text = $"Last Input: {action}";
@@ -78,6 +98,7 @@ namespace GlassRefrain.Presentation
 
         public void UpdateLockOnTarget(string target)
         {
+            Initialize();
             if (lockOnTargetLabel != null)
             {
                 lockOnTargetLabel.text = $"LockOn: {target}";

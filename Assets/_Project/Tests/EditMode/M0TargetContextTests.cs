@@ -45,6 +45,47 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void LockOnSecondPressReleasesFocusedTarget() {
+            var context = new M0TargetContext();
+            context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
+
+            Assert.That(context.ConsumeInputIntent(CreateInputSnapshot(true)), Is.True);
+            Assert.That(context.Snapshot.IsLockedOn, Is.True);
+
+            Assert.That(context.ConsumeInputIntent(CreateInputSnapshot(true)), Is.True);
+            Assert.That(context.Snapshot.FocusState, Is.EqualTo(TargetFocusState.Inactive));
+            Assert.That(context.Snapshot.IsLockedOn, Is.False);
+            Assert.That(context.Snapshot.ReleaseReason, Is.EqualTo("LockOn toggled off"));
+        }
+
+        [Test]
+        public void LockOnPressSequence_AcquireReleaseAcquire() {
+            var context = new M0TargetContext();
+            context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
+
+            Assert.That(context.ConsumeInputIntent(CreateInputSnapshot(true)), Is.True);
+            Assert.That(context.Snapshot.IsLockedOn, Is.True);
+            Assert.That(context.Snapshot.TargetId, Is.EqualTo("Enemy_01"));
+
+            Assert.That(context.ConsumeInputIntent(CreateInputSnapshot(true)), Is.True);
+            Assert.That(context.Snapshot.IsLockedOn, Is.False);
+
+            Assert.That(context.ConsumeInputIntent(CreateInputSnapshot(true)), Is.True);
+            Assert.That(context.Snapshot.IsLockedOn, Is.True);
+            Assert.That(context.Snapshot.TargetId, Is.EqualTo("Enemy_01"));
+        }
+
+        [Test]
+        public void LockOnPressWithoutValidTarget_StaysAcquireRequested() {
+            var context = new M0TargetContext();
+
+            Assert.That(context.ConsumeInputIntent(CreateInputSnapshot(true)), Is.True);
+            Assert.That(context.Snapshot.FocusState, Is.EqualTo(TargetFocusState.AcquireRequested));
+            Assert.That(context.Snapshot.IsLockedOn, Is.False);
+            Assert.That(context.Snapshot.AcquireReason, Is.EqualTo("LockOn request pending valid target"));
+        }
+
+        [Test]
         public void TargetContextCanReleaseFocusedTarget() {
             var context = new M0TargetContext();
             context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
@@ -112,6 +153,21 @@ namespace GlassRefrain.Tests.EditMode {
                 foreach (var pattern in forbiddenPatterns)
                     Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden pattern: " + pattern);
             }
+        }
+
+        [Test]
+        public void ResetForEncounter_ClearsLockOnState() {
+            var context = new M0TargetContext();
+            context.SetTargetValidity(new TargetValidityContext("Enemy_01", true, "Current duel enemy"));
+            Assert.That(context.ConsumeInputIntent(CreateInputSnapshot(true)), Is.True);
+            Assert.That(context.Snapshot.IsLockedOn, Is.True);
+
+            context.ResetForEncounter("Encounter reset");
+
+            Assert.That(context.Snapshot.IsLockedOn, Is.False);
+            Assert.That(context.Snapshot.FocusState, Is.EqualTo(TargetFocusState.Inactive));
+            Assert.That(context.Snapshot.TargetId, Is.EqualTo(string.Empty));
+            Assert.That(context.Snapshot.ReleaseReason, Is.EqualTo("Encounter reset"));
         }
 
         private static InputIntentSnapshot CreateInputSnapshot(bool lockOnPressed) {

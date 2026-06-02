@@ -11,20 +11,20 @@ namespace Linework.SurfaceFill
     public class SurfaceFillSettings : ScriptableObject
     {
         internal Action OnSettingsChanged;
-        
+
         [SerializeField] private InjectionPoint injectionPoint = InjectionPoint.AfterRenderingPostProcessing;
         [SerializeField] private bool showInSceneView = true;
         [SerializeField] private List<Fill> fills = new(8);
-        
+
         public InjectionPoint InjectionPoint => injectionPoint;
         public bool ShowInSceneView => showInSceneView;
         public List<Fill> Fills => fills;
-        
+
         public void Changed()
         {
             OnSettingsChanged?.Invoke();
         }
-        
+
         private void OnValidate()
         {
 #if UNITY_EDITOR
@@ -47,7 +47,7 @@ namespace Linework.SurfaceFill
                 fill.SetActive(active);
             }
         }
-        
+
 #if UNITY_EDITOR
         private class OnDestroyProcessor: AssetModificationProcessor
         {

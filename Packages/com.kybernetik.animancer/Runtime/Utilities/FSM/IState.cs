@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace Animancer.FSM
     /// Finite State Machines</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.FSM/IState
-    /// 
+    ///
     public interface IState
     {
         /// <summary>Can this state be entered?</summary>
@@ -77,7 +77,7 @@ namespace Animancer.FSM
     /// State Types</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.FSM/State
-    /// 
+    ///
     public abstract class State : IState
     {
         /************************************************************************************************************************/
@@ -102,40 +102,40 @@ namespace Animancer.FSM
     /************************************************************************************************************************/
 
     /// <summary>Various extension methods for <see cref="IState"/> and <see cref="IOwnedState{TState}"/>.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Documentation:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/manual/fsm">
     /// Finite State Machines</see>
     /// </remarks>
-    /// 
+    ///
     /// <example><code>
     /// public class Character : MonoBehaviour
     /// {
     ///     public StateMachine&lt;CharacterState&gt; StateMachine { get; private set; }
     /// }
-    /// 
+    ///
     /// public class CharacterState : StateBehaviour, IOwnedState&lt;CharacterState&gt;
     /// {
     ///     [SerializeField]
     ///     private Character _Character;
     ///     public Character Character =&gt; _Character;
-    ///     
+    ///
     ///     public StateMachine&lt;CharacterState&gt; OwnerStateMachine =&gt; _Character.StateMachine;
     /// }
-    /// 
+    ///
     /// public class CharacterBrain : MonoBehaviour
     /// {
     ///     [SerializeField] private Character _Character;
     ///     [SerializeField] private CharacterState _Jump;
-    ///     
+    ///
     ///     private void Update()
     ///     {
     ///         if (Input.GetKeyDown(KeyCode.Space))
     ///         {
     ///             // Normally you would need to refer to both the state machine and the state:
     ///             _Character.StateMachine.TrySetState(_Jump);
-    ///             
+    ///
     ///             // But since CharacterState implements IOwnedState you can use these extension methods:
     ///             _Jump.TryEnterState();
     ///         }
@@ -157,11 +157,11 @@ namespace Animancer.FSM
     /// {
     ///     public void SetTarget(Transform target) { }
     /// }
-    /// 
+    ///
     /// public class CharacterBrain : MonoBehaviour
     /// {
     ///     [SerializeField] private AttackState _Attack;
-    ///     
+    ///
     ///     private void Update()
     ///     {
     ///         if (Input.GetMouseButtonDown(0))
@@ -424,4 +424,3 @@ namespace Animancer.FSM
         /************************************************************************************************************************/
     }
 }
-

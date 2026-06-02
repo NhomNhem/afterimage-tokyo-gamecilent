@@ -13,14 +13,19 @@
         "GlassRefrain.Input",
         "GlassRefrain.Locomotion",
         "GlassRefrain.Memory",
+        "GlassRefrain.Presentation",
+        "GlassRefrain.Camera",
         "GlassRefrain.Targeting",
+        "NhemDangFugBixs.Attributes",
         "NhemDangFugBixs.Logging",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "VContainer",
         "VContainer.Editor"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,

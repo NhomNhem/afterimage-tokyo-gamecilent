@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0414 // Field is assigned but its value is never used.
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
@@ -12,15 +12,15 @@ namespace Animancer.Samples.InverseKinematics
     /// Demonstrates how to use Unity's Inverse Kinematics (IK) system to
     /// adjust a character's feet according to the terrain they are moving over.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/ik/uneven-ground">
     /// Uneven Ground</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.InverseKinematics/RaycastFootIK
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Inverse Kinematics - Raycast Foot IK")]
     [AnimancerHelpUrl(typeof(RaycastFootIK))]
     public class RaycastFootIK : MonoBehaviour

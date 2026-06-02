@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1ae14bf1f98371428ee080a75de9aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _FocalPoint: {x: 0, y: 1, z: 0}
   _Sensitivity: {x: 1, y: -0.75, z: -0.1}
   _MinZoom: 0.5

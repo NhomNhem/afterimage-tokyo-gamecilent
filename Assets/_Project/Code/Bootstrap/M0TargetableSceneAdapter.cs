@@ -1,43 +1,104 @@
 using UnityEngine;
 using VContainer;
 using GlassRefrain.Core;
+using NhemDangFugBixs.NhemLogging;
+using GlassRefrain.Targeting;
 
 namespace GlassRefrain.Bootstrap {
-    /// <summary>
-    /// M0 prototype-only scene adapter for a static targetable placeholder.
-    /// Implements ITargetable and self-registers with ITargetableRegistry via VContainer injection.
-    /// Use only for PlayMode verification of Story 1-4 hit/whiff resolution.
-    /// Not for production: no health, no AI, no animation, no hit reaction.
-    /// </summary>
     public sealed class M0TargetableSceneAdapter : MonoBehaviour, ITargetable {
         [SerializeField] private string targetId = "enemy-m0-placeholder";
 
-        private ITargetableRegistry? registry;
+        private ITargetableRegistry registry;
+        private INhemLogger logger;
+        private bool isRegistered;
 
         public string TargetId => targetId;
         public bool IsTargetable => gameObject.activeInHierarchy;
 
         [Inject]
-        internal void Construct(ITargetableRegistry targetableRegistry) {
+        public void Construct(ITargetableRegistry targetableRegistry, INhemLogger injectedLogger) {
             registry = targetableRegistry;
+            logger = injectedLogger;
+#if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
+            logger?.Log($"[M0Target] SceneAdapter Construct called: targetId={targetId} active={gameObject.activeInHierarchy}");
+#endif
+            TryRegister("Construct");
         }
 
         private void Start() {
-            if (registry != null) {
-                registry.Register(this);
-            }
+            TryRegister("Start");
+        }
+
+        private void OnEnable() {
+            TryRegister("OnEnable");
+        }
+
+        private void OnDisable() {
+            Unregister("OnDisable");
         }
 
         private void OnDestroy() {
-            if (registry != null) {
-                registry.Unregister(this);
-                registry = null;
-            }
+            Unregister("OnDestroy");
+            registry = null;
+            logger = null;
         }
 
         public Axis2 GetPosition() {
             var pos = transform.position;
             return new Axis2(pos.x, pos.z);
+        }
+
+        private void TryRegister(string source) {
+#if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
+            logger?.Log($"[M0Target] SceneAdapter TryRegister: source={source} targetId={targetId} active={isActiveAndEnabled} isRegistered={isRegistered}");
+#endif
+
+            if (registry == null) {
+                logger?.LogWarning("[M0Target] SceneAdapter register skipped: registry is null");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(targetId)) {
+                logger?.LogWarning("[M0Target] SceneAdapter register skipped: targetId is empty");
+                return;
+            }
+
+            if (!isActiveAndEnabled) {
+                logger?.LogWarning("[M0Target] SceneAdapter register skipped: object inactive");
+                return;
+            }
+
+            if (isRegistered) {
+#if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
+                logger?.Log("[M0Target] SceneAdapter register skipped: already registered");
+#endif
+                return;
+            }
+
+            registry.Register(this);
+            isRegistered = true;
+
+            var currentEnemy = registry.GetCurrentDuelEnemy();
+            var currentEnemyId = currentEnemy != null ? currentEnemy.TargetId : "None";
+            var registeredCount = registry is M0TargetableRegistry typedRegistry
+                ? typedRegistry.GetAllRegisteredTargets().Count
+                : -1;
+            logger?.Log($"[M0Target] SceneAdapter register success: currentDuelEnemyId={currentEnemyId} count={registeredCount}");
+        }
+
+        private void Unregister(string source) {
+            if (registry == null) return;
+            if (!isRegistered) return;
+
+            registry.Unregister(this);
+            isRegistered = false;
+
+            var currentEnemy = registry.GetCurrentDuelEnemy();
+            var currentEnemyId = currentEnemy != null ? currentEnemy.TargetId : "None";
+            var registeredCount = registry is M0TargetableRegistry typedRegistry
+                ? typedRegistry.GetAllRegisteredTargets().Count
+                : -1;
+            logger?.Log($"[M0Target] SceneAdapter unregister: source={source} currentDuelEnemyId={currentEnemyId} count={registeredCount}");
         }
     }
 }

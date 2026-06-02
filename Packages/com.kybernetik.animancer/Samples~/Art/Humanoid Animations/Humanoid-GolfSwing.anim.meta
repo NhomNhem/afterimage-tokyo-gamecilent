@@ -7,13 +7,6 @@ labels:
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293524
-  packageName: Animancer Lite v8
-  packageVersion: 8.3.1
-  assetPath: Packages/com.kybernetik.animancer/Samples~/Art/Humanoid Animations/Humanoid-GolfSwing.anim
-  uploadId: 895130
+  userData:
+  assetBundleName:
+  assetBundleVariant:

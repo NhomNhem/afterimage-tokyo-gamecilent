@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -9,15 +9,15 @@ namespace Animancer.Samples.Basics
     /// <summary>
     /// Combines <see cref="BasicMovementAnimations"/> and <see cref="PlayTransitionOnClick"/> into one script.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/basics/character">
     /// Basic Character</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Basics/BasicCharacterAnimations
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Basics - Basic Character Animations")]
     [AnimancerHelpUrl(typeof(BasicCharacterAnimations))]
     public class BasicCharacterAnimations : MonoBehaviour

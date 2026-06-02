@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using UnityEngine;
 
@@ -75,4 +75,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

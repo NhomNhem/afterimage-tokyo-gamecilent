@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using UnityEngine;
 
@@ -8,7 +8,7 @@ namespace Animancer
     /// A component which takes the root motion from an <see cref="UnityEngine.Animator"/>
     /// and applies it to a different object.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// This can be useful if the character's <see cref="Rigidbody"/> or <see cref="CharacterController"/> is on a
     /// parent of the <see cref="UnityEngine.Animator"/> to keep the model separate from the logical components.
@@ -17,9 +17,9 @@ namespace Animancer
     /// <see href="https://kybernetik.com.au/animancer/docs/manual/other/root-motion#redirecting-root-motion">
     /// Redirecting Root Motion</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/RedirectRootMotion
-    /// 
+    ///
     [HelpURL("https://kybernetik.com.au/animancer/api/Animancer/" + nameof(RedirectRootMotion))]
     [RequireComponent(typeof(Animator))]
     public abstract class RedirectRootMotion : MonoBehaviour
@@ -72,7 +72,7 @@ namespace Animancer
 
     /// <summary>A <see cref="RedirectRootMotion"/> with a generic <see cref="Target"/>.</remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/RedirectRootMotion_1
-    /// 
+    ///
     [HelpURL("https://kybernetik.com.au/animancer/api/Animancer/" + nameof(RedirectRootMotion<T>) + "_1")]
     public abstract class RedirectRootMotion<T> : RedirectRootMotion
         where T : Object
@@ -117,4 +117,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

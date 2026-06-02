@@ -8,7 +8,7 @@ namespace Linework.Common
     {
         public List<ShaderPropertyOverride> overrides = new();
         private MaterialPropertyBlock propertyBlock;
-        
+
         public void AddFloatOverride(string propertyName, float value)
         {
             overrides.Add(new ShaderPropertyOverride
@@ -18,7 +18,7 @@ namespace Linework.Common
                 floatValue = value
             });
         }
-        
+
         public void AddIntOverride(string propertyName, int value)
         {
             overrides.Add(new ShaderPropertyOverride
@@ -28,7 +28,7 @@ namespace Linework.Common
                 intValue = value
             });
         }
-        
+
         public void AddColorOverride(string propertyName, Color color)
         {
             overrides.Add(new ShaderPropertyOverride
@@ -38,7 +38,7 @@ namespace Linework.Common
                 colorValue = color
             });
         }
-        
+
         public void AddVectorOverride(string propertyName, Vector4 value)
         {
             overrides.Add(new ShaderPropertyOverride
@@ -71,12 +71,12 @@ namespace Linework.Common
 
             propertyBlock ??= new MaterialPropertyBlock();
             propertyBlock.Clear();
-            
+
 
             foreach (var propertyOverride in overrides)
             {
                 propertyOverride.CachePropertyID();
-                
+
                 switch (propertyOverride.type)
                 {
                     case ShaderPropertyType.Float:
@@ -96,7 +96,7 @@ namespace Linework.Common
                         break;
                 }
             }
-            
+
             rend.SetPropertyBlock(propertyBlock);
         }
     }

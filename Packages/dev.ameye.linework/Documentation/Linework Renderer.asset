@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1bf42c897c344772a8dea9cae097da4, type: 3}
   m_Name: FastOutline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_Active: 0
   settings: {fileID: 11400000, guid: 4f1175f712c9643d3823c6c6af00c7ad, type: 2}
   shaders:
@@ -29,7 +29,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
   m_Name: Linework Renderer
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f513a53c9ad43a3860c8a56ea7dd26b, type: 3}
   m_Name: SurfaceFill
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_Active: 0
   settings: {fileID: 11400000, guid: cf7f285ee54ef49d9b9d1863ef75ea60, type: 2}
   shaders:
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e598cd55476104d909f677d2b056f508, type: 3}
   m_Name: SoftOutline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_Active: 1
   settings: {fileID: 11400000, guid: 175e846df6f884c13ac188909568c953, type: 2}
   shaders:
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521933c422ef94aa58e7d435b6f8921a, type: 3}
   m_Name: WideOutline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_Active: 0
   settings: {fileID: 11400000, guid: 77919a79a0a6848a48cc159fda371efb, type: 2}
   shaders:
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9377bada70366419aa6301068e988aa4, type: 3}
   m_Name: EdgeDetection
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_Active: 0
   settings: {fileID: 11400000, guid: e1bb6646214c84437814a6e99de108c9, type: 2}
   shaders:

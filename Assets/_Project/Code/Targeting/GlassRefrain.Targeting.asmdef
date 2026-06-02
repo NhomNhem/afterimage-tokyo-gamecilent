@@ -3,7 +3,8 @@
   "rootNamespace": "GlassRefrain.Targeting",
   "references": [
     "GlassRefrain.Core",
-    "GlassRefrain.Shared"
+    "GlassRefrain.Shared",
+    "NhemDangFugBixs.Attributes"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

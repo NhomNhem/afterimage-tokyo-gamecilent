@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -10,15 +10,15 @@ namespace Animancer.Samples.AnimatorControllers.GameKit
     /// A <see cref="CharacterState"/> which teleports back to the starting position, plays an animation then returns
     /// to the <see cref="Character.Idle"/> state.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/animator-controllers/3d-game-kit/respawn">
     /// 3D Game Kit/Respawn</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.AnimatorControllers.GameKit/RespawnState
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Respawn State")]
     [AnimancerHelpUrl(typeof(RespawnState))]
     public class RespawnState : CharacterState

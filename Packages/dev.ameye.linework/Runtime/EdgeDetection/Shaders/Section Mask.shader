@@ -32,7 +32,7 @@ Shader "Hidden/Outlines/Edge Detection/Section Mask"
             #else
                 #pragma target 4.5 DOTS_INSTANCING_ON
             #endif
-            
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -44,7 +44,7 @@ Shader "Hidden/Outlines/Edge Detection/Section Mask"
                 float4 positionHCS : SV_POSITION;
                 UNITY_VERTEX_OUTPUT_STEREO // VR support
             };
-            
+
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;

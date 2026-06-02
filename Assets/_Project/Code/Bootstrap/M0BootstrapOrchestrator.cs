@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GlassRefrain.Infrastructure;
+using NhemDangFugBixs.NhemLogging;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ namespace GlassRefrain.Bootstrap {
     /// </summary>
     public sealed class M0BootstrapOrchestrator : MonoBehaviour {
         [SerializeField] private bool loadOnStart = true;
+        private INhemLogger logger;
 
         private async void Start() {
             if (loadOnStart) {
@@ -18,8 +20,12 @@ namespace GlassRefrain.Bootstrap {
             }
         }
 
+        public void SetLogger(INhemLogger log) {
+            logger = log;
+        }
+
         public async Task LoadM0SceneSetAsync() {
-            Debug.Log("[Bootstrap] Starting M0 Additive Scene Load...");
+            logger?.Log("[Bootstrap] Starting M0 Additive Scene Load...");
 
             // Strict order per ADR-0001: Bootstrap (current) -> Systems -> Level -> Gameplay -> Camera -> UI
             var scenesToLoad = new List<string> {
@@ -33,13 +39,13 @@ namespace GlassRefrain.Bootstrap {
             foreach (var scenePath in scenesToLoad) {
                 if (string.IsNullOrEmpty(scenePath)) continue;
 
-                Debug.Log($"[Bootstrap] Loading scene additive: {scenePath}");
-                
+                logger?.Log($"[Bootstrap] Loading scene additive: {scenePath}");
+
                 // Using scene path directly. Ensure scenes are in Build Settings.
                 var operation = SceneManager.LoadSceneAsync(scenePath, LoadSceneMode.Additive);
-                
+
                 if (operation == null) {
-                    Debug.LogError($"[Bootstrap] Failed to start load for scene: {scenePath}. Is it in Build Settings?");
+                    logger?.LogError($"[Bootstrap] Failed to start load for scene: {scenePath}. Is it in Build Settings?");
                     continue;
                 }
 
@@ -48,7 +54,7 @@ namespace GlassRefrain.Bootstrap {
                 }
             }
 
-            Debug.Log("[Bootstrap] M0 Scene Set Load Complete.");
+            logger?.Log("[Bootstrap] M0 Scene Set Load Complete.");
         }
     }
 }

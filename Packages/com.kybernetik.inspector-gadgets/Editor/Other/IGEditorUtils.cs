@@ -538,7 +538,7 @@ namespace InspectorGadgets.Editor
 
         /************************************************************************************************************************/
 
-        /// <summary>[Pro-Only] 
+        /// <summary>[Pro-Only]
         /// Draws the GUI for all <see cref="Attributes.BaseInspectableAttribute"/>s of the `targets`.
         /// </summary>
         public static void DoInspectableGUI(Object[] targets)
@@ -812,7 +812,7 @@ namespace InspectorGadgets.Editor
         /************************************************************************************************************************/
 
         /// <summary>Registers the specified method to be called while drawing the <see cref="SceneView"/> GUI.</summary>
-        /// 
+        ///
         /// <remarks>
         /// This allows you to use the <see cref="Handles"/> class which isn't available during a
         /// <see cref="MonoBehaviour"/> <c>OnDrawGizmos</c> message.
@@ -822,13 +822,13 @@ namespace InspectorGadgets.Editor
         /// <para></para>
         /// Otherwise it will be de-registered when the delegate itself is garbage collected.
         /// </remarks>
-        /// 
+        ///
         /// <example>
         /// You can prevent the delegate from being garbage collected by storing it as you pass it into this method.
         /// <para></para><code>
         /// #if UNITY_EDITOR
         ///     private Action _OnSceneGUI;
-        /// 
+        ///
         ///     public ThisClassName()// Constructor.
         ///     {
         ///         InspectorGadgets.Editor.IGEditorUtils.OnSceneGUI(_OnSceneGUI = () =>
@@ -1063,7 +1063,7 @@ namespace InspectorGadgets.Editor
                     { typeof(Texture), "png" },
                     { typeof(Texture2D), "png" },
                     { typeof(Sprite), "png" },
-                    
+
 #if UNITY_ANIMATION
                     { typeof(AnimationClip), "anim" },
                     { typeof(RuntimeAnimatorController), "controller" },
@@ -1071,12 +1071,12 @@ namespace InspectorGadgets.Editor
                     { typeof(AvatarMask), "mask" },
                     { typeof(Avatar), null },
 #endif
-                    
+
 #if UNITY_AUDIO
                     { typeof(UnityEngine.Audio.AudioMixer), "mixer" },
                     { typeof(AudioClip), null },
 #endif
-                    
+
 #if UNITY_PHYSICS_2D
                     { typeof(PhysicsMaterial2D), "physicsMaterial2D" },
 #endif

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -10,15 +10,15 @@ namespace Animancer.Samples.Basics
     /// This script is basically the same as <see cref="PlayAnimationOnClick"/>, except that it uses
     /// <see href="https://kybernetik.com.au/animancer/docs/manual/transitions">Transitions</see>.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/basics/transitions">
     /// Transitions</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Basics/PlayTransitionOnClick
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Basics - Play Transition On Click")]
     [AnimancerHelpUrl(typeof(PlayTransitionOnClick))]
     public class PlayTransitionOnClick : MonoBehaviour

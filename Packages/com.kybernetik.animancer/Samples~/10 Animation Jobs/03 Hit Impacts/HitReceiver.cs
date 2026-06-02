@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -14,15 +14,15 @@ namespace Animancer.Samples.Jobs
     /// A sample component that demonstrates how <see cref="SimpleLean"/>
     /// can be used as a dynamic response to getting hit.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/hit-impacts">
     /// Hit Impacts</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/HitReceiver
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Jobs - Hit Receiver")]
     [AnimancerHelpUrl(typeof(HitReceiver))]
     public class HitReceiver : MonoBehaviour

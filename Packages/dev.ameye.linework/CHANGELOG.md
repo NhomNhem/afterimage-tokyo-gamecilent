@@ -206,7 +206,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed from `TextureDesc.format` to `TextureDesc.colorFormat` for improved compatibility with older version of Unity 6
-- Temporarily disabled fill functionality for section map 
+- Temporarily disabled fill functionality for section map
 
 ## [1.4.1] - 2025-02-18
 
@@ -306,7 +306,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MSAA + Soft Outline: Fixed rendering issues when MSAA is enabled for soft outline
 - MSAA + Wide Outline: Fixed console errors when MSAA is enabled for wide outline (rendering artifacts are still present!)
 - Surface Fill: Fixed rotation values not being applied correctly for texture patterns
-- Unity 6: Fixed stencil rendering issue 
+- Unity 6: Fixed stencil rendering issue
 
 ## [1.2.6] - 2024-11-27
 

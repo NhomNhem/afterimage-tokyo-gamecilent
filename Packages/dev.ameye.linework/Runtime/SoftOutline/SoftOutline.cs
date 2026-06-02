@@ -29,7 +29,7 @@ namespace Linework.SoftOutline
 #else
             private readonly ProfilingSampler maskSampler, silhouetteSampler, blurSampler, outlineSampler;
 #endif
-            
+
             public SoftOutlinePass()
             {
                 profilingSampler = new ProfilingSampler(nameof(SoftOutlinePass));
@@ -41,7 +41,7 @@ namespace Linework.SoftOutline
                 outlineSampler = new ProfilingSampler(ShaderPassName.Outline);
 #endif
             }
-            
+
             public bool Setup(ref SoftOutlineSettings softOutlineSettings, ref Material maskMaterial, ref Material silhouetteMaterial, ref Material silhouetteInstancedMaterial, ref Material blurMaterial, ref Material compositeMaterial)
             {
                 settings = softOutlineSettings;
@@ -66,9 +66,9 @@ namespace Linework.SoftOutline
                     {
                         continue;
                     }
-                    
+
                     var silhouette = outline.gpuInstancing ? outline.materialInstanced : outline.material;
-                    
+
                     silhouette.SetColor(CommonShaderPropertyId.OutlineColor, settings.type == OutlineType.Hard ? Color.white : outline.color);
                     if(outline.occlusion == SoftOutlineOcclusion.AsMask) silhouette.SetColor(CommonShaderPropertyId.OutlineColor, Color.clear);
 
@@ -87,7 +87,7 @@ namespace Linework.SoftOutline
                             silhouette.SetFloat(CommonShaderPropertyId.CullMode, (float) CullMode.Back);
                             break;
                     }
-                    
+
                     switch (outline.occlusion)
                     {
                         case SoftOutlineOcclusion.Always:
@@ -125,7 +125,7 @@ namespace Linework.SoftOutline
                         blur.SetFloat(CommonShaderPropertyId.ReferenceResolution, settings.customResolution);
                         break;
                 }
-                
+
                 if (settings.dilationMethod is DilationMethod.Box or DilationMethod.Gaussian or DilationMethod.Dilate)
                 {
                     blur.SetInt(ShaderPropertyId.KernelSize, settings.kernelSize);
@@ -161,7 +161,7 @@ namespace Linework.SoftOutline
                 }
                 return false;
             }
-            
+
             private static bool ShouldRenderOutline(Outline outline)
             {
                 return outline.IsActive() && outline.occlusion != SoftOutlineOcclusion.AsMask;
@@ -178,7 +178,7 @@ namespace Linework.SoftOutline
                 internal readonly List<RendererListHandle> maskRendererListHandles = new();
                 internal readonly List<(RendererListHandle handle, bool vertexAnimated)> silhouetteRendererListHandles = new();
             }
-            
+
             public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
             {
                 var resourceData = frameData.Get<UniversalResourceData>();
@@ -201,7 +201,7 @@ namespace Linework.SoftOutline
                     {
                         builder.UseRendererList(rendererListHandle);
                     }
-                  
+
                     builder.AllowPassCulling(false);
 
                     builder.SetRenderFunc((PassData data, RasterGraphContext context) =>
@@ -212,25 +212,25 @@ namespace Linework.SoftOutline
                         }
                     });
                 }
-                
+
                 // 2. Silhouette.
                 // -> Render a silhouette.
                 using (var builder = renderGraph.AddRasterRenderPass<PassData>(ShaderPassName.Silhouette, out var passData))
                 {
                     builder.SetRenderAttachment(silhouetteHandle, 0);
                     builder.SetRenderAttachmentDepth(resourceData.activeDepthTexture);
-                   
+
                     builder.SetGlobalTextureAfterPass(silhouetteHandle, ShaderPropertyId.SilhouetteBuffer);
-                    
+
                     InitSilhouetteRendererLists(renderGraph, frameData, ref passData);
                     foreach (var rendererListHandle in passData.silhouetteRendererListHandles)
                     {
                         builder.UseRendererList(rendererListHandle.handle);
                     }
-                    
+
                     builder.AllowGlobalStateModification(true); // vertex animation
                     builder.AllowPassCulling(false);
-                
+
                     builder.SetRenderFunc((PassData data, RasterGraphContext context) =>
                     {
                         foreach (var handle in data.silhouetteRendererListHandles)
@@ -239,9 +239,9 @@ namespace Linework.SoftOutline
                             {
                                 context.cmd.EnableKeyword(Keyword.OutlineColor);
                             }
-                            
+
                             context.cmd.DrawRendererList(handle.handle);
-                            
+
                             if (handle.vertexAnimated)
                             {
                                 context.cmd.DisableKeyword(Keyword.OutlineColor);
@@ -249,20 +249,20 @@ namespace Linework.SoftOutline
                         }
                     });
                 }
-                
+
                 // 3. Blur.
                 // -> Blur the silhouette.
                 using (var builder = renderGraph.AddUnsafePass<PassData>(ShaderPassName.Blur, out _))
                 {
                     builder.UseTexture(silhouetteHandle);
                     builder.UseTexture(blurHandle, AccessFlags.Write);
-                    
+
                     builder.AllowPassCulling(false);
-                
+
                     builder.SetRenderFunc((PassData _, UnsafeGraphContext context) =>
                     {
                         var cmd = CommandBufferHelpers.GetNativeCommandBuffer(context.cmd);
-                
+
                         switch (settings.dilationMethod)
                         {
                             case DilationMethod.Box or DilationMethod.Gaussian or DilationMethod.Dilate:
@@ -283,7 +283,7 @@ namespace Linework.SoftOutline
                         }
                     });
                 }
-                
+
                 // 4. Outline.
                 // -> Render an outline.
                 using (var builder = renderGraph.AddRasterRenderPass<PassData>(ShaderPassName.Outline, out _))
@@ -297,9 +297,9 @@ namespace Linework.SoftOutline
                     builder.UseTexture(source);
                     builder.SetRenderAttachment(resourceData.activeColorTexture, 0);
                     builder.SetRenderAttachmentDepth(resourceData.activeDepthTexture);
-                
+
                     builder.AllowPassCulling(false);
-                
+
                     builder.SetRenderFunc((PassData _, RasterGraphContext context) =>
                     {
                         Blitter.BlitTexture(context.cmd, source, Vector2.one, composite, ShaderPass.Outline);
@@ -310,13 +310,13 @@ namespace Linework.SoftOutline
             private void InitMaskRendererLists(RenderGraph renderGraph, ContextContainer frameData, ref PassData passData)
             {
                 passData.maskRendererListHandles.Clear();
-                
+
                 var renderingData = frameData.Get<UniversalRenderingData>();
                 var cameraData = frameData.Get<UniversalCameraData>();
                 var lightData = frameData.Get<UniversalLightData>();
-                
+
                 var sortingCriteria = cameraData.defaultOpaqueSortFlags;
-                
+
                 var i = 0;
                 foreach (var outline in settings.Outlines)
                 {
@@ -325,7 +325,7 @@ namespace Linework.SoftOutline
                         i++;
                         continue;
                     }
-                    
+
                     var drawingSettings = RenderingUtils.CreateDrawingSettings(RenderUtils.DefaultShaderTagIds, renderingData, cameraData, lightData, sortingCriteria);
                     drawingSettings.overrideMaterial = mask;
                     drawingSettings.overrideShaderPassIndex = ShaderPass.Mask;
@@ -337,14 +337,14 @@ namespace Linework.SoftOutline
                         OutlineRenderQueue.OpaqueAndTransparent => RenderQueueRange.all,
                         _ => throw new ArgumentOutOfRangeException()
                     };
-                    
+
                     var filteringSettings = new FilteringSettings(renderQueueRange, outline.layerMask, outline.RenderingLayer);
                     var renderStateBlock = new RenderStateBlock(RenderStateMask.Nothing);
 
                     var blendState = BlendState.defaultValue;
                     blendState.blendState0 = new RenderTargetBlendState(0);
                     renderStateBlock.blendState = blendState;
-                    
+
                     var stencilState = StencilState.defaultValue;
                     stencilState.enabled = true;
                     stencilState.SetCompareFunction(CompareFunction.Always);
@@ -355,7 +355,7 @@ namespace Linework.SoftOutline
                     renderStateBlock.mask |= RenderStateMask.Stencil;
                     renderStateBlock.stencilReference = 1 << i;
                     renderStateBlock.stencilState = stencilState;
-                    
+
                     var handle = new RendererListHandle();
                     RenderUtils.CreateRendererListWithRenderStateBlock(renderGraph, ref renderingData.cullResults, drawingSettings, filteringSettings, renderStateBlock,
                         ref handle);
@@ -389,7 +389,7 @@ namespace Linework.SoftOutline
                         drawingSettings.overrideMaterialPassIndex = ShaderPass.Silhouette;
                         drawingSettings.enableInstancing = outline.gpuInstancing;
                     }
-                    
+
                     var renderQueueRange = outline.renderQueue switch
                     {
                         OutlineRenderQueue.Opaque => RenderQueueRange.opaque,
@@ -397,11 +397,11 @@ namespace Linework.SoftOutline
                         OutlineRenderQueue.OpaqueAndTransparent => RenderQueueRange.all,
                         _ => throw new ArgumentOutOfRangeException()
                     };
-                
+
                     var filteringSettings = new FilteringSettings(renderQueueRange, outline.layerMask, outline.RenderingLayer);
-                    
+
                     var renderStateBlock = new RenderStateBlock(RenderStateMask.Nothing);
-                    
+
                     var stencilState = StencilState.defaultValue;
                     stencilState.enabled = true;
                     stencilState.SetCompareFunction(outline.occlusion == SoftOutlineOcclusion.WhenOccluded ? CompareFunction.NotEqual : CompareFunction.Always);
@@ -413,7 +413,7 @@ namespace Linework.SoftOutline
                     renderStateBlock.mask |= RenderStateMask.Stencil;
                     renderStateBlock.stencilReference = 1 << i;
                     renderStateBlock.stencilState = stencilState;
-                    
+
                     if (outline.vertexAnimation)
                     {
                         var depthState = DepthState.defaultValue;
@@ -440,20 +440,20 @@ namespace Linework.SoftOutline
                     RenderUtils.CreateRendererListWithRenderStateBlock(renderGraph, ref renderingData.cullResults, drawingSettings, filteringSettings, renderStateBlock,
                         ref handle);
                     passData.silhouetteRendererListHandles.Add((handle, outline.vertexAnimation));
-                    
+
                     i++;
                 }
             }
-            
+
             private void CreateRenderGraphTextures(RenderGraph renderGraph, UniversalResourceData resourceData, out TextureHandle silhouetteHandle,
                 out TextureHandle blurHandle)
             {
                 var cameraDescriptor = resourceData.activeColorTexture.GetDescriptor(renderGraph);
-                
-                const float renderTextureScale = 1.0f; 
+
+                const float renderTextureScale = 1.0f;
                 var width = (int)(cameraDescriptor.width * renderTextureScale);
                 var height = (int)(cameraDescriptor.height * renderTextureScale);
-                
+
                 var descriptor = new TextureDesc(width, height)
                 {
                     dimension = TextureDimension.Tex2D,
@@ -473,7 +473,7 @@ namespace Linework.SoftOutline
 #else
             private RTHandle cameraDepthRTHandle, silhouetteRTHandle, blurRTHandle;
             private RTHandle[] handles;
-            
+
             #pragma warning disable 618, 672
             public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
             {
@@ -483,17 +483,17 @@ namespace Linework.SoftOutline
                 }
                 handles[0] = silhouetteRTHandle;
                 handles[1] = blurRTHandle;
-                
+
                 ConfigureTarget(handles, cameraDepthRTHandle);
                 ConfigureClear(ClearFlag.Color, Color.clear);
             }
-            
+
             public void CreateHandles(RenderingData renderingData)
             {
-                const float renderTextureScale = 1.0f; 
+                const float renderTextureScale = 1.0f;
                 var width = (int)(renderingData.cameraData.cameraTargetDescriptor.width * renderTextureScale);
                 var height = (int)(renderingData.cameraData.cameraTargetDescriptor.height * renderTextureScale);
-                
+
                 var descriptor = new RenderTextureDescriptor(width, height)
                 {
                     dimension = TextureDimension.Tex2D,
@@ -509,11 +509,11 @@ namespace Linework.SoftOutline
                     depthBufferBits = (int) DepthBits.None,
                     colorFormat = RenderTextureFormat.Default
                 };
-                
+
                 RenderingUtils.ReAllocateIfNeeded(ref silhouetteRTHandle, descriptor, FilterMode.Point, TextureWrapMode.Clamp, name: Buffer.Silhouette);
                 RenderingUtils.ReAllocateIfNeeded(ref blurRTHandle, descriptor, FilterMode.Point, TextureWrapMode.Clamp, name: Buffer.Blur);
             }
-            
+
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
                 // 1. Mask.
@@ -524,9 +524,9 @@ namespace Linework.SoftOutline
                 {
                     context.ExecuteCommandBuffer(maskCmd);
                     maskCmd.Clear();
-                    
+
                     var sortingCriteria = renderingData.cameraData.defaultOpaqueSortFlags;
-                    
+
                     var maskIndex = 0;
                     foreach (var outline in settings.Outlines)
                     {
@@ -535,7 +535,7 @@ namespace Linework.SoftOutline
                             maskIndex++;
                             continue;
                         }
-                        
+
                         var renderQueueRange = outline.renderQueue switch
                         {
                             OutlineRenderQueue.Opaque => RenderQueueRange.opaque,
@@ -571,21 +571,21 @@ namespace Linework.SoftOutline
                         maskIndex++;
                     }
                 }
-                
+
                 context.ExecuteCommandBuffer(maskCmd);
                 CommandBufferPool.Release(maskCmd);
 
                 // 2. Silhouette.
                 // -> Render a silhouette.
                 var silhouetteCmd = CommandBufferPool.Get();
-                
+
                 using (new ProfilingScope(silhouetteCmd, silhouetteSampler))
-                { 
+                {
                     CoreUtils.SetRenderTarget(silhouetteCmd, silhouetteRTHandle, renderingData.cameraData.renderer.cameraDepthTargetHandle);
-                    
+
                     context.ExecuteCommandBuffer(silhouetteCmd);
                     silhouetteCmd.Clear();
-                    
+
                     var sortingCriteria = renderingData.cameraData.defaultOpaqueSortFlags;
                     var i = 0;
                     foreach (var outline in settings.Outlines)
@@ -595,7 +595,7 @@ namespace Linework.SoftOutline
                             i++;
                             continue;
                         }
-                        
+
                         var renderQueueRange = outline.renderQueue switch
                         {
                             OutlineRenderQueue.Opaque => RenderQueueRange.opaque,
@@ -611,11 +611,11 @@ namespace Linework.SoftOutline
                             drawingSettings.overrideShaderPassIndex = ShaderPass.Silhouette;
                             drawingSettings.enableInstancing = outline.gpuInstancing;
                         }
-                       
+
                         var filteringSettings = new FilteringSettings(renderQueueRange, outline.layerMask, outline.RenderingLayer);
-                        
+
                         var renderStateBlock = new RenderStateBlock(RenderStateMask.Nothing);
-                        
+
                         var stencilState = StencilState.defaultValue;
                         stencilState.enabled = true;
                         stencilState.SetCompareFunction(outline.occlusion == SoftOutlineOcclusion.WhenOccluded ? CompareFunction.NotEqual : CompareFunction.Always);
@@ -626,7 +626,7 @@ namespace Linework.SoftOutline
                         renderStateBlock.mask |= RenderStateMask.Stencil;
                         renderStateBlock.stencilReference = 1 << i;
                         renderStateBlock.stencilState = stencilState;
-                        
+
                         if (outline.vertexAnimation)
                         {
                             var depthState = DepthState.defaultValue;
@@ -648,30 +648,30 @@ namespace Linework.SoftOutline
                             renderStateBlock.mask |= RenderStateMask.Depth;
                             renderStateBlock.depthState = depthState;
                         }
-                        
+
                         if (outline.vertexAnimation) silhouetteCmd.EnableKeyword(Keyword.OutlineColor);
                         context.ExecuteCommandBuffer(silhouetteCmd);
                         context.DrawRenderers(renderingData.cullResults, ref drawingSettings, ref filteringSettings, ref renderStateBlock);
                         if (outline.vertexAnimation) silhouetteCmd.DisableKeyword(Keyword.OutlineColor);
                         context.ExecuteCommandBuffer(silhouetteCmd);
-                        
+
                         i++;
                     }
                 }
-                
+
                 silhouetteCmd.SetGlobalTexture(ShaderPropertyId.SilhouetteBuffer, silhouetteRTHandle.nameID);
                 context.ExecuteCommandBuffer(silhouetteCmd);
                 CommandBufferPool.Release(silhouetteCmd);
-                
+
                 // 3. Blur.
                 // -> Blur the silhouette.
                 var blurCmd = CommandBufferPool.Get();
-                
+
                 using (new ProfilingScope(blurCmd, blurSampler))
                 {
                     context.ExecuteCommandBuffer(blurCmd);
                     blurCmd.Clear();
-                
+
                     switch (settings.dilationMethod)
                     {
                         case DilationMethod.Box or DilationMethod.Gaussian or DilationMethod.Dilate:
@@ -691,40 +691,40 @@ namespace Linework.SoftOutline
                             break;
                     }
                 }
-                
+
                 context.ExecuteCommandBuffer(blurCmd);
                 CommandBufferPool.Release(blurCmd);
-                
+
                 // 4. Outline.
                 // -> Render an outline.
                 var outlineCmd = CommandBufferPool.Get();
-                
+
                 using (new ProfilingScope(outlineCmd, outlineSampler))
                 {
                     context.ExecuteCommandBuffer(outlineCmd);
                     outlineCmd.Clear();
-                    
+
                     var source = settings.dilationMethod switch
                     {
                         DilationMethod.Box or DilationMethod.Gaussian => silhouetteRTHandle,
                         DilationMethod.Kawase => blurRTHandle,
                         _ => silhouetteRTHandle
                     };
-                
+
                     CoreUtils.SetRenderTarget(outlineCmd, renderingData.cameraData.renderer.cameraColorTargetHandle, cameraDepthRTHandle); // if using cameraColorRTHandle this does not render in scene view when rendering after post processing with post processing enabled
                     Blitter.BlitTexture(outlineCmd, source, Vector2.one, composite, ShaderPass.Outline);
                 }
-                
+
                 context.ExecuteCommandBuffer(outlineCmd);
                 CommandBufferPool.Release(outlineCmd);
             }
             #pragma warning restore 618, 672
-            
+
             public void SetTarget(RTHandle depth)
             {
                 cameraDepthRTHandle = depth;
             }
-            
+
             public override void OnCameraCleanup(CommandBuffer cmd)
             {
                 if (cmd == null)
@@ -735,11 +735,11 @@ namespace Linework.SoftOutline
                 cameraDepthRTHandle = null;
             }
 #endif
-            
+
             public void Dispose()
             {
                 settings = null; // de-reference settings to allow them to be freed from memory
-                
+
 #if UNITY_6000_0_OR_NEWER
 #else
                 silhouetteRTHandle?.Release();
@@ -797,7 +797,7 @@ namespace Linework.SoftOutline
             var render = softOutlinePass.Setup(ref settings, ref maskMaterial, ref silhouetteMaterial, ref silhouetteInstancedMaterial, ref blurMaterial, ref outlineMaterial);
             if (render) renderer.EnqueuePass(softOutlinePass);
         }
-        
+
 #if UNITY_6000_0_OR_NEWER
 #else
         #pragma warning disable 618, 672
@@ -805,7 +805,7 @@ namespace Linework.SoftOutline
         {
             if (settings == null || softOutlinePass == null || renderingData.cameraData.cameraType == CameraType.SceneView && !settings.ShowInSceneView) return;
             if (renderingData.cameraData.cameraType is CameraType.Preview or CameraType.Reflection) return;
-            
+
             softOutlinePass.CreateHandles(renderingData);
             softOutlinePass.SetTarget(renderer.cameraDepthTargetHandle);
         }
@@ -821,7 +821,7 @@ namespace Linework.SoftOutline
             softOutlinePass = null;
             DestroyMaterials();
         }
-        
+
         private void OnDestroy()
         {
             settings = null; // de-reference settings to allow them to be freed from memory
@@ -848,7 +848,7 @@ namespace Linework.SoftOutline
             {
                 silhouetteMaterial = CoreUtils.CreateEngineMaterial(shaders.silhouette);
             }
-            
+
             if (silhouetteInstancedMaterial == null)
             {
                 silhouetteInstancedMaterial = CoreUtils.CreateEngineMaterial(shaders.silhouetteInstanced);

@@ -1,14 +1,19 @@
 using System;
-using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
 using GlassRefrain.Targeting;
-using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Combat {
     public interface IM0CombatCore { }
-    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+
     public sealed class M0CombatCore : IM0CombatCore {
+        private static readonly M0CombatTimingSettings DefaultTimingSettings =
+#if GR_M0_PROTOTYPE
+            new M0CombatTimingSettings(0.12f, 0.18f, 0.25f, 0.08f, 0.18f, 0.25f, 0.08f, 0.16f, 0.25f, 3.0f, 0.25f);
+#else
+            new M0CombatTimingSettings(0.12f, 0.18f, 0.25f, 0.08f, 0.18f, 0.25f, 0.08f, 0.16f, 0.25f, 0.5f, 0.25f);
+#endif
+
         private CombatCoreState currentState;
         private CombatActionRequestResult lastActionResult;
         private CombatResolutionResult lastResolutionResult;
@@ -19,9 +24,16 @@ namespace GlassRefrain.Combat {
         private M0CombatSnapshot latestSnapshot;
         private M0TargetContext targetContext;
         private bool parryWasEligible;
+        private float actionStateElapsedSeconds;
         private readonly INhemLogger? logger;
+        private readonly M0CombatTimingSettings timingSettings;
 
-        public M0CombatCore(INhemLogger? logger = null) {
+        public M0CombatCore(INhemLogger? logger = null)
+            : this(DefaultTimingSettings, logger) {
+        }
+
+        public M0CombatCore(M0CombatTimingSettings timingSettings, INhemLogger? logger = null) {
+            this.timingSettings = timingSettings;
             this.logger = logger;
             currentState = CombatCoreState.Neutral;
             lastActionResult = new CombatActionRequestResult(CombatActionResult.Ignored, "No action processed yet",
@@ -48,8 +60,10 @@ namespace GlassRefrain.Combat {
             targetContext = context;
         }
 
-        // Story 1-6: Tick method for time-based state management (CounterWindow duration expiry).
+        // Story 1-6: Tick method for time-based state management.
         public void Tick(float deltaTime) {
+            if (deltaTime <= 0f) return;
+
             if (counterWindowState.IsOpen) {
                 float newElapsed = counterWindowState.ElapsedSeconds + deltaTime;
                 if (newElapsed >= counterWindowState.DurationSeconds) {
@@ -63,6 +77,14 @@ namespace GlassRefrain.Combat {
                     RefreshSnapshot();
                 }
             }
+
+            float durationSeconds = GetCurrentStateDurationSeconds();
+            if (durationSeconds <= 0f) return;
+
+            actionStateElapsedSeconds += deltaTime;
+            if (actionStateElapsedSeconds < durationSeconds) return;
+
+            AdvanceState("Timed " + currentState + " complete");
         }
 
         // Story 1-6: Defensive intent — EnemyIntentSnapshot passed as value struct by M0GameplayTickHandler.
@@ -156,6 +178,15 @@ namespace GlassRefrain.Combat {
                 return lastActionResult;
             }
 
+            lastResolutionResult = new CombatResolutionResult(
+                request.ActionType,
+                false,
+                false,
+                false,
+                counterWindowState.IsOpen,
+                request.Source,
+                request.ActionType + " accepted; awaiting active resolution");
+
             switch (request.ActionType) {
                 case CombatActionType.LightAttack:
                 case CombatActionType.HeavyAttack:
@@ -230,7 +261,7 @@ namespace GlassRefrain.Combat {
 #if GR_COMBAT_DEBUG
                         logger?.Log("[M0Combat] Parry success: CounterWindow opening");
 #endif
-                        OpenCounterWindow("ParrySuccess", 0.5f);
+                        OpenCounterWindow("ParrySuccess", timingSettings.CounterWindowDurationSeconds);
                     }
 #if GR_COMBAT_DEBUG
                     else {
@@ -258,6 +289,7 @@ namespace GlassRefrain.Combat {
                     break;
             }
 
+            RefreshSnapshot();
             return new CombatStepResult(previous != currentState, previous, currentState, reason);
         }
 
@@ -324,9 +356,49 @@ namespace GlassRefrain.Combat {
             RefreshSnapshot();
         }
 
+        public void ResetForEncounter(string reason) {
+            currentState = CombatCoreState.Neutral;
+            actionStateElapsedSeconds = 0f;
+            parryWasEligible = false;
+
+            lastActionResult = new CombatActionRequestResult(
+                CombatActionResult.Ignored,
+                "Encounter reset",
+                CombatCoreState.Neutral.ToString());
+
+            lastResolutionResult = new CombatResolutionResult(
+                CombatActionType.Unknown,
+                false,
+                false,
+                false,
+                false,
+                string.Empty,
+                "Encounter reset");
+
+            counterWindowState = new CounterWindowState(false, string.Empty, 0f, 0f);
+            actionLockContext = new ActionLockContext(false, string.Empty, CombatCoreState.Neutral);
+            recoveryContext = new RecoveryContext(false, string.Empty, CombatCoreState.Neutral,
+                RecoverySource.CombatCore, 0f);
+
+            lastRevealRequestContext = new RevealRequestContext(
+                CombatRequestSourceType.Unknown,
+                "EncounterReset",
+                "CombatCore",
+                string.Empty,
+                reason ?? "Encounter reset");
+
+#if GR_COMBAT_DEBUG || GR_M0_PROTOTYPE
+            logger?.Log("[M0Combat] ResetForEncounter -> Neutral");
+#endif
+            RefreshSnapshot();
+        }
+
         private void TransitionTo(CombatCoreState nextState, string reason) {
             var previousState = currentState;
             currentState = nextState;
+            if (previousState != nextState) {
+                actionStateElapsedSeconds = 0f;
+            }
 #if GR_COMBAT_DEBUG
             if (previousState != nextState) {
                 logger?.Log("[M0Combat] State changed: " + previousState + " -> " + nextState);
@@ -368,7 +440,7 @@ namespace GlassRefrain.Combat {
             if (state == CombatCoreState.AttackRecovery ||
                 state == CombatCoreState.DodgeRecovery ||
                 state == CombatCoreState.ParryRecovery)
-                return new RecoveryContext(true, state.ToString(), state, RecoverySource.CombatCore, 0.25f);
+                return new RecoveryContext(true, state.ToString(), state, RecoverySource.CombatCore, timingSettings.RecoveryDurationSeconds);
 
             return new RecoveryContext(false, string.Empty, state, RecoverySource.CombatCore, 0f);
         }
@@ -386,6 +458,12 @@ namespace GlassRefrain.Combat {
             if (handler != null) handler(lastRevealRequestContext);
         }
 
+#if GR_M0_PROTOTYPE || GR_MEMORY_DEBUG
+        public void DebugEmitCounterRevealEvidence(string sourceLabel = "DebugCounterRevealEvidence") {
+            EmitRevealRequest(sourceLabel);
+        }
+#endif
+
         private void RefreshSnapshot() {
             latestSnapshot = new M0CombatSnapshot(
                 currentState,
@@ -397,6 +475,31 @@ namespace GlassRefrain.Combat {
 
             var handler = SnapshotChanged;
             if (handler != null) handler(latestSnapshot);
+        }
+
+        private float GetCurrentStateDurationSeconds() {
+            switch (currentState) {
+                case CombatCoreState.AttackStartup:
+                    return timingSettings.AttackStartupSeconds;
+                case CombatCoreState.AttackActive:
+                    return timingSettings.AttackActiveSeconds;
+                case CombatCoreState.AttackRecovery:
+                    return timingSettings.AttackRecoverySeconds;
+                case CombatCoreState.DodgeStartup:
+                    return timingSettings.DodgeStartupSeconds;
+                case CombatCoreState.DodgeActive:
+                    return timingSettings.DodgeActiveSeconds;
+                case CombatCoreState.DodgeRecovery:
+                    return timingSettings.DodgeRecoverySeconds;
+                case CombatCoreState.ParryStartup:
+                    return timingSettings.ParryStartupSeconds;
+                case CombatCoreState.ParryActive:
+                    return timingSettings.ParryActiveSeconds;
+                case CombatCoreState.ParryRecovery:
+                    return timingSettings.ParryRecoverySeconds;
+                default:
+                    return 0f;
+            }
         }
     }
 }

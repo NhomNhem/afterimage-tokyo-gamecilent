@@ -13,7 +13,7 @@ namespace Linework.Editor.SoftOutline
         {
             public static readonly GUIContent Settings = EditorGUIUtility.TrTextContent("Settings", "The settings for the Soft Outline renderer feature.");
         }
-        
+
         private SerializedProperty settings;
 
         private bool initialized;
@@ -47,7 +47,7 @@ namespace Linework.Editor.SoftOutline
                     serializedObject.ApplyModifiedProperties();
                 }
             }
-            else 
+            else
             {
                 if (GUILayout.Button("Open", EditorStyles.miniButton, GUILayout.Width(70.0f)))
                 {
@@ -55,7 +55,7 @@ namespace Linework.Editor.SoftOutline
                 }
             }
             EditorGUILayout.EndHorizontal();
-            
+
             if (settings.objectReferenceValue != null && !((SoftOutlineSettings) settings.objectReferenceValue).Outlines.Any(outline => outline.IsActive()))
             {
                 EditorGUILayout.Space();

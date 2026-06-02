@@ -19,7 +19,7 @@ namespace InspectorGadgets.Editor
     /// <remarks>This class doesn't use any Editor-Only functionality, but it's unlikely to be useful at runtime.</remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/ConversionCache_2
     /// https://kybernetik.com.au/animancer/api/InspectorGadgets.Editor/ConversionCache_2
-    /// 
+    ///
     public class ConversionCache<TKey, TValue>
     {
         /************************************************************************************************************************/
@@ -103,7 +103,7 @@ namespace InspectorGadgets.Editor
     /// <remarks>This class doesn't use any Editor-Only functionality, but it's unlikely to be useful at runtime.</remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.Editor/ConversionCache
     /// https://kybernetik.com.au/animancer/api/InspectorGadgets.Editor/ConversionCache
-    /// 
+    ///
     public static class ConversionCache
     {
         /************************************************************************************************************************/
@@ -132,4 +132,3 @@ namespace InspectorGadgets.Editor
 }
 
 #endif
-

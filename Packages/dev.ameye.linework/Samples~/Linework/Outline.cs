@@ -58,7 +58,7 @@ public class Outline : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
                 ? originalLayer | outlineLayer
                 : originalLayer;
 #else
-            rend.renderingLayerMask = enable 
+            rend.renderingLayerMask = enable
 	        ? originalLayer | 1u << (int)Mathf.Log(outlineLayer, 2)
 	        : originalLayer;
 #endif

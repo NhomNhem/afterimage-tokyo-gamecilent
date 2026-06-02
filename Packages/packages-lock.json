@@ -91,7 +91,7 @@
       "dependencies": {
         "jp.hadashikick.vcontainer": "1.17.0"
       },
-      "hash": "8f41ca84aab1da08da423781fbb4f542223c57dd"
+      "hash": "3f17d54909f9810c25abc6bc15bb7b535a1e9dca"
     },
     "com.unity.ai.navigation": {
       "version": "2.0.11",
@@ -280,6 +280,16 @@
       "dependencies": {
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.project-auditor": {
+      "version": "1.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.10.1",
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
       },
       "url": "https://packages.unity.com"
     },

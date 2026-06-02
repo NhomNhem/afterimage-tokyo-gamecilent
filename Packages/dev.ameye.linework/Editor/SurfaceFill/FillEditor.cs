@@ -15,12 +15,12 @@ namespace Linework.Editor.SurfaceFill
         private SerializedProperty renderQueue;
         private SerializedProperty materialType;
         private SerializedProperty customMaterial;
-        
+
         // Occlusion.
         private SerializedProperty occlusion;
         private SerializedProperty occludedBy;
         private SerializedProperty occludersRenderingLayer;
-        
+
         private SerializedProperty blendMode;
         private SerializedProperty pattern;
         private SerializedProperty primaryColor;
@@ -46,12 +46,12 @@ namespace Linework.Editor.SurfaceFill
             renderQueue = serializedObject.FindProperty(nameof(Fill.renderQueue));
             materialType = serializedObject.FindProperty(nameof(Fill.materialType));
             customMaterial = serializedObject.FindProperty(nameof(Fill.customMaterial));
-            
+
             // Occlusion.
             occlusion = serializedObject.FindProperty(nameof(Fill.occlusion));
             occludersRenderingLayer = serializedObject.FindProperty(nameof(Fill.OccludersRenderingLayer));
             occludedBy = serializedObject.FindProperty(nameof(Fill.occludedBy));
-            
+
             blendMode = serializedObject.FindProperty(nameof(Fill.blendMode));
             pattern = serializedObject.FindProperty(nameof(Fill.pattern));
             primaryColor = serializedObject.FindProperty(nameof(Fill.primaryColor));

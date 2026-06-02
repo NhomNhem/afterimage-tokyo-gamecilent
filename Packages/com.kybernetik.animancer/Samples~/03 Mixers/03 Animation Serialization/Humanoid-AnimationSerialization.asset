@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-Flinch
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 2481247305373057028
   references:
@@ -39,7 +39,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-GolfSwing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 2481247305373057028
   references:
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
   m_Name: Humanoid-PistolShoot
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Transition:
     rid: 2481247305373057028
   references:
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f08fdd50e79d0c4bb235a5c2696516d, type: 3}
   m_Name: Humanoid-AnimationSerialization
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Definition:
     _Transitions:
     - {fileID: 11400000, guid: a7f0583d7b4d49244829b41e1830d1e5, type: 2}
@@ -116,6 +116,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f04d4a67566152e40aaa01b8b745ff6b, type: 3}
   m_Name: Editor Data
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _Library: {fileID: 11400000}
   _TransitionSortMode: 0

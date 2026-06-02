@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -8,15 +8,15 @@ using UnityEngine;
 namespace Animancer.Samples.Mixers
 {
     /// <summary>Creates buttons for playing each transition in a library.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/mixers/serialization">
     /// Animation Serialization</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Mixers/PlayAnimationButtons
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Mixers - Play Animation Buttons")]
     [AnimancerHelpUrl(typeof(PlayAnimationButtons))]
     public class PlayAnimationButtons : MonoBehaviour

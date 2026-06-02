@@ -1,9 +1,15 @@
 using System;
+using NhemDangFugBixs.NhemLogging;
 using GlassRefrain.Core;
 
 namespace GlassRefrain.Enemy {
+    public interface IEnemyDebugHarness {
+        void DebugForceParryEligibleActive();
+    }
+
     public sealed class M0EnemyIntentModel {
         private readonly string enemyId;
+        private readonly INhemLogger logger;
 
         private EnemyIntentState currentState;
         private string intentLabel;
@@ -15,8 +21,9 @@ namespace GlassRefrain.Enemy {
         private EnemyIntentSnapshot latestSnapshot;
         public event Action<EnemyIntentSnapshot> SnapshotChanged;
 
-        public M0EnemyIntentModel(string enemyId = "M0Enemy") {
-            this.enemyId = enemyId ?? string.Empty;
+        public M0EnemyIntentModel(INhemLogger logger = null) {
+            this.enemyId = "M0Enemy";
+            this.logger = logger;
 
             currentState = EnemyIntentState.Idle;
             intentLabel = "Idle";
@@ -37,11 +44,18 @@ namespace GlassRefrain.Enemy {
         }
 
         public EnemyIntentSnapshot Snapshot => latestSnapshot;
-        
+
         public void EnterIdle(string reason) {
+            var previousState = currentState;
             currentState = EnemyIntentState.Idle;
             intentLabel = string.IsNullOrEmpty(reason) ? "Idle" : reason;
             remainingSeconds = 0f;
+
+#if GR_M0_PROTOTYPE
+            if (previousState != EnemyIntentState.Idle) {
+                logger?.Log($"[M0Enemy] State changed: {previousState} -> Idle");
+            }
+#endif
 
             telegraph = new TelegraphStateSnapshot(
                 telegraph.TelegraphId,
@@ -63,6 +77,10 @@ namespace GlassRefrain.Enemy {
             intentLabel = string.IsNullOrEmpty(reason) ? "Telegraph" : reason;
             remainingSeconds = durationSeconds;
 
+#if GR_M0_PROTOTYPE
+            logger?.Log($"[M0Enemy] State changed: Idle -> Telegraph duration={durationSeconds}");
+#endif
+
             telegraph = new TelegraphStateSnapshot(
                 telegraphId ?? string.Empty,
                 durationSeconds > 0f,
@@ -83,6 +101,12 @@ namespace GlassRefrain.Enemy {
             intentLabel = string.IsNullOrEmpty(reason) ? "Commit" : reason;
             remainingSeconds = durationSeconds;
 
+#if GR_M0_PROTOTYPE
+            var tags = intent.AttackTags.Tags;
+            var tagsStr = tags != null && tags.Length > 0 ? string.Join(",", tags) : "none";
+            logger?.Log($"[M0Enemy] State changed: Telegraph -> Commit duration={durationSeconds} tags={tagsStr}");
+#endif
+
             telegraph = new TelegraphStateSnapshot(
                 telegraph.TelegraphId,
                 false,
@@ -102,6 +126,13 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Active;
             intentLabel = string.IsNullOrEmpty(reason) ? "Active" : reason;
             remainingSeconds = durationSeconds;
+
+#if GR_M0_PROTOTYPE
+            var tags = attackIntent.AttackTags.Tags;
+            var tagsStr = tags != null && tags.Length > 0 ? string.Join(",", tags) : "none";
+            var isParryEligible = tags != null && System.Array.IndexOf(tags, "ParryEligible") >= 0;
+            logger?.Log($"[M0Enemy] State changed: Commit -> Active duration={durationSeconds} tags={tagsStr} ParryEligible={isParryEligible}");
+#endif
 
             telegraph = new TelegraphStateSnapshot(
                 telegraph.TelegraphId,
@@ -127,6 +158,10 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Recovery;
             intentLabel = string.IsNullOrEmpty(reason) ? "Recovery" : reason;
             remainingSeconds = durationSeconds;
+
+#if GR_M0_PROTOTYPE
+            logger?.Log($"[M0Enemy] State changed: Active -> Recovery duration={durationSeconds}");
+#endif
 
             telegraph = new TelegraphStateSnapshot(
                 telegraph.TelegraphId,
@@ -170,6 +205,10 @@ namespace GlassRefrain.Enemy {
             TickPunishWindow(deltaSeconds);
 
             RefreshSnapshot();
+        }
+
+        public void ResetForEncounter(string reason) {
+            EnterIdle(string.IsNullOrEmpty(reason) ? "EncounterReset" : reason);
         }
 
         private void TickTelegraph(float deltaSeconds) {

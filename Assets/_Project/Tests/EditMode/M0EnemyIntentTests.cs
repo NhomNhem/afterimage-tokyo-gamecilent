@@ -8,10 +8,10 @@ namespace GlassRefrain.Tests.EditMode {
     public class M0EnemyIntentTests {
         [Test]
         public void IdleStateIsDefaultAndReadOnlySnapshotExposed() {
-            var model = new M0EnemyIntentModel("EnemyA");
+            var model = new M0EnemyIntentModel();
 
             Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Idle));
-            Assert.That(model.Snapshot.EnemyId, Is.EqualTo("EnemyA"));
+            Assert.That(model.Snapshot.EnemyId, Is.EqualTo("M0Enemy"));
             Assert.That(model.Snapshot.IsTelegraphing, Is.False);
             Assert.That(model.Snapshot.PunishWindow.IsOpen, Is.False);
         }
@@ -137,6 +137,28 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void IntentLabel_PreservesReadablePhaseCueAcrossTransitions() {
+            var model = new M0EnemyIntentModel();
+            var intent = new EnemyAttackIntentContext(
+                "SlashA",
+                "BasicSlash",
+                0.2f,
+                new EnemyAttackTagSet(new[] { "ParryEligible" }));
+
+            model.EnterTelegraph("TelegraphA", 0.9f, "Telegraph:TelegraphA (0.90s)");
+            Assert.That(model.Snapshot.IntentLabel, Is.EqualTo("Telegraph:TelegraphA (0.90s)"));
+
+            model.EnterCommit(intent, 0.25f, "Commit:SlashA (0.25s)");
+            Assert.That(model.Snapshot.IntentLabel, Is.EqualTo("Commit:SlashA (0.25s)"));
+
+            model.EnterActive(0.2f, "Active:SlashA (0.20s)");
+            Assert.That(model.Snapshot.IntentLabel, Is.EqualTo("Active:SlashA (0.20s)"));
+
+            model.EnterRecovery(0.65f, "Recovery:RecoveryEnd (0.65s)", true, 0.4f, "RecoveryEnd");
+            Assert.That(model.Snapshot.IntentLabel, Is.EqualTo("Recovery:RecoveryEnd (0.65s)"));
+        }
+
+        [Test]
         public void EnemyIntentFilesDoNotReferenceForbiddenDependencies() {
             string[] coreAndEnemyFiles = {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
@@ -186,6 +208,26 @@ namespace GlassRefrain.Tests.EditMode {
                 foreach (var pattern in enemyOnlyForbiddenPatterns)
                     Assert.That(contents.Contains(pattern), Is.False, file + " contains forbidden pattern: " + pattern);
             }
+        }
+
+        [Test]
+        public void ResetForEncounter_ReturnsModelToIdleAndClearsTelegraphAndPunishWindow() {
+            var model = new M0EnemyIntentModel();
+            var intent = new EnemyAttackIntentContext(
+                "SlashA",
+                "BasicSlash",
+                0.2f,
+                new EnemyAttackTagSet(new[] { "DodgePunishable", "ParryEligible" }));
+
+            model.EnterCommit(intent, 0.2f, "Commit");
+            model.EnterRecovery(0.4f, "Recovery", true, 0.25f, "RecoveryEnd");
+            Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Recovery));
+
+            model.ResetForEncounter("EncounterReset");
+
+            Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Idle));
+            Assert.That(model.Snapshot.Telegraph.IsActive, Is.False);
+            Assert.That(model.Snapshot.PunishWindow.IsOpen, Is.False);
         }
     }
 }

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using UnityEngine;
@@ -10,15 +10,15 @@ namespace Animancer
     /// <summary>[Pro-Only]
     /// A base wrapper which allows access to the value of properties that are controlled by animations.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Documentation:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/manual/ik#animated-properties">
     /// Animated Properties</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/AnimatedProperty_2
-    /// 
+    ///
     public abstract class AnimatedProperty<TJob, TValue> : AnimancerJob<TJob>, IDisposable
         where TJob : struct, IAnimationJob
         where TValue : struct
@@ -159,4 +159,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -8,15 +8,15 @@ using UnityEngine;
 namespace Animancer.Samples.Events
 {
     /// <summary>Manages the physics of a golf ball.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/events/golf">
     /// Golf Events</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Events/GolfBall
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Golf Events - Golf Ball")]
     [AnimancerHelpUrl(typeof(GolfBall))]
     public class GolfBall : MonoBehaviour
@@ -71,7 +71,7 @@ namespace Animancer.Samples.Events
         /************************************************************************************************************************/
 #else
         /************************************************************************************************************************/
-        
+
         protected virtual void Awake()
         {
             SampleModules.LogMissingPhysics3DModuleError(this);
@@ -81,7 +81,7 @@ namespace Animancer.Samples.Events
             => false;
 
         public void Hit() { }
-        
+
         /************************************************************************************************************************/
 #endif
         /************************************************************************************************************************/

@@ -12,7 +12,7 @@ namespace Animancer
     /// Directional Animation Sets</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/DirectionalSet2_1
-    /// 
+    ///
     [AnimancerHelpUrl(typeof(DirectionalSet2<>))]
     public class DirectionalSet2<T> : DirectionalSet<T>
     {
@@ -121,24 +121,6 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public override int GetDirection(string name)
-        {
-            var direction = AnimancerUtilities.GetDirection(name);
-
-            if (direction.x == 0)
-                direction.x = direction.y;
-
-            return direction.x switch
-            {
-                > 0 => (int)Direction2.Right,
-                < 0 => (int)Direction2.Left,
-                _ => -1
-            };
-        }
-
-        /************************************************************************************************************************/
-
-        /// <inheritdoc/>
         public override Vector2 Snap(Vector2 vector)
             => Directions.SnapToDirection2(vector);
 
@@ -147,4 +129,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-

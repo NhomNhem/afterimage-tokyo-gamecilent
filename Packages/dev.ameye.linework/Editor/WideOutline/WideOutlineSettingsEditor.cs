@@ -14,7 +14,7 @@ namespace Linework.Editor.WideOutline
     {
         private SerializedProperty injectionPoint;
         private SerializedProperty showInSceneView;
-        
+
         private SerializedProperty materialType;
         private SerializedProperty customMaterial;
         private SerializedProperty widthMethod;
@@ -28,7 +28,7 @@ namespace Linework.Editor.WideOutline
         private SerializedProperty scaleWithResolution;
         private SerializedProperty referenceResolution;
         private SerializedProperty customReferenceResolution;
-        
+
         private SerializedProperty outlines;
         private EditorList<Outline> outlineList;
 
@@ -36,7 +36,7 @@ namespace Linework.Editor.WideOutline
         {
             injectionPoint = serializedObject.FindProperty("injectionPoint");
             showInSceneView = serializedObject.FindProperty("showInSceneView");
-            
+
             materialType = serializedObject.FindProperty(nameof(WideOutlineSettings.materialType));
             customMaterial = serializedObject.FindProperty(nameof(WideOutlineSettings.customMaterial));
             widthMethod = serializedObject.FindProperty(nameof(WideOutlineSettings.widthControl));
@@ -68,7 +68,7 @@ namespace Linework.Editor.WideOutline
 
             var occlusionChanged = false;
             var widthMethodChanged = false;
-            
+
             EditorGUILayout.LabelField("Wide Outline", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(injectionPoint, EditorUtils.CommonStyles.InjectionPoint);
             EditorGUILayout.PropertyField(showInSceneView, EditorUtils.CommonStyles.ShowInSceneView);
@@ -128,17 +128,17 @@ namespace Linework.Editor.WideOutline
                     throw new ArgumentOutOfRangeException();
             }
             EditorGUILayout.Space();
-            
+
             serializedObject.ApplyModifiedProperties();
             outlineList.Draw();
-            
+
             EditorGUILayout.Space();
-            
+
             if (occlusionChanged)
             {
                 ForceSave();
             }
-            
+
             if (widthMethodChanged)
             {
                 ForceSave();

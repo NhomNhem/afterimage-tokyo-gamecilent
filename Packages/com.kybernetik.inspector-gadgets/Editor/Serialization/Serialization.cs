@@ -966,30 +966,30 @@ namespace InspectorGadgets.Editor
             /************************************************************************************************************************/
 
             /// <summary>Returns the <see cref="Field"/> if there is one or tries to get it from the object's type.</summary>
-            /// 
+            ///
             /// <remarks>
             /// If this accessor has a <see cref="Parent"/>, the `obj` must be associated with the root
             /// <see cref="SerializedProperty"/> and this method will change it to reference the parent field's value.
             /// </remarks>
-            /// 
+            ///
             /// <example><code>
             /// [Serializable]
             /// public class InnerClass
             /// {
             ///     public float value;
             /// }
-            /// 
+            ///
             /// [Serializable]
             /// public class RootClass
             /// {
             ///     public InnerClass inner;
             /// }
-            /// 
+            ///
             /// public class MyBehaviour : MonoBehaviour
             /// {
             ///     public RootClass root;
             /// }
-            /// 
+            ///
             /// [UnityEditor.CustomEditor(typeof(MyBehaviour))]
             /// public class MyEditor : UnityEditor.Editor
             /// {
@@ -999,9 +999,9 @@ namespace InspectorGadgets.Editor
             ///         var rootProperty = serializedObject.FindProperty("root");
             ///         var innerProperty = rootProperty.FindPropertyRelative("inner");
             ///         var valueProperty = innerProperty.FindPropertyRelative("value");
-            /// 
+            ///
             ///         var accessor = valueProperty.GetAccessor();
-            /// 
+            ///
             ///         object obj = target;
             ///         var valueField = accessor.GetField(ref obj);
             ///         // valueField is a FieldInfo referring to InnerClass.value.
@@ -1009,7 +1009,7 @@ namespace InspectorGadgets.Editor
             ///     }
             /// }
             /// </code></example>
-            /// 
+            ///
             public FieldInfo GetField(ref object obj)
             {
                 if (Parent != null)

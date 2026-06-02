@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -9,7 +9,7 @@ using UnityEngine.Animations;
 namespace Animancer.Samples.Jobs
 {
     /// <summary>An sample of how to use Animation Jobs in Animancer to apply physics based damping to certain bones.</summary>
-    /// 
+    ///
     /// <remarks>
     /// This sample is based on Unity's
     /// <see href="https://github.com/Unity-Technologies/animation-jobs-samples">Animation Jobs Samples</see>.
@@ -18,7 +18,7 @@ namespace Animancer.Samples.Jobs
     /// <see href="https://github.com/Unity-Technologies/animation-jobs-samples/blob/master/Assets/animation-jobs-samples/Samples/Scripts/Damping/Damping.cs">
     /// Damping.cs</see>.
     /// <para></para>
-    /// The <see cref="DampingJob"/> script is almost identical to the original 
+    /// The <see cref="DampingJob"/> script is almost identical to the original
     /// <see href="https://github.com/Unity-Technologies/animation-jobs-samples/blob/master/Assets/animation-jobs-samples/Runtime/AnimationJobs/DampingJob.cs">
     /// DampingJob.cs</see>.
     /// <para></para>
@@ -29,9 +29,9 @@ namespace Animancer.Samples.Jobs
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/damping">
     /// Damping</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/Damping
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Jobs - Damping")]
     [AnimancerHelpUrl(typeof(Damping))]
     public class Damping : MonoBehaviour

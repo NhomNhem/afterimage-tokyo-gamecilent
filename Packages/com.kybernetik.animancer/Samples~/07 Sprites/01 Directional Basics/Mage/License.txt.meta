@@ -8,14 +8,6 @@ labels:
 - Saint11
 TextScriptImporter:
   externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293524
-  packageName: Animancer Lite v8
-  packageVersion: 8.3.1
-  assetPath: Packages/com.kybernetik.animancer/Samples~/07 Sprites/01 Directional
-    Basics/Mage/License.txt
-  uploadId: 895130
+  userData:
+  assetBundleName:
+  assetBundleVariant:

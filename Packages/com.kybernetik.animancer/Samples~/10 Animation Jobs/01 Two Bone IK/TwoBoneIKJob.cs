@@ -7,15 +7,15 @@ using UnityEngine.Animations;
 namespace Animancer.Samples.Jobs
 {
     /// <summary>An <see cref="IAnimationJob"/> which executes two bone Inverse Kinematics.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/jobs/two-bone-ik">
     /// Two Bone IK</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.Jobs/TwoBoneIKJob
-    /// 
+    ///
     public struct TwoBoneIKJob : IAnimationJob
     {
         public TransformSceneHandle effector;

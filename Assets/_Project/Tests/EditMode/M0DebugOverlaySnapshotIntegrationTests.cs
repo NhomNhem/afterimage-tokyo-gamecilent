@@ -155,6 +155,59 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(encounter.Snapshot.State, Is.EqualTo(beforeEncounter.State));
         }
 
+        [Test]
+        public void EnemyIntentReason_UsesIntentLabelThenPunishSourceThenTelegraphId() {
+            var aggregator = new M0DebugOverlaySnapshotAggregator();
+            var input = new M0InputRouter();
+            var locomotion = new M0PlayerLocomotion();
+            var target = new M0TargetContext();
+            var combat = new M0CombatCore();
+            var health = new M0HealthDamageReactionModel();
+            var memory = new M0MemoryState();
+            var memoryVfx = new M0MemoryVFXResponse();
+            var encounter = new M0EncounterFramework();
+
+            var enemyWithIntentLabel = new M0EnemyIntentModel();
+            enemyWithIntentLabel.EnterTelegraph("EnemyAttack01", 1f, "Telegraph:EnemyAttack01 (1.00s)");
+            var snapshotWithIntentLabel = aggregator.Capture(
+                input.Snapshot, null, locomotion.Snapshot, target.Snapshot, combat.Snapshot,
+                enemyWithIntentLabel.Snapshot, health.Snapshot, memory.Snapshot, memoryVfx.Snapshot, encounter.Snapshot);
+            Assert.That(snapshotWithIntentLabel.EnemyIntent.LastReason, Is.EqualTo("Telegraph:EnemyAttack01 (1.00s)"));
+
+            var intent = new EnemyAttackIntentContext(
+                "SlashA",
+                "BasicSlash",
+                0.2f,
+                new EnemyAttackTagSet(new[] { "CounterOnWhiff" }));
+            var enemyWithPunishOnly = new EnemyIntentSnapshot(
+                EnemyIntentState.Recovery,
+                "M0Enemy",
+                string.Empty,
+                false,
+                0.4f,
+                new TelegraphStateSnapshot(string.Empty, false, 0f),
+                intent,
+                new EnemyPunishWindowContext(true, 0.3f, "RecoveryEnd"));
+            var snapshotWithPunishOnly = aggregator.Capture(
+                input.Snapshot, null, locomotion.Snapshot, target.Snapshot, combat.Snapshot,
+                enemyWithPunishOnly, health.Snapshot, memory.Snapshot, memoryVfx.Snapshot, encounter.Snapshot);
+            Assert.That(snapshotWithPunishOnly.EnemyIntent.LastReason, Is.EqualTo("RecoveryEnd"));
+
+            var enemyWithTelegraphOnly = new EnemyIntentSnapshot(
+                EnemyIntentState.Telegraph,
+                "M0Enemy",
+                string.Empty,
+                true,
+                1f,
+                new TelegraphStateSnapshot("EnemyAttack02", true, 1f),
+                new EnemyAttackIntentContext(string.Empty, string.Empty, 0f, new EnemyAttackTagSet(new string[0])),
+                new EnemyPunishWindowContext(false, 0f, string.Empty));
+            var snapshotWithTelegraphOnly = aggregator.Capture(
+                input.Snapshot, null, locomotion.Snapshot, target.Snapshot, combat.Snapshot,
+                enemyWithTelegraphOnly, health.Snapshot, memory.Snapshot, memoryVfx.Snapshot, encounter.Snapshot);
+            Assert.That(snapshotWithTelegraphOnly.EnemyIntent.LastReason, Is.EqualTo("EnemyAttack02"));
+        }
+
         private static DebugOverlayAggregateSnapshot CreateAggregateSnapshot(M0DebugOverlaySnapshotAggregator aggregator) {
             var input = new M0InputRouter();
             var locomotion = new M0PlayerLocomotion();

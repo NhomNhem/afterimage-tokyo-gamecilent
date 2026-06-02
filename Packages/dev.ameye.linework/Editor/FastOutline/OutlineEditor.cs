@@ -66,7 +66,7 @@ namespace Linework.Editor.FastOutline
             EditorGUILayout.PropertyField(layerMask, EditorUtils.CommonStyles.LayerMask);
             EditorGUILayout.PropertyField(renderQueue, EditorUtils.CommonStyles.RenderQueue);
             EditorGUILayout.Space();
-            
+
             EditorGUILayout.LabelField("Render", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(occlusion, EditorUtils.CommonStyles.OutlineOcclusion);
             EditorGUILayout.PropertyField(blendMode, EditorUtils.CommonStyles.OutlineBlendMode);

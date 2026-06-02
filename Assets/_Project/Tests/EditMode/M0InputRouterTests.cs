@@ -64,6 +64,7 @@ namespace GlassRefrain.Tests.EditMode {
             router.SetInputEnabled(false);
             router.RecordRoutingOutcome(InputActionIntent.LockOn, InputRoutingDisposition.Rejected, "Targeting",
                 "no target");
+            router.SetActionPressed(InputActionIntent.Interact, true);
 
             var debugSnapshot = router.CreateDebugSnapshot();
             var joined = string.Join("\n", debugSnapshot.Details);
@@ -71,7 +72,28 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(debugSnapshot.Summary, Is.EqualTo("M0 input state"));
             Assert.That(debugSnapshot.Details, Is.Not.Null);
             StringAssert.Contains("InputEnabled: False", joined);
+            StringAssert.Contains("Interact: True", joined);
             StringAssert.Contains("LatestRouting:", joined);
+        }
+
+        [Test]
+        public void RouterDrainsTriggeredActionsInOrder() {
+            var router = new M0InputRouter();
+            var drained = new System.Collections.Generic.List<InputActionIntent>();
+
+            router.RecordTriggeredAction(InputActionIntent.LightAttack);
+            router.RecordTriggeredAction(InputActionIntent.Interact);
+            router.RecordTriggeredAction(InputActionIntent.LockOn);
+
+            var count = router.DrainTriggeredActions(drained);
+            var secondDrainCount = router.DrainTriggeredActions(drained);
+
+            Assert.That(count, Is.EqualTo(3));
+            Assert.That(secondDrainCount, Is.EqualTo(0));
+            Assert.That(drained.Count, Is.EqualTo(3));
+            Assert.That(drained[0], Is.EqualTo(InputActionIntent.LightAttack));
+            Assert.That(drained[1], Is.EqualTo(InputActionIntent.Interact));
+            Assert.That(drained[2], Is.EqualTo(InputActionIntent.LockOn));
         }
     }
 }

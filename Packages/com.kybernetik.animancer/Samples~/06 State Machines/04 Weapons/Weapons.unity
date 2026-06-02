@@ -194,8 +194,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88b141073e9c11499db9761c99dd5b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _AttackAnimations:
   - {fileID: 360, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
   _EquipAnimation: {fileID: 357, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
@@ -245,8 +245,8 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8713ae8fdc5c6f8498df051397d837d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Character: {fileID: 1845757776}
 --- !u!114 &299430866
 MonoBehaviour:
@@ -258,8 +258,8 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f826255ba7332fe47ba4153a4305d03c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Character: {fileID: 1845757776}
 --- !u!114 &299430867
 MonoBehaviour:
@@ -271,8 +271,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cf1c1df53fdbf745aa0acbf1fd00819, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Character: {fileID: 1845757776}
   _Move: {fileID: 299430868}
   _Attack: {fileID: 299430865}
@@ -292,8 +292,8 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e3337d6aec58c4491b212830493917, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Character: {fileID: 1845757776}
   _Animation: {fileID: 11400000, guid: a7f0583d7b4d49244829b41e1830d1e5, type: 2}
   _SpeedParameter: {fileID: 11400000, guid: 790636dfe67f5994b8eea431d335b8e5, type: 2}
@@ -711,8 +711,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 0
@@ -777,8 +777,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c38935e66278cb46b13935bc561b226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _WeaponHolder: {fileID: 1664552800}
   _Weapon: {fileID: 1805352583}
 --- !u!4 &998501716
@@ -826,8 +826,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8777c1a0e0ab4954e89d35f5ca94808a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Text: 'This sample expands upon the <b>Brains</b> sample to allow a character
     hold various weapons which each have their own set of animations.
 
@@ -1002,8 +1002,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
   m_BlockingMask:
@@ -1019,8 +1019,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
@@ -1086,8 +1086,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bb9852087f39824f9647d710481937e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Animator: {fileID: 935791963}
   _Target: {fileID: 1845757777}
 --- !u!1001 &1664552795
@@ -1190,8 +1190,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!4 &1664552797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7961256787916819595, guid: f976ca0fb1329b44a8bc3dcca706751a,
@@ -1419,7 +1419,7 @@ PrefabInstance:
     - target: {fileID: 1950737954701862579, guid: 9aa688c12da05294ab008f9441fee36f,
         type: 3}
       propertyPath: _LookAt
-      value: 
+      value:
       objectReference: {fileID: 1845757779}
     - target: {fileID: 1950737954701862580, guid: 9aa688c12da05294ab008f9441fee36f,
         type: 3}
@@ -1528,8 +1528,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88b141073e9c11499db9761c99dd5b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _AttackAnimations: []
   _EquipAnimation: {fileID: 357, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
   _UnequipAnimation: {fileID: 0}
@@ -1563,8 +1563,8 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fa736332e17cee45a870f01beabb57d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Character: {fileID: 1845757776}
   _Animation: {fileID: -364791089063896547, guid: aa5cf1ffc9d45614d8a51bbe2c453245,
     type: 2}
@@ -1578,8 +1578,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9519020ed4eedd0469501fe0d98e8339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _Animancer: {fileID: 1664552796}
   _StateMachine:
     _CurrentState: {fileID: 1845757775}
@@ -1679,8 +1679,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e88b141073e9c11499db9761c99dd5b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _AttackAnimations:
   - {fileID: 358, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}
   - {fileID: 360, guid: 333c509a4f743f547ac673336c25c8f0, type: 2}

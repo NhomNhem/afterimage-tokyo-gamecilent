@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 
@@ -13,7 +13,7 @@ namespace Animancer.FSM
     /// Changing States</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.FSM/StateChange_1
-    /// 
+    ///
     public struct StateChange<TState> : IDisposable
         where TState : class, IState
     {
@@ -128,4 +128,3 @@ namespace Animancer.FSM
         /************************************************************************************************************************/
     }
 }
-

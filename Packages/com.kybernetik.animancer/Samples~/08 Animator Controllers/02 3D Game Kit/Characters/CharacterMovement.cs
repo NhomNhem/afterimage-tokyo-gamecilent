@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -9,15 +9,15 @@ using static Animancer.Validate;
 namespace Animancer.Samples.AnimatorControllers.GameKit
 {
     /// <summary>The stats and logic for moving a <see cref="Character"/>.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/animator-controllers/3d-game-kit">
     /// 3D Game Kit</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer.Samples.AnimatorControllers.GameKit/CharacterMovement
-    /// 
+    ///
     [AddComponentMenu(Strings.SamplesMenuPrefix + "Game Kit - Character Movement")]
     [AnimancerHelpUrl(typeof(CharacterMovement))]
     public class CharacterMovement : MonoBehaviour
@@ -87,7 +87,7 @@ namespace Animancer.Samples.AnimatorControllers.GameKit
                 MaxTurnSpeed,
                 MinTurnSpeed,
                 _Character.Parameters.ForwardSpeed / _Character.Parameters.DesiredForwardSpeed);
-                
+
         /************************************************************************************************************************/
 
         public bool GetTurnAngles(Vector3 direction, out float currentAngle, out float targetAngle)
@@ -103,7 +103,7 @@ namespace Animancer.Samples.AnimatorControllers.GameKit
             targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             return true;
         }
-        
+
         /************************************************************************************************************************/
 
         public void TurnTowards(float currentAngle, float targetAngle, float speed)
@@ -118,7 +118,7 @@ namespace Animancer.Samples.AnimatorControllers.GameKit
             if (GetTurnAngles(direction, out float currentAngle, out float targetAngle))
                 TurnTowards(currentAngle, targetAngle, speed);
         }
-        
+
         /************************************************************************************************************************/
 
         protected virtual void OnAnimatorMove()

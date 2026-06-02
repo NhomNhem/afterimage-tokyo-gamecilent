@@ -2,6 +2,9 @@
     "name": "GlassRefrain.Presentation",
     "references": [
         "GlassRefrain.Core",
+        "Kybernetik.Animancer",
+        "NhemDangFugBixs.Logging",
+        "VContainer",
         "UnityEngine.UIElements",
         "UnityEngine.UIElementsModule"
     ],

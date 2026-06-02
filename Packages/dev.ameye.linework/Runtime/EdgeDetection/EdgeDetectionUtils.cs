@@ -19,7 +19,7 @@ namespace Linework.EdgeDetection
             return this;
         }
     }
-    
+
     static class ShaderPath
     {
         public const string Outline = "Hidden/Outlines/Edge Detection/Outline";
@@ -38,7 +38,7 @@ namespace Linework.EdgeDetection
         public const string Section = "Section (Edge Detection)";
         public const string Outline = "Outline (Edge Detection)";
     }
-    
+
     static class ShaderPropertyId
     {
         // Line appearance.
@@ -57,18 +57,18 @@ namespace Linework.EdgeDetection
         public static readonly int HeightFadeStart = Shader.PropertyToID("_HeightFadeStart");
         public static readonly int HeightFadeDistance = Shader.PropertyToID("_HeightFadeDistance");
         public static readonly int HeightFadeColor = Shader.PropertyToID("_HeightFadeColor");
-        
+
         // Distortion.
         public static readonly int DistortionTexture = Shader.PropertyToID("_DistortionTexture");
         public static readonly int DistortionScale = Shader.PropertyToID("_DistortionScale");
         public static readonly int DistortionThicknessInfluence = Shader.PropertyToID("_DistortionThicknessInfluence");
         public static readonly int DistortionStrength = Shader.PropertyToID("_DistortionStrength");
         public static readonly int DistortionStepRate = Shader.PropertyToID("_DistortionStepRate");
-        
+
         // Break up.
         public static readonly int BreakupScale = Shader.PropertyToID("_BreakUpScale");
         public static readonly int BreakupAmount = Shader.PropertyToID("_BreakUpAmount");
-        
+
         // Edge detection.
         public static readonly int DepthSensitivity = Shader.PropertyToID("_DepthSensitivity");
         public static readonly int DepthDistanceModulation = Shader.PropertyToID("_DepthDistanceModulation");
@@ -77,7 +77,7 @@ namespace Linework.EdgeDetection
         public static readonly int NormalSensitivity = Shader.PropertyToID("_NormalSensitivity");
         public static readonly int LuminanceSensitivity = Shader.PropertyToID("_LuminanceSensitivity");
         public static readonly int CameraSectioningTexture = Shader.PropertyToID("_CameraSectioningTexture");
-  
+
         // Section map.
         public static readonly int SectionTexture = Shader.PropertyToID("_SectionTexture");
     }
@@ -86,7 +86,7 @@ namespace Linework.EdgeDetection
     {
         public const string Section = "_SectionBuffer";
     }
-    
+
     [Flags]
     public enum DiscontinuityInput
     {
@@ -97,7 +97,7 @@ namespace Linework.EdgeDetection
         Sections = 1 << 3,
         All = ~0,
     }
-    
+
     [Flags]
     public enum DebugSectionsChannels
     {
@@ -107,7 +107,7 @@ namespace Linework.EdgeDetection
         B = 1 << 2,
         All = ~0,
     }
-    
+
     [Flags]
     public enum MaskInfluence
     {
@@ -117,7 +117,7 @@ namespace Linework.EdgeDetection
         Luminance = 1 << 2,
         All = ~0,
     }
-    
+
     public enum DebugView
     {
         None,
@@ -130,7 +130,7 @@ namespace Linework.EdgeDetection
         [InspectorName("Sections")]
         Sections
     }
-    
+
     static class ShaderFeature
     {
         public const string DepthDiscontinuity = "DEPTH";
@@ -142,12 +142,12 @@ namespace Linework.EdgeDetection
         public const string TextureUV1 = "TEXTURE_UV_SET_UV1";
         public const string TextureUV2 = "TEXTURE_UV_SET_UV2";
         public const string TextureUV3 = "TEXTURE_UV_SET_UV3";
-        
+
         public const string VertexColorChannelR = "VERTEX_COLOR_CHANNEL_R";
         public const string VertexColorChannelG = "VERTEX_COLOR_CHANNEL_G";
         public const string VertexColorChannelB = "VERTEX_COLOR_CHANNEL_B";
         public const string VertexColorChannelA = "VERTEX_COLOR_CHANNEL_A";
-        
+
         public const string TextureChannelR = "TEXTURE_CHANNEL_R";
         public const string TextureChannelG = "TEXTURE_CHANNEL_G";
         public const string TextureChannelB = "TEXTURE_CHANNEL_B";
@@ -174,7 +174,7 @@ namespace Linework.EdgeDetection
         public const string NormalsMask = "NORMALS_MASK";
         public const string LuminanceMask = "LUMINANCE_MASK";
         public const string Fill = "FILL";
-        
+
         public const string DebugSectionsR = "DEBUG_SECTIONS_R";
         public const string DebugSectionsG = "DEBUG_SECTIONS_G";
         public const string DebugSectionsB = "DEBUG_SECTIONS_B";
@@ -184,7 +184,7 @@ namespace Linework.EdgeDetection
         public const string InputVertexColor = "INPUT_VERTEX_COLOR";
         public const string InputTexture = "INPUT_TEXTURE";
     }
-    
+
     public enum SectionMapInput
     {
         [InspectorName("Solid Color")]
@@ -196,7 +196,7 @@ namespace Linework.EdgeDetection
         [InspectorName("Custom")]
         Custom
     }
-    
+
     public enum Kernel
     {
         RobertsCross,
@@ -204,7 +204,7 @@ namespace Linework.EdgeDetection
         [InspectorName("Circular (sections only)")]
         Circular
     }
-    
+
     public enum UVSet
     {
         UV0,
@@ -212,7 +212,7 @@ namespace Linework.EdgeDetection
         UV2,
         UV3
     }
-    
+
     public enum Resolution
     {
         [InspectorName("480px")]

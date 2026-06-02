@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Collections.Generic;
 
@@ -11,7 +11,7 @@ namespace Animancer.FSM
     /// State Selectors</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.FSM/IPrioritizable
-    /// 
+    ///
     public interface IPrioritizable : IState
     {
         float Priority { get; }
@@ -22,7 +22,7 @@ namespace Animancer.FSM
     public partial class StateMachine<TState>
     {
         /// <summary>A prioritised list of potential states for a <see cref="StateMachine{TState}"/> to enter.</summary>
-        /// 
+        ///
         /// <remarks>
         /// <strong>Documentation:</strong>
         /// <see href="https://kybernetik.com.au/animancer/docs/manual/fsm#state-selectors">
@@ -32,16 +32,16 @@ namespace Animancer.FSM
         /// public StateMachine&lt;CharacterState&gt; stateMachine;
         /// public CharacterState run;
         /// public CharacterState idle;
-        /// 
+        ///
         /// private readonly StateMachine&lt;CharacterState&gt;.StateSelector
         ///     Selector = new();
-        /// 
+        ///
         /// private void Awake()
         /// {
         ///     Selector.Add(1, run);
         ///     Selector.Add(0, idle);
         /// }
-        /// 
+        ///
         /// public void RunOrIdle()
         /// {
         ///     stateMachine.TrySetState(Selector.Values);
@@ -50,9 +50,9 @@ namespace Animancer.FSM
         ///     // If neither allows the transition, nothing happens and "stateMachine.TrySetState" returns false.
         /// }
         /// </code></remarks>
-        /// 
+        ///
         /// https://kybernetik.com.au/animancer/api/Animancer.FSM/StateSelector
-        /// 
+        ///
         public class StateSelector : SortedList<float, TState>
         {
             public StateSelector() : base(ReverseComparer<float>.Instance) { }
@@ -80,4 +80,3 @@ namespace Animancer.FSM
         public int Compare(T x, T y) => Comparer<T>.Default.Compare(y, x);
     }
 }
-

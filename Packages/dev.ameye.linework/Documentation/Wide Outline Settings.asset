@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8345be34a994929ba7ca6c0b1a5c5c7, type: 3}
   m_Name: Outline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   active: 1
   customDepthEnabled: 0
   RenderingLayer:
@@ -31,7 +31,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8345be34a994929ba7ca6c0b1a5c5c7, type: 3}
   m_Name: Outline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   active: 1
   customDepthEnabled: 0
   RenderingLayer:
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1beecfe6c40d4fc397be59c6d99409a5, type: 3}
   m_Name: Wide Outline Settings
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   injectionPoint: 550
   showInSceneView: 1
   clearStencil: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8345be34a994929ba7ca6c0b1a5c5c7, type: 3}
   m_Name: Outline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   active: 1
   customDepthEnabled: 0
   RenderingLayer:
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8345be34a994929ba7ca6c0b1a5c5c7, type: 3}
   m_Name: Outline
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   active: 1
   customDepthEnabled: 0
   RenderingLayer:

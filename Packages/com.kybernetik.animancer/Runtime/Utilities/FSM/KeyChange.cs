@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 
@@ -13,7 +13,7 @@ namespace Animancer.FSM
     /// Changing States</see>
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.FSM/KeyChange_1
-    /// 
+    ///
     public struct KeyChange<TKey> : IDisposable
     {
         /************************************************************************************************************************/
@@ -77,7 +77,7 @@ namespace Animancer.FSM
         /// <see cref="KeyChange{TKey}"/> containing the details of the previously active change so that disposing
         /// it will re-assign those previous details to be current again in case of recursive state changes.
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// <strong>Example:</strong><code>
         /// using (new KeyChange&lt;TState&gt;(previousKey, nextKey))
@@ -85,7 +85,7 @@ namespace Animancer.FSM
         ///     // Do the actual key change.
         /// }
         /// </code></remarks>
-        /// 
+        ///
         internal KeyChange(IKeyedStateMachine<TKey> stateMachine, TKey previousKey, TKey nextKey)
         {
             this = _Current;
@@ -126,4 +126,3 @@ namespace Animancer.FSM
         /************************************************************************************************************************/
     }
 }
-

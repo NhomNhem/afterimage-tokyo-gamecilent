@@ -1,19 +1,19 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2026 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using UnityEngine;
 
 namespace Animancer
 {
     /// <summary>A <see cref="DirectionalAnimations3D{T}"/> using <see cref="int"/> as the group type.</summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/sprites/character-3d">
     /// Directional Character 3D</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/DirectionalAnimations3D
-    /// 
+    ///
     [AddComponentMenu(Strings.MenuPrefix + "Directional Animations 3D")]
     [AnimancerHelpUrl(typeof(DirectionalAnimations3D))]
     public class DirectionalAnimations3D : DirectionalAnimations3D<int> { }
@@ -25,15 +25,15 @@ namespace Animancer
     /// <see cref="DirectionalSet4{T}"/> to make it look like a <see cref="Sprite"/>
     /// based character is facing a particular direction in 3D space.
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// <strong>Sample:</strong>
     /// <see href="https://kybernetik.com.au/animancer/docs/samples/sprites/character-3d">
     /// Directional Character 3D</see>
     /// </remarks>
-    /// 
+    ///
     /// https://kybernetik.com.au/animancer/api/Animancer/DirectionalAnimations3D_1
-    /// 
+    ///
     [AnimancerHelpUrl(typeof(DirectionalAnimations3D<>))]
     public class DirectionalAnimations3D<TGroup> : MonoBehaviour
     {
@@ -399,4 +399,3 @@ namespace Animancer
         /************************************************************************************************************************/
     }
 }
-
