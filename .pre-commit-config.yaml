@@ -1,0 +1,40 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-merge-conflict
+
+      - id: check-yaml
+        files: ^(Assets/_Project/|ProjectSettings/|Packages/manifest\.json|Packages/packages-lock\.json|.*\.ya?ml$)
+
+      - id: check-json
+        files: ^(Assets/_Project/|Packages/manifest\.json|Packages/packages-lock\.json|.*\.json$)
+
+      - id: trailing-whitespace
+        files: ^Assets/_Project/.*\.(cs|asmdef|json|md|txt)$
+
+      - id: end-of-file-fixer
+        files: ^Assets/_Project/.*\.(cs|asmdef|json|md|txt)$
+
+  - repo: local
+    hooks:
+      - id: forbid-unity-debug-log
+        name: forbid direct UnityEngine.Debug logging
+        entry: python scripts/precommit/forbid_debug_log.py --all
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: require-public-vcontainer-inject
+        name: require public VContainer [Inject] methods
+        entry: python scripts/precommit/require_public_inject.py --all
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: forbid-unity-generated-folders
+        name: forbid Unity generated folders
+        entry: python scripts/precommit/forbid_unity_generated_paths.py --staged
+        language: system
+        pass_filenames: false
+        always_run: true

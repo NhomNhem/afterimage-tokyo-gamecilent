@@ -102,5 +102,3 @@
 	st.global.u32 	[payload], %r1;
 	ret;
 }
-
-

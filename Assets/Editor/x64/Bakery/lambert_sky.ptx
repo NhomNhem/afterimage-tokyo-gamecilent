@@ -625,5 +625,3 @@ BB0_50:
 	st.global.f32 	[payload], %f176;
 	ret;
 }
-
-

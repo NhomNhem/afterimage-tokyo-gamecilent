@@ -56,4 +56,3 @@ public class ftClearCache
         Debug.Log("Done");
     }
 }
-

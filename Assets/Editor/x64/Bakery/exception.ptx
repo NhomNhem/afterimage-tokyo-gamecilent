@@ -161,14 +161,14 @@ BB0_58:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd83;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r82, [retval0+0];
-	
+
 	//{
 	}// Callseq End 18
 	bra.uni 	BB0_60;
@@ -234,14 +234,14 @@ BB0_56:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd79;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r80, [retval0+0];
-	
+
 	//{
 	}// Callseq End 17
 
@@ -272,14 +272,14 @@ BB0_41:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd66;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r71, [retval0+0];
-	
+
 	//{
 	}// Callseq End 13
 
@@ -314,14 +314,14 @@ BB0_48:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd70;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r76, [retval0+0];
-	
+
 	//{
 	}// Callseq End 15
 	bra.uni 	BB0_60;
@@ -350,14 +350,14 @@ BB0_30:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd51;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r62, [retval0+0];
-	
+
 	//{
 	}// Callseq End 9
 
@@ -392,14 +392,14 @@ BB0_37:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd56;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r67, [retval0+0];
-	
+
 	//{
 	}// Callseq End 11
 	bra.uni 	BB0_60;
@@ -428,14 +428,14 @@ BB0_19:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd38;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r53, [retval0+0];
-	
+
 	//{
 	}// Callseq End 5
 
@@ -470,14 +470,14 @@ BB0_26:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd42;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r58, [retval0+0];
-	
+
 	//{
 	}// Callseq End 7
 	bra.uni 	BB0_60;
@@ -501,14 +501,14 @@ BB0_50:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd76;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r78, [retval0+0];
-	
+
 	//{
 	}// Callseq End 16
 	bra.uni 	BB0_60;
@@ -535,14 +535,14 @@ BB0_45:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd69;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r74, [retval0+0];
-	
+
 	//{
 	}// Callseq End 14
 	bra.uni 	BB0_60;
@@ -584,14 +584,14 @@ BB0_17:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd32;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r51, [retval0+0];
-	
+
 	//{
 	}// Callseq End 4
 	bra.uni 	BB0_60;
@@ -618,14 +618,14 @@ BB0_39:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd60;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r69, [retval0+0];
-	
+
 	//{
 	}// Callseq End 12
 	bra.uni 	BB0_60;
@@ -655,14 +655,14 @@ BB0_34:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd52;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r65, [retval0+0];
-	
+
 	//{
 	}// Callseq End 10
 	bra.uni 	BB0_60;
@@ -731,14 +731,14 @@ BB0_15:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd28;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r48, [retval0+0];
-	
+
 	//{
 	}// Callseq End 3
 	bra.uni 	BB0_60;
@@ -762,14 +762,14 @@ BB0_28:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd48;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r60, [retval0+0];
-	
+
 	//{
 	}// Callseq End 8
 	bra.uni 	BB0_60;
@@ -796,14 +796,14 @@ BB0_23:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd41;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r56, [retval0+0];
-	
+
 	//{
 	}// Callseq End 6
 	bra.uni 	BB0_60;
@@ -841,14 +841,14 @@ BB0_13:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd14;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r46, [retval0+0];
-	
+
 	//{
 	}// Callseq End 2
 	bra.uni 	BB0_60;
@@ -884,14 +884,14 @@ BB0_11:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd14;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r44, [retval0+0];
-	
+
 	//{
 	}// Callseq End 1
 	bra.uni 	BB0_60;
@@ -918,17 +918,15 @@ BB0_9:
 	.param .b64 param1;
 	st.param.b64	[param1+0], %rd16;
 	.param .b32 retval0;
-	call.uni (retval0), 
-	vprintf, 
+	call.uni (retval0),
+	vprintf,
 	(
-	param0, 
+	param0,
 	param1
 	);
 	ld.param.b32	%r42, [retval0+0];
-	
+
 	//{
 	}// Callseq End 0
 	bra.uni 	BB0_60;
 }
-
-

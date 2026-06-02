@@ -6,8 +6,8 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_Microsoft_Extensions_Logging_AbstractionsAnalyzerMultiTargeting" 
-          Condition="'$(SupportsRoslynComponentVersioning)' != 'true'" 
+  <Target Name="_Microsoft_Extensions_Logging_AbstractionsAnalyzerMultiTargeting"
+          Condition="'$(SupportsRoslynComponentVersioning)' != 'true'"
           AfterTargets="ResolvePackageDependenciesForBuild;ResolveNuGetPackageAssets"
           DependsOnTargets="_Microsoft_Extensions_Logging_AbstractionsGatherAnalyzers">
 
@@ -18,7 +18,7 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_Microsoft_Extensions_Logging_AbstractionsRemoveAnalyzers" 
+  <Target Name="_Microsoft_Extensions_Logging_AbstractionsRemoveAnalyzers"
           Condition="'$(DisableMicrosoftExtensionsLoggingSourceGenerator)' == 'true'"
           AfterTargets="ResolvePackageDependenciesForBuild;ResolveNuGetPackageAssets"
           DependsOnTargets="_Microsoft_Extensions_Logging_AbstractionsGatherAnalyzers">

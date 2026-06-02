@@ -360,6 +360,3 @@ public class ftSkyLightInspector : UnityEditor.Editor
         }
     }
 }
-
-
-

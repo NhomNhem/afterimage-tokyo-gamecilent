@@ -8820,9 +8820,9 @@ public class ftRenderLightmap : EditorWindow//ScriptableWizard
                     sl.shadowmaskFalloff = obj.shadowmaskFalloff;
                     sl.name = obj.name;
                     sl.lid = lid;
-                    
+
                     obj.lmid = sl.lmid = -lid + areaLightOffset;
-                    
+
                     savedLights.Add(sl);
 
                     batchedCount++;
@@ -11312,7 +11312,7 @@ public class ftRenderLightmap : EditorWindow//ScriptableWizard
                 var outPath1 = Application.dataPath + "/" + outputPathFull + "/" + lmname + "_L1" + (pstorage.format8bit == BakeryProjectSettings.FileFormat.PNG ? ".png" : ".tga");
                 if (File.Exists(outPath1)) ValidateFileAttribs(outPath1);
 
-                startInfo.Arguments       = " \"" + outPath1 + "\"" + 
+                startInfo.Arguments       = " \"" + outPath1 + "\"" +
                                             " \"" + scenePath + "/" + lmname + "_final_L1x" + (compressedOutput ? ".lz4" : ".dds") + "\"" +
                                             " \"" + scenePath + "/" + lmname + "_final_L1y" + (compressedOutput ? ".lz4" : ".dds") + "\"" +
                                             " \"" + scenePath + "/" + lmname + "_final_L1z" + (compressedOutput ? ".lz4" : ".dds") + "\"";

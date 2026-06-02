@@ -10,4 +10,3 @@ public partial class ftModelPostProcessor : ftModelPostProcessorInternal
         xatlas.Unwrap(m, uparams);
     }
 }
-

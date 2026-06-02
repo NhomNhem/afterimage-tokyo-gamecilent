@@ -93,14 +93,14 @@ public class ftClearMenu : EditorWindow
             RemoveFiles(maps[i]);
         }
     }
-    
+
     static void RemoveFiles(Mesh mesh)
     {
         var path = AssetDatabase.GetAssetPath(mesh);
         AssetDatabase.DeleteAsset(path);
         ftRenderLightmap.DebugLogInfo("Deleted " + path);
     }
-    
+
     static void RemoveFiles(List<Mesh> meshes)
     {
         for(int i=0; i<meshes.Count; i++)
@@ -187,4 +187,3 @@ public class ftClearMenu : EditorWindow
 #endif
     }
 }
-

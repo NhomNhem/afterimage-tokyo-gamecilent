@@ -558,4 +558,3 @@ public class ftClient
         if (statusProc != null) statusProc.MoveNext();
     }
 }
-

@@ -26,4 +26,3 @@ public class ftLightmapsStorageInspector : UnityEditor.Editor
         }
     }
 }
-

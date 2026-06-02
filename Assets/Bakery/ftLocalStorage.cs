@@ -13,4 +13,3 @@ public class ftLocalStorage : ScriptableObject
     [SerializeField]
     public List<int> modifiedAssetPaddingHash = new List<int>();
 }
-

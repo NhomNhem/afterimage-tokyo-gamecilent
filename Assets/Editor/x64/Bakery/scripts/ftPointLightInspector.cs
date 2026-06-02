@@ -869,6 +869,3 @@ public class ftPointLightInspector : UnityEditor.Editor
         }
     }
 }
-
-
-

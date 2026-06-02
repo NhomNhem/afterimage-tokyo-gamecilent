@@ -25,7 +25,7 @@ System.ComponentModel.DataAnnotations.RegularExpressionAttribute
 System.ComponentModel.DataAnnotations.DataTypeAttribute
 System.ComponentModel.DataAnnotations.RangeAttribute
 System.ComponentModel.DataAnnotations.KeyAttribute
- 
+
 When using NuGet 3.x this package requires at least version 3.4.</description>
     <releaseNotes>https://go.microsoft.com/fwlink/?LinkID=799421</releaseNotes>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>

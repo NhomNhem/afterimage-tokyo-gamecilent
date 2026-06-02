@@ -67,4 +67,3 @@ MRT frag (v2f IN)
 
     return mrt;
 }
-

@@ -197,4 +197,3 @@ public class BakeryLightmapGroup : ScriptableObject
         return str;
     }
 }
-

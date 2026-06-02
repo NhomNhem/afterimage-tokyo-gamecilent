@@ -130,4 +130,3 @@ public class BakeryLightmappedPrefab : MonoBehaviour
     }
 #endif
 }
-

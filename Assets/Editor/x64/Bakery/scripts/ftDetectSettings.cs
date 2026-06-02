@@ -280,4 +280,3 @@ public class ftDetectSettings
         lastReturnValue = GetProcessReturnValueAndClose(exeProcess);
     }
 }
-

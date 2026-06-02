@@ -187,4 +187,3 @@ public class ftLMGroupSelectorInspector : UnityEditor.Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
-

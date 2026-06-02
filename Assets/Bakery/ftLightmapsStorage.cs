@@ -645,7 +645,7 @@ public class ftLightmapsStorage : MonoBehaviour{
             f07 = sh[0,7];
             f17 = sh[1,7];
             f27 = sh[2,7];
-            
+
             f08 = sh[0,8];
             f18 = sh[1,8];
             f28 = sh[2,8];

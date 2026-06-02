@@ -6,8 +6,8 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_System_Text_JsonAnalyzerMultiTargeting" 
-          Condition="'$(SupportsRoslynComponentVersioning)' != 'true'" 
+  <Target Name="_System_Text_JsonAnalyzerMultiTargeting"
+          Condition="'$(SupportsRoslynComponentVersioning)' != 'true'"
           AfterTargets="ResolvePackageDependenciesForBuild;ResolveNuGetPackageAssets"
           DependsOnTargets="_System_Text_JsonGatherAnalyzers">
 
@@ -18,7 +18,7 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_System_Text_JsonRemoveAnalyzers" 
+  <Target Name="_System_Text_JsonRemoveAnalyzers"
           Condition="'$(DisableSystemTextJsonSourceGenerator)' == 'true'"
           AfterTargets="ResolvePackageDependenciesForBuild;ResolveNuGetPackageAssets"
           DependsOnTargets="_System_Text_JsonGatherAnalyzers">

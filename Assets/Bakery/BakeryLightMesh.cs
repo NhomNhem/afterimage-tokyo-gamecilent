@@ -74,6 +74,3 @@ public class BakeryLightMesh : MonoBehaviour
         if (mr!=null) Gizmos.DrawWireSphere(mr.bounds.center, cutoff);
 	}
 }
-
-
-

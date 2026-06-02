@@ -211,7 +211,7 @@ public class ftDirectLightInspector : UnityEditor.Editor
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(obj, "Move directional light projection");
-                
+
                 newPos -= ntangent * 0.5f/obj.cloudShadowTilingX;
                 newPos -= nbinormal * 0.5f/obj.cloudShadowTilingY;
                 obj.cloudShadowOffsetX = Vector3.Dot(ntangent, newPos) * -obj.cloudShadowTilingX;
@@ -658,6 +658,3 @@ public class ftDirectLightInspector : UnityEditor.Editor
         }
     }
 }
-
-
-

@@ -261,5 +261,3 @@ BB0_2:
 	st.global.f32 	[normal+8], %f63;
 	ret;
 }
-
-

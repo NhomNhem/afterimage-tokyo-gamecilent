@@ -180,6 +180,3 @@ public class BakeryPointLight : MonoBehaviour
     }
 #endif
 }
-
-
-

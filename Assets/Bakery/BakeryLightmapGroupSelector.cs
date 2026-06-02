@@ -7,4 +7,3 @@ public class BakeryLightmapGroupSelector : MonoBehaviour
     public bool instanceResolutionOverride = false;
     public int instanceResolution = 256;
 }
-

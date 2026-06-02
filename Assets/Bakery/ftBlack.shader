@@ -39,4 +39,3 @@ Shader "Hidden/ftBlack"
         }
     }
 }
-

@@ -297,5 +297,3 @@ BB0_5:
 	st.global.v2.f32 	[texCoords], {%f86, %f87};
 	ret;
 }
-
-

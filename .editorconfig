@@ -29,6 +29,7 @@
 dotnet_diagnostic.ND003.severity = warning
 dotnet_diagnostic.NHEM_DI_010.severity = warning
 dotnet_diagnostic.NHEM_DI_011.severity = warning
+dotnet_diagnostic.NDFG014.severity = warning
 
 
 # ============================================================

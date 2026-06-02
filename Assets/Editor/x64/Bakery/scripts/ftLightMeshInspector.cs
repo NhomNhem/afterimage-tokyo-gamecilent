@@ -710,6 +710,3 @@ public class ftLightMeshInspector : UnityEditor.Editor
         }
     }
 }
-
-
-

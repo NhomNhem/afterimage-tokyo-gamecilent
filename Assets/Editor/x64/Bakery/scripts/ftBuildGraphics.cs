@@ -6030,7 +6030,7 @@ public class ftBuildGraphics : ScriptableWizard
             int id = lmgroup.id;
 
             var mr = GetValidRenderer(obj);
-            
+
             if (modifyLightmapStorage)
             {
                 if (lmBounds[id].size == Vector3.zero) {
@@ -6233,7 +6233,7 @@ public class ftBuildGraphics : ScriptableWizard
                     if (!obj.activeInHierarchy) continue;
                     var path = AssetDatabase.GetAssetPath(obj);
                     if (path != "") continue; // must belong to scene
-                    
+
 
                     if (!CheckForMultipleSceneStorages(obj, data)) yield break;
                     if (ConvertUnityAreaLight(obj)) continue;
