@@ -96,9 +96,9 @@
                  {
                      BeginVBox(style);
                  }
-            
+
                  protected override void CloseScope()
-                 { 
+                 {
                      EndVBox();
                  }
              }</code>

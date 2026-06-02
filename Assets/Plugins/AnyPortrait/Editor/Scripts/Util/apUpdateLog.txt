@@ -1,0 +1,679 @@
+(업데이트 이미지 개수)
+3
+-----------------------------------------
+(영어)
+<size=16>AnyPortrait Update Log v1.6.0 / v1.6.1</size>
+(April 30, 2025 / August 6, 2025)
+
+<size=13>Improvements</size>
+
+- <color=blue>Masks</color>
+    The ability to create and send a render texture that acts as a mask and similar has been greatly improved.
+    Unlike clipping masks, masks can be created and sent regardless of the rendering order of the meshes.
+    Multiple meshes can create a single mask together.
+    Custom properties can be passed with masks.
+    The ability to combine multiple masks is added.
+    Instead of an alpha mask, a mask texture generated with a regular shader can be passed with the Alpha value to implement a "See-Through" effect.
+    "As Mask Only" option is added to set a mesh that does not actually render, but only serves as a mask provider.
+    An option to size render textures for masks based on screen size is added.
+    Improved "v16" material presets is added to support mask functionality, and old material presets and packages are classified as "Legacy".
+
+- <color=blue>Editor Docking</color>
+    AnyPortrait editor can be run docked within the Unity editor layout.
+    An issue is fixed where the editor would terminate when "Maximized" while docked.
+    An issue is fixed that occurred when switching to another scene while the editor was docked.
+
+- <color=blue>Animation-related Scripts</color>
+    To check the length of the animation, the "TimeLength" and "Duration" properties are added to apAnimPlayData, and the "GetAnimationTimeLength" and "GetAnimationDuration" functions are added to apPortrait.
+    To check whether the animation is looped, the "IsLoop" property is added to apAnimPlayData, and the "IsAnimationLoop" function is added to apPortrait.
+    The "OnAnimationEnded" event is added to apPortrait to detect when the animation being played has ended or reached the last frame.
+    "PauseAt" and "ChangeFrame" functions to change the frame of an animation are added. (v1.6.1)
+
+- <color=blue>Bake Option Validation</color>
+    Automatic validation of key Bake options is added that need to be set to match the project environment, such as "Render Pipeline", "Color Space", and "Number of Cameras".
+    This feature is added to the Bake dialog, and some options are moved to the Settings tab.
+
+- It is improved that the "Reserved Properties" used inside AnyPortrait in the "Material Library" are automatically determined based on the set shader asset.
+- "Move Symmetrically" function in the mesh editing screen.
+- A function is added to move the axis to the pivot when using the Mirror tool in the mesh editing screen.
+- Assembly definition (asmdef) file is added so that AnyPortrait scripts are compiled separately.
+- Webpage links have been modified due to the website renewal. (v1.6.1)
+
+
+
+<size=13>Fixed issues</size>
+
+- An issue is fixed where an error related to the render texture would occur when the AnyPortrait editor was too small.
+- An issue is fixed where the value of the RGB channel would be affected by the Alpha value when the background color was semi-transparent during screen capture.
+- An issue is fixed where the data of keyframes would be initialized and unrecoverable when undoing after deleting the timeline of an animation, etc.
+- An issue is fixed where the gizmo would not work when undoing after deleting the timeline of an animation, etc.
+- An issue is fixed where all lines connecting existing vertices would disappear when undoing after adding vertices in the mesh editing screen.
+- An issue is fixed where undoing after creating a new character or Bake would not be performed properly.
+- An issue is fixed where a strange image was output to the upper left of the workspace in Unity 2022 or earlier.
+- An issue is fixed where an error log related to the command buffer occurred when running with URP in Unity 6.
+- An issue is fixed where some list UIs, such as Add Timeline and Add Modifier, were output awkwardly in Unity 6.
+- An issue is fixed where the UI for copying and pasting vertices of a mesh was output somewhat small in Unity 2023 or later.
+- An issue is fixed where the initial Alpha would be 0 when adding a new key depending on the editor settings when editing the "Color Only (Controller)" modifier.
+- An issue is fixed where the brush icon in the rigging edit screen would scale up/down with the screen zoom.
+- An issue is fixed where the editor would not be able to edit modifiers due to an error when deleting a mesh registered to a Rigging or Physics modifier and then restarting it immediately.
+- An issue is fixed where clipped meshes would not render in frames where the clipping mask was hidden and then shown. (v1.6.1)
+- An issue is fixed where an error would occur when synchronization of two characters playing as Mecanim was released. (v1.6.1)
+
+
+
+
+-----------------------------------------
+(한국어)
+<size=16>AnyPortrait 업데이트 로그 v1.6.0 / v1.6.1</size>
+(2025년 4월 30일 / 2025년 8월 6일)
+
+<size=13>개선된 사항</size>
+
+- <color=blue>마스크</color>
+    마스크 및 유사한 역할을 하는 렌더 텍스쳐를 생성하고 전달하는 기능이 크게 개선됨
+    클리핑 마스크와 달리, 메시의 렌더링 순서에 무관하게 마스크를 생성하고 전달할 수 있음
+    여러개의 메시들이 하나의 마스크를 같이 생성하여 전달할 수 있음
+    마스크로서의 렌더 텍스쳐 및 사용자 지정 프로퍼티를 전달할 수 있음
+    여러개의 마스크들을 조합하는 기능이 추가됨
+    알파 마스크 대신 일반 쉐이더로 생성된 마스크 텍스쳐를 Alpha 값과 함께 전달하여 "투과 효과(See-Through)" 구현이 가능함
+    실제로 렌더링은 안되지만 마스크 제공 역할만 하는 메시를 설정하기 위한 "As Mask Only" 옵션이 추가됨
+    화면의 크기에 따라 마스크용 렌더 텍스쳐의 크기가 결정되는 옵션이 추가됨
+    마스크 기능을 지원하도록 개선된 "v16" 재질 프리셋이 추가되었으며, 이전 재질 프리셋과 패키지들이 "Legacy"로 분류됨
+
+- <color=blue>에디터 도킹</color>
+    AnyPortrait 에디터를 유니티 에디터 레이아웃 내에 도킹한 상태로 실행 가능
+    에디터가 도킹된 상태에서 "최대화(Maximize)"시 에디터가 종료되는 문제가 수정됨
+    에디터가 도킹된 상태에서 다른 씬으로 전환할 때 발생하는 에러가 수정됨
+
+- <color=blue>애니메이션 관련 스크립트</color>
+    애니메이션의 길이를 확인할 수 있도록, apAnimPlayData에 "TimeLength"와 "Duration" 프로퍼티가 추가되고, apPortrait에 "GetAnimationTimeLength"와 "GetAnimationDuration" 함수가 추가됨
+    애니메이션의 루프 여부를 확인할 수 있도록, apAnimPlayData에 "IsLoop" 프로퍼티가 추가되고, apPortrait에 "IsAnimationLoop" 함수가 추가됨
+    재생되는 애니메이션이 종료되거나 또는 마지막 프레임 도달했음을 감지하기 위한 "OnAnimationEnded" 이벤트가 apPortrait에 추가됨
+    애니메이션의 프레임을 변경하는 "PauseAt"과 "ChangeFrame" 함수가 추가됨 (v1.6.1)
+
+- <color=blue>Bake 옵션 유효성 검사</color>
+    "렌더 파이프라인", "색상 공간", "카메라 개수"와 같은 프로젝트 환경에 맞추어서 설정해야하는 주요 Bake 옵션들의 유효성을 자동으로 검사하는 기능이 추가됨
+    해당 기능이 Bake 다이얼로그에 추가되었으며, 이에 따라 일부 UI가 Setting 탭으로 이동됨
+
+- "재질 라이브러리"에서 AnyPortrait 내부에서 사용되는 "예약된 프로퍼티(Reserved Property)"들이 설정된 쉐이더 에셋에 따라 자동으로 결정되도록 개선됨
+- 메시 편집 화면에서 "버텍스 대칭 이동" 기능이 추가됨
+- 메시 편집 화면에서 미러 편집시의 축을 피벗(Pivot)으로 이동시키는 기능이 추가됨
+- 어셈블리 정의(asmdef) 파일을 추가하여 AnyPortrait 스크립트들이 별도로 컴파일되도록 변경됨
+- 홈페이지 리뉴얼에 따라 웹페이지 바로가기 링크가 수정됨 (v1.6.1)
+
+
+
+<size=13>수정된 문제점</size>
+
+- AnyPortrait 에디터가 너무 작은 경우 렌더 텍스쳐와 관련된 에러가 발생하는 문제가 수정됨
+- 화면 캡쳐시 배경 색상이 반투명한 경우, RGB 채널의 값이 Alpha 값에 영향을 받는 문제가 수정됨
+- 애니메이션의 타임라인 등을 삭제한 후 실행 취소시, 키프레임의 데이터가 초기화되고 복원 불가 상태가 되는 문제가 수정됨
+- 애니메이션의 타임라인 등을 삭제한 후 실행 취소시, 기즈모가 동작하지 않는 문제가 수정됨
+- 메시 편집 화면에서 버텍스를 추가한 후 실행 취소 시, 기존의 버텍스들을 연결하는 선들이 모두 사라지는 문제가 수정됨
+- Bake나 새로운 캐릭터를 생성한 후 정상적으로 실행 취소가 되지 않는 문제가 수정됨
+- 유니티 2022 또는 이전 버전에서 작업 공간 좌측 상단에 이상한 이미지가 출력되는 문제가 수정됨
+- 유니티 6에서 URP로 실행시, 커맨드 버퍼와 관련된 에러 로그가 발생하는 문제가 수정됨
+- 유니티 6에서 타임라인 추가하기, 모디파이어 추가하기 등과 같은 일부 리스트 UI가 어색하게 출력되는 문제가 수정됨
+- 유니티 2023 또는 이후 버전에서 메시의 버텍스를 복사하여 붙여넣는 UI가 다소 작게 출력되는 문제가 수정됨
+- "Color Only (Controller)" 모디파이어를 편집할 때, 에디터 설정에 따라서 새로운 키(Key)를 추가할 때 객체가 보여져야하는 상태에서도 초기 Alpha가 0이 되어버리는 문제가 수정됨
+- 리깅 편집 화면에서 브러시 아이콘이 화면 확대/축소에 따라 같이 확대/축소되는 문제가 수정됨
+- Rigging, Physics 모디파이어에 등록된 메시를 삭제한 후 바로 에디터를 재시작하면, 에러로 인하여 모디파이어 편집이 불가한 문제가 수정됨
+- 클리핑 마스크 메시가 숨겨졌다가 보여지는 프레임에서 클리핑 메시가 렌더링되지 않는 문제가 수정됨 (v1.6.1)
+- 메카님으로 재생되는 두 캐릭터의 동기화가 해제될 때 에러가 발생되는 문제가 수정됨 (v1.6.1)
+
+
+
+
+-----------------------------------------
+(프랑스어)
+<size=16>Fichier de mise à jour AnyPortrait v1.6.0 / v1.6.1</size>
+(30 avril 2025 / 6 août 2025)
+
+<size=13>Améliorations</size>
+
+- <color=blue>Masques</color>
+    La possibilité de créer et d'envoyer une texture de rendu faisant office de masque a été grandement améliorée.
+    Contrairement aux masques d'écrêtage, les masques peuvent être créés et envoyés quel que soit l'ordre de rendu des maillages.
+    Plusieurs maillages peuvent créer un seul masque.
+    Des propriétés personnalisées peuvent être transmises aux masques.
+    La possibilité de combiner plusieurs masques est ajoutée.
+    Au lieu d'un masque alpha, une texture de masque générée avec un shader standard peut être transmise avec la valeur Alpha pour implémenter un effet « See-Through ».
+    L'option « Masque uniquement » a été ajoutée pour définir un maillage qui ne s'affiche pas réellement, mais sert uniquement de fournisseur de masque.
+    Une option permettant de dimensionner les textures de rendu des masques en fonction de la taille de l'écran a été ajoutée.
+    Des préréglages de matériaux « v16 » améliorés ont été ajoutés pour prendre en charge la fonctionnalité de masque, et les anciens préréglages et packages de matériaux sont classés comme « Legacy ».
+
+- <color=blue>Ancrage de l'éditeur</color>
+    L'éditeur AnyPortrait peut être exécuté ancré dans l'interface de l'éditeur Unity.
+    Un problème a été corrigé : l'éditeur se fermait lorsqu'il était « maximisé » alors qu'il était ancré.
+    Un problème survenant lors du passage à une autre scène alors que l'éditeur était ancré a été corrigé.
+
+- <color=blue>Scripts liés à l'animation</color>
+    Pour vérifier la durée de l'animation, les propriétés « TimeLength » et « Duration » ont été ajoutées à apAnimPlayData, et les fonctions « GetAnimationTimeLength » et « GetAnimationDuration » ont été ajoutées à apPortrait.
+    Pour vérifier si l'animation est en boucle, la propriété « IsLoop » a été ajoutée à apAnimPlayData, et la fonction « IsAnimationLoop » a été ajoutée à apPortrait.
+    L'événement « OnAnimationEnded » a été ajouté à apPortrait pour détecter la fin ou la dernière image de l'animation en cours de lecture.
+    Les fonctions « PauseAt » et « ChangeFrame » permettant de modifier l'image d'une animation ont été ajoutées. (v1.6.1)
+
+- <color=blue>Validation des options de cuisson</color>
+    La validation automatique des options clés de cuisson a été ajoutée.
+    Elles doivent être définies en fonction de l'environnement du projet, telles que « Pipeline de rendu », « Espace colorimétrique » et « Nombre de caméras ».
+    Cette fonctionnalité est ajoutée à la boîte de dialogue Cuisson et certaines options sont déplacées vers l'onglet Paramètres.
+
+- Amélioration : les « Propriétés réservées » utilisées dans AnyPortrait dans la « Bibliothèque de matériaux » sont automatiquement déterminées en fonction de l'élément de shader défini.
+- Fonction « Déplacer symétriquement » dans l'écran d'édition du maillage.
+- Une fonction a été ajoutée pour déplacer l'axe vers le pivot lors de l'utilisation de l'outil Miroir dans l'écran d'édition du maillage.
+- Un fichier de définition d'assemblage (asmdef) a été ajouté afin que les scripts AnyPortrait soient compilés séparément.
+- Les liens des pages Web ont été modifiés en raison du renouvellement du site Web (v1.6.1).
+
+
+
+<size=13>Problème résolu</size>
+
+- Un problème a été résolu où une erreur liée à la texture de rendu se produisait lorsque l'éditeur AnyPortrait était trop petit.
+- Un problème a été résolu où la valeur du canal RVB était affectée par la valeur Alpha lorsque la couleur d'arrière-plan était semi-transparente lors de la capture d'écran.
+- Un problème a été résolu où les données des images clés étaient initialisées et irrécupérables lors de l'annulation après la suppression de la chronologie d'une animation, etc.
+- Un problème a été résolu où le gadget ne fonctionnait pas lors de l'annulation après la suppression de la chronologie d'une animation, etc.
+- Un problème a été résolu où toutes les lignes reliant les sommets existants disparaissaient lors de l'annulation après l'ajout de sommets dans l'écran d'édition du maillage.
+- Un problème a été résolu où l'annulation après la création d'un nouveau personnage ou d'une ébauche ne s'effectuait pas correctement. - Correction d'un problème où une image étrange s'affichait en haut à gauche de l'espace de travail dans Unity 2022 ou versions antérieures.
+- Un problème a été résolu où un journal d'erreurs lié au tampon de commandes survenait lors de l'exécution avec URP dans Unity 6.
+- Un problème a été résolu où certaines interfaces utilisateur de liste, telles que Ajouter une chronologie et Ajouter un modificateur, s'affichaient de manière anormale dans Unity 6.
+- Un problème a été résolu où l'interface utilisateur pour copier-coller les sommets d'un maillage s'affichait de manière quelque peu réduite dans Unity 2023 ou versions ultérieures.
+- Un problème a été résolu où l'alpha initial était de 0 lors de l'ajout d'une nouvelle clé, selon les paramètres de l'éditeur lors de la modification du modificateur « Couleur uniquement (Contrôleur) ».
+- Un problème a été résolu où l'icône de pinceau dans l'écran de modification du rigging s'agrandissait ou se réduisait en fonction du zoom de l'écran.
+- Un problème a été résolu où l'éditeur ne pouvait pas modifier les modificateurs en raison d'une erreur lors de la suppression d'un maillage enregistré dans un modificateur de rigging ou de physique, puis de son redémarrage immédiat.
+- Un problème a été résolu où le rendu des maillages découpés dans les images où le masque de découpage était masqué puis affiché. (v1.6.1)
+- Un problème a été résolu où une erreur lors de la synchronisation de deux personnages incarnant Mecanim. (v1.6.1)
+
+
+
+-----------------------------------------
+(독일어)
+<size=16>AnyPortrait-Aktualisierungsprotokoll v1.6.0 / v1.6.1</size>
+(30. April 2025 / 6. August 2025)
+
+<size=13>Verbesserungen</size>
+
+- <color=blue>Masken</color>
+    Die Möglichkeit, eine Rendertextur zu erstellen und zu senden, die als Maske oder Ähnliches fungiert, wurde erheblich verbessert.
+    Im Gegensatz zu Clipping-Masken können Masken unabhängig von der Renderreihenfolge der Meshes erstellt und gesendet werden.
+    Mehrere Meshes können zusammen eine Maske bilden.
+    Benutzerdefinierte Eigenschaften können mit Masken übergeben werden.
+    Die Möglichkeit, mehrere Masken zu kombinieren, wurde hinzugefügt.
+    Anstelle einer Alpha-Maske kann eine mit einem regulären Shader generierte Maskentextur mit dem Alpha-Wert übergeben werden, um einen Durchsicht-Effekt zu erzielen.
+    Die Option „Nur als Maske“ wurde hinzugefügt, um ein Mesh festzulegen, das nicht tatsächlich rendert, sondern nur als Maskenprovider dient.
+    Eine Option zur Größenanpassung von Rendertexturen für Masken basierend auf der Bildschirmgröße wurde hinzugefügt.
+    Verbesserte Materialvorgaben der Version 16 wurden hinzugefügt, um die Maskenfunktionalität zu unterstützen. Alte Materialvorgaben und -pakete wurden als „Legacy“ klassifiziert.
+
+- <color=blue>Editor-Andocken</color>
+    Der AnyPortrait-Editor kann im Unity-Editor-Layout angedockt ausgeführt werden.
+    Ein Problem wurde behoben, bei dem der Editor im angedockten Zustand bei Maximierung beendet wurde.
+    Ein Problem wurde behoben, das beim Wechsel zu einer anderen Szene im angedockten Zustand auftrat.
+
+- <color=blue>Animationsbezogene Skripte</color>
+    Um die Länge der Animation zu überprüfen, wurden die Eigenschaften „TimeLength“ und „Duration“ zu apAnimPlayData und die Funktionen „GetAnimationTimeLength“ und „GetAnimationDuration“ zu apPortrait hinzugefügt.
+    Um zu überprüfen, ob die Animation in einer Schleife abgespielt wird, wurde die Eigenschaft „IsLoop“ zu apAnimPlayData und die Funktion „IsAnimationLoop“ zu apPortrait hinzugefügt.
+    Das Ereignis „OnAnimationEnded“ wurde zu apPortrait hinzugefügt, um zu erkennen, wann die abgespielte Animation beendet ist oder das letzte Bild erreicht hat.
+    Die Funktionen „PauseAt“ und „ChangeFrame“ zum Ändern des Frames einer Animation wurden hinzugefügt. (v1.6.1)
+
+- <color=blue>Validierung von Bake-Optionen</color>
+    Die automatische Validierung wichtiger Bake-Optionen, die an die Projektumgebung angepasst werden müssen, wie z. B. „Render-Pipeline“, „Farbraum“ und „Anzahl der Kameras“, wurde hinzugefügt.
+    Diese Funktion wurde dem Bake-Dialog hinzugefügt, und einige Optionen wurden in den Reiter „Einstellungen“ verschoben.
+
+- Die in AnyPortrait in der Materialbibliothek verwendeten „Reservierten Eigenschaften“ werden nun automatisch anhand des eingestellten Shader-Assets ermittelt.
+- Funktion „Symmetrisch verschieben“ im Mesh-Bearbeitungsbildschirm.
+- Eine Funktion zum Verschieben der Achse zum Drehpunkt wurde hinzugefügt, wenn das Spiegelwerkzeug im Mesh-Bearbeitungsbildschirm verwendet wird.
+- Eine Assembly-Definitionsdatei (asmdef) wurde hinzugefügt, sodass AnyPortrait-Skripte separat kompiliert werden können.
+- Webseiten-Links wurden aufgrund der Website-Erneuerung geändert. (v1.6.1)
+
+
+
+<size=13>Problem behoben</size>
+
+- Ein Problem wurde behoben, bei dem ein Fehler im Zusammenhang mit der Rendertextur auftrat, wenn der AnyPortrait-Editor zu klein war.
+- Ein Problem wurde behoben, bei dem der Wert des RGB-Kanals durch den Alpha-Wert beeinflusst wurde, wenn die Hintergrundfarbe während der Bildschirmaufnahme halbtransparent war.
+- Ein Problem wurde behoben, bei dem die Daten von Keyframes initialisiert und nicht wiederherstellbar waren, wenn nach dem Löschen der Zeitleiste einer Animation usw. eine Rückgängigmachung vorgenommen wurde.
+- Ein Problem wurde behoben, bei dem das Gizmo beim Rückgängigmachen nach dem Löschen der Zeitleiste einer Animation usw. nicht funktionierte.
+- Ein Problem wurde behoben, bei dem alle Linien, die vorhandene Scheitelpunkte verbinden, beim Rückgängigmachen nach dem Hinzufügen von Scheitelpunkten im Mesh-Bearbeitungsbildschirm verschwanden.
+- Ein Problem wurde behoben, bei dem das Rückgängigmachen nach dem Erstellen eines neuen Charakters oder nach dem Backen nicht korrekt ausgeführt wurde.
+- Ein Problem wurde behoben, bei dem in Unity 2022 oder früheren Versionen oben links im Arbeitsbereich ein seltsames Bild ausgegeben wurde.
+- Ein Problem wurde behoben, bei dem bei der Ausführung mit URP in Unity 6 ein Fehlerprotokoll im Zusammenhang mit dem Befehlspuffer auftrat.
+- Ein Problem wurde behoben, bei dem einige Listen-UIs, wie z. B. „Zeitleiste hinzufügen“ und „Modifikator hinzufügen“, in Unity 6 fehlerhaft ausgegeben wurden.
+- Ein Problem wurde behoben, bei dem die UI zum Kopieren und Einfügen von Eckpunkten eines Meshs in Unity 2023 oder höher etwas klein ausgegeben wurde.
+- Ein Problem wurde behoben, bei dem das anfängliche Alpha beim Hinzufügen eines neuen Schlüssels je nach den Editoreinstellungen beim Bearbeiten des Modifikators „Nur Farbe (Controller)“ 0 war.
+- Ein Problem wurde behoben, bei dem das Pinselsymbol im Rigging-Bearbeitungsbildschirm mit dem Bildschirmzoom vergrößert/verkleinert wurde.
+- Ein Problem wurde behoben, bei dem der Editor aufgrund eines Fehlers beim Löschen eines für einen Rigging- oder Physik-Modifikator registrierten Meshs und anschließenden Neustart keine Modifikatoren bearbeiten konnte.
+- Ein Problem wurde behoben, bei dem abgeschnittene Meshes in Frames nicht gerendert wurden, in denen die Schnittmaske ausgeblendet und dann wieder angezeigt wurde. (v1.6.1)
+- Ein Problem wurde behoben, bei dem ein Fehler auftrat, wenn die Synchronisierung zweier Charaktere, die als Mecanim spielten, freigegeben wurde. (v1.6.1)
+
+
+
+
+-----------------------------------------
+(스페인어)
+<size=16>AnyPortrait Update Log v1.6.0 / v1.6.1</size>
+(30 de abril de 2025 / 6 de agosto de 2025)
+
+<size=13>Mejoras</size>
+
+- <color=blue>Máscaras</color>
+    Se ha mejorado considerablemente la capacidad de crear y enviar una textura de renderizado que actúa como máscara y similar.
+    A diferencia de las máscaras de recorte, las máscaras se pueden crear y enviar independientemente del orden de renderizado de las mallas.
+    Varias mallas pueden crear una sola máscara.
+    Se pueden pasar propiedades personalizadas con máscaras.
+    Se añade la capacidad de combinar varias máscaras.
+    En lugar de una máscara alfa, se puede pasar una textura de máscara generada con un sombreador normal con el valor Alfa para implementar un efecto de transparencia.
+    Se ha añadido la opción "Solo como máscara" para configurar una malla que no se renderiza realmente, sino que solo sirve como proveedor de máscara.
+    Se ha añadido una opción para dimensionar las texturas de renderizado de las máscaras según el tamaño de la pantalla.
+    Se han añadido ajustes preestablecidos de material "v16" mejorados para admitir la funcionalidad de máscara, y los ajustes preestablecidos y paquetes de materiales antiguos se clasifican como "Legacy".
+
+- <color=blue>Acoplamiento del editor</color>
+    El editor AnyPortrait puede ejecutarse acoplado dentro del diseño del editor de Unity.
+    Se solucionó un problema por el cual el editor se cerraba al maximizarse estando acoplado.
+    Se solucionó un problema que ocurría al cambiar de escena con el editor acoplado.
+
+- <color=blue>Scripts relacionados con la animación</color>
+    Para comprobar la duración de la animación, se añaden las propiedades "TimeLength" y "Duration" a apAnimPlayData, y las funciones "GetAnimationTimeLength" y "GetAnimationDuration" a apPortrait.
+    Para comprobar si la animación se repite en bucle, se añaden la propiedad "IsLoop" a apAnimPlayData y la función "IsAnimationLoop" a apPortrait.
+    El evento "OnAnimationEnded" se añade a apPortrait para detectar cuándo la animación en reproducción ha finalizado o ha llegado al último fotograma.
+    Se añadieron las funciones "PauseAt" y "ChangeFrame" para cambiar el fotograma de una animación. (v1.6.1)
+
+- <color=blue>Validación de la opción de horneado</color>
+    Se añade la validación automática de las opciones clave de horneado que deben configurarse para adaptarse al entorno del proyecto, como "Render Pipeline", "Color Space" y "Number of Cameras". Esta función se ha añadido al cuadro de diálogo "Hornear" y algunas opciones se han trasladado a la pestaña "Configuración".
+
+- Se ha mejorado que las "Propiedades reservadas" utilizadas en AnyPortrait en la "Biblioteca de materiales" se determinen automáticamente en función del recurso de sombreado definido.
+- Función "Mover simétricamente" en la pantalla de edición de malla.
+- Se ha añadido una función para mover el eje al pivote al usar la herramienta Reflejar en la pantalla de edición de malla.
+- Se ha añadido el archivo de definición de ensamblaje (asmdef) para que los scripts de AnyPortrait se compilen por separado.
+- Los enlaces de las páginas web han sido modificados debido a la renovación del sitio web (v1.6.1).
+
+
+
+<size=13>Problema solucionado</size>
+
+- Se solucionó un problema que causaba un error relacionado con la textura de renderizado cuando el editor AnyPortrait era demasiado pequeño.
+- Se solucionó un problema que afectaba al valor del canal RGB cuando el color de fondo era semitransparente durante la captura de pantalla.
+- Se solucionó un problema que causaba que los datos de los fotogramas clave se inicializaran y fueran irrecuperables al deshacer una animación tras eliminar la línea de tiempo, etc.
+- Se solucionó un problema que causaba que el gizmo no funcionara al deshacer una animación tras eliminar la línea de tiempo, etc.
+- Se solucionó un problema que causaba que todas las líneas que conectaban vértices existentes desaparecieran al deshacer una animación tras añadir vértices en la pantalla de edición de malla.
+- Se solucionó un problema que causaba que deshacer una animación tras crear un nuevo personaje o usar la función Bake no se realizara correctamente. - Se solucionó un problema por el cual se mostraba una imagen extraña en la esquina superior izquierda del espacio de trabajo en Unity 2022 o versiones anteriores.
+- Se solucionó un problema por el cual se generaba un registro de error relacionado con el búfer de comandos al ejecutar con URP en Unity 6.
+- Se solucionó un problema por el cual algunas IU de lista, como Agregar línea de tiempo y Agregar modificador, se mostraban de forma incorrecta en Unity 6.
+- Se solucionó un problema por el cual la IU para copiar y pegar vértices de una malla se mostraba algo pequeña en Unity 2023 o posterior.
+- Se solucionó un problema por el cual el alfa inicial era 0 al agregar una nueva clave, dependiendo de la configuración del editor al editar el modificador "Solo color (controlador)".
+- Se solucionó un problema por el cual el icono del pincel en la pantalla de edición de rigging se escalaba hacia arriba o hacia abajo con el zoom de la pantalla.
+- Se solucionó un problema por el cual el editor no podía editar modificadores debido a un error al eliminar una malla registrada para un modificador de rigging o física y luego reiniciarla inmediatamente.
+- Se solucionó un problema por el cual las mallas recortadas no se renderizaban en fotogramas donde la máscara de recorte se ocultaba y luego se mostraba. (v1.6.1)
+- Se solucionó un problema por el cual se producía un error al activar la sincronización de dos personajes que jugaban como Mecanim. (v1.6.1)
+
+
+
+
+-----------------------------------------
+(이탈리아어)
+<size=16>Registro aggiornamenti AnyPortrait v1.6.0 / v1.6.1</size>
+(30 aprile 2025 / 6 agosto 2025)
+
+<size=13>Miglioramenti</size>
+
+- <color=blue>Maschere</color>
+    La possibilità di creare e inviare una texture di rendering che funge da maschera e simili è stata notevolmente migliorata.
+    A differenza delle maschere di ritaglio, le maschere possono essere create e inviate indipendentemente dall'ordine di rendering delle mesh.
+    Più mesh possono creare una singola maschera insieme.
+    È possibile passare proprietà personalizzate con le maschere.
+    È stata aggiunta la possibilità di combinare più maschere.
+    Invece di una maschera alfa, è possibile passare una texture di maschera generata con uno shader normale con il valore alfa per implementare un effetto "Trasparenza".
+    È stata aggiunta l'opzione "Solo come maschera" per impostare una mesh che non esegue effettivamente il rendering, ma funge solo da fornitore di maschere.
+    È stata aggiunta un'opzione per ridimensionare le texture di rendering per le maschere in base alle dimensioni dello schermo.
+    Sono stati aggiunti preset di materiali "v16" migliorati per supportare la funzionalità delle maschere e i vecchi preset e pacchetti di materiali sono classificati come "Legacy".
+
+- <color=blue>Aggancio dell'editor</color>
+    L'editor AnyPortrait può essere eseguito agganciato all'interno del layout dell'editor di Unity.
+    È stato risolto un problema per cui l'editor si chiudeva quando era "ingrandito" mentre era agganciato.
+    È stato risolto un problema che si verificava passando a un'altra scena mentre l'editor era agganciato.
+
+- <color=blue>Script relativi all'animazione</color>
+    Per verificare la lunghezza dell'animazione, le proprietà "TimeLength" e "Duration" vengono aggiunte ad apAnimPlayData, mentre le funzioni "GetAnimationTimeLength" e "GetAnimationDuration" vengono aggiunte ad apPortrait.
+    Per verificare se l'animazione è in loop, la proprietà "IsLoop" viene aggiunta ad apAnimPlayData e la funzione "IsAnimationLoop" viene aggiunta ad apPortrait.
+    L'evento "OnAnimationEnded" viene aggiunto ad apPortrait per rilevare quando l'animazione in riproduzione è terminata o ha raggiunto l'ultimo fotogramma.
+    Sono state aggiunte le funzioni "PauseAt" e "ChangeFrame" per cambiare il fotogramma di un'animazione. (v1.6.1)
+
+- <color=blue>Convalida delle opzioni di Bake</color>
+    Viene aggiunta la convalida automatica delle opzioni chiave di Bake che devono essere impostate in base all'ambiente del progetto, come "Render Pipeline", "Color Space" e "Number of Cameras".
+    Questa funzionalità viene aggiunta alla finestra di dialogo Bake e alcune opzioni vengono spostate nella scheda Impostazioni.
+
+- È stato migliorato il fatto che le "Proprietà riservate" utilizzate all'interno di AnyPortrait nella "Libreria materiali" vengano determinate automaticamente in base alla risorsa shader impostata.
+- Funzione "Sposta simmetricamente" nella schermata di modifica mesh.
+- È stata aggiunta una funzione per spostare l'asse sul perno quando si utilizza lo strumento Specchio nella schermata di modifica mesh.
+- È stato aggiunto il file di definizione dell'assemblaggio (asmdef) in modo che gli script di AnyPortrait vengano compilati separatamente.
+- I link alle pagine web sono stati modificati a causa del rinnovo del sito web (v1.6.1).
+
+
+
+<size=13>Risolto il problema</size>
+
+- È stato risolto un problema che causava un errore relativo alla texture di rendering quando l'editor AnyPortrait era troppo piccolo.
+- È stato risolto un problema che causava l'influenza del valore Alpha sul canale RGB quando il colore di sfondo era semitrasparente durante l'acquisizione dello schermo.
+- È stato risolto un problema che causava l'inizializzazione dei dati dei fotogrammi chiave e l'impossibilità di recuperarli annullando un'operazione dopo l'eliminazione della timeline di un'animazione, ecc.
+- È stato risolto un problema che causava il mancato funzionamento del gizmo annullando un'operazione dopo l'eliminazione della timeline di un'animazione, ecc.
+- È stato risolto un problema che causava la scomparsa di tutte le linee che collegavano i vertici esistenti annullando un'operazione dopo l'aggiunta di vertici nella schermata di modifica della mesh.
+- È stato risolto un problema che impediva l'esecuzione corretta dell'annullamento dopo la creazione di un nuovo personaggio o di Bake.
+- È stato risolto un problema che causava la visualizzazione di un'immagine anomala nell'angolo in alto a sinistra dell'area di lavoro in Unity 2022 o versioni precedenti. - È stato risolto un problema per cui si verificava un log di errori relativo al buffer dei comandi durante l'esecuzione con URP in Unity 6.
+- È stato risolto un problema per cui alcune interfacce utente di elenco, come Aggiungi linea temporale e Aggiungi modificatore, venivano visualizzate in modo anomalo in Unity 6.
+- È stato risolto un problema per cui l'interfaccia utente per copiare e incollare i vertici di una mesh veniva visualizzata in modo alquanto piccolo in Unity 2023 o versioni successive.
+- È stato risolto un problema per cui l'Alpha iniziale risultava 0 quando si aggiungeva una nuova chiave, a seconda delle impostazioni dell'editor durante la modifica del modificatore "Solo colore (Controller)".
+- È stato risolto un problema per cui l'icona del pennello nella schermata di modifica del rigging si ridimensionava in base allo zoom dello schermo.
+- È stato risolto un problema per cui l'editor non era in grado di modificare i modificatori a causa di un errore durante l'eliminazione di una mesh registrata per un modificatore Rigging o Fisica e il successivo riavvio immediato.
+- È stato risolto un problema per cui le mesh ritagliate non venivano renderizzate nei frame in cui la maschera di ritaglio era nascosta e poi mostrata. (v1.6.1)
+- È stato risolto un problema per cui si verificava un errore quando veniva rilasciata la sincronizzazione di due personaggi che giocavano come Mecanim. (v1.6.1)
+
+
+
+-----------------------------------------
+(덴마크어)
+<size=16>AnyPortrait Update Log v1.6.0 / v1.6.1</size>
+(30. april 2025 / 6. august 2025)
+
+<size=13>Forbedringer</size>
+
+- <color=blue>Masker</color>
+    Evnen til at skabe og sende en gengivelsestekstur, der fungerer som en maske og lignende, er blevet væsentligt forbedret.
+    I modsætning til klippemasker kan masker oprettes og sendes uanset gengivelsesrækkefølgen af ​​maskerne.
+    Flere masker kan skabe en enkelt maske sammen.
+    Brugerdefinerede egenskaber kan videregives med masker.
+    Muligheden for at kombinere flere masker tilføjes.
+    I stedet for en alfamaske kan en masketekstur genereret med en almindelig skygge sendes med Alpha-værdien for at implementere en "See-Through"-effekt.
+    "Kun som maske"-indstillingen tilføjes for at indstille en maske, der faktisk ikke gengives, men kun fungerer som en maskeudbyder.
+    Der tilføjes en mulighed for størrelsesgengivelse af teksturer til masker baseret på skærmstørrelse.
+    Forbedrede "v16" materialeforudindstillinger er tilføjet for at understøtte maskefunktionalitet, og gamle materialeforudindstillinger og -pakker klassificeres som "Legacy".
+
+- <color=blue>Editor Docking</color>
+    AnyPortrait-editor kan køres forankret i Unity-editorens layout.
+    Et problem er rettet, hvor editoren ville afslutte, når "maksimeret", mens den var forankret.
+    Der er rettet et problem, der opstod ved skift til en anden scene, mens editoren var forankret.
+
+- <color=blue>Animationsrelaterede scripts</color>
+    For at kontrollere længden af ​​animationen føjes egenskaberne "TimeLength" og "Duration" til apAnimPlayData, og funktionerne "GetAnimationTimeLength" og "GetAnimationDuration" tilføjes til apPortrait.
+    For at kontrollere, om animationen er loopet, tilføjes egenskaben "IsLoop" til apAnimPlayData, og funktionen "IsAnimationLoop" tilføjes til apPortrait.
+    Hændelsen "OnAnimationEnded" føjes til apPortrait for at registrere, hvornår den afspillede animation er afsluttet eller nået det sidste billede.
+    Funktionerne "PauseAt" og "ChangeFrame" til at ændre rammen i en animation er tilføjet. (v1.6.1)
+
+- <color=blue>Validering af bageindstilling</color>
+    Automatisk validering af centrale Bake-indstillinger tilføjes, som skal indstilles til at matche projektmiljøet, såsom "Render Pipeline", "Color Space" og "Antal kameraer".
+    Denne funktion føjes til Bage-dialogen, og nogle muligheder flyttes til fanen Indstillinger.
+
+- Det er forbedret, at de "Reserverede egenskaber", der bruges inde i AnyPortrait i "Material Library", bestemmes automatisk baseret på det indstillede shader-aktiv.
+- "Flyt symmetrisk"-funktion i mesh-redigeringsskærmen.
+- Der tilføjes en funktion til at flytte aksen til pivoten, når du bruger spejlværktøjet i mesh-redigeringsskærmen.
+- En samlingsdefinitionsfil (asmdef) tilføjes, så AnyPortrait-scripts kompileres separat.
+- Websidelinks er blevet ændret på grund af hjemmesidefornyelsen (v1.6.1).
+
+
+
+<size=13>Faste problem</size>
+
+- Et problem er rettet, hvor en fejl relateret til gengivelsesteksturen ville opstå, når AnyPortrait-editoren var for lille.
+- Et problem er rettet, hvor værdien af ​​RGB-kanalen ville blive påvirket af alfaværdien, når baggrundsfarven var halvgennemsigtig under skærmoptagelse.
+- Et problem er rettet, hvor dataene i keyframes ville blive initialiseret og uoprettelige, når de fortrydes efter sletning af tidslinjen for en animation osv.
+- Et problem er rettet, hvor dimsen ikke ville fungere, når den fortrydes efter sletning af tidslinjen for en animation osv.
+- Et problem er rettet, hvor alle linjer, der forbinder eksisterende hjørner, ville forsvinde, når de fortrydes efter tilføjelse af knudepunkter i mesh-redigeringsskærmen.
+- Et problem er rettet, hvor fortrydelse efter oprettelse af en ny karakter eller Bake ikke ville blive udført korrekt.
+- Et problem er rettet, hvor et mærkeligt billede blev outputtet øverst til venstre i arbejdsområdet i Unity 2022 eller tidligere.
+- Et problem er rettet, hvor der opstod en fejllog relateret til kommandobufferen, når den kørte med URP i Unity 6.
+- Et problem er rettet, hvor nogle listebrugergrænseflader, såsom Tilføj tidslinje og Tilføj ændring, blev outputtet akavet i Unity 6.
+- Et problem er rettet, hvor brugergrænsefladen til kopiering og indsættelse af hjørner af en mesh blev outputtet noget lille i Unity 2023 eller nyere.
+- Et problem er rettet, hvor den oprindelige alfa ville være 0, når der tilføjes en ny nøgle, afhængigt af editorens indstillinger, når du redigerer "Kun farve (Controller)" modifikator.
+- Et problem er rettet, hvor børsteikonet på rigningsredigeringsskærmen ville skalere op/ned med skærmens zoom.
+- Et problem er rettet, hvor editoren ikke ville være i stand til at redigere modifikatorer på grund af en fejl ved sletning af en mesh, der er registreret til en Rigging eller Physics modifikator og derefter genstarter den med det samme.
+- Et problem er rettet, hvor klippede masker ikke blev gengivet i billeder, hvor klippemasken var skjult og derefter vist. (v1.6.1)
+- Et problem er rettet, hvor der opstod en fejl, når synkronisering af to figurer, der spilles som Mecanim, blev udgivet. (v1.6.1)
+
+
+
+
+-----------------------------------------
+(일본어)
+<size=16> AnyPortrait更新ログv1.6.0 / v1.6.1</size>
+（2025年4月30日 / 2025年8月6日）
+
+<size=13>改善点</size>
+
+- <color=blue>マスク</color>
+    マスクなどとして機能するレンダリングテクスチャの作成と送信機能が大幅に改善されました。
+    クリッピングマスクとは異なり、マスクはメッシュのレンダリング順序に関係なく作成・送信できます。
+    複数のメッシュを組み合わせて1つのマスクを作成できます。
+    マスクにカスタムプロパティを渡すことができます。
+    複数のマスクを組み合わせる機能が追加されました。
+    アルファマスクの代わりに、通常のシェーダーで生成されたマスクテクスチャをアルファ値とともに渡すことで、「シースルー」効果を実現できます。
+    「マスクのみ」オプションが追加され、実際にはレンダリングされず、マスクプロバイダとしてのみ機能するメッシュを設定できます。
+    画面サイズに基づいてマスクのレンダリングテクスチャのサイズを変更するオプションが追加されました。
+    マスク機能をサポートするために、改良された「v16」マテリアルプリセットが追加されました。古いマテリアルプリセットとパッケージは「レガシー」として分類されます。
+
+- <color=blue>エディターのドッキング</color>
+    AnyPortraitエディターは、Unityエディターレイアウト内にドッキングして実行できます。
+    ドッキング中に「最大化」するとエディターが終了する問題を修正しました。
+    エディターがドッキングされている状態で別のシーンに切り替えると発生する問題を修正しました。
+
+- <color=blue>アニメーション関連スクリプト</color>
+    アニメーションの長さを確認するために、apAnimPlayData に「TimeLength」プロパティと「Duration」プロパティが追加され、apPortrait に「GetAnimationTimeLength」関数と「GetAnimationDuration」関数が追加されました。
+    アニメーションがループしているかどうかを確認するために、apAnimPlayData に「IsLoop」プロパティが追加され、apPortrait に「IsAnimationLoop」関数が追加されました。
+    再生中のアニメーションが終了したか、最後のフレームに達したかを検出するために、apPortrait に「OnAnimationEnded」イベントが追加されました。
+    アニメーションのフレームを変更する「PauseAt」と「ChangeFrame」関数が追加されました。（v1.6.1）
+
+- <color=blue>ベイクオプションの検証</color>
+    「レンダーパイプライン」、「カラースペース」、「カメラ数」など、プロジェクト環境に合わせて設定する必要がある主要なベイクオプションの自動検証が追加されました。
+    この機能は「ベイク」ダイアログに追加され、一部のオプションは「設定」タブに移動されました。
+
+- 「マテリアルライブラリ」内のAnyPortrait内部で使用される「予約プロパティ」が、設定されているシェーダーアセットに基づいて自動的に決定されるように改善されました。
+- メッシュ編集画面に「対称移動」機能を追加しました。
+- メッシュ編集画面でミラーツールを使用する際に、軸をピボットに移動する機能を追加しました。
+- AnyPortraitスクリプトを個別にコンパイルできるように、アセンブリ定義ファイル（asmdef）を追加しました。
+- ホームページリニューアルによりウェブページショートカットリンクが修正されました。（v1.6.1）
+
+
+
+<size=13>修正された問題</size>
+
+- AnyPortraitエディタが小さすぎる場合にレンダリングテクスチャ関連のエラーが発生する問題を修正しました。
+- 画面キャプチャ時の背景色が半透明の場合、RGBチャンネルの値がアルファ値の影響を受けてしまう問題を修正しました。
+- アニメーションなどのタイムラインを削除した後にUndoすると、キーフレームのデータが初期化され、復元できなくなる問題を修正しました。
+- アニメーションなどのタイムラインを削除した後にUndoすると、ギズモが動作しなくなる問題を修正しました。
+- メッシュ編集画面で頂点を追加した後にUndoすると、既存の頂点を結ぶ線がすべて消えてしまう問題を修正しました。
+- 新規キャラクター作成後やBake後のUndoが正常に行われない問題を修正しました。
+- Unity 2022以前で、ワークスペースの左上に奇妙な画像が出力される問題を修正しました。
+- Unity 6 で URP 実行時にコマンドバッファ関連のエラーログが発生する問題を修正しました。
+- Unity 6 で「タイムライン追加」「モディファイア追加」などの一部のリスト UI が不自然に出力される問題を修正しました。
+- Unity 2023 以降で、メッシュの頂点をコピー＆ペーストする UI がやや小さく出力される問題を修正しました。
+- 「Color Only (Controller)」モディファイア編集時に、エディターの設定によっては新規キー追加時に初期アルファが 0 になる問題を修正しました。
+- リギング編集画面のブラシアイコンが画面ズームに合わせて拡大縮小する問題を修正しました。
+- リギングまたは物理モディファイアに登録されたメッシュを削除し、すぐにエディターを再起動するとエラーが発生し、モディファイアの編集ができなくなる問題を修正しました。
+- クリッピングマスクメッシュが非表示になって見えるフレームでクリッピングされるメッシュがレンダリングされない問題を修正しました。（v1.6.1）
+- 「Mecanim」で再生される2つのキャラクターの同期が解除されたときにエラーが発生する問題を修正しました。（v1.6.1）
+
+
+
+
+-----------------------------------------
+(중국어-번체)
+<size=16>AnyPortrait更新日誌v1.6.0/v1.6.1</size>
+（2025年4月30日/2025年8月6日）
+
+<size=13>改進</size>
+
+- <color=blue>面具</color>
+    創建和發送充當遮罩等的渲染紋理的能力得到了極大提高。
+    與剪貼蒙版不同，無論網格的渲染順序如何，都可以建立和發送遮罩。
+    多個網格可以一起建立一個蒙版。
+    自訂屬性可以透過掩碼傳遞。
+    增加了組合多個蒙版的功能。
+    除了使用 Alpha 蒙版之外，還可以使用常規著色器產生的蒙版紋理與 Alpha 值一起傳遞，以實現「透明」效果。
+    新增了「僅作為蒙版」選項來設定實際上不渲染但僅作為蒙版提供者的網格。
+    新增了根據螢幕尺寸調整蒙版渲染紋理大小的選項。
+    添加了改進的“v16”材質預設以支援遮罩功能，舊的材質預設和包被歸類為“舊版”。
+
+- <color=blue>編輯器停靠</color>
+    AnyPortrait 編輯器可以在 Unity 編輯器佈局內停靠運作。
+    修正了當編輯器停靠時「最大化」時會終止的問題。
+    修正了編輯器停靠時切換到另一個場景時出現的問題。
+
+- <color=blue>動畫相關腳本</color>
+    為了檢查動畫的長度，apAnimPlayData中加入了「TimeLength」和「Duration」屬性，apPortrait中加入了「GetAnimationTimeLength」和「GetAnimationDuration」函數。
+    為了檢查動畫是否循環，在apAnimPlayData中加入了「IsLoop」屬性，在apPortrait中加入了「IsAnimationLoop」函數。
+    apPortrait 新增了「OnAnimationEnded」事件，用於偵測正在播放的動畫何時結束或到達最後一格。
+    新增了「PauseAt」和「ChangeFrame」函數來更改動畫的幀。 （v1.6.1）
+
+- <color=blue>烘焙選項驗證</color>
+    新增了需要設定以符合專案環境的關鍵烘焙選項的自動驗證，例如「渲染管道」、「色彩空間」和「攝影機數量」。
+    此功能已新增至「烘焙」對話方塊中，並且一些選項已移至「設定」標籤。
+
+- 改進了「材質庫」中AnyPortrait內部使用的「保留屬性」會根據設定的著色器資源自動決定。
+- 網格編輯畫面中的「對稱移動」功能。
+- 新增了在網格編輯畫面中使用鏡像工具時將軸移動到樞軸的功能。
+- 新增了程式集定義（asmdef）文件，以便單獨編譯AnyPortrait腳本。
+- 因網站更新，網頁連結已修改。（v1.6.1）
+
+
+
+<size=13>修復了問題</size>
+
+- 修正了當 AnyPortrait 編輯器太小時會出現與渲染紋理相關的錯誤的問題。
+- 修正了截圖時背景顏色為半透明時 RGB 頻道的值會受到 Alpha 值影響的問題。
+- 修正刪除動畫時間軸等操作後撤銷時關鍵影格資料會被初始化且無法復原的問題。
+- 修正了刪除動畫時間軸等後撤消時小工具不起作用的問題。
+- 修正了在網格編輯畫面中新增頂點後撤銷時連接現有頂點的所有線條都會消失的問題。
+- 修正了創建新角色或烘焙後無法正確撤消的問題。
+- 修正了在 Unity 2022 或更早版本中，工作區左上角輸出奇怪影像的問題。
+- 修正了在 Unity 6 中使用 URP 運行時出現與命令緩衝區相關的錯誤日誌的問題。
+- 修正了「新增時間軸」和「新增修改器」等部分清單 UI 在 Unity 6 中輸出不流暢的問題。
+- 修正了在 Unity 2023 或更高版本中，複製和貼上網格頂點的 UI 輸出有點小的問題。
+- 修正了編輯「僅顏色（控制器）」修改器時根據編輯器設定新增鍵時初始 Alpha 為 0 的問題。
+- 修正了索具編輯畫面中的畫筆圖示會隨著螢幕縮放而放大/縮小的問題。
+- 修正了刪除註冊到 Rigging 或 Physics 修改器的網格並立即重新啟動時發生錯誤，導致編輯器無法編輯修改器的問題。
+- 修正了剪切蒙版隱藏後再顯示的幀中剪切網格無法渲染的問題。（v1.6.1）
+- 修正了「Mecanim」模式下兩個角色同步播放時出現錯誤的問題。（v1.6.1）
+
+
+
+
+-----------------------------------------
+(중국어-간체)
+<size=16>AnyPortrait更新日志v1.6.0/v1.6.1</size>
+（2025年4月30日/2025年8月6日）
+
+<size=13>改进</size>
+
+- <color=blue>蒙版</color>
+    创建和发送用作蒙版及类似功能的渲染纹理的功能得到了显著改进。
+    与剪贴蒙版不同，蒙版的创建和发送不受网格渲染顺序影响。
+    多个网格可以共同创建一个蒙版。
+    自定义属性可以与蒙版一起传递。
+    增加了组合多个蒙版的功能。
+    除了 Alpha 蒙版，还可以将使用常规着色器生成的蒙版纹理与 Alpha 值一起传递，以实现“透视”效果。
+    新增“仅作为蒙版”选项，用于设置不实际渲染、仅用作蒙版提供者的网格。
+    新增了根据屏幕尺寸调整蒙版渲染纹理大小的选项。
+    新增了改进的“v16”材质预设，以支持蒙版功能，旧的材质预设和包将被归类为“旧版”。
+
+- <color=blue>编辑器停靠</color>
+    AnyPortrait 编辑器可以在 Unity 编辑器布局中停靠运行。
+    修复了编辑器在停靠状态下“最大化”时终止的问题。
+    修复了编辑器停靠状态下切换到其他场景时出现的问题。
+
+- <color=blue>动画相关脚本</color>
+    为了检查动画的长度，apAnimPlayData 添加了“TimeLength”和“Duration”属性，apPortrait 添加了“GetAnimationTimeLength”和“GetAnimationDuration”函数。
+    为了检查动画是否循环，apAnimPlayData 添加了“IsLoop”属性，apPortrait 添加了“IsAnimationLoop”函数。
+    apPortrait 添加了“OnAnimationEnded”事件，用于检测正在播放的动画何时结束或到达最后一帧。
+    添加了“PauseAt”和“ChangeFrame”函数来更改动画的帧。（v1.6.1）
+
+- <color=blue>烘焙选项验证</color>
+    新增了需要根据项目环境设置的关键烘焙选项的自动验证功能，例如“渲染管线”、“色彩空间”和“摄像机数量”。
+    此功能已添加到“烘焙”对话框中，部分选项已移至“设置”选项卡。
+
+- 改进了“材质库”中 AnyPortrait 内部使用的“保留属性”会根据设置的着色器资源自动确定。
+- 网格编辑界面新增“对称移动”功能。
+- 新增了在网格编辑界面中使用“镜像”工具时，将轴移动到枢轴的功能。
+- 新增了程序集定义 (asmdef) 文件，以便单独编译 AnyPortrait 脚本。
+- 因网站更新，网页链接已修改。（v1.6.1）
+
+
+
+<size=13>修复了问题</size>
+
+- 修复了 AnyPortrait 编辑器过小时，渲染纹理相关错误发生的问题。
+- 修复了截屏时背景色为半透明时，RGB 通道值会受 Alpha 值影响的问题。
+- 修复了删除动画时间轴等操作后撤消时，关键帧数据会被初始化且无法恢复的问题。
+- 修复了删除动画时间轴等操作后撤消时，Gizmo 无法工作的问题。
+- 修复了在网格编辑界面中添加顶点后撤消时，所有连接现有顶点的线条都会消失的问题。
+- 修复了创建新角色或烘焙后无法正常撤消的问题。
+- 修复了 Unity 2022 或更早版本中，工作区左上角输出奇怪图像的问题。
+- 修复了在 Unity 6 中使用 URP 运行时出现与命令缓冲区相关的错误日志的问题。
+- 修复了在 Unity 6 中某些列表 UI（例如“添加时间轴”和“添加修改器”）输出异常的问题。
+- 修复了在 Unity 2023 或更高版本中，复制和粘贴网格顶点的 UI 输出过小的问题。
+- 修复了在编辑“仅颜色（控制器）”修改器时，根据编辑器设置添加新键时初始 Alpha 值为 0 的问题。
+- 修复了绑定编辑屏幕中的画笔图标会随着屏幕缩放而放大/缩小的问题。
+- 修复了删除注册到绑定或物理修改器的网格并立即重新启动时，由于错误导致编辑器无法编辑修改器的问题。
+- 修复了剪切蒙版隐藏后再显示的帧中剪切网格无法渲染的问题。（v1.6.1）
+- 修复了“Mecanim”模式下两个角色同步播放时出现错误的问题。（v1.6.1）
+
+
+
+
+-----------------------------------------
+(폴란드어)
+<size=16>Dziennik aktualizacji AnyPortret v1.6.0 / v1.6.1</size>
+(30 kwietnia 2025 / 6 sierpnia 2025 r.)
+
+<size=13>Ulepszenia</size>
+
+- <color=blue>Maski</color>
+    Możliwość tworzenia i wysyłania tekstury renderowania, która działa jak maska ​​i podobne, została znacznie ulepszona.
+    W przeciwieństwie do masek przycinających, maski można tworzyć i wysyłać niezależnie od kolejności renderowania siatek.
+    Wiele siatek może tworzyć jedną maskę razem.
+    Właściwości niestandardowe można przekazywać z maskami.
+    Dodano możliwość łączenia wielu masek.
+    Zamiast maski alfa, tekstura maski wygenerowana za pomocą zwykłego shadera może być przekazana z wartością Alfa, aby zaimplementować efekt „Przezroczystości”.
+    Dodano opcję „Tylko jako maska”, aby ustawić siatkę, która faktycznie nie jest renderowana, ale służy jedynie jako dostawca maski.
+    Dodano opcję zmiany rozmiaru tekstur renderowania dla masek na podstawie rozmiaru ekranu.
+    Dodano ulepszone ustawienia wstępne materiału „v16” w celu obsługi funkcjonalności maski, a stare ustawienia wstępne materiału i pakiety są klasyfikowane jako „Starsze”.
+
+- <color=blue>Dokowanie edytora</color>
+    Edytor AnyPortrait można uruchomić zadokowany w układzie edytora Unity.
+    Naprawiono problem, w którym edytor kończył działanie po „Zmaksymalizowaniu” w stanie zadokowanym.
+    Naprawiono problem, który występował podczas przełączania się na inną scenę, gdy edytor był zadokowany.
+
+- <color=blue>Skrypty związane z animacją</color>
+    Aby sprawdzić długość animacji, właściwości „TimeLength” i „Duration” są dodawane do apAnimPlayData, a funkcje „GetAnimationTimeLength” i „GetAnimationDuration” są dodawane do apPortrait.
+    Aby sprawdzić, czy animacja jest zapętlona, ​​właściwość „IsLoop” jest dodawana do apAnimPlayData, a funkcja „IsAnimationLoop” jest dodawana do apPortrait.
+    Zdarzenie „OnAnimationEnded” jest dodawane do apPortrait w celu wykrycia, kiedy odtwarzana animacja się zakończyła lub osiągnęła ostatnią klatkę.
+    Dodano funkcje „PauseAt” i „ChangeFrame” umożliwiające zmianę klatki animacji. (v1.6.1)
+
+- <color=blue>Walidacja opcji wypieku</color>
+    Dodano automatyczną walidację kluczowych opcji wypieku, które muszą być ustawione tak, aby pasowały do ​​środowiska projektu, takich jak „Render Pipeline”, „Color Space” i „Number of Cameras”.
+    Ta funkcja została dodana do okna dialogowego wypieku, a niektóre opcje zostały przeniesione na kartę Ustawienia.
+
+- Ulepszono to, że „Zarezerwowane właściwości” używane wewnątrz AnyPortrait w „Material Library” są automatycznie określane na podstawie ustawionego zasobu shadera.
+- Funkcja „Move Symmetrically” na ekranie edycji siatki.
+- Dodano funkcję przesuwania osi do punktu obrotu podczas korzystania z narzędzia Mirror na ekranie edycji siatki.
+- Dodano plik definicji zespołu (asmdef), aby skrypty AnyPortrait były kompilowane osobno.
+- Linki do stron internetowych zostały zmodyfikowane ze względu na odnowę witryny (v1.6.1).
+
+
+
+<size=13>Naprawiono problem</size>
+
+- Naprawiono problem, w którym błąd związany z teksturą renderowania występował, gdy edytor AnyPortrait był zbyt mały.
+- Naprawiono problem, w którym wartość kanału RGB była zależna od wartości Alpha, gdy kolor tła był półprzezroczysty podczas przechwytywania ekranu.
+- Naprawiono problem, w którym dane klatek kluczowych były inicjowane i nie można ich było odzyskać po cofnięciu po usunięciu osi czasu animacji itp.
+- Naprawiono problem, w którym gizmo nie działało po cofnięciu po usunięciu osi czasu animacji itp.
+- Naprawiono problem, w którym wszystkie linie łączące istniejące wierzchołki znikały po cofnięciu po dodaniu wierzchołków na ekranie edycji siatki.
+- Naprawiono problem, w którym cofnięcie po utworzeniu nowej postaci lub Bake nie było wykonywane prawidłowo.
+- Naprawiono problem, w którym dziwny obraz był wyświetlany w lewym górnym rogu obszaru roboczego w Unity 2022 lub starszym. - Naprawiono problem, w którym dziennik błędów związany z buforem poleceń występował podczas uruchamiania z URP w Unity 6.
+- Naprawiono problem, w którym niektóre interfejsy użytkownika listy, takie jak Dodaj oś czasu i Dodaj modyfikator, były niezręcznie wyprowadzane w Unity 6.
+- Naprawiono problem, w którym interfejs użytkownika do kopiowania i wklejania wierzchołków siatki był wyprowadzany nieco za mały w Unity 2023 lub nowszym.
+- Naprawiono problem, w którym początkowa alfa wynosiła 0 podczas dodawania nowego klucza, w zależności od ustawień edytora podczas edycji modyfikatora „Tylko kolor (kontroler)”.
+- Naprawiono problem, w którym ikona pędzla na ekranie edycji riggingu była skalowana w górę/w dół wraz z powiększeniem ekranu.
+- Naprawiono problem, w którym edytor nie mógł edytować modyfikatorów z powodu błędu podczas usuwania siatki zarejestrowanej w modyfikatorze riggingu lub fizyki, a następnie natychmiastowego ponownego uruchamiania.
+- Naprawiono problem, w wyniku którego przycięte siatki nie renderowały się w klatkach, w których maska przycinania była ukryta, a następnie wyświetlona. (v1.6.1)
+- Naprawiono problem, w wyniku którego występował błąd po udostępnieniu synchronizacji dwóch postaci grających Mecanimem. (v1.6.1)
+
+
+
+
+-----------------------------------------

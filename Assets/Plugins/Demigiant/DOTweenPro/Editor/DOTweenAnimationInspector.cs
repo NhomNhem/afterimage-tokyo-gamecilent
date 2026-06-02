@@ -228,7 +228,7 @@ namespace DG.DOTweenEditor
 
             if (playMode) {
                 if (_runtimeEditMode) {
-                    
+
                 } else {
                     GUILayout.Space(8);
                     GUILayout.Label("Animation Editor disabled while in play mode", EditorGUIUtils.wordWrapLabelStyle);

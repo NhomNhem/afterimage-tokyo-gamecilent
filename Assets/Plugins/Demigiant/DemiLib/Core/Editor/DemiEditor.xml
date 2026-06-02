@@ -647,7 +647,7 @@
         </member>
         <member name="F:DG.DemiEditor.DeGUINodeSystem.ConnectionMode.Dual">
             <summary>
-            Requires only two connectedNodesIds (no more, no less), 
+            Requires only two connectedNodesIds (no more, no less),
             uses regular CTRL+Drag to connect connection 0, CTRL+SPACE+Drag to connect connection 1
             </summary>
         </member>
