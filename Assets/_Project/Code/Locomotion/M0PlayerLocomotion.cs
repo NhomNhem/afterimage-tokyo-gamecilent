@@ -375,8 +375,9 @@ namespace GlassRefrain.Locomotion {
             }
         }
 
-        private static bool HasMoveIntent(Axis2 move) {
-            return move.X != 0f || move.Y != 0f;
+        private bool HasMoveIntent(Axis2 move) {
+            float inputMagnitude = Mathf.Sqrt(move.X * move.X + move.Y * move.Y);
+            return inputMagnitude >= settings.InputDeadzone;
         }
 
         private Vector3 ResolveDodgeDirection() {

@@ -8,6 +8,7 @@ using GlassRefrain.Targeting;
 using GlassRefrain.Health;
 using GlassRefrain.Enemy;
 using GlassRefrain.Memory;
+using NhemDangFugBixs.NhemLogging;
 
 #pragma warning disable ND005 // Test-only containers intentionally mirror isolated manual VContainer wiring.
 
@@ -23,12 +24,15 @@ namespace GlassRefrain.Tests.EditMode {
             var builder = new ContainerBuilder();
 
             // When (Manual registration as seen in GameplayLifetimeScope)
+            builder.Register(_ => new M0CombatTimingSettings(0.12f, 0.18f, 0.25f, 0.08f, 0.18f, 0.25f, 0.08f, 0.16f, 0.25f, 0.5f, 0.25f), Lifetime.Singleton);
+            builder.Register(_ => new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 1.5f, 10.0f, 0.2f), Lifetime.Singleton);
+            builder.Register<INhemLogger, NhemNullLogger>(Lifetime.Singleton);
             builder.Register<M0CombatCore>(Lifetime.Singleton);
             builder.Register<M0PlayerLocomotion>(Lifetime.Singleton);
             builder.Register<M0TargetContext>(Lifetime.Singleton);
-            builder.Register<M0HealthDamageReactionModel>(Lifetime.Singleton);
+            builder.Register(_ => new M0HealthDamageReactionModel(), Lifetime.Singleton);
             builder.Register<M0EnemyIntentModel>(Lifetime.Singleton);
-            builder.Register<M0MemoryState>(Lifetime.Singleton);
+            builder.Register(_ => new M0MemoryState("M0RevealCandidate"), Lifetime.Singleton);
             builder.Register<ITargetableRegistry, M0TargetableRegistry>(Lifetime.Singleton);
             builder.Register<M0InputRouter>(Lifetime.Singleton);
 

@@ -3,6 +3,7 @@ using VContainer;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;
 using GlassRefrain.Targeting;
+using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Tests.EditMode {
     /// <summary>
@@ -168,6 +169,8 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void ManualVContainer_Resolves_M0CombatCore_As_Singleton() {
             var builder = new ContainerBuilder();
+            builder.Register(_ => new M0CombatTimingSettings(0.12f, 0.18f, 0.25f, 0.08f, 0.18f, 0.25f, 0.08f, 0.16f, 0.25f, 0.5f, 0.25f), Lifetime.Singleton);
+            builder.Register<INhemLogger, NhemNullLogger>(Lifetime.Singleton);
             builder.Register<M0CombatCore>(Lifetime.Singleton);
 
             using (var container = builder.Build()) {

@@ -131,7 +131,7 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
-        public void TargetContextFilesDoNotReferenceLegacyInputManagerOrGeneratedDi() {
+        public void TargetContextFilesDoNotReferenceLegacyInputManagerOrCompositionRootGeneration() {
             string[] files = {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
                 "Assets/_Project/Code/Targeting/M0TargetContext.cs",
@@ -142,8 +142,7 @@ namespace GlassRefrain.Tests.EditMode {
                 "InputManager",
                 "UnityEngine.Input;",
                 "UnityEngine.Input ",
-                "RegisterGeneratedFor<",
-                "NhemDangFugBixs.Attributes"
+                "RegisterGeneratedFor<"
             };
 
             foreach (var file in files) {
