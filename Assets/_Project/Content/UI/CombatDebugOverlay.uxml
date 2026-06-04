@@ -9,4 +9,8 @@
         <ui:Label name="last-input-label" text="Last Input: None" class="debug-label" />
         <ui:Label name="lock-on-target-label" text="LockOn: None" class="debug-label" />
     </ui:VisualElement>
+
+    <ui:VisualElement name="interaction-prompt" class="interaction-prompt hidden">
+        <ui:Label name="interaction-prompt-label" text="Press F to Interact" class="interaction-prompt-label" />
+    </ui:VisualElement>
 </ui:UXML>

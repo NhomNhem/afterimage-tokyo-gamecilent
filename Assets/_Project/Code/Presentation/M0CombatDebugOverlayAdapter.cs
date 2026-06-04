@@ -15,6 +15,8 @@ namespace GlassRefrain.Presentation
         private Label counterWindowLabel;
         private Label lastInputLabel;
         private Label lockOnTargetLabel;
+        private VisualElement interactionPrompt;
+        private Label interactionPromptLabel;
 
         private void Awake()
         {
@@ -42,6 +44,8 @@ namespace GlassRefrain.Presentation
                 counterWindowLabel = root.Q<Label>("counter-window-label");
                 lastInputLabel = root.Q<Label>("last-input-label");
                 lockOnTargetLabel = root.Q<Label>("lock-on-target-label");
+                interactionPrompt = uiDocument.rootVisualElement.Q<VisualElement>("interaction-prompt");
+                interactionPromptLabel = uiDocument.rootVisualElement.Q<Label>("interaction-prompt-label");
             }
         }
 
@@ -102,6 +106,21 @@ namespace GlassRefrain.Presentation
             if (lockOnTargetLabel != null)
             {
                 lockOnTargetLabel.text = $"LockOn: {target}";
+            }
+        }
+
+        public void UpdateInteractionPrompt(bool isVisible, string fragmentId)
+        {
+            Initialize();
+            if (interactionPrompt == null)
+            {
+                return;
+            }
+
+            interactionPrompt.style.display = isVisible ? DisplayStyle.Flex : DisplayStyle.None;
+            if (interactionPromptLabel != null)
+            {
+                interactionPromptLabel.text = "Press F to Interact";
             }
         }
     }

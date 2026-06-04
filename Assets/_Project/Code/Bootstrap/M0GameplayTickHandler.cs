@@ -213,6 +213,12 @@ namespace GlassRefrain.Bootstrap {
             if (_memoryInteractionService != null && _locomotion != null) {
                 var playerPosition = _locomotion.GetMovementSnapshot().Position;
                 _memoryInteractionService.Tick(playerPosition, _interactTriggeredThisFrame);
+                var interactionSnapshot = _memoryInteractionService.Snapshot;
+                debugOverlayAdapter?.UpdateInteractionPrompt(
+                    interactionSnapshot.HasEligibleFragment,
+                    interactionSnapshot.NearbyFragmentId);
+            } else {
+                debugOverlayAdapter?.UpdateInteractionPrompt(false, string.Empty);
             }
 
             // Story 1-6: Recovery context forwarding — forwards combat recovery state to locomotion each frame.

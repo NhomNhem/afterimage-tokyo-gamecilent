@@ -15,3 +15,22 @@
     margin-bottom: 5px;
     unity-font-style: bold;
 }
+
+.interaction-prompt {
+    position: absolute;
+    bottom: 72px;
+    align-self: center;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.72);
+}
+
+.interaction-prompt-label {
+    font-size: 16px;
+    color: #ffffff;
+    unity-font-style: bold;
+}
+
+.hidden {
+    display: none;
+}
