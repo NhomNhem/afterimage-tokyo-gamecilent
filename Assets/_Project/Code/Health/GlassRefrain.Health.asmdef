@@ -3,7 +3,10 @@
   "rootNamespace": "GlassRefrain.Health",
   "references": [
     "GlassRefrain.Core",
-    "GlassRefrain.Shared"
+    "GlassRefrain.Shared",
+    "NhemDangFugBixs.VContainer",
+    "NhemDangFugBixs.Attributes",
+    "NhemDangFugBixs.Runtime"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

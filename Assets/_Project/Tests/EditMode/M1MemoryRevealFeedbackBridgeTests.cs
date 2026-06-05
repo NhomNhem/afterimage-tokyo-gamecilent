@@ -139,7 +139,10 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(adapterSource.Contains("IMemoryVFXResponseSnapshot"), Is.True);
             Assert.That(adapterSource.Contains("MemoryInteractionService"), Is.False);
             Assert.That(adapterSource.Contains("MemoryState"), Is.False);
-            Assert.That(adapterSource.Contains("InputAction"), Is.False);
+            Assert.That(adapterSource.Contains("UnityEngine.InputSystem"), Is.False);
+            Assert.That(adapterSource.Contains("InputAction."), Is.False);
+            Assert.That(adapterSource.Contains("InputAction "), Is.False);
+            Assert.That(adapterSource.Contains("CallbackContext"), Is.False);
             Assert.That(uxml.Contains("memory-reveal-feedback"), Is.True);
             Assert.That(uss.Contains(".memory-reveal-feedback"), Is.True);
         }

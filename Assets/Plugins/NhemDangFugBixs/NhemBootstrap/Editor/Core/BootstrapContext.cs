@@ -26,7 +26,7 @@ namespace NhemBootStrap.Editor.Core {
         /// <param name="message">The message to log.</param>
         public void Log(string message) {
 //            Debug.Log(message);
-  //          Logs.Add(message);
+            Logs.Add(message);
         }
     }
 }

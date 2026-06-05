@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Targeting {
     public interface IM0TargetContext {
@@ -14,6 +16,9 @@ namespace GlassRefrain.Targeting {
         void SetTargetDirection(TargetDirectionContext direction);
         TargetDebugSnapshot CreateDebugSnapshot();
     }
+
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton), As<IM0TargetContext>]
+    [AsSelf]
     public sealed class M0TargetContext : IM0TargetContext {
         private readonly ITargetableRegistry targetableRegistry;
         private TargetFocusState focusState;

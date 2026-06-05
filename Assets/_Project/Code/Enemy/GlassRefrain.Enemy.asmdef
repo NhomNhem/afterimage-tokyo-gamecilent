@@ -3,7 +3,10 @@
   "rootNamespace": "GlassRefrain.Enemy",
   "references": [
     "GlassRefrain.Core",
-    "NhemDangFugBixs.Logging"
+    "NhemDangFugBixs.Logging",
+    "NhemDangFugBixs.Attributes",
+    "NhemDangFugBixs.Runtime",
+    "GlassRefrain.Shared"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

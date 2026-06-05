@@ -71,9 +71,9 @@ namespace GlassRefrain.Bootstrap {
             builder.Register(_ => new M0PlayerLocomotion(new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 1.5f, 10.0f, 0.2f)), Lifetime.Singleton)
                 .As<IM0PlayerLocomotion>()
                 .AsSelf();
-            builder.Register<M0TargetContext>(Lifetime.Singleton).As<IM0TargetContext>().AsSelf();
-            builder.Register<M0HealthDamageReactionModel>(Lifetime.Singleton).As<IM0HealthDamageReactionModel>().AsSelf();
-            builder.Register<M0EnemyIntentModel>(Lifetime.Singleton).AsSelf();
+            // builder.Register<M0TargetContext>(Lifetime.Singleton).As<IM0TargetContext>().AsSelf();
+            // builder.Register<M0HealthDamageReactionModel>(Lifetime.Singleton).As<IM0HealthDamageReactionModel>().AsSelf();
+            //builder.Register<M0EnemyIntentModel>(Lifetime.Singleton).AsSelf();
             builder.Register(_ => new M0MemoryState("M0RevealCandidate"), Lifetime.Singleton)
                 .As<IM0MemoryState>()
                 .AsSelf();

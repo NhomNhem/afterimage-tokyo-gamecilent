@@ -1,12 +1,16 @@
 using System;
+using _Project.Code.Shared.DI;
 using NhemDangFugBixs.NhemLogging;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Enemy {
     public interface IEnemyDebugHarness {
         void DebugForceParryEligibleActive();
     }
 
+    [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
+    [AsSelf]
     public sealed class M0EnemyIntentModel {
         private readonly string enemyId;
         private readonly INhemLogger logger;

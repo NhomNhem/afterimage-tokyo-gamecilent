@@ -1,5 +1,7 @@
 using System;
+using _Project.Code.Shared.DI;
 using GlassRefrain.Core;
+using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Health {
     public interface IM0HealthDamageReactionModel {
@@ -10,6 +12,7 @@ namespace GlassRefrain.Health {
         void EnterLiving(string reason);
     }
 
+    [AutoRegisterIn<IGameplayLifetimeScope>, As<IM0HealthDamageReactionModel>, AsSelf]
     public sealed class M0HealthDamageReactionModel : IM0HealthDamageReactionModel {
         private readonly float maxHealth;
         private float currentHealth;
