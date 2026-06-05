@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using GlassRefrain.Core;
@@ -19,6 +20,8 @@ namespace GlassRefrain.Presentation
         private Label interactionPromptLabel;
         private VisualElement memoryRevealFeedback;
         private Label memoryRevealFeedbackLabel;
+        private VisualElement runtimeMemoryLog;
+        private Label runtimeMemoryLogLatestLabel;
 
         private void Awake()
         {
@@ -50,6 +53,8 @@ namespace GlassRefrain.Presentation
                 interactionPromptLabel = uiDocument.rootVisualElement.Q<Label>("interaction-prompt-label");
                 memoryRevealFeedback = uiDocument.rootVisualElement.Q<VisualElement>("memory-reveal-feedback");
                 memoryRevealFeedbackLabel = uiDocument.rootVisualElement.Q<Label>("memory-reveal-feedback-label");
+                runtimeMemoryLog = uiDocument.rootVisualElement.Q<VisualElement>("runtime-memory-log");
+                runtimeMemoryLogLatestLabel = uiDocument.rootVisualElement.Q<Label>("runtime-memory-log-latest-label");
             }
         }
 
@@ -146,6 +151,22 @@ namespace GlassRefrain.Presentation
                 memoryRevealFeedbackLabel.text = context == null || string.IsNullOrEmpty(context.MemoryId)
                     ? "Memory Revealed"
                     : "Memory Revealed: " + context.MemoryId;
+            }
+        }
+
+        public void UpdateRuntimeMemoryLog(IReadOnlyList<string> entries)
+        {
+            Initialize();
+            if (runtimeMemoryLog == null)
+            {
+                return;
+            }
+
+            bool hasEntries = entries != null && entries.Count > 0;
+            runtimeMemoryLog.style.display = hasEntries ? DisplayStyle.Flex : DisplayStyle.None;
+            if (runtimeMemoryLogLatestLabel != null)
+            {
+                runtimeMemoryLogLatestLabel.text = hasEntries ? entries[entries.Count - 1] : string.Empty;
             }
         }
     }

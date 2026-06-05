@@ -45,6 +45,7 @@ namespace GlassRefrain.Bootstrap {
         private InputIntentSnapshot lastInputSnapshot;
         private TargetContextSnapshot lastTargetSnapshot;
         private readonly M1MemoryRevealFeedbackBridge _memoryRevealFeedbackBridge = new M1MemoryRevealFeedbackBridge();
+        private readonly M1RuntimeMemoryLogPlaceholder _runtimeMemoryLogPlaceholder = new M1RuntimeMemoryLogPlaceholder();
         private bool _loggedAdapterMissing;
         private bool _dodgeDisplacementArmed;
         private Vector3 _encounterResetStartPosition;
@@ -219,13 +220,19 @@ namespace GlassRefrain.Bootstrap {
                     interactionSnapshot.HasEligibleFragment,
                     interactionSnapshot.NearbyFragmentId);
                 if (_memoryState != null) {
+                    var memorySnapshot = _memoryState.Snapshot;
                     _memoryRevealFeedbackBridge.TryPlayAcceptedInteraction(
                         interactionSnapshot,
-                        _memoryState.Snapshot,
+                        memorySnapshot,
                         _memoryVfxResponse);
+                    _runtimeMemoryLogPlaceholder.TryAppendAcceptedInteraction(
+                        interactionSnapshot,
+                        memorySnapshot);
+                    debugOverlayAdapter?.UpdateRuntimeMemoryLog(_runtimeMemoryLogPlaceholder.Entries);
                 }
             } else {
                 debugOverlayAdapter?.UpdateInteractionPrompt(false, string.Empty);
+                debugOverlayAdapter?.UpdateRuntimeMemoryLog(_runtimeMemoryLogPlaceholder.Entries);
             }
 
             // Story 1-6: Recovery context forwarding — forwards combat recovery state to locomotion each frame.

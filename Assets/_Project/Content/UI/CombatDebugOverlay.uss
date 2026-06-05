@@ -48,6 +48,32 @@
     unity-font-style: bold;
 }
 
+.runtime-memory-log {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 250px;
+    flex-direction: column;
+    padding: 8px 10px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.72);
+    border-left-width: 3px;
+    border-left-color: #9cffb7;
+}
+
+.runtime-memory-log-title {
+    font-size: 11px;
+    color: #9cffb7;
+    unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.runtime-memory-log-entry {
+    font-size: 13px;
+    color: #ffffff;
+    unity-font-style: bold;
+}
+
 .hidden {
     display: none;
 }

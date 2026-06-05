@@ -17,4 +17,9 @@
     <ui:VisualElement name="memory-reveal-feedback" class="memory-reveal-feedback hidden">
         <ui:Label name="memory-reveal-feedback-label" text="Memory Revealed" class="memory-reveal-feedback-label" />
     </ui:VisualElement>
+
+    <ui:VisualElement name="runtime-memory-log" class="runtime-memory-log hidden">
+        <ui:Label name="runtime-memory-log-title" text="Memory Log" class="runtime-memory-log-title" />
+        <ui:Label name="runtime-memory-log-latest-label" text="" class="runtime-memory-log-entry" />
+    </ui:VisualElement>
 </ui:UXML>
