@@ -17,6 +17,8 @@ namespace GlassRefrain.Presentation
         private Label lockOnTargetLabel;
         private VisualElement interactionPrompt;
         private Label interactionPromptLabel;
+        private VisualElement memoryRevealFeedback;
+        private Label memoryRevealFeedbackLabel;
 
         private void Awake()
         {
@@ -46,6 +48,8 @@ namespace GlassRefrain.Presentation
                 lockOnTargetLabel = root.Q<Label>("lock-on-target-label");
                 interactionPrompt = uiDocument.rootVisualElement.Q<VisualElement>("interaction-prompt");
                 interactionPromptLabel = uiDocument.rootVisualElement.Q<Label>("interaction-prompt-label");
+                memoryRevealFeedback = uiDocument.rootVisualElement.Q<VisualElement>("memory-reveal-feedback");
+                memoryRevealFeedbackLabel = uiDocument.rootVisualElement.Q<Label>("memory-reveal-feedback-label");
             }
         }
 
@@ -121,6 +125,27 @@ namespace GlassRefrain.Presentation
             if (interactionPromptLabel != null)
             {
                 interactionPromptLabel.text = "Press F to Interact";
+            }
+        }
+
+        public void UpdateMemoryRevealFeedback(IMemoryVFXResponseSnapshot snapshot)
+        {
+            Initialize();
+            if (memoryRevealFeedback == null)
+            {
+                return;
+            }
+
+            bool isVisible = snapshot != null &&
+                (snapshot.State == MemoryVFXResponseState.Requested ||
+                 snapshot.State == MemoryVFXResponseState.Playing);
+            memoryRevealFeedback.style.display = isVisible ? DisplayStyle.Flex : DisplayStyle.None;
+            if (memoryRevealFeedbackLabel != null && isVisible)
+            {
+                var context = snapshot.SourceAcceptedContext;
+                memoryRevealFeedbackLabel.text = context == null || string.IsNullOrEmpty(context.MemoryId)
+                    ? "Memory Revealed"
+                    : "Memory Revealed: " + context.MemoryId;
             }
         }
     }

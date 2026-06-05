@@ -13,4 +13,8 @@
     <ui:VisualElement name="interaction-prompt" class="interaction-prompt hidden">
         <ui:Label name="interaction-prompt-label" text="Press F to Interact" class="interaction-prompt-label" />
     </ui:VisualElement>
+
+    <ui:VisualElement name="memory-reveal-feedback" class="memory-reveal-feedback hidden">
+        <ui:Label name="memory-reveal-feedback-label" text="Memory Revealed" class="memory-reveal-feedback-label" />
+    </ui:VisualElement>
 </ui:UXML>

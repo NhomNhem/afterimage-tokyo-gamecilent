@@ -44,6 +44,7 @@ namespace GlassRefrain.Bootstrap {
         private EnemyIntentSnapshot lastEnemyIntentSnapshot;
         private InputIntentSnapshot lastInputSnapshot;
         private TargetContextSnapshot lastTargetSnapshot;
+        private readonly M1MemoryRevealFeedbackBridge _memoryRevealFeedbackBridge = new M1MemoryRevealFeedbackBridge();
         private bool _loggedAdapterMissing;
         private bool _dodgeDisplacementArmed;
         private Vector3 _encounterResetStartPosition;
@@ -217,6 +218,12 @@ namespace GlassRefrain.Bootstrap {
                 debugOverlayAdapter?.UpdateInteractionPrompt(
                     interactionSnapshot.HasEligibleFragment,
                     interactionSnapshot.NearbyFragmentId);
+                if (_memoryState != null) {
+                    _memoryRevealFeedbackBridge.TryPlayAcceptedInteraction(
+                        interactionSnapshot,
+                        _memoryState.Snapshot,
+                        _memoryVfxResponse);
+                }
             } else {
                 debugOverlayAdapter?.UpdateInteractionPrompt(false, string.Empty);
             }
@@ -228,6 +235,9 @@ namespace GlassRefrain.Bootstrap {
 
             if (_memoryVfxResponse != null) {
                 _memoryVfxResponse.Update(dt);
+                debugOverlayAdapter?.UpdateMemoryRevealFeedback(_memoryVfxResponse.Snapshot);
+            } else {
+                debugOverlayAdapter?.UpdateMemoryRevealFeedback(null);
             }
 
             if (_memoryState != null && _memoryVfxResponse != null) {

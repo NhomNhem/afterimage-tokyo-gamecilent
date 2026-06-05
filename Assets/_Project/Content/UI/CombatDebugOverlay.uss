@@ -31,6 +31,23 @@
     unity-font-style: bold;
 }
 
+.memory-reveal-feedback {
+    position: absolute;
+    bottom: 118px;
+    align-self: center;
+    padding: 10px 14px;
+    border-radius: 5px;
+    background-color: rgba(18, 12, 30, 0.78);
+    border-left-width: 3px;
+    border-left-color: #8fe6ff;
+}
+
+.memory-reveal-feedback-label {
+    font-size: 16px;
+    color: #dff7ff;
+    unity-font-style: bold;
+}
+
 .hidden {
     display: none;
 }
