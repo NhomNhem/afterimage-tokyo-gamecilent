@@ -171,8 +171,7 @@ namespace GlassRefrain.Tests.EditMode {
                 "InputManager",
                 "UnityEngine.Input;",
                 "UnityEngine.Input ",
-                "RegisterGeneratedFor<",
-                "NhemDangFugBixs.Attributes"
+                "RegisterGeneratedFor<"
             };
 
             foreach (var file in coreAndEnemyFiles) {

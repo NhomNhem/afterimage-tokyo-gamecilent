@@ -2,34 +2,39 @@
 
 .main-container {
     flex-direction: column;
-    padding: 12px;
-    background-color: #232323;
-    border-radius: 4px;
+    padding: 10px;
+    background-color: #1e1e1e;
 }
 
 /* Header Styles */
 .header {
     flex-direction: column;
-    padding: 16px;
+    padding: 14px 16px;
     margin-bottom: 12px;
-    background-color: #3c3c3c;
-    border-radius: 4px;
+    background-color: #2a2a2a;
+    border-radius: 6px;
     border-left-width: 4px;
-    border-left-color: #4a90e2;
-    border-left-style: solid;
+    border-left-color: #3b82f6;
+    border-top-width: 1px;
+    border-top-color: #333333;
+    border-right-width: 1px;
+    border-right-color: #333333;
+    border-bottom-width: 1px;
+    border-bottom-color: #333333;
 }
 
 .title {
-    font-size: 20px;
-    -unity-font-style-and-weight: bold;
+    font-size: 16px;
+    -unity-font-style: bold;
     color: #ffffff;
-    margin-bottom: 4px;
+    letter-spacing: 0.5px;
 }
 
 .subtitle {
-    font-size: 12px;
-    color: #b0b0b0;
+    font-size: 11px;
+    color: #8e9cae;
     -unity-font-style: italic;
+    margin-top: 2px;
 }
 
 /* Content Container */
@@ -40,74 +45,96 @@
 /* Section Styles */
 .section {
     flex-direction: column;
-    background-color: #2d2d2d;
-    border-radius: 4px;
-    margin-bottom: 8px;
+    background-color: #242424;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    border-width: 1px;
+    border-color: #2d2d2d;
     overflow: hidden;
 }
 
 .section-header {
     flex-direction: row;
     align-items: center;
-    padding: 10px 12px;
-    background-color: #383838;
+    padding: 8px 12px;
+    background-color: #2a2a2a;
 }
 
 .section-title {
-    font-size: 14px;
-    -unity-font-style-and-weight: 600;
-    color: #e0e0e0;
-    margin-right: 8px;
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: #cccccc;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
 }
 
 .divider {
     flex-grow: 1;
     height: 1px;
-    background-color: #555555;
+    background-color: #333333;
+    margin-left: 4px;
 }
 
 .section-content {
     flex-direction: column;
-    padding: 12px;
+    padding: 10px 14px 12px 14px;
+    background-color: #1d1d1d;
 }
 
 /* Property Field Styles */
 PropertyField {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    padding-left: 4px;
 }
 
 PropertyField > Label {
-    color: #c0c0c0;
+    color: #aaaaaa;
+    font-size: 11px;
+}
+
+/* VContainer foldout follows the section-header treatment. */
+.vcontainer-section {
+    background-color: #1d1d1d;
+}
+
+.vcontainer-section .unity-foldout__toggle {
+    margin: 0;
+    padding: 8px 12px;
+    background-color: #2a2a2a;
+    border-bottom-width: 1px;
+    border-bottom-color: #2d2d2d;
+}
+
+.vcontainer-section .unity-foldout__text {
     font-size: 12px;
-    -unity-font-style-and-weight: 500;
+    -unity-font-style: bold;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.vcontainer-section .unity-foldout__content {
+    padding: 10px 14px 12px 14px;
+    margin: 0;
 }
 
 /* Footer Styles */
 .footer {
     flex-direction: row;
     justify-content: center;
-    padding: 12px;
-    margin-top: 8px;
-    background-color: #2d2d2d;
+    padding: 10px;
+    margin-top: 4px;
+    background-color: #1a1a1a;
     border-radius: 4px;
 }
 
 .footer-text {
-    font-size: 11px;
-    color: #808080;
-    -unity-font-style: italic;
+    font-size: 10px;
+    color: #555555;
 }
 
-/* Hover Effects */
-.section:hover {
-    background-color: #323232;
-}
-
-.section-header:hover {
-    background-color: #404040;
-}
-
-/* Focus States */
-PropertyField:focus-within > Label {
-    color: #4a90e2;
+/* Hover effects */
+.section-header:hover,
+.vcontainer-section .unity-foldout__toggle:hover {
+    background-color: #2f2f2f;
 }

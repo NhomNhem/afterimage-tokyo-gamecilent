@@ -11,6 +11,9 @@ namespace GlassRefrain.Tests.EditMode {
     /// </summary>
     public class SceneComposition_test {
         private const string GameplayLifetimeScopePath = "Assets/_Project/Code/Bootstrap/GameplayLifetimeScope.cs";
+        private const string M0SceneCompositionRegistrarPath = "Assets/_Project/Code/Bootstrap/M0SceneCompositionRegistrar.cs";
+        private const string GameplayLifetimeScopeEditorPath = "Assets/_Project/Code/Bootstrap/Editor/GameplayLifetimeScopeEditor.cs";
+        private const string GameplayLifetimeScopeEditorUxmlPath = "Assets/_Project/Code/Bootstrap/Editor/GameplayLifetimeScopeEditor.uxml";
         private const string GameplayScenePath = "Assets/_Project/Content/Scenes/Gameplay/Gameplay_CombatPrototype.unity";
         private const string M0CombatTimingConfigAssetPath = "Assets/_Project/Content/Data/Combat/M0CombatTimingConfig.asset";
         private const string M0LocomotionConfigAssetPath = "Assets/_Project/Content/Data/Locomotion/M0LocomotionConfig.asset";
@@ -38,9 +41,13 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void GameplayLifetimeScope_UsesExplicitMemorySceneComposition() {
             string source = File.ReadAllText(GameplayLifetimeScopePath);
+            string registrar = File.ReadAllText(M0SceneCompositionRegistrarPath);
 
             Assert.That(source, Does.Contain("MemoryRaycastProProbe memoryProbe"));
             Assert.That(source, Does.Contain("MemoryFragment[] memoryFragments"));
+            Assert.That(source, Does.Contain("CreateSceneCompositionRegistrar().Register(builder)"));
+            Assert.That(registrar, Does.Contain("container.Inject(_memoryProbe)"));
+            Assert.That(registrar, Does.Contain("container.Inject(fragment)"));
             Assert.That(source, Does.Not.Contain("FindObjectOfType"));
             Assert.That(source, Does.Not.Contain("FindFirstObjectByType"));
             Assert.That(source, Does.Not.Contain("FindAnyObjectByType"));
@@ -48,6 +55,13 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(source, Does.Not.Contain("Resources.Load"));
             Assert.That(source, Does.Not.Contain("ServiceLocator"));
             Assert.That(source, Does.Not.Contain("Debug.Log"));
+            Assert.That(registrar, Does.Not.Contain("FindObjectOfType"));
+            Assert.That(registrar, Does.Not.Contain("FindFirstObjectByType"));
+            Assert.That(registrar, Does.Not.Contain("FindAnyObjectByType"));
+            Assert.That(registrar, Does.Not.Contain("FindObjectsByType"));
+            Assert.That(registrar, Does.Not.Contain("Resources.Load"));
+            Assert.That(registrar, Does.Not.Contain("ServiceLocator"));
+            Assert.That(registrar, Does.Not.Contain("Debug.Log"));
         }
 
         [Test]
@@ -83,6 +97,7 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayLifetimeScope_UsesExplicitCombatTimingConfigComposition() {
             string source = File.ReadAllText(GameplayLifetimeScopePath);
 
+            Assert.That(source, Does.Contain("RegisterGeneratedFor<IGameplayLifetimeScope>()"));
             Assert.That(source, Does.Contain("M0CombatTimingConfig combatTimingConfig"));
             Assert.That(source, Does.Contain("combatTimingConfig.ToSettings()"));
             Assert.That(source, Does.Not.Contain("attackStartupSeconds: 0.14f"));
@@ -129,6 +144,7 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayLifetimeScope_UsesExplicitLocomotionConfigComposition() {
             string source = File.ReadAllText(GameplayLifetimeScopePath);
 
+            Assert.That(source, Does.Contain("CreateSceneCompositionRegistrar().Register(builder)"));
             Assert.That(source, Does.Contain("M0LocomotionConfig locomotionConfig"));
             Assert.That(source, Does.Contain("locomotionConfig.ToSettings()"));
             Assert.That(source, Does.Not.Contain("new M0LocomotionSettings(5.0f"));
@@ -145,6 +161,40 @@ namespace GlassRefrain.Tests.EditMode {
             string scene = File.ReadAllText(GameplayScenePath);
 
             Assert.That(scene, Does.Contain("locomotionConfig: {fileID: 11400000, guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2}"));
+        }
+
+        [Test]
+        public void M0SceneCompositionRegistrar_HandlesSceneComponentRegistrationAndWiringOnly() {
+            string source = File.ReadAllText(M0SceneCompositionRegistrarPath);
+
+            Assert.That(source, Does.Contain("public sealed class M0SceneCompositionRegistrar"));
+            Assert.That(source, Does.Contain("RegisterSceneComponents(builder)"));
+            Assert.That(source, Does.Contain("RegisterBuildWiring(builder)"));
+            Assert.That(source, Does.Contain("builder.RegisterComponent(_tickHandler)"));
+            Assert.That(source, Does.Contain("builder.RegisterComponent(_playerAnimationDriver).As<IPlayerAnimationService>()"));
+            Assert.That(source, Does.Contain("builder.RegisterComponent(_enemyAnimationDriver).As<IEnemyAnimationService>()"));
+            Assert.That(source, Does.Contain("_tickHandler.SetVisualFeedbackAdapter(_visualFeedbackAdapter)"));
+            Assert.That(source, Does.Contain("_loopDriver.Construct(enemyIntentModel, _logger)"));
+            Assert.That(source, Does.Not.Contain("new M0CombatCore"));
+            Assert.That(source, Does.Not.Contain("new M0PlayerLocomotion"));
+            Assert.That(source, Does.Not.Contain("new M0MemoryState"));
+            Assert.That(source, Does.Not.Contain("RequestAction("));
+            Assert.That(source, Does.Not.Contain("ConsumeInputIntent("));
+            Assert.That(source, Does.Not.Contain("TryInteract"));
+        }
+
+        [Test]
+        public void GameplayLifetimeScopeEditor_BindsSerializedFieldsWithoutDirectDebugLogging() {
+            string editor = File.ReadAllText(GameplayLifetimeScopeEditorPath);
+            string uxml = File.ReadAllText(GameplayLifetimeScopeEditorUxmlPath);
+
+            Assert.That(editor, Does.Contain("rootElement.Bind(serializedObject)"));
+            Assert.That(editor, Does.Not.Contain("Debug.Log"));
+            Assert.That(uxml, Does.Contain("binding-path=\"tickHandler\""));
+            Assert.That(uxml, Does.Contain("binding-path=\"combatTimingConfig\""));
+            Assert.That(uxml, Does.Contain("binding-path=\"locomotionConfig\""));
+            Assert.That(uxml, Does.Contain("binding-path=\"memoryProbe\""));
+            Assert.That(uxml, Does.Contain("binding-path=\"memoryFragments\""));
         }
     }
 }
