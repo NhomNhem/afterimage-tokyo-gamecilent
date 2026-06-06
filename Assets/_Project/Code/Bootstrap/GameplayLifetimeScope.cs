@@ -1,3 +1,4 @@
+using System;
 using _Project.Code.Shared.DI;
 using UnityEngine;
 using VContainer;
@@ -34,6 +35,7 @@ namespace GlassRefrain.Bootstrap {
         [SerializeField, Required] private M0AnimationPresentationAdapter animationPresentationAdapter;
         [SerializeField, Required] private AnimancerPlayerAnimationDriver playerAnimationDriver;
         [SerializeField, Required] private AnimancerEnemyAnimationDriver enemyAnimationDriver;
+        [SerializeField, Required] private M0CombatTimingConfig combatTimingConfig;
         [SerializeField] private MemoryRaycastProProbe memoryProbe;
         [SerializeField] private MemoryFragment[] memoryFragments = new MemoryFragment[0];
 
@@ -54,18 +56,7 @@ namespace GlassRefrain.Bootstrap {
 
             // Core Gameplay Skeletons (Pure C# Authority)
             builder.Register(resolver => new M0CombatCore(
-                    new M0CombatTimingSettings(
-                        attackStartupSeconds: 0.14f,
-                        attackActiveSeconds: 0.20f,
-                        attackRecoverySeconds: 0.26f,
-                        dodgeStartupSeconds: 0.09f,
-                        dodgeActiveSeconds: 0.20f,
-                        dodgeRecoverySeconds: 0.24f,
-                        parryStartupSeconds: 0.10f,
-                        parryActiveSeconds: 0.18f,
-                        parryRecoverySeconds: 0.24f,
-                        counterWindowDurationSeconds: 3.0f,
-                        recoveryDurationSeconds: 0.24f),
+                    CreateCombatTimingSettings(),
                     resolver.Resolve<INhemLogger>()),
                 Lifetime.Singleton)
                 .As<IM0CombatCore>()
@@ -164,6 +155,14 @@ namespace GlassRefrain.Bootstrap {
             }
 
             return injectedFragmentCount;
+        }
+
+        private M0CombatTimingSettings CreateCombatTimingSettings() {
+            if (combatTimingConfig == null) {
+                throw new InvalidOperationException("GameplayLifetimeScope requires an assigned M0CombatTimingConfig.");
+            }
+
+            return combatTimingConfig.ToSettings();
         }
     }
 

@@ -5,10 +5,6 @@ using GlassRefrain.Core;
 using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Enemy {
-    public interface IEnemyDebugHarness {
-        void DebugForceParryEligibleActive();
-    }
-
     [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
     [AsSelf]
     public sealed class M0EnemyIntentModel {
