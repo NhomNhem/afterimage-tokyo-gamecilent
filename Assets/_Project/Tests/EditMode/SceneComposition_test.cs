@@ -1,5 +1,6 @@
 using System.IO;
 using GlassRefrain.Combat;
+using GlassRefrain.Locomotion;
 using GlassRefrain.Infrastructure;
 using NUnit.Framework;
 using UnityEditor;
@@ -12,6 +13,7 @@ namespace GlassRefrain.Tests.EditMode {
         private const string GameplayLifetimeScopePath = "Assets/_Project/Code/Bootstrap/GameplayLifetimeScope.cs";
         private const string GameplayScenePath = "Assets/_Project/Content/Scenes/Gameplay/Gameplay_CombatPrototype.unity";
         private const string M0CombatTimingConfigAssetPath = "Assets/_Project/Content/Data/Combat/M0CombatTimingConfig.asset";
+        private const string M0LocomotionConfigAssetPath = "Assets/_Project/Content/Data/Locomotion/M0LocomotionConfig.asset";
 
         [Test]
         public void ScenePaths_AreDefined() {
@@ -106,6 +108,43 @@ namespace GlassRefrain.Tests.EditMode {
             string scene = File.ReadAllText(GameplayScenePath);
 
             Assert.That(scene, Does.Contain("combatTimingConfig: {fileID: 11400000, guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2}"));
+        }
+
+        [Test]
+        public void M0LocomotionConfig_DefaultAssetMatchesCurrentM0Values() {
+            var config = AssetDatabase.LoadAssetAtPath<M0LocomotionConfig>(M0LocomotionConfigAssetPath);
+
+            Assert.That(config, Is.Not.Null, "Default M0 locomotion config asset should exist.");
+
+            M0LocomotionSettings settings = config.ToSettings();
+            Assert.That(settings.MoveSpeed, Is.EqualTo(5.0f));
+            Assert.That(settings.InputDeadzone, Is.EqualTo(0.1f));
+            Assert.That(settings.FacingLerpSpeed, Is.EqualTo(8.0f));
+            Assert.That(settings.DodgeDistance, Is.EqualTo(1.5f));
+            Assert.That(settings.DodgeSpeed, Is.EqualTo(10.0f));
+            Assert.That(settings.DodgeDurationSeconds, Is.EqualTo(0.2f));
+        }
+
+        [Test]
+        public void GameplayLifetimeScope_UsesExplicitLocomotionConfigComposition() {
+            string source = File.ReadAllText(GameplayLifetimeScopePath);
+
+            Assert.That(source, Does.Contain("M0LocomotionConfig locomotionConfig"));
+            Assert.That(source, Does.Contain("locomotionConfig.ToSettings()"));
+            Assert.That(source, Does.Not.Contain("new M0LocomotionSettings(5.0f"));
+            Assert.That(source, Does.Not.Contain("new M0LocomotionSettings(5.0"));
+            Assert.That(source, Does.Not.Contain("Resources.Load"));
+            Assert.That(source, Does.Not.Contain("FindObjectOfType"));
+            Assert.That(source, Does.Not.Contain("FindFirstObjectByType"));
+            Assert.That(source, Does.Not.Contain("FindAnyObjectByType"));
+            Assert.That(source, Does.Not.Contain("ServiceLocator"));
+        }
+
+        [Test]
+        public void GameplayScene_AssignsM0LocomotionConfigReference() {
+            string scene = File.ReadAllText(GameplayScenePath);
+
+            Assert.That(scene, Does.Contain("locomotionConfig: {fileID: 11400000, guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2}"));
         }
     }
 }

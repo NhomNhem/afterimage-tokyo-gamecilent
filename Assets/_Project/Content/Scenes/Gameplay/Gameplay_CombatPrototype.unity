@@ -382,6 +382,7 @@ MonoBehaviour:
   playerAnimationDriver: {fileID: 1932872215}
   enemyAnimationDriver: {fileID: 500000016}
   combatTimingConfig: {fileID: 11400000, guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2}
+  locomotionConfig: {fileID: 11400000, guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2}
   memoryProbe: {fileID: 1932872218}
   memoryFragments:
   - {fileID: 1990882809}

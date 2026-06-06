@@ -20,29 +20,61 @@ using Sirenix.Serialization;
 
 namespace GlassRefrain.Bootstrap {
     /// <summary>
+using UnityEngine;
+using VContainer;
+using VContainer.Unity;
+using GlassRefrain.Combat;
+using GlassRefrain.Core;
+using GlassRefrain.Health;
+using GlassRefrain.Input;
+using GlassRefrain.Locomotion;
+using GlassRefrain.Enemy;
+using GlassRefrain.Memory;
+using GlassRefrain.Targeting;
+using GlassRefrain.Presentation;
+using NhemDangFugBixs.Attributes;
+using NhemDangFugBixs.NhemLogging;
+using NhemDangFugBixs.VContainer;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+
+namespace GlassRefrain.Bootstrap {
+    /// <summary>
     /// Manual VContainer composition root for M0 Gameplay.
     /// Resolves core gameplay skeleton services and wires runtime drivers.
     /// </summary>
 
     [LifetimeScopeFor<IGameplayLifetimeScope>]
     public sealed class GameplayLifetimeScope : LifetimeScope {
+        [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0GameplayTickHandler tickHandler;
+        [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0TargetableSceneAdapter targetableAdapter;
+        [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0EnemyIntentLoopDriver loopDriver;
+        [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0DirectPlayerInput playerInput;
+        [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
+        [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0CombatDebugOverlayAdapter debugOverlayAdapter;
+        [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0AnimationPresentationAdapter animationPresentationAdapter;
+
+        [TabGroup("Gameplay Scope", "Animation Drivers")]
         [SerializeField, Required] private AnimancerPlayerAnimationDriver playerAnimationDriver;
+        [TabGroup("Gameplay Scope", "Animation Drivers")]
         [SerializeField, Required] private AnimancerEnemyAnimationDriver enemyAnimationDriver;
+
+        [TabGroup("Gameplay Scope", "Configs")]
         [SerializeField, Required] private M0CombatTimingConfig combatTimingConfig;
+        [TabGroup("Gameplay Scope", "Configs")]
+        [SerializeField, Required] private M0LocomotionConfig locomotionConfig;
+
+        [TabGroup("Gameplay Scope", "Memory System")]
         [SerializeField] private MemoryRaycastProProbe memoryProbe;
+        [TabGroup("Gameplay Scope", "Memory System")]
         [SerializeField] private MemoryFragment[] memoryFragments = new MemoryFragment[0];
-
-        private INhemLogger _logger;
-
-        protected override void Configure(IContainerBuilder builder) {
-            builder.RegisterGeneratedFor<IGameplayLifetimeScope>();
 
             // Manual VContainer registration for M0.
             // ADR-0004: All registrations MUST be manual in composition roots.
@@ -61,7 +93,7 @@ namespace GlassRefrain.Bootstrap {
                 Lifetime.Singleton)
                 .As<IM0CombatCore>()
                 .AsSelf();
-            builder.Register(_ => new M0PlayerLocomotion(new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 1.5f, 10.0f, 0.2f)), Lifetime.Singleton)
+            builder.Register(_ => new M0PlayerLocomotion(CreateLocomotionSettings()), Lifetime.Singleton)
                 .As<IM0PlayerLocomotion>()
                 .AsSelf();
             // builder.Register<M0TargetContext>(Lifetime.Singleton).As<IM0TargetContext>().AsSelf();
@@ -163,6 +195,14 @@ namespace GlassRefrain.Bootstrap {
             }
 
             return combatTimingConfig.ToSettings();
+        }
+
+        private M0LocomotionSettings CreateLocomotionSettings() {
+            if (locomotionConfig == null) {
+                throw new InvalidOperationException("GameplayLifetimeScope requires an assigned M0LocomotionConfig.");
+            }
+
+            return locomotionConfig.ToSettings();
         }
     }
 
