@@ -7,6 +7,7 @@ using NUnit.Framework;
 namespace GlassRefrain.Tests.EditMode {
     public sealed class M1RuntimeMemoryLogPlaceholderTests {
         private const string RuntimeLogPath = "Assets/_Project/Code/Bootstrap/M1RuntimeMemoryLogPlaceholder.cs";
+        private const string MemoryBridgePath = "Assets/_Project/Code/Bootstrap/M0MemoryInteractionTickBridge.cs";
         private const string OverlayAdapterPath = "Assets/_Project/Code/Presentation/M0CombatDebugOverlayAdapter.cs";
         private const string TickHandlerPath = "Assets/_Project/Code/Bootstrap/M0GameplayTickHandler.cs";
         private const string UxmlPath = "Assets/_Project/Content/UI/CombatDebugOverlay.uxml";
@@ -96,6 +97,7 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void RuntimeMemoryLogPlaceholderSourceStaysWithinOwnershipGuardrails() {
             string source = File.ReadAllText(RuntimeLogPath);
+            string bridge = File.ReadAllText(MemoryBridgePath);
             string adapter = File.ReadAllText(OverlayAdapterPath);
             string tickHandler = File.ReadAllText(TickHandlerPath);
 
@@ -123,8 +125,9 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(adapter, Does.Not.Contain("Resources.Load"));
             Assert.That(adapter, Does.Not.Contain("Debug.Log"));
 
-            Assert.That(tickHandler, Does.Contain("_runtimeMemoryLogPlaceholder.TryAppendAcceptedInteraction"));
-            Assert.That(tickHandler, Does.Contain("UpdateRuntimeMemoryLog"));
+            Assert.That(bridge, Does.Contain("_runtimeMemoryLogPlaceholder.TryAppendAcceptedInteraction"));
+            Assert.That(bridge, Does.Contain("UpdateRuntimeMemoryLog"));
+            Assert.That(tickHandler, Does.Contain("_memoryInteractionTickBridge.TickInteraction"));
         }
 
         [Test]

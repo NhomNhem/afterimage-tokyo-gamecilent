@@ -44,8 +44,7 @@ namespace GlassRefrain.Bootstrap {
         private EnemyIntentSnapshot lastEnemyIntentSnapshot;
         private InputIntentSnapshot lastInputSnapshot;
         private TargetContextSnapshot lastTargetSnapshot;
-        private readonly M1MemoryRevealFeedbackBridge _memoryRevealFeedbackBridge = new M1MemoryRevealFeedbackBridge();
-        private readonly M1RuntimeMemoryLogPlaceholder _runtimeMemoryLogPlaceholder = new M1RuntimeMemoryLogPlaceholder();
+        private readonly M0MemoryInteractionTickBridge _memoryInteractionTickBridge = new M0MemoryInteractionTickBridge();
         private bool _loggedAdapterMissing;
         private bool _dodgeDisplacementArmed;
         private Vector3 _encounterResetStartPosition;
@@ -212,59 +211,24 @@ namespace GlassRefrain.Bootstrap {
             // Story 1-6: Combat Core tick for time-based state management (CounterWindow duration expiry).
             _combatCore?.Tick(dt);
 
-            if (_memoryInteractionService != null && _locomotion != null) {
-                var playerPosition = _locomotion.GetMovementSnapshot().Position;
-                _memoryInteractionService.Tick(playerPosition, _interactTriggeredThisFrame);
-                var interactionSnapshot = _memoryInteractionService.Snapshot;
-                debugOverlayAdapter?.UpdateInteractionPrompt(
-                    interactionSnapshot.HasEligibleFragment,
-                    interactionSnapshot.NearbyFragmentId);
-                if (_memoryState != null) {
-                    var memorySnapshot = _memoryState.Snapshot;
-                    _memoryRevealFeedbackBridge.TryPlayAcceptedInteraction(
-                        interactionSnapshot,
-                        memorySnapshot,
-                        _memoryVfxResponse);
-                    _runtimeMemoryLogPlaceholder.TryAppendAcceptedInteraction(
-                        interactionSnapshot,
-                        memorySnapshot);
-                    debugOverlayAdapter?.UpdateRuntimeMemoryLog(_runtimeMemoryLogPlaceholder.Entries);
-                }
-            } else {
-                debugOverlayAdapter?.UpdateInteractionPrompt(false, string.Empty);
-                debugOverlayAdapter?.UpdateRuntimeMemoryLog(_runtimeMemoryLogPlaceholder.Entries);
-            }
+            _memoryInteractionTickBridge.TickInteraction(
+                _locomotion,
+                _memoryInteractionService,
+                _memoryState,
+                _memoryVfxResponse,
+                debugOverlayAdapter,
+                _interactTriggeredThisFrame);
 
             // Story 1-6: Recovery context forwarding — forwards combat recovery state to locomotion each frame.
             // M0PlayerLocomotion.SetRecoveryContext already handles IsRecovering == false as a no-op.
             if (_combatCore != null && _locomotion != null)
                 _locomotion.SetRecoveryContext(_combatCore.Snapshot.Recovery);
 
-            if (_memoryVfxResponse != null) {
-                _memoryVfxResponse.Update(dt);
-                debugOverlayAdapter?.UpdateMemoryRevealFeedback(_memoryVfxResponse.Snapshot);
-            } else {
-                debugOverlayAdapter?.UpdateMemoryRevealFeedback(null);
-            }
-
-            if (_memoryState != null && _memoryVfxResponse != null) {
-                var memorySnapshot = _memoryState.Snapshot;
-                var vfxState = _memoryVfxResponse.State;
-                var transitionedToCooldown = false;
-
-                if (memorySnapshot.Phase == MemoryRevealPhase.Responding &&
-                    (vfxState == MemoryVFXResponseState.CoolingDown || vfxState == MemoryVFXResponseState.Idle)) {
-                    _memoryState.AdvancePhase("Reveal playback complete");
-                    memorySnapshot = _memoryState.Snapshot;
-                    transitionedToCooldown = true;
-                }
-
-                if (memorySnapshot.Phase == MemoryRevealPhase.Cooldown &&
-                    vfxState == MemoryVFXResponseState.Idle &&
-                    !transitionedToCooldown) {
-                    _memoryState.AdvancePhase("Reveal cooldown complete");
-                }
-            }
+            _memoryInteractionTickBridge.TickRevealFeedback(
+                dt,
+                _memoryState,
+                _memoryVfxResponse,
+                debugOverlayAdapter);
         }
 
         [ContextMenu("M0 Debug/Reset Encounter")]
@@ -574,32 +538,11 @@ namespace GlassRefrain.Bootstrap {
         }
 
         private void OnRevealRequestEmitted(RevealRequestContext request) {
-            if (_memoryState == null || _memoryVfxResponse == null) {
-                return;
-            }
-
-            _memoryState.IntakeRevealRequest(request);
-            var evaluation = _memoryState.EvaluateRequestedReveal();
-            if (!evaluation.Accepted) {
-                _memoryVfxResponse.OnRejectRequest(MemoryVFXResponseReasons.NotAcceptedByMemoryState);
-                return;
-            }
-
-            _memoryState.AdvancePhase("Reveal response accepted");
-
-            var acceptedContext = new AcceptedMemoryRevealContext(
-                _memoryState.Snapshot.MemoryId,
+            _memoryInteractionTickBridge.HandleRevealRequest(
                 request,
-                evaluation,
-                request.CombatResultSourceLabel,
-                request.ContextLabel);
-
-            _memoryVfxResponse.OnAcceptedReveal(acceptedContext);
-            _memoryVfxResponse.OnPlaybackStarted();
-
-#if GR_MEMORY_DEBUG || GR_M0_PROTOTYPE
-            _logger?.Log("[M0Memory] Reveal accepted: source=" + request.CombatResultSourceLabel + " memoryId=" + _memoryState.Snapshot.MemoryId);
-#endif
+                _memoryState,
+                _memoryVfxResponse,
+                _logger);
         }
 
     }

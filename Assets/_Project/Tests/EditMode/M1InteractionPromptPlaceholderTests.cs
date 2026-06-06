@@ -5,6 +5,7 @@ namespace GlassRefrain.Tests.EditMode {
     public sealed class M1InteractionPromptPlaceholderTests {
         private const string OverlayAdapterPath = "Assets/_Project/Code/Presentation/M0CombatDebugOverlayAdapter.cs";
         private const string TickHandlerPath = "Assets/_Project/Code/Bootstrap/M0GameplayTickHandler.cs";
+        private const string MemoryBridgePath = "Assets/_Project/Code/Bootstrap/M0MemoryInteractionTickBridge.cs";
         private const string UxmlPath = "Assets/_Project/Content/UI/CombatDebugOverlay.uxml";
         private const string UssPath = "Assets/_Project/Content/UI/CombatDebugOverlay.uss";
 
@@ -20,13 +21,15 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
-        public void PromptPresenter_UsesReadOnlySnapshotValues_FromTickHandler() {
+        public void PromptPresenter_UsesReadOnlySnapshotValues_FromMemoryBridge() {
+            var memoryBridge = File.ReadAllText(MemoryBridgePath);
             var tickHandler = File.ReadAllText(TickHandlerPath);
 
-            Assert.That(tickHandler, Does.Contain("_memoryInteractionService.Snapshot"));
-            Assert.That(tickHandler, Does.Contain("UpdateInteractionPrompt("));
-            Assert.That(tickHandler, Does.Contain("interactionSnapshot.HasEligibleFragment"));
-            Assert.That(tickHandler, Does.Contain("interactionSnapshot.NearbyFragmentId"));
+            Assert.That(memoryBridge, Does.Contain("memoryInteractionService.Snapshot"));
+            Assert.That(memoryBridge, Does.Contain("UpdateInteractionPrompt("));
+            Assert.That(memoryBridge, Does.Contain("interactionSnapshot.HasEligibleFragment"));
+            Assert.That(memoryBridge, Does.Contain("interactionSnapshot.NearbyFragmentId"));
+            Assert.That(tickHandler, Does.Contain("_memoryInteractionTickBridge.TickInteraction"));
         }
 
         [Test]
