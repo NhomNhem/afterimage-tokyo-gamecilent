@@ -1,6 +1,7 @@
 using System.IO;
 using GlassRefrain.Combat;
 using GlassRefrain.Locomotion;
+using GlassRefrain.Memory;
 using GlassRefrain.Infrastructure;
 using NUnit.Framework;
 using UnityEditor;
@@ -17,6 +18,8 @@ namespace GlassRefrain.Tests.EditMode {
         private const string GameplayScenePath = "Assets/_Project/Content/Scenes/Gameplay/Gameplay_CombatPrototype.unity";
         private const string M0CombatTimingConfigAssetPath = "Assets/_Project/Content/Data/Combat/M0CombatTimingConfig.asset";
         private const string M0LocomotionConfigAssetPath = "Assets/_Project/Content/Data/Locomotion/M0LocomotionConfig.asset";
+        private const string M0MemoryRuntimeTuningConfigPath = "Assets/_Project/Code/Memory/M0MemoryRuntimeTuningConfig.cs";
+        private const string M0MemoryRuntimeTuningConfigAssetPath = "Assets/_Project/Content/Data/Memory/M0MemoryRuntimeTuningConfig.asset";
 
         [Test]
         public void ScenePaths_AreDefined() {
@@ -164,6 +167,66 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void M0MemoryRuntimeTuningConfig_DefaultAssetMatchesCurrentM0Values() {
+            var config = AssetDatabase.LoadAssetAtPath<M0MemoryRuntimeTuningConfig>(M0MemoryRuntimeTuningConfigAssetPath);
+
+            Assert.That(config, Is.Not.Null, "Default M0 memory runtime tuning config asset should exist.");
+
+            M0MemoryRuntimeTuningSettings settings = config.ToSettings();
+            Assert.That(settings.DefaultRevealCandidateId, Is.EqualTo("M0RevealCandidate"));
+            Assert.That(settings.RevealFeedbackDurationSeconds, Is.EqualTo(0.25f));
+            Assert.That(settings.RevealFeedbackCooldownSeconds, Is.EqualTo(0f));
+            Assert.That(settings.RevealFeedbackIntensityLabel, Is.EqualTo("standard"));
+        }
+
+        [Test]
+        public void M0MemoryRuntimeTuningConfig_StoresStaticTuningOnly() {
+            string source = File.ReadAllText(M0MemoryRuntimeTuningConfigPath);
+
+            Assert.That(source, Does.Contain("defaultRevealCandidateId"));
+            Assert.That(source, Does.Contain("revealFeedbackDurationSeconds"));
+            Assert.That(source, Does.Contain("revealFeedbackCooldownSeconds"));
+            Assert.That(source, Does.Contain("revealFeedbackIntensityLabel"));
+            Assert.That(source, Does.Not.Contain("collected"));
+            Assert.That(source, Does.Not.Contain("revealed"));
+            Assert.That(source, Does.Not.Contain("accepted"));
+            Assert.That(source, Does.Not.Contain("rejected"));
+            Assert.That(source, Does.Not.Contain("duplicate"));
+            Assert.That(source, Does.Not.Contain("playback"));
+        }
+
+        [Test]
+        public void GameplayLifetimeScope_UsesExplicitMemoryRuntimeTuningConfigComposition() {
+            string source = File.ReadAllText(GameplayLifetimeScopePath);
+
+            Assert.That(source, Does.Contain("RegisterGeneratedFor<IGameplayLifetimeScope>()"));
+            Assert.That(source, Does.Contain("M0MemoryRuntimeTuningConfig memoryRuntimeTuningConfig"));
+            Assert.That(source, Does.Contain("CreateMemoryRuntimeTuningSettings()"));
+            Assert.That(source, Does.Contain("memoryRuntimeTuningConfig.ToSettings()"));
+            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.DefaultRevealCandidateId"));
+            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackDurationSeconds"));
+            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackCooldownSeconds"));
+            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackIntensityLabel"));
+            Assert.That(source, Does.Contain("GameplayLifetimeScope requires an assigned M0MemoryRuntimeTuningConfig."));
+            Assert.That(source, Does.Not.Contain("new M0MemoryState(\"M0RevealCandidate\")"));
+            Assert.That(source, Does.Not.Contain("new M0MemoryVFXResponse(0.25f, 0f, \"standard\")"));
+            Assert.That(source, Does.Not.Contain("Resources.Load"));
+            Assert.That(source, Does.Not.Contain("FindObjectOfType"));
+            Assert.That(source, Does.Not.Contain("FindFirstObjectByType"));
+            Assert.That(source, Does.Not.Contain("FindAnyObjectByType"));
+            Assert.That(source, Does.Not.Contain("FindObjectsByType"));
+            Assert.That(source, Does.Not.Contain("ServiceLocator"));
+            Assert.That(source, Does.Not.Contain("Debug.Log"));
+        }
+
+        [Test]
+        public void GameplayScene_AssignsM0MemoryRuntimeTuningConfigReference() {
+            string scene = File.ReadAllText(GameplayScenePath);
+
+            Assert.That(scene, Does.Contain("memoryRuntimeTuningConfig: {fileID: 11400000, guid: fa048c7d2e1bd4745a743423cc6f728a, type: 2}"));
+        }
+
+        [Test]
         public void M0SceneCompositionRegistrar_HandlesSceneComponentRegistrationAndWiringOnly() {
             string source = File.ReadAllText(M0SceneCompositionRegistrarPath);
 
@@ -193,6 +256,7 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(uxml, Does.Contain("binding-path=\"tickHandler\""));
             Assert.That(uxml, Does.Contain("binding-path=\"combatTimingConfig\""));
             Assert.That(uxml, Does.Contain("binding-path=\"locomotionConfig\""));
+            Assert.That(uxml, Does.Contain("binding-path=\"memoryRuntimeTuningConfig\""));
             Assert.That(uxml, Does.Contain("binding-path=\"memoryProbe\""));
             Assert.That(uxml, Does.Contain("binding-path=\"memoryFragments\""));
         }

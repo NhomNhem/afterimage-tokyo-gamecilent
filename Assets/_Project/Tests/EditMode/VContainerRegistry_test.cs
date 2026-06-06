@@ -22,6 +22,11 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayScope_CanResolveM0Skeletons() {
             // Given
             var builder = new ContainerBuilder();
+            var memoryRuntimeTuningSettings = new M0MemoryRuntimeTuningSettings(
+                "M0RevealCandidate",
+                0.25f,
+                0f,
+                "standard");
 
             // When (Manual registration as seen in GameplayLifetimeScope)
             builder.Register(_ => new M0CombatTimingSettings(0.12f, 0.18f, 0.25f, 0.08f, 0.18f, 0.25f, 0.08f, 0.16f, 0.25f, 0.5f, 0.25f), Lifetime.Singleton);
@@ -32,7 +37,12 @@ namespace GlassRefrain.Tests.EditMode {
             builder.Register<M0TargetContext>(Lifetime.Singleton);
             builder.Register(_ => new M0HealthDamageReactionModel(), Lifetime.Singleton);
             builder.Register<M0EnemyIntentModel>(Lifetime.Singleton);
-            builder.Register(_ => new M0MemoryState("M0RevealCandidate"), Lifetime.Singleton);
+            builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton);
+            builder.Register(_ => new M0MemoryVFXResponse(
+                    memoryRuntimeTuningSettings.RevealFeedbackDurationSeconds,
+                    memoryRuntimeTuningSettings.RevealFeedbackCooldownSeconds,
+                    memoryRuntimeTuningSettings.RevealFeedbackIntensityLabel),
+                Lifetime.Singleton);
             builder.Register<ITargetableRegistry, M0TargetableRegistry>(Lifetime.Singleton);
             builder.Register<M0InputRouter>(Lifetime.Singleton);
 
@@ -44,6 +54,7 @@ namespace GlassRefrain.Tests.EditMode {
                 Assert.That(container.Resolve<M0HealthDamageReactionModel>(), Is.Not.Null, "M0HealthDamageReactionModel failed to resolve");
                 Assert.That(container.Resolve<M0EnemyIntentModel>(), Is.Not.Null, "M0EnemyIntentModel failed to resolve");
                 Assert.That(container.Resolve<M0MemoryState>(), Is.Not.Null, "M0MemoryState failed to resolve");
+                Assert.That(container.Resolve<M0MemoryVFXResponse>(), Is.Not.Null, "M0MemoryVFXResponse failed to resolve");
                 Assert.That(container.Resolve<ITargetableRegistry>(), Is.Not.Null, "ITargetableRegistry failed to resolve");
                 Assert.That(container.Resolve<M0InputRouter>(), Is.Not.Null, "M0InputRouter failed to resolve");
             }

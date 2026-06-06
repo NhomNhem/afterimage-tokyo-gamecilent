@@ -45,6 +45,7 @@
                 <engine:VisualElement class="section-content">
                     <editor:PropertyField binding-path="combatTimingConfig" label="Combat Timing Config"/>
                     <editor:PropertyField binding-path="locomotionConfig" label="Locomotion Config"/>
+                    <editor:PropertyField binding-path="memoryRuntimeTuningConfig" label="Memory Runtime Tuning Config"/>
                 </engine:VisualElement>
             </engine:VisualElement>
 

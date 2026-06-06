@@ -37,6 +37,7 @@ namespace GlassRefrain.Bootstrap {
         [TabGroup("Gameplay Scope", "Configs")]
         [SerializeField, Required] private M0CombatTimingConfig combatTimingConfig;
         [SerializeField, Required] private M0LocomotionConfig locomotionConfig;
+        [SerializeField, Required] private M0MemoryRuntimeTuningConfig memoryRuntimeTuningConfig;
 
         [TabGroup("Gameplay Scope", "Memory System")]
         [SerializeField] private MemoryRaycastProProbe memoryProbe;
@@ -62,10 +63,16 @@ namespace GlassRefrain.Bootstrap {
                 .As<IM0PlayerLocomotion>()
                 .AsSelf();
 
-            builder.Register(_ => new M0MemoryState("M0RevealCandidate"), Lifetime.Singleton)
+            M0MemoryRuntimeTuningSettings memoryRuntimeTuningSettings = CreateMemoryRuntimeTuningSettings();
+
+            builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton)
                 .As<IM0MemoryState>()
                 .AsSelf();
-            builder.Register(_ => new M0MemoryVFXResponse(0.25f, 0f, "standard"), Lifetime.Singleton)
+            builder.Register(_ => new M0MemoryVFXResponse(
+                    memoryRuntimeTuningSettings.RevealFeedbackDurationSeconds,
+                    memoryRuntimeTuningSettings.RevealFeedbackCooldownSeconds,
+                    memoryRuntimeTuningSettings.RevealFeedbackIntensityLabel),
+                Lifetime.Singleton)
                 .AsSelf();
 
             CreateSceneCompositionRegistrar().Register(builder);
@@ -85,6 +92,14 @@ namespace GlassRefrain.Bootstrap {
             }
 
             return locomotionConfig.ToSettings();
+        }
+
+        private M0MemoryRuntimeTuningSettings CreateMemoryRuntimeTuningSettings() {
+            if (memoryRuntimeTuningConfig == null) {
+                throw new InvalidOperationException("GameplayLifetimeScope requires an assigned M0MemoryRuntimeTuningConfig.");
+            }
+
+            return memoryRuntimeTuningConfig.ToSettings();
         }
 
         private M0SceneCompositionRegistrar CreateSceneCompositionRegistrar() {
