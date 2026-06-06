@@ -34,6 +34,8 @@ namespace GlassRefrain.Bootstrap {
         [SerializeField, Required] private M0AnimationPresentationAdapter animationPresentationAdapter;
         [SerializeField, Required] private AnimancerPlayerAnimationDriver playerAnimationDriver;
         [SerializeField, Required] private AnimancerEnemyAnimationDriver enemyAnimationDriver;
+        [SerializeField] private MemoryRaycastProProbe memoryProbe;
+        [SerializeField] private MemoryFragment[] memoryFragments = new MemoryFragment[0];
 
         private INhemLogger _logger;
 
@@ -112,19 +114,7 @@ namespace GlassRefrain.Bootstrap {
                 _logger = container.Resolve<INhemLogger>();
                 playerInput?.SetLogger(_logger);
 
-                var memoryProbe = FindFirstObjectByType<MemoryRaycastProProbe>(FindObjectsInactive.Include);
-                if (memoryProbe != null) {
-                    container.Inject(memoryProbe);
-                } else {
-                    _logger?.LogWarning("[M0Bootstrap] MemoryRaycastProProbe not found in scene; memory interact debug probe unavailable.");
-                }
-
-                var memoryFragments = FindObjectsByType<MemoryFragment>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-                for (int i = 0; i < memoryFragments.Length; i++) {
-                    container.Inject(memoryFragments[i]);
-                }
-
-                _logger?.Log("[M0Bootstrap] Memory DI injected: probe=" + (memoryProbe != null) + " fragments=" + memoryFragments.Length);
+                InjectMemorySceneParticipants(container);
 
                 // Wire presentation adapters to tickHandler
                 if (tickHandler != null) {
@@ -146,6 +136,34 @@ namespace GlassRefrain.Bootstrap {
                     _logger?.LogWarning("[GameplayLifetimeScope] loopDriver is null in build callback");
                 }
             });
+        }
+
+        private int InjectMemorySceneParticipants(IObjectResolver container) {
+            if (memoryProbe != null) {
+                container.Inject(memoryProbe);
+            } else {
+                _logger?.LogWarning("[M0Bootstrap] MemoryRaycastProProbe reference is not assigned; memory interact debug probe unavailable.");
+            }
+
+            int injectedFragmentCount = 0;
+            if (memoryFragments != null) {
+                for (int i = 0; i < memoryFragments.Length; i++) {
+                    var fragment = memoryFragments[i];
+                    if (fragment == null) {
+                        continue;
+                    }
+
+                    container.Inject(fragment);
+                    injectedFragmentCount++;
+                }
+            }
+
+            _logger?.Log("[M0Bootstrap] Memory DI injected: probe=" + (memoryProbe != null) + " fragments=" + injectedFragmentCount);
+            if (injectedFragmentCount == 0) {
+                _logger?.LogWarning("[M0Bootstrap] No MemoryFragment references assigned; memory interaction fragments will not register.");
+            }
+
+            return injectedFragmentCount;
         }
     }
 

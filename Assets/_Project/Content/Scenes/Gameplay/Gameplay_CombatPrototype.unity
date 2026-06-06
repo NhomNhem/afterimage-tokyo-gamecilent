@@ -381,6 +381,9 @@ MonoBehaviour:
   animationPresentationAdapter: {fileID: 435937325}
   playerAnimationDriver: {fileID: 1932872215}
   enemyAnimationDriver: {fileID: 500000016}
+  memoryProbe: {fileID: 1932872218}
+  memoryFragments:
+  - {fileID: 1990882809}
 --- !u!1 &435937320
 GameObject:
   m_ObjectHideFlags: 0
