@@ -26,8 +26,8 @@ namespace GlassRefrain.Bootstrap {
         /// Current locomotion instance. Set by M0GameplayTickHandler via VContainer
         /// during M0 bootstrap. Never owns movement truth.
         /// </summary>
-        private M0PlayerLocomotion locomotion;
-        private INhemLogger logger;
+        private M0PlayerLocomotion _locomotion;
+        private INhemLogger _logger;
         private bool _wasMoving;
         private bool _warnedMissingLocomotion;
 
@@ -36,18 +36,18 @@ namespace GlassRefrain.Bootstrap {
         /// VContainer injection. Adapter only reads snapshots — never mutates truth.
         /// </summary>
         public void SetLocomotion(M0PlayerLocomotion loco) {
-            locomotion = loco;
+            _locomotion = loco;
         }
 
         public void SetLogger(INhemLogger log) {
-            logger = log;
+            _logger = log;
         }
 
         private void Update() {
-            if (locomotion == null) {
+            if (_locomotion == null) {
 #if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
                 if (!_warnedMissingLocomotion) {
-                    logger?.LogWarning("[M0Locomotion] Adapter has no locomotion instance; movement cannot be applied");
+                    _logger?.LogWarning("[M0Locomotion] Adapter has no locomotion instance; movement cannot be applied");
                     _warnedMissingLocomotion = true;
                 }
 #endif
@@ -63,7 +63,7 @@ namespace GlassRefrain.Bootstrap {
         /// Reads locomotion movement snapshot and applies it to player transform.
         /// </summary>
         private void ApplyLocomotionToTransform() {
-            LocomotionMovementSnapshot snapshot = locomotion.GetMovementSnapshot();
+            LocomotionMovementSnapshot snapshot = _locomotion.GetMovementSnapshot();
             Vector3 before = transform.position;
 
             // Apply position to transform
@@ -79,9 +79,9 @@ namespace GlassRefrain.Bootstrap {
             Vector3 after = transform.position;
             bool moved = (after - before).sqrMagnitude > 0.0000001f;
             if (moved && !_wasMoving) {
-                logger?.Log($"[M0Locomotion] Move applied: before=({before.x:F2},{before.y:F2},{before.z:F2}) after=({after.x:F2},{after.y:F2},{after.z:F2})");
+                _logger?.Log($"[M0Locomotion] Move applied: before=({before.x:F2},{before.y:F2},{before.z:F2}) after=({after.x:F2},{after.y:F2},{after.z:F2})");
             } else if (!moved && _wasMoving) {
-                logger?.Log("[M0Locomotion] Move stopped");
+                _logger?.Log("[M0Locomotion] Move stopped");
             }
             _wasMoving = moved;
 #endif
@@ -91,11 +91,11 @@ namespace GlassRefrain.Bootstrap {
         /// Public access to movement snapshot for external systems.
         /// </summary>
         public LocomotionMovementSnapshot GetMovementSnapshot() {
-            if (locomotion == null) {
-                logger?.LogError("[M0PlayerLocomotionAdapter] locomotion is null — was SetLocomotion() called before first Update?");
+            if (_locomotion == null) {
+                _logger?.LogError("[M0PlayerLocomotionAdapter] locomotion is null — was SetLocomotion() called before first Update?");
                 return default;
             }
-            return locomotion.GetMovementSnapshot();
+            return _locomotion.GetMovementSnapshot();
         }
     }
 }

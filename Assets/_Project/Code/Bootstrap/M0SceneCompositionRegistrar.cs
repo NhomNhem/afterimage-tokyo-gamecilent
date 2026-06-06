@@ -56,9 +56,7 @@ namespace GlassRefrain.Bootstrap {
         }
 
         private void RegisterSceneComponents(IContainerBuilder builder) {
-            if (_tickHandler != null) {
-                builder.RegisterComponent(_tickHandler);
-            }
+            if (_tickHandler != null) builder.RegisterComponent(_tickHandler);
 
             if (_targetableAdapter != null) {
                 builder.RegisterComponent(_targetableAdapter);

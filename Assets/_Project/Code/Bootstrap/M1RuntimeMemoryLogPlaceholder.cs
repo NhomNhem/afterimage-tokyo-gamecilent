@@ -8,28 +8,23 @@ namespace GlassRefrain.Bootstrap {
         private const string FallbackMemoryLabel = "Memory Fragment";
         private const string RevealedStateLabel = "Revealed";
 
-        private readonly List<string> _entries = new List<string>();
-        private readonly HashSet<string> _displayedOutcomeKeys = new HashSet<string>(StringComparer.Ordinal);
+        private readonly List<string> _entries = new();
+        private readonly HashSet<string> _displayedOutcomeKeys = new(StringComparer.Ordinal);
 
-        public IReadOnlyList<string> Entries {
-            get { return _entries; }
-        }
+        public IReadOnlyList<string> Entries => _entries;
 
         public bool TryAppendAcceptedInteraction(
             MemoryInteractionSnapshot interactionSnapshot,
             MemoryStateSnapshot memorySnapshot) {
-            if (interactionSnapshot.LastOutcome != MemoryInteractOutcome.Accepted) {
+            if (interactionSnapshot.LastOutcome != MemoryInteractOutcome.Accepted)
                 return false;
-            }
 
-            if (!memorySnapshot.LastResult.Accepted) {
+            if (!memorySnapshot.LastResult.Accepted)
                 return false;
-            }
 
             string outcomeKey = ResolveOutcomeKey(interactionSnapshot, memorySnapshot);
-            if (!_displayedOutcomeKeys.Add(outcomeKey)) {
+            if (!_displayedOutcomeKeys.Add(outcomeKey))
                 return false;
-            }
 
             _entries.Add(ResolveEntryLabel(interactionSnapshot, memorySnapshot) + ": " + RevealedStateLabel);
             return true;
@@ -56,17 +51,14 @@ namespace GlassRefrain.Bootstrap {
         private static string ResolveMemoryId(
             MemoryInteractionSnapshot interactionSnapshot,
             MemoryStateSnapshot memorySnapshot) {
-            if (!string.IsNullOrEmpty(memorySnapshot.MemoryId)) {
+            if (!string.IsNullOrEmpty(memorySnapshot.MemoryId))
                 return memorySnapshot.MemoryId;
-            }
 
-            if (!string.IsNullOrEmpty(memorySnapshot.LastResult.MemoryId)) {
+            if (!string.IsNullOrEmpty(memorySnapshot.LastResult.MemoryId))
                 return memorySnapshot.LastResult.MemoryId;
-            }
 
-            if (!string.IsNullOrEmpty(memorySnapshot.LastRequest.MemoryId)) {
+            if (!string.IsNullOrEmpty(memorySnapshot.LastRequest.MemoryId))
                 return memorySnapshot.LastRequest.MemoryId;
-            }
 
             return interactionSnapshot.NearbyFragmentId;
         }
