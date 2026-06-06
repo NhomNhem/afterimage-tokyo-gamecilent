@@ -1,0 +1,59 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/_Project/Code/Bootstrap/Editor/GameplayLifetimeScopeEditor.uss?fileID=7433441132597879392&amp;guid=819da399884662a43b935320bd51ec2f&amp;type=3#GameplayLifetimeScopeEditor"/>
+    <engine:VisualElement name="container" class="main-container">
+        <engine:VisualElement name="header" class="header">
+            <engine:Label name="title" text="Gameplay Lifetime Scope" class="title"/>
+            <engine:Label name="subtitle" text="M0 Gameplay Composition Root" class="subtitle"/>
+        </engine:VisualElement>
+        <engine:VisualElement name="content" class="content">
+            <engine:VisualElement name="core-adapters" class="section">
+                <engine:VisualElement name="core-adapters-header" class="section-header">
+                    <engine:Label name="core-adapters-title" text="Core Adapters" class="section-title"/>
+                    <engine:VisualElement name="core-adapters-divider" class="divider"/>
+                </engine:VisualElement>
+                <engine:VisualElement name="core-adapters-content" class="section-content">
+                    <editor:PropertyField name="tickHandler" binding-path="tickHandler" label="Tick Handler"/>
+                    <editor:PropertyField name="targetableAdapter" binding-path="targetableAdapter" label="Targetable Adapter"/>
+                    <editor:PropertyField name="loopDriver" binding-path="loopDriver" label="Enemy Intent Loop Driver"/>
+                    <editor:PropertyField name="playerInput" binding-path="playerInput" label="Direct Player Input"/>
+                    <editor:PropertyField name="visualFeedbackAdapter" binding-path="visualFeedbackAdapter" label="Combat Visual Feedback"/>
+                    <editor:PropertyField name="debugOverlayAdapter" binding-path="debugOverlayAdapter" label="Debug Overlay Adapter"/>
+                    <editor:PropertyField name="animationPresentationAdapter" binding-path="animationPresentationAdapter" label="Animation Presentation Adapter"/>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="animation-drivers" class="section">
+                <engine:VisualElement name="animation-drivers-header" class="section-header">
+                    <engine:Label name="animation-drivers-title" text="Animation Drivers" class="section-title"/>
+                    <engine:VisualElement name="animation-drivers-divider" class="divider"/>
+                </engine:VisualElement>
+                <engine:VisualElement name="animation-drivers-content" class="section-content">
+                    <editor:PropertyField name="playerAnimationDriver" binding-path="playerAnimationDriver" label="Player Animation Driver"/>
+                    <editor:PropertyField name="enemyAnimationDriver" binding-path="enemyAnimationDriver" label="Enemy Animation Driver"/>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="configs" class="section">
+                <engine:VisualElement name="configs-header" class="section-header">
+                    <engine:Label name="configs-title" text="Configs" class="section-title"/>
+                    <engine:VisualElement name="configs-divider" class="divider"/>
+                </engine:VisualElement>
+                <engine:VisualElement name="configs-content" class="section-content">
+                    <editor:PropertyField name="combatTimingConfig" binding-path="combatTimingConfig" label="Combat Timing Config"/>
+                    <editor:PropertyField name="locomotionConfig" binding-path="locomotionConfig" label="Locomotion Config"/>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="memory-system" class="section">
+                <engine:VisualElement name="memory-system-header" class="section-header">
+                    <engine:Label name="memory-system-title" text="Memory System" class="section-title"/>
+                    <engine:VisualElement name="memory-system-divider" class="divider"/>
+                </engine:VisualElement>
+                <engine:VisualElement name="memory-system-content" class="section-content">
+                    <editor:PropertyField name="memoryProbe" binding-path="memoryProbe" label="Memory Raycast Probe"/>
+                    <editor:PropertyField name="memoryFragments" binding-path="memoryFragments" label="Memory Fragments"/>
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="footer" class="footer">
+            <engine:Label name="footer-text" text="Manual VContainer composition for M0 Gameplay" class="footer-text"/>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

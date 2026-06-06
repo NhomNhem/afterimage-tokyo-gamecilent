@@ -1,0 +1,113 @@
+/* GameplayLifetimeScope Editor Styles */
+
+.main-container {
+    flex-direction: column;
+    padding: 12px;
+    background-color: #232323;
+    border-radius: 4px;
+}
+
+/* Header Styles */
+.header {
+    flex-direction: column;
+    padding: 16px;
+    margin-bottom: 12px;
+    background-color: #3c3c3c;
+    border-radius: 4px;
+    border-left-width: 4px;
+    border-left-color: #4a90e2;
+    border-left-style: solid;
+}
+
+.title {
+    font-size: 20px;
+    -unity-font-style-and-weight: bold;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #b0b0b0;
+    -unity-font-style: italic;
+}
+
+/* Content Container */
+.content {
+    flex-direction: column;
+}
+
+/* Section Styles */
+.section {
+    flex-direction: column;
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.section-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 12px;
+    background-color: #383838;
+}
+
+.section-title {
+    font-size: 14px;
+    -unity-font-style-and-weight: 600;
+    color: #e0e0e0;
+    margin-right: 8px;
+}
+
+.divider {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #555555;
+}
+
+.section-content {
+    flex-direction: column;
+    padding: 12px;
+}
+
+/* Property Field Styles */
+PropertyField {
+    margin-bottom: 4px;
+}
+
+PropertyField > Label {
+    color: #c0c0c0;
+    font-size: 12px;
+    -unity-font-style-and-weight: 500;
+}
+
+/* Footer Styles */
+.footer {
+    flex-direction: row;
+    justify-content: center;
+    padding: 12px;
+    margin-top: 8px;
+    background-color: #2d2d2d;
+    border-radius: 4px;
+}
+
+.footer-text {
+    font-size: 11px;
+    color: #808080;
+    -unity-font-style: italic;
+}
+
+/* Hover Effects */
+.section:hover {
+    background-color: #323232;
+}
+
+.section-header:hover {
+    background-color: #404040;
+}
+
+/* Focus States */
+PropertyField:focus-within > Label {
+    color: #4a90e2;
+}

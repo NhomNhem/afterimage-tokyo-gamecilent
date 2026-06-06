@@ -25,7 +25,6 @@ namespace GlassRefrain.Bootstrap {
 
         private float _loopTimer;
         private int _loopPhase; // 0=Idle, 1=Telegraph, 2=Commit, 3=Active, 4=Recovery
-        private bool _initialized;
         private bool _isForcedParryEligibleActive;
         private float _forcedActiveRemainingSeconds;
 
@@ -56,7 +55,6 @@ namespace GlassRefrain.Bootstrap {
             _model?.EnterIdle(BuildPhaseLabel("Idle", "LoopIdle", idleDuration));
             _loopTimer = 0f;
             _loopPhase = 0;
-            _initialized = true;
         }
 
         public void Tick(float deltaTime) {
@@ -69,7 +67,7 @@ namespace GlassRefrain.Bootstrap {
 #if GR_ENEMY_DEBUG
                 _debugTickLogTimer += deltaTime;
                 if (_debugTickLogTimer >= 1f) {
-                    _logger?.Log($"[M0EnemyLoop] Tick phase=ForcedActive timer={_forcedActiveRemainingSeconds:F2} dt={deltaTime:F3} initialized={_initialized}");
+                    _logger?.Log($"[M0EnemyLoop] Tick phase=ForcedActive timer={_forcedActiveRemainingSeconds:F2} dt={deltaTime:F3}");
                     _debugTickLogTimer = 0f;
                 }
 #endif
@@ -91,7 +89,7 @@ namespace GlassRefrain.Bootstrap {
 #if GR_ENEMY_DEBUG
             _debugTickLogTimer += deltaTime;
             if (_debugTickLogTimer >= 1f) {
-                _logger?.Log($"[M0EnemyLoop] Tick phase={GetPhaseName(_loopPhase)} timer={_loopTimer:F2} dt={deltaTime:F3} initialized={_initialized}");
+                _logger?.Log($"[M0EnemyLoop] Tick phase={GetPhaseName(_loopPhase)} timer={_loopTimer:F2} dt={deltaTime:F3}");
                 _debugTickLogTimer = 0f;
             }
 #endif
