@@ -1,24 +1,26 @@
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace GlassRefrain.Presentation
 {
-    public class M0CombatVisualFeedbackAdapter : MonoBehaviour
+    public class M0CombatVisualFeedbackAdapter : SerializedMonoBehaviour
     {
         [Header("Renderers")]
-        public Renderer playerRenderer;
-        public Renderer enemyRenderer;
+        [OdinSerialize] private Renderer playerRenderer;
+        [OdinSerialize] private Renderer enemyRenderer;
 
         [Header("Feedback Materials")]
-        public Material playerOriginalMaterial;
-        public Material playerLightAttackMaterial;
-        public Material playerHeavyAttackMaterial;
-        public Material playerParryMaterial;
-        public Material playerCounterMaterial;
+        [OdinSerialize] private Material playerOriginalMaterial;
+        [OdinSerialize] private Material playerLightAttackMaterial;
+        [OdinSerialize] private Material playerHeavyAttackMaterial;
+        [OdinSerialize] private Material playerParryMaterial;
+        [OdinSerialize] private Material playerCounterMaterial;
 
-        public Material enemyOriginalMaterial;
-        public Material enemyTelegraphMaterial;
-        public Material enemyActiveMaterial;
-        public Material enemyRecoveryMaterial;
+        [OdinSerialize] private Material enemyOriginalMaterial;
+        [OdinSerialize] private Material enemyTelegraphMaterial;
+        [OdinSerialize] private Material enemyActiveMaterial;
+        [OdinSerialize] private Material enemyRecoveryMaterial;
 
         private Material playerCurrentMaterial;
         private Material enemyCurrentMaterial;

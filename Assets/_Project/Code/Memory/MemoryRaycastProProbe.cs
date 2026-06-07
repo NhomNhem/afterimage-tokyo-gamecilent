@@ -11,10 +11,13 @@ namespace GlassRefrain.Memory {
         [SerializeField, Min(0.01f)] private float fallbackRadius = 2.25f;
 
         private INhemLogger _logger;
+        private MemoryInteractionService _memoryInteractionService;
         private bool _hasLoggedMissingInteractAction;
+
         [Inject]
-        public void Construct(INhemLogger logger) {
+        public void Construct(INhemLogger logger, MemoryInteractionService memoryInteractionService) {
             _logger = logger;
+            _memoryInteractionService = memoryInteractionService;
         }
 
         private void Update() {
@@ -32,18 +35,25 @@ namespace GlassRefrain.Memory {
                 return;
             }
 
+            var serviceSnapshot = _memoryInteractionService != null
+                ? _memoryInteractionService.Snapshot
+                : new MemoryInteractionSnapshot(string.Empty, false, false, MemoryInteractOutcome.None, "MemoryInteractionService unavailable");
+            var colliderSnapshot = TryReadColliderSnapshot();
+            LogProbeSnapshot(serviceSnapshot, colliderSnapshot);
+        }
+
+        private MemoryProbeColliderSnapshot TryReadColliderSnapshot() {
             if (rangeDetector == null) {
                 rangeDetector = GetComponent<RangeDetector>();
                 if (rangeDetector == null) {
-                    _logger?.LogWarning("[M1MemoryDebug] Interact pressed but RangeDetector is missing.");
-                    return;
+                    _logger?.LogWarning("[M1MemoryDebug] Interact pressed but RangeDetector is missing; service eligibility remains authoritative.");
+                    return MemoryProbeColliderSnapshot.Unavailable("RangeDetectorMissing");
                 }
             }
 
             rangeDetector.Radius = fallbackRadius;
             if (!rangeDetector.Cast()) {
-                _logger?.Log("[M1MemoryDebug] hitName=None distance=-1.00 layer=None withinRadius=False");
-                return;
+                return MemoryProbeColliderSnapshot.Unavailable("NoColliderHit");
             }
 
             Collider selectedCollider = null;
@@ -71,8 +81,7 @@ namespace GlassRefrain.Memory {
             }
 
             if (selectedCollider == null) {
-                _logger?.Log("[M1MemoryDebug] hitName=None distance=-1.00 layer=None withinRadius=False");
-                return;
+                return MemoryProbeColliderSnapshot.Unavailable("NoMemoryFragmentCollider");
             }
 
             var layerName = LayerMask.LayerToName(selectedCollider.gameObject.layer);
@@ -82,12 +91,69 @@ namespace GlassRefrain.Memory {
 
             float distance = Mathf.Sqrt(nearestSqrDistance);
             float allowedRadius = selectedFragment != null ? selectedFragment.InteractionRadius : fallbackRadius;
-
             bool withinRadius = distance <= allowedRadius;
-            _logger?.Log("[M1MemoryDebug] hitName=" + selectedCollider.gameObject.name +
-                         " distance=" + distance.ToString("F2") +
-                         " layer=" + layerName +
-                         " withinRadius=" + withinRadius);
+
+            return new MemoryProbeColliderSnapshot(
+                true,
+                selectedCollider.gameObject.name,
+                distance,
+                layerName,
+                withinRadius,
+                string.Empty);
+        }
+
+        private void LogProbeSnapshot(MemoryInteractionSnapshot serviceSnapshot, MemoryProbeColliderSnapshot colliderSnapshot) {
+            string serviceFragmentId = string.IsNullOrEmpty(serviceSnapshot.NearbyFragmentId)
+                ? "None"
+                : serviceSnapshot.NearbyFragmentId;
+            string colliderHitName = string.IsNullOrEmpty(colliderSnapshot.HitName)
+                ? "None"
+                : colliderSnapshot.HitName;
+            string colliderLayer = string.IsNullOrEmpty(colliderSnapshot.LayerName)
+                ? "None"
+                : colliderSnapshot.LayerName;
+            string colliderReason = string.IsNullOrEmpty(colliderSnapshot.Reason)
+                ? "None"
+                : colliderSnapshot.Reason;
+
+            _logger?.Log("[M1MemoryDebug] serviceEligible=" + serviceSnapshot.HasEligibleFragment +
+                         " serviceFragmentId=" + serviceFragmentId +
+                         " serviceOutcome=" + serviceSnapshot.LastOutcome +
+                         " serviceReason=" + serviceSnapshot.LastReason +
+                         " colliderAvailable=" + colliderSnapshot.Available +
+                         " colliderHitName=" + colliderHitName +
+                         " colliderDistance=" + colliderSnapshot.Distance.ToString("F2") +
+                         " colliderLayer=" + colliderLayer +
+                         " colliderWithinRadius=" + colliderSnapshot.WithinRadius +
+                         " colliderReason=" + colliderReason);
+        }
+
+        private readonly struct MemoryProbeColliderSnapshot {
+            public MemoryProbeColliderSnapshot(
+                bool available,
+                string hitName,
+                float distance,
+                string layerName,
+                bool withinRadius,
+                string reason) {
+                Available = available;
+                HitName = hitName ?? string.Empty;
+                Distance = distance;
+                LayerName = layerName ?? string.Empty;
+                WithinRadius = withinRadius;
+                Reason = reason ?? string.Empty;
+            }
+
+            public bool Available { get; }
+            public string HitName { get; }
+            public float Distance { get; }
+            public string LayerName { get; }
+            public bool WithinRadius { get; }
+            public string Reason { get; }
+
+            public static MemoryProbeColliderSnapshot Unavailable(string reason) {
+                return new MemoryProbeColliderSnapshot(false, string.Empty, -1f, string.Empty, false, reason);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using GlassRefrain.Code.Shared.DI;
+using GlassRefrain.Code.Shared.Extentions;
 using GlassRefrain.Combat;
 using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
@@ -19,7 +20,7 @@ namespace GlassRefrain.Bootstrap {
     /// Resolves core gameplay skeleton services and wires runtime drivers.
     /// </summary>
     [LifetimeScopeFor<IGameplayLifetimeScope>]
-    public sealed class GameplayLifetimeScope : LifetimeScope {
+    public sealed class GameplayLifetimeScope : SerializedLifetimeScope {
         [TabGroup("Gameplay Scope", "Core Adapters")]
         [SerializeField, Required] private M0GameplayTickHandler tickHandler;
         [SerializeField, Required] private M0TargetableSceneAdapter targetableAdapter;

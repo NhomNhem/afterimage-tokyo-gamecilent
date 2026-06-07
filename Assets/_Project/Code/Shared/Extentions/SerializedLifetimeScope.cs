@@ -1,22 +1,22 @@
 using Sirenix.Serialization;
 using UnityEngine;
 using VContainer.Unity;
-using Sirenix.OdinInspector;
 
 namespace GlassRefrain.Code.Shared.Extentions {
-    public class SerializedLifetimeScope : LifetimeScope, ISerializationCallbackReceiver {
-        [SerializeField, HideInInspector]
-        private SerializationData _serializationData;
+    public abstract class SerializedLifetimeScope : LifetimeScope, ISerializationCallbackReceiver {
+        [SerializeField, HideInInspector] private SerializationData serializationData;
 
-        SerializationData ISupportSerializationCallbackReceiver.SerializationData
-        {
-            get => this.serializationData;
-            set => this.serializationData = value;
+        void ISerializationCallbackReceiver.OnBeforeSerialize() {
+            this.OnBeforeSerialize();
+            UnitySerializationUtility.SerializeUnityObject(this, ref this.serializationData);
         }
 
-        public void OnBeforeSerialize() {
+        void ISerializationCallbackReceiver.OnAfterDeserialize() {
+            UnitySerializationUtility.DeserializeUnityObject(this, ref this.serializationData);
+            this.OnAfterDeserialize();
         }
-        public void OnAfterDeserialize() {
-        }
+
+        protected virtual void OnBeforeSerialize() { }
+        protected virtual void OnAfterDeserialize() { }
     }
 }
