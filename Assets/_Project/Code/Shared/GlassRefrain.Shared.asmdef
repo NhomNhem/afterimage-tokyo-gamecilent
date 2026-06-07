@@ -1,15 +1,19 @@
 {
-  "name": "GlassRefrain.Shared",
-  "references": [
-    "NhemDangFugBixs.Attributes"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "GlassRefrain.Shared",
+    "rootNamespace": "",
+    "references": [
+        "NhemDangFugBixs.Attributes",
+        "VContainer",
+        "VContainer.Editor",
+        "Sirenix.OdinInspector.Modules.UnityMathematics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

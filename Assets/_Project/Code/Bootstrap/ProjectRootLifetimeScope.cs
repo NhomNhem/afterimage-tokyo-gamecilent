@@ -1,4 +1,4 @@
-using _Project.Code.Shared.DI;
+using GlassRefrain.Code.Shared.DI;
 using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
 using NhemDangFugBixs.VContainer;

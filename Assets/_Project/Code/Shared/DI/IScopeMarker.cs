@@ -1,4 +1,4 @@
-﻿namespace _Project.Code.Shared.DI {
+﻿namespace GlassRefrain.Code.Shared.DI {
     /// <summary>
     /// Marker base for all DI scope markers.
     /// Scope markers are conceptual DI boundaries, not runtime services.

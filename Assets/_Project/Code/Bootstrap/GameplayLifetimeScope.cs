@@ -1,7 +1,6 @@
 using System;
-using _Project.Code.Shared.DI;
+using GlassRefrain.Code.Shared.DI;
 using GlassRefrain.Combat;
-using GlassRefrain.Core;
 using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
 using GlassRefrain.Memory;
@@ -52,54 +51,15 @@ namespace GlassRefrain.Bootstrap {
             builder.Register<INhemLogger, NhemNullLogger>(Lifetime.Singleton);
 #endif
 
-            builder.Register(resolver => new M0CombatCore(
-                    CreateCombatTimingSettings(),
-                    resolver.Resolve<INhemLogger>()),
-                Lifetime.Singleton)
-                .As<IM0CombatCore>()
-                .AsSelf();
-
-            builder.Register(_ => new M0PlayerLocomotion(CreateLocomotionSettings()), Lifetime.Singleton)
-                .As<IM0PlayerLocomotion>()
-                .AsSelf();
-
-            M0MemoryRuntimeTuningSettings memoryRuntimeTuningSettings = CreateMemoryRuntimeTuningSettings();
-
-            builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton)
-                .As<IM0MemoryState>()
-                .AsSelf();
-            builder.Register(_ => new M0MemoryVFXResponse(
-                    memoryRuntimeTuningSettings.RevealFeedbackDurationSeconds,
-                    memoryRuntimeTuningSettings.RevealFeedbackCooldownSeconds,
-                    memoryRuntimeTuningSettings.RevealFeedbackIntensityLabel),
-                Lifetime.Singleton)
-                .AsSelf();
-
+            CreateRuntimeServiceCompositionRegistrar().Register(builder);
             CreateSceneCompositionRegistrar().Register(builder);
         }
 
-        private M0CombatTimingSettings CreateCombatTimingSettings() {
-            if (combatTimingConfig == null) {
-                throw new InvalidOperationException("GameplayLifetimeScope requires an assigned M0CombatTimingConfig.");
-            }
-
-            return combatTimingConfig.ToSettings();
-        }
-
-        private M0LocomotionSettings CreateLocomotionSettings() {
-            if (locomotionConfig == null) {
-                throw new InvalidOperationException("GameplayLifetimeScope requires an assigned M0LocomotionConfig.");
-            }
-
-            return locomotionConfig.ToSettings();
-        }
-
-        private M0MemoryRuntimeTuningSettings CreateMemoryRuntimeTuningSettings() {
-            if (memoryRuntimeTuningConfig == null) {
-                throw new InvalidOperationException("GameplayLifetimeScope requires an assigned M0MemoryRuntimeTuningConfig.");
-            }
-
-            return memoryRuntimeTuningConfig.ToSettings();
+        private M0RuntimeServiceCompositionRegistrar CreateRuntimeServiceCompositionRegistrar() {
+            return new M0RuntimeServiceCompositionRegistrar(
+                combatTimingConfig,
+                locomotionConfig,
+                memoryRuntimeTuningConfig);
         }
 
         private M0SceneCompositionRegistrar CreateSceneCompositionRegistrar() {

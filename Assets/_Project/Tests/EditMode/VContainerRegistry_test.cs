@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using UnityEngine;
 using VContainer;
+using GlassRefrain.Bootstrap;
 using GlassRefrain.Core;
 using GlassRefrain.Combat;
 using GlassRefrain.Input;
@@ -22,27 +24,17 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayScope_CanResolveM0Skeletons() {
             // Given
             var builder = new ContainerBuilder();
-            var memoryRuntimeTuningSettings = new M0MemoryRuntimeTuningSettings(
-                "M0RevealCandidate",
-                0.25f,
-                0f,
-                "standard");
+            var runtimeServiceRegistrar = new M0RuntimeServiceCompositionRegistrar(
+                ScriptableObject.CreateInstance<M0CombatTimingConfig>(),
+                ScriptableObject.CreateInstance<M0LocomotionConfig>(),
+                ScriptableObject.CreateInstance<M0MemoryRuntimeTuningConfig>());
 
             // When (Manual registration as seen in GameplayLifetimeScope)
-            builder.Register(_ => new M0CombatTimingSettings(0.12f, 0.18f, 0.25f, 0.08f, 0.18f, 0.25f, 0.08f, 0.16f, 0.25f, 0.5f, 0.25f), Lifetime.Singleton);
-            builder.Register(_ => new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 1.5f, 10.0f, 0.2f), Lifetime.Singleton);
             builder.Register<INhemLogger, NhemNullLogger>(Lifetime.Singleton);
-            builder.Register<M0CombatCore>(Lifetime.Singleton);
-            builder.Register<M0PlayerLocomotion>(Lifetime.Singleton);
+            runtimeServiceRegistrar.Register(builder);
             builder.Register<M0TargetContext>(Lifetime.Singleton);
             builder.Register(_ => new M0HealthDamageReactionModel(), Lifetime.Singleton);
             builder.Register<M0EnemyIntentModel>(Lifetime.Singleton);
-            builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton);
-            builder.Register(_ => new M0MemoryVFXResponse(
-                    memoryRuntimeTuningSettings.RevealFeedbackDurationSeconds,
-                    memoryRuntimeTuningSettings.RevealFeedbackCooldownSeconds,
-                    memoryRuntimeTuningSettings.RevealFeedbackIntensityLabel),
-                Lifetime.Singleton);
             builder.Register<ITargetableRegistry, M0TargetableRegistry>(Lifetime.Singleton);
             builder.Register<M0InputRouter>(Lifetime.Singleton);
 
@@ -57,6 +49,9 @@ namespace GlassRefrain.Tests.EditMode {
                 Assert.That(container.Resolve<M0MemoryVFXResponse>(), Is.Not.Null, "M0MemoryVFXResponse failed to resolve");
                 Assert.That(container.Resolve<ITargetableRegistry>(), Is.Not.Null, "ITargetableRegistry failed to resolve");
                 Assert.That(container.Resolve<M0InputRouter>(), Is.Not.Null, "M0InputRouter failed to resolve");
+                Assert.That(container.Resolve<IM0CombatCore>(), Is.SameAs(container.Resolve<M0CombatCore>()));
+                Assert.That(container.Resolve<IM0PlayerLocomotion>(), Is.SameAs(container.Resolve<M0PlayerLocomotion>()));
+                Assert.That(container.Resolve<IM0MemoryState>(), Is.SameAs(container.Resolve<M0MemoryState>()));
             }
         }
 

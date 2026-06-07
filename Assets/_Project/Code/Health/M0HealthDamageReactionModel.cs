@@ -1,5 +1,5 @@
 using System;
-using _Project.Code.Shared.DI;
+using GlassRefrain.Code.Shared.DI;
 using GlassRefrain.Core;
 using NhemDangFugBixs.Attributes;
 

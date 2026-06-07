@@ -2,7 +2,7 @@
 using GlassRefrain.Core;
 using Sirenix.OdinInspector;
 
-namespace _Project.Tests.Others {
+namespace GlassRefrain.Tests.Others {
     #region Sample001
     public class SampleTest {
         public delegate void EnemyIntentChangedHandler(EnemyIntentSnapshot snapshot);

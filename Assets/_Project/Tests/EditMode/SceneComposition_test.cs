@@ -12,6 +12,7 @@ namespace GlassRefrain.Tests.EditMode {
     /// </summary>
     public class SceneComposition_test {
         private const string GameplayLifetimeScopePath = "Assets/_Project/Code/Bootstrap/GameplayLifetimeScope.cs";
+        private const string M0RuntimeServiceCompositionRegistrarPath = "Assets/_Project/Code/Bootstrap/M0RuntimeServiceCompositionRegistrar.cs";
         private const string M0SceneCompositionRegistrarPath = "Assets/_Project/Code/Bootstrap/M0SceneCompositionRegistrar.cs";
         private const string GameplayLifetimeScopeEditorPath = "Assets/_Project/Code/Bootstrap/Editor/GameplayLifetimeScopeEditor.cs";
         private const string GameplayLifetimeScopeEditorUxmlPath = "Assets/_Project/Code/Bootstrap/Editor/GameplayLifetimeScopeEditor.uxml";
@@ -99,10 +100,14 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void GameplayLifetimeScope_UsesExplicitCombatTimingConfigComposition() {
             string source = File.ReadAllText(GameplayLifetimeScopePath);
+            string runtimeRegistrar = File.ReadAllText(M0RuntimeServiceCompositionRegistrarPath);
 
             Assert.That(source, Does.Contain("RegisterGeneratedFor<IGameplayLifetimeScope>()"));
             Assert.That(source, Does.Contain("M0CombatTimingConfig combatTimingConfig"));
-            Assert.That(source, Does.Contain("combatTimingConfig.ToSettings()"));
+            Assert.That(source, Does.Contain("CreateRuntimeServiceCompositionRegistrar().Register(builder)"));
+            Assert.That(source, Does.Not.Contain("combatTimingConfig.ToSettings()"));
+            Assert.That(runtimeRegistrar, Does.Contain("_combatTimingConfig.ToSettings()"));
+            Assert.That(runtimeRegistrar, Does.Contain("M0RuntimeServiceCompositionRegistrar requires an assigned M0CombatTimingConfig."));
             Assert.That(source, Does.Not.Contain("attackStartupSeconds: 0.14f"));
             Assert.That(source, Does.Not.Contain("attackActiveSeconds: 0.20f"));
             Assert.That(source, Does.Not.Contain("attackRecoverySeconds: 0.26f"));
@@ -118,7 +123,15 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(source, Does.Not.Contain("FindObjectOfType"));
             Assert.That(source, Does.Not.Contain("FindFirstObjectByType"));
             Assert.That(source, Does.Not.Contain("FindAnyObjectByType"));
+            Assert.That(source, Does.Not.Contain("FindObjectsByType"));
             Assert.That(source, Does.Not.Contain("ServiceLocator"));
+            Assert.That(runtimeRegistrar, Does.Not.Contain("Resources.Load"));
+            Assert.That(runtimeRegistrar, Does.Not.Contain("FindObjectOfType"));
+            Assert.That(runtimeRegistrar, Does.Not.Contain("FindFirstObjectByType"));
+            Assert.That(runtimeRegistrar, Does.Not.Contain("FindAnyObjectByType"));
+            Assert.That(runtimeRegistrar, Does.Not.Contain("FindObjectsByType"));
+            Assert.That(runtimeRegistrar, Does.Not.Contain("ServiceLocator"));
+            Assert.That(runtimeRegistrar, Does.Not.Contain("Debug.Log"));
         }
 
         [Test]
@@ -146,16 +159,21 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void GameplayLifetimeScope_UsesExplicitLocomotionConfigComposition() {
             string source = File.ReadAllText(GameplayLifetimeScopePath);
+            string runtimeRegistrar = File.ReadAllText(M0RuntimeServiceCompositionRegistrarPath);
 
             Assert.That(source, Does.Contain("CreateSceneCompositionRegistrar().Register(builder)"));
+            Assert.That(source, Does.Contain("CreateRuntimeServiceCompositionRegistrar().Register(builder)"));
             Assert.That(source, Does.Contain("M0LocomotionConfig locomotionConfig"));
-            Assert.That(source, Does.Contain("locomotionConfig.ToSettings()"));
+            Assert.That(source, Does.Not.Contain("locomotionConfig.ToSettings()"));
+            Assert.That(runtimeRegistrar, Does.Contain("_locomotionConfig.ToSettings()"));
+            Assert.That(runtimeRegistrar, Does.Contain("M0RuntimeServiceCompositionRegistrar requires an assigned M0LocomotionConfig."));
             Assert.That(source, Does.Not.Contain("new M0LocomotionSettings(5.0f"));
             Assert.That(source, Does.Not.Contain("new M0LocomotionSettings(5.0"));
             Assert.That(source, Does.Not.Contain("Resources.Load"));
             Assert.That(source, Does.Not.Contain("FindObjectOfType"));
             Assert.That(source, Does.Not.Contain("FindFirstObjectByType"));
             Assert.That(source, Does.Not.Contain("FindAnyObjectByType"));
+            Assert.That(source, Does.Not.Contain("FindObjectsByType"));
             Assert.That(source, Does.Not.Contain("ServiceLocator"));
         }
 
@@ -198,16 +216,19 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void GameplayLifetimeScope_UsesExplicitMemoryRuntimeTuningConfigComposition() {
             string source = File.ReadAllText(GameplayLifetimeScopePath);
+            string runtimeRegistrar = File.ReadAllText(M0RuntimeServiceCompositionRegistrarPath);
 
             Assert.That(source, Does.Contain("RegisterGeneratedFor<IGameplayLifetimeScope>()"));
             Assert.That(source, Does.Contain("M0MemoryRuntimeTuningConfig memoryRuntimeTuningConfig"));
-            Assert.That(source, Does.Contain("CreateMemoryRuntimeTuningSettings()"));
-            Assert.That(source, Does.Contain("memoryRuntimeTuningConfig.ToSettings()"));
-            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.DefaultRevealCandidateId"));
-            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackDurationSeconds"));
-            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackCooldownSeconds"));
-            Assert.That(source, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackIntensityLabel"));
-            Assert.That(source, Does.Contain("GameplayLifetimeScope requires an assigned M0MemoryRuntimeTuningConfig."));
+            Assert.That(source, Does.Contain("CreateRuntimeServiceCompositionRegistrar().Register(builder)"));
+            Assert.That(source, Does.Not.Contain("CreateMemoryRuntimeTuningSettings()"));
+            Assert.That(source, Does.Not.Contain("memoryRuntimeTuningConfig.ToSettings()"));
+            Assert.That(runtimeRegistrar, Does.Contain("_memoryRuntimeTuningConfig.ToSettings()"));
+            Assert.That(runtimeRegistrar, Does.Contain("memoryRuntimeTuningSettings.DefaultRevealCandidateId"));
+            Assert.That(runtimeRegistrar, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackDurationSeconds"));
+            Assert.That(runtimeRegistrar, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackCooldownSeconds"));
+            Assert.That(runtimeRegistrar, Does.Contain("memoryRuntimeTuningSettings.RevealFeedbackIntensityLabel"));
+            Assert.That(runtimeRegistrar, Does.Contain("M0RuntimeServiceCompositionRegistrar requires an assigned M0MemoryRuntimeTuningConfig."));
             Assert.That(source, Does.Not.Contain("new M0MemoryState(\"M0RevealCandidate\")"));
             Assert.That(source, Does.Not.Contain("new M0MemoryVFXResponse(0.25f, 0f, \"standard\")"));
             Assert.That(source, Does.Not.Contain("Resources.Load"));
@@ -217,6 +238,39 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(source, Does.Not.Contain("FindObjectsByType"));
             Assert.That(source, Does.Not.Contain("ServiceLocator"));
             Assert.That(source, Does.Not.Contain("Debug.Log"));
+        }
+
+        [Test]
+        public void RuntimeServiceCompositionRegistrar_PreservesManualRegistrationParity() {
+            string source = File.ReadAllText(M0RuntimeServiceCompositionRegistrarPath);
+
+            Assert.That(source, Does.Contain("public sealed class M0RuntimeServiceCompositionRegistrar"));
+            Assert.That(source, Does.Contain("public void Register(IContainerBuilder builder)"));
+            Assert.That(source, Does.Contain("builder.Register(resolver => new M0CombatCore("));
+            Assert.That(source, Does.Contain("resolver.Resolve<INhemLogger>()"));
+            Assert.That(source, Does.Contain(".As<IM0CombatCore>()"));
+            Assert.That(source, Does.Contain("builder.Register(_ => new M0PlayerLocomotion(locomotionSettings), Lifetime.Singleton)"));
+            Assert.That(source, Does.Contain(".As<IM0PlayerLocomotion>()"));
+            Assert.That(source, Does.Contain("builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton)"));
+            Assert.That(source, Does.Contain(".As<IM0MemoryState>()"));
+            Assert.That(source, Does.Contain("builder.Register(_ => new M0MemoryVFXResponse("));
+            Assert.That(source, Does.Contain("Lifetime.Singleton"));
+            Assert.That(source, Does.Contain(".AsSelf()"));
+        }
+
+        [Test]
+        public void RuntimeServiceCompositionRegistrar_ConstructsOnlyAndDoesNotOwnGameplayTruth() {
+            string source = File.ReadAllText(M0RuntimeServiceCompositionRegistrarPath);
+
+            Assert.That(source, Does.Not.Contain("RequestAction("));
+            Assert.That(source, Does.Not.Contain("TryRequest"));
+            Assert.That(source, Does.Not.Contain("ConsumeInputIntent("));
+            Assert.That(source, Does.Not.Contain("TryInteract"));
+            Assert.That(source, Does.Not.Contain("IntakeRevealRequest("));
+            Assert.That(source, Does.Not.Contain("EvaluateRequestedReveal("));
+            Assert.That(source, Does.Not.Contain("OnAcceptedReveal("));
+            Assert.That(source, Does.Not.Contain("OnPlaybackStarted("));
+            Assert.That(source, Does.Not.Contain("OnPlaybackComplete("));
         }
 
         [Test]
@@ -244,6 +298,20 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(source, Does.Not.Contain("RequestAction("));
             Assert.That(source, Does.Not.Contain("ConsumeInputIntent("));
             Assert.That(source, Does.Not.Contain("TryInteract"));
+        }
+
+        [Test]
+        public void GameplayLifetimeScope_ReadsAsHighLevelCompositionOrder() {
+            string source = File.ReadAllText(GameplayLifetimeScopePath);
+
+            Assert.That(source, Does.Contain("RegisterGeneratedFor<IGameplayLifetimeScope>()"));
+            Assert.That(source, Does.Contain("Register<INhemLogger"));
+            Assert.That(source, Does.Contain("CreateRuntimeServiceCompositionRegistrar().Register(builder)"));
+            Assert.That(source, Does.Contain("CreateSceneCompositionRegistrar().Register(builder)"));
+            Assert.That(source, Does.Not.Contain("new M0CombatCore"));
+            Assert.That(source, Does.Not.Contain("new M0PlayerLocomotion"));
+            Assert.That(source, Does.Not.Contain("new M0MemoryState"));
+            Assert.That(source, Does.Not.Contain("new M0MemoryVFXResponse"));
         }
 
         [Test]
