@@ -21,7 +21,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "VContainer",
-        "VContainer.Editor"
+        "VContainer.Editor",
+        "Sirenix.Serialization",
+        "Sirenix.OdinInspector.Modules.UnityMathematics"
     ],
     "includePlatforms": [
         "Editor"
@@ -30,7 +32,8 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "nunit.framework.dll"
+        "nunit.framework.dll",
+        "Sirenix.Serialization.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

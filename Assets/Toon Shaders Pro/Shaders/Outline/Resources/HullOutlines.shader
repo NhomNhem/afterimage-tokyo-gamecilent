@@ -68,7 +68,7 @@ Shader "Hidden/ToonShadersPro/URP/HullOutlines"
 				UNITY_SETUP_INSTANCE_ID(v);
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-
+                
 				float4 positionOS = v.positionOS;
 				positionOS.xyz += normalize(v.normalOS) * _OutlineThickness;
                 positionCS = TransformObjectToHClip(positionOS.xyz);

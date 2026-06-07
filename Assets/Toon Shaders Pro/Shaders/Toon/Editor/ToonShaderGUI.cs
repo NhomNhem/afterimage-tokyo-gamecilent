@@ -67,11 +67,11 @@ namespace ToonShadersPro.URP
         MaterialProperty diffuseThresholdsProp = null;
         const string diffuseThresholdsName = "_DiffuseThresholds";
         const string diffuseThresholdsLabel = "Diffuse Thresholds";
-        const string diffuseThresholdsTooltip = "Thresholds which determine position of lighting cutoff for diffuse light.\n" +
-            "\nThe internal lighting values run from -1 to +1, and then for the output brightness: " +
-            "\nx = Raw light value where darkness ends." +
-            "\ny = Raw light value where full brightness starts." +
-            "\nValues between x and y use a smoothstep falloff to calculate final diffuse between fully shadow and fully lit.\n" +
+        const string diffuseThresholdsTooltip = "Thresholds which determine position of lighting cutoff for diffuse light.\n" + 
+            "\nThe internal lighting values run from -1 to +1, and then for the output brightness: " + 
+            "\nx = Raw light value where darkness ends." + 
+            "\ny = Raw light value where full brightness starts." + 
+            "\nValues between x and y use a smoothstep falloff to calculate final diffuse between fully shadow and fully lit.\n" + 
             "\nUsing the 'second threshold' option performs two thresholding steps and introduces a 'middle tint'.";
 
         MaterialProperty smoothnessProp = null;
@@ -459,7 +459,6 @@ namespace ToonShadersPro.URP
                                 material.SetOverrideTag("RenderType", "Opaque");
                             }
 
-
                             break;
                         }
                     case SurfaceType.Transparent:
@@ -482,7 +481,7 @@ namespace ToonShadersPro.URP
                             break;
                         }
                 }
-
+                
                 material.SetFloat("_AlphaToMask", useAlphaToMask ? 1.0f : 0.0f);
             }
 
@@ -643,7 +642,7 @@ namespace ToonShadersPro.URP
                 materialEditor.TexturePropertySingleLine(new GUIContent(metallicLabel, metallicTooltip),
                     metallicMapProp, metallicProp);
             }
-
+            
             if(shouldRenderSpecular)
             {
                 materialEditor.TexturePropertySingleLine(new GUIContent(specularColorLabel, specularColorTooltip), specularMapProp, specularColorProp);

@@ -54,7 +54,7 @@ struct Varyings
 #if defined(DYNAMICLIGHTMAP_ON)
     float2 dynamicLightmapUV        : TEXCOORD9;
 #endif
-
+    
     float3 viewWS                   : TEXCOORD10;
 
     float4 positionCS               : SV_POSITION;
@@ -83,11 +83,11 @@ float4 stochasticTexturing(texture2D tex, sampler samplerState, float2 uv)
     BW_vx = ((barycentric.z > 0) ?
 		float4x3(float3(vxID, 0), float3(vxID + float2(0, 1), 0), float3(vxID + float2(1, 0), 0), barycentric.zyx) :
 		float4x3(float3(vxID + float2(1, 1), 0), float3(vxID + float2(1, 0), 0), float3(vxID + float2(0, 1), 0), float3(-barycentric.z, 1.0 - barycentric.y, 1.0 - barycentric.x)));
-
+ 
 	// Calculate derivatives to avoid triangular grid artifacts.
     float2 dx = ddx(uv);
     float2 dy = ddy(uv);
-
+ 
 	// Blend samples with calculated weights.
     return  mul(SAMPLE_TEXTURE2D_GRAD(tex, samplerState, uv + hash2D2D(BW_vx[0].xy), dx, dy), BW_vx[3].x) +
             mul(SAMPLE_TEXTURE2D_GRAD(tex, samplerState, uv + hash2D2D(BW_vx[1].xy), dx, dy), BW_vx[3].y) +
@@ -368,7 +368,7 @@ Varyings SplatmapVert(Attributes v)
     #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
         o.shadowCoord = GetShadowCoord(Attributes);
     #endif
-
+    
     o.viewWS = GetWorldSpaceNormalizeViewDir(o.positionWS);
 
     return o;
@@ -451,7 +451,7 @@ void SplatmapFragment(Varyings i , out half4 outColor : SV_Target0
     half4 maskMetallic = half4(masks[0].r, masks[1].r, masks[2].r, masks[3].r);
     defaultMetallic = lerp(defaultMetallic, maskMetallic, hasMask);
     half metallic = dot(splatControl, defaultMetallic);
-
+    
     half3 specularStrength = splatControl.x * _Specular0 + splatControl.y * _Specular1 + splatControl.z * _Specular2 + splatControl.w * _Specular3;
 
     half4 maskOcclusion = half4(masks[0].g, masks[1].g, masks[2].g, masks[3].g);
@@ -462,7 +462,7 @@ void SplatmapFragment(Varyings i , out half4 outColor : SV_Target0
     InputData inputData;
     InitializeInputData(i, normalTS, inputData);
     SetupTerrainDebugTextureData(inputData, i.uvMainAndLM.xy);
-
+    
 #if defined(_DBUFFER)
     half3 specular = half3(0.0h, 0.0h, 0.0h);
     ApplyDecal(i.positionCS,
@@ -473,7 +473,7 @@ void SplatmapFragment(Varyings i , out half4 outColor : SV_Target0
         occlusion,
         smoothness);
 #endif
-
+    
     // Calculate the specular light offset values.
     float2 offsetUVs = TRANSFORM_TEX(i.positionWS.xz, _SpecularOffsetNoiseMap);
     float specularOffset = SAMPLE_TEXTURE2D(_SpecularOffsetNoiseMap, sampler_SpecularOffsetNoiseMap, offsetUVs).r;
@@ -481,19 +481,19 @@ void SplatmapFragment(Varyings i , out half4 outColor : SV_Target0
 
     // Get the main light.
     Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, inputData.shadowMask);
-
+    
     // Set up BRDF data for lighting calculations.
     BRDFData brdfData;
     ToonBRDFData(albedo, metallic, 0.0f, smoothness, alpha, brdfData);
-
+    
     // Calculate global illumination.
     MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, inputData.shadowMask);
     AmbientOcclusionFactor aoFactor = CreateAmbientOcclusionFactor(inputData.normalizedScreenSpaceUV, 1.0h);
     half3 giColor = ToonGlobalIllumination(brdfData, inputData.bakedGI, aoFactor.indirectAmbientOcclusion, i.normalWS, i.viewWS);
     giColor = lerp(0.0, giColor, _GIStrength);
-
+    
     half3 mainLightColor = CalculateToonLighting(brdfData, mainLight, inputData.normalWS, inputData.viewDirectionWS, specularOffset);
-
+    
     half3 additionalLightColor = 0.0h;
 
 #ifdef _ADDITIONAL_LIGHTS
@@ -504,7 +504,7 @@ void SplatmapFragment(Varyings i , out half4 outColor : SV_Target0
 #if USE_FORWARD_PLUS
 
     // Apply secondary lights (Forward rendering).
-    for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); ++lightIndex)
+    for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); ++lightIndex) 
     {
         FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
 
@@ -522,9 +522,9 @@ void SplatmapFragment(Varyings i , out half4 outColor : SV_Target0
     LIGHT_LOOP_END
 
 #endif
-
+    
     float4 baseColor = float4(albedo * (giColor + mainLightColor + additionalLightColor), alpha);
-
+    
     SplatmapFinalColor(baseColor, inputData.fogCoord);
 
     outColor = half4(baseColor.rgb, 1.0h);

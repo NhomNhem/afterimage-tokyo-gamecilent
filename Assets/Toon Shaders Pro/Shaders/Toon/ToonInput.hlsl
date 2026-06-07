@@ -57,7 +57,7 @@ CBUFFER_END
 UNITY_DOTS_INSTANCING_START(MaterialPropertyMetadata)
 	UNITY_DOTS_INSTANCED_PROP(float4, _BaseColor)
 	UNITY_DOTS_INSTANCED_PROP(float3, _LightTint)
-	UNITY_DOTS_INSTANCED_PROP(float3, _LightTint)
+	UNITY_DOTS_INSTANCED_PROP(float3, _MiddleTint)
 	UNITY_DOTS_INSTANCED_PROP(float3, _ShadowTint)
 	UNITY_DOTS_INSTANCED_PROP(float , _AmbientStrength)
 	UNITY_DOTS_INSTANCED_PROP(float2, _ShadowThresholds)
@@ -69,10 +69,10 @@ UNITY_DOTS_INSTANCING_START(MaterialPropertyMetadata)
 	UNITY_DOTS_INSTANCED_PROP(float , _GIStrength)
 	UNITY_DOTS_INSTANCED_PROP(float , _SpecularOffsetNoiseStrength)
 	UNITY_DOTS_INSTANCED_PROP(float , _SpecularStrength)
-	UNITY_DOTS_INSTANCED_PROP(float4, _SpecularColor)
+	UNITY_DOTS_INSTANCED_PROP(float3, _SpecularColor)
 	UNITY_DOTS_INSTANCED_PROP(float , _SpecularPower)
 	UNITY_DOTS_INSTANCED_PROP(float2, _SpecularThresholds)
-	UNITY_DOTS_INSTANCED_PROP(float4, _RimColor)
+	UNITY_DOTS_INSTANCED_PROP(float3, _RimColor)
 	UNITY_DOTS_INSTANCED_PROP(float2, _RimThresholds)
 	UNITY_DOTS_INSTANCED_PROP(float , _RimExtension)
 	UNITY_DOTS_INSTANCED_PROP(float , _BumpScale)
@@ -104,10 +104,10 @@ static float  unity_DOTS_Sampled_SpecularBoost;
 static float  unity_DOTS_Sampled_GIStrength;
 static float  unity_DOTS_Sampled_SpecularOffsetNoiseStrength;
 static float  unity_DOTS_Sampled_SpecularStrength;
-static float4 unity_DOTS_Sampled_SpecularColor;
+static float3 unity_DOTS_Sampled_SpecularColor;
 static float  unity_DOTS_Sampled_SpecularPower;
 static float2 unity_DOTS_Sampled_SpecularThresholds;
-static float4 unity_DOTS_Sampled_RimColor;
+static float3 unity_DOTS_Sampled_RimColor;
 static float2 unity_DOTS_Sampled_RimThresholds;
 static float  unity_DOTS_Sampled_RimExtension;
 static float  unity_DOTS_Sampled_BumpScale;
@@ -129,10 +129,10 @@ void SetupDOTSLitMaterialPropertyCaches()
     unity_DOTS_Sampled_GIStrength		    = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _GIStrength);
 	unity_DOTS_Sampled_SpecularOffsetNoiseStrength	= UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _SpecularOffsetNoiseStrength);
     unity_DOTS_Sampled_SpecularStrength     = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _SpecularStrength);
-    unity_DOTS_Sampled_SpecularColor        = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _SpecularColor);
+    unity_DOTS_Sampled_SpecularColor        = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _SpecularColor);
     unity_DOTS_Sampled_SpecularPower        = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _SpecularPower);
     unity_DOTS_Sampled_SpecularThresholds   = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float2, _SpecularThresholds);
-    unity_DOTS_Sampled_RimColor				= UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimColor);
+    unity_DOTS_Sampled_RimColor				= UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _RimColor);
     unity_DOTS_Sampled_RimThresholds        = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float2, _RimThresholds);
     unity_DOTS_Sampled_RimExtension			= UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _RimExtension);
     unity_DOTS_Sampled_BumpScale            = UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _BumpScale);
@@ -156,10 +156,10 @@ void SetupDOTSLitMaterialPropertyCaches()
 #define _GIStrength			    UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _GIStrength)
 #define _SpecularOffsetNoiseStrength	UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _SpecularOffsetNoiseStrength)
 #define _SpecularStrength		UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _SpecularStrength)
-#define _SpecularColor			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _SpecularColor)
+#define _SpecularColor			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _SpecularColor)
 #define _SpecularPower			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _SpecularPower)
 #define _SpecularThresholds		UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float2, _SpecularThresholds)
-#define _RimColor				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4, _RimPower)
+#define _RimColor				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float3, _RimColor)
 #define _RimThresholds			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float2, _RimThresholds)
 #define _RimExtension			UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _RimExtension)
 #define _BumpScale				UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float , _BumpScale)

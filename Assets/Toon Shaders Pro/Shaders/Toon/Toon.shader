@@ -104,7 +104,7 @@ Shader "Toon Shaders Pro/URP/Toon"
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
 
             #pragma shader_feature_local_fragment _SPECULAR_SETUP
-
+            
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS
 			#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
@@ -178,7 +178,7 @@ Shader "Toon Shaders Pro/URP/Toon"
             }
 
             void frag(
-				v2f i,
+				v2f i, 
 				out float4 outColor : SV_Target0
 #ifdef _WRITE_RENDERING_LAYERS
 				, out float4 outRenderingLayers : SV_Target1
@@ -272,7 +272,7 @@ Shader "Toon Shaders Pro/URP/Toon"
 #if USE_FORWARD_PLUS
 
                 // Apply secondary lights (Forward rendering).
-				for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); ++lightIndex)
+				for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); ++lightIndex) 
 				{
                     FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
 
@@ -299,7 +299,7 @@ Shader "Toon Shaders Pro/URP/Toon"
             	baseColor.a = OutputAlpha(baseColor.a, IsSurfaceTypeTransparent(_Surface));
 
                 outColor = baseColor;
-
+            	
 #ifdef _WRITE_RENDERING_LAYERS
 				outRenderingLayers = float4(EncodeMeshRenderingLayer(), 0, 0, 0);
 #endif
@@ -498,7 +498,7 @@ Shader "Toon Shaders Pro/URP/Toon"
 
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
-
+            
             #pragma multi_compile_instancing
 
             struct appdata
@@ -570,7 +570,7 @@ Shader "Toon Shaders Pro/URP/Toon"
 
                 // Draw the mesh's normals in world space to the output texture.
 	            outNormalWS = float4(NormalizeNormalPerPixel(normalWS), 0.0f);
-
+            	
 #ifdef _WRITE_RENDERING_LAYERS
 				outRenderingLayers = float4(EncodeMeshRenderingLayer(), 0, 0, 0);
 #endif

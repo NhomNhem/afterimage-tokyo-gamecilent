@@ -14,6 +14,7 @@ namespace GlassRefrain.Enemy {
         private EnemyIntentState currentState;
         private string intentLabel;
         private float remainingSeconds;
+        private float phaseDurationSeconds;
 
         private TelegraphStateSnapshot telegraph;
         private EnemyAttackIntentContext attackIntent;
@@ -28,6 +29,7 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Idle;
             intentLabel = "Idle";
             remainingSeconds = 0f;
+            phaseDurationSeconds = 0f;
 
             telegraph = new TelegraphStateSnapshot(string.Empty, false, 0f);
 
@@ -50,6 +52,7 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Idle;
             intentLabel = string.IsNullOrEmpty(reason) ? "Idle" : reason;
             remainingSeconds = 0f;
+            phaseDurationSeconds = 0f;
 
 #if GR_M0_PROTOTYPE
             if (previousState != EnemyIntentState.Idle) {
@@ -76,6 +79,7 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Telegraph;
             intentLabel = string.IsNullOrEmpty(reason) ? "Telegraph" : reason;
             remainingSeconds = durationSeconds;
+            phaseDurationSeconds = durationSeconds;
 
 #if GR_M0_PROTOTYPE
             logger?.Log($"[M0Enemy] State changed: Idle -> Telegraph duration={durationSeconds}");
@@ -100,6 +104,7 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Commit;
             intentLabel = string.IsNullOrEmpty(reason) ? "Commit" : reason;
             remainingSeconds = durationSeconds;
+            phaseDurationSeconds = durationSeconds;
 
 #if GR_M0_PROTOTYPE
             var tags = intent.AttackTags.Tags;
@@ -126,6 +131,7 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Active;
             intentLabel = string.IsNullOrEmpty(reason) ? "Active" : reason;
             remainingSeconds = durationSeconds;
+            phaseDurationSeconds = durationSeconds;
 
 #if GR_M0_PROTOTYPE
             var tags = attackIntent.AttackTags.Tags;
@@ -158,6 +164,7 @@ namespace GlassRefrain.Enemy {
             currentState = EnemyIntentState.Recovery;
             intentLabel = string.IsNullOrEmpty(reason) ? "Recovery" : reason;
             remainingSeconds = durationSeconds;
+            phaseDurationSeconds = durationSeconds;
 
 #if GR_M0_PROTOTYPE
             logger?.Log($"[M0Enemy] State changed: Active -> Recovery duration={durationSeconds}");
@@ -246,7 +253,15 @@ namespace GlassRefrain.Enemy {
                 remainingSeconds,
                 telegraph,
                 attackIntent,
-                punishWindow
+                punishWindow,
+                EnemyTelegraphReadabilitySnapshot.FromIntentState(
+                    currentState,
+                    ResolvePhaseLabel(),
+                    remainingSeconds,
+                    ResolvePhaseProgress01(),
+                    attackIntent.AttackTags,
+                    punishWindow,
+                    ResolveReadabilityReason())
             );
 
             OnSnapshotChanged(latestSnapshot);
@@ -258,6 +273,40 @@ namespace GlassRefrain.Enemy {
 
         private static float ClampDuration(float seconds) {
             return seconds > 0f ? seconds : 0f;
+        }
+
+        private string ResolvePhaseLabel() {
+            if (!string.IsNullOrEmpty(intentLabel)) {
+                return intentLabel;
+            }
+
+            return currentState.ToString();
+        }
+
+        private string ResolveReadabilityReason() {
+            if (!string.IsNullOrEmpty(intentLabel)) {
+                return intentLabel;
+            }
+
+            if (!string.IsNullOrEmpty(punishWindow.Source)) {
+                return punishWindow.Source;
+            }
+
+            return telegraph.TelegraphId;
+        }
+
+        private float ResolvePhaseProgress01() {
+            if (phaseDurationSeconds <= 0f) {
+                return remainingSeconds <= 0f ? 1f : 0f;
+            }
+
+            var elapsed = phaseDurationSeconds - remainingSeconds;
+            var progress = elapsed / phaseDurationSeconds;
+            if (progress < 0f) {
+                return 0f;
+            }
+
+            return progress > 1f ? 1f : progress;
         }
 
         private static EnemyAttackIntentContext CreateEmptyAttackIntent() {

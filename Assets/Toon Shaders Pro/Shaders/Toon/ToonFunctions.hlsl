@@ -135,10 +135,10 @@ inline half3 CalculateToonLighting(BRDFData brdfData, Light light, half3 normalW
     specularTerm = specularTerm - HALF_MIN;
     specularTerm = clamp(specularTerm, 0.0, 1000.0); // Prevent FP16 overflow on mobiles
 #endif
-
+    
     specularTerm = smoothstep(_SpecularThresholds.x, _SpecularThresholds.y, specularTerm + specularOffset);
     specularTerm *= _SpecularBoost;
-
+    
     brdf += brdfData.specular * specularTerm;
 
     // Rim lighting.

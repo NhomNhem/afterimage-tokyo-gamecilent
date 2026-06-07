@@ -372,6 +372,15 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   tickHandler: {fileID: 179067871}
   targetableAdapter: {fileID: 500000004}
   loopDriver: {fileID: 500000013}
@@ -432,17 +441,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e1fa5ff1bd45d4ca840dbaf54c0cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Presentation::GlassRefrain.Presentation.M0CombatVisualFeedbackAdapter
-  playerRenderer: {fileID: 7935186871277009625, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
-  enemyRenderer: {fileID: 1959090280}
-  playerOriginalMaterial: {fileID: 2100000, guid: 33e3276122b91e44f9d25485d3cabd52, type: 2}
-  playerLightAttackMaterial: {fileID: 2100000, guid: 879e8de50e677294ca24fe0455056109, type: 2}
-  playerHeavyAttackMaterial: {fileID: 2100000, guid: 9bf6110923874d64ca76a7d179ae8957, type: 2}
-  playerParryMaterial: {fileID: 2100000, guid: 5a1698ac681c6f04e90854214cf5cf24, type: 2}
-  playerCounterMaterial: {fileID: 2100000, guid: d99b26159b766a74b97f31e146f8f446, type: 2}
-  enemyOriginalMaterial: {fileID: 2100000, guid: fbef4c703e2e9f24ba89fa6a421823c8, type: 2}
-  enemyTelegraphMaterial: {fileID: 2100000, guid: 3978c305b3491444a93842d599d7d03a, type: 2}
-  enemyActiveMaterial: {fileID: 2100000, guid: e876b3ed518306440b966838342f6a97, type: 2}
-  enemyRecoveryMaterial: {fileID: 2100000, guid: 1fbe67c2aa5339142a5bff2131fc7450, type: 2}
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: playerRenderer
+      Entry: 6
+      Data: 
+    - Name: enemyRenderer
+      Entry: 6
+      Data: 
+    - Name: playerOriginalMaterial
+      Entry: 6
+      Data: 
+    - Name: playerLightAttackMaterial
+      Entry: 6
+      Data: 
+    - Name: playerHeavyAttackMaterial
+      Entry: 6
+      Data: 
+    - Name: playerParryMaterial
+      Entry: 6
+      Data: 
+    - Name: playerCounterMaterial
+      Entry: 6
+      Data: 
+    - Name: enemyOriginalMaterial
+      Entry: 6
+      Data: 
+    - Name: enemyTelegraphMaterial
+      Entry: 6
+      Data: 
+    - Name: enemyActiveMaterial
+      Entry: 6
+      Data: 
+    - Name: enemyRecoveryMaterial
+      Entry: 6
+      Data: 
 --- !u!4 &435937323
 Transform:
   m_ObjectHideFlags: 0
@@ -1408,6 +1448,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3783074506700319736, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
   m_PrefabInstance: {fileID: 559362603}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &705430264
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3926403918263359043, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348744349585824750, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_Name
+      value: SK_MechanicGirl_AllPartsTogether Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348744349585824750, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8137212
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0020049214
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.0056946
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.22778751
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.007373989
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.97317314
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.031503785
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 3.323
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 153.604
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689522222151008596, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.648
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93f005984568f8d41a28c7432f6f109e, type: 3}
 --- !u!1 &1146040996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,3 +2426,4 @@ SceneRoots:
   - {fileID: 1146040999}
   - {fileID: 2131933448}
   - {fileID: 1990882813}
+  - {fileID: 705430264}

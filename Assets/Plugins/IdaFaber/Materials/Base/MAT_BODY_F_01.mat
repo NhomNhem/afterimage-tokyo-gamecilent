@@ -34,12 +34,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MAT_BODY_F_01
-  m_Shader: {fileID: -6465566751694194690, guid: 58bd24c3542ca78448b90ae35be39b26, type: 3}
+  m_Shader: {fileID: 4800000, guid: 1035ba4200ea08f41befac01b4c9d952, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _ADD_MICRODETAIL
+  m_ValidKeywords: []
   m_InvalidKeywords:
+  - _ADD_MICRODETAIL
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
   - _MASKMAP
@@ -50,7 +50,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -223,11 +223,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: bfb78dcdc414cc24dbf3c9305c1ad5c5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SmoothnessMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularOffsetNoiseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -311,6 +323,7 @@ Material:
     - _BaseColor_Scale_By_Center: 1
     - _Blend: 0
     - _BlendMode: 0
+    - _BlendModePreserveSpecular: 1
     - _Blood_Roughness: 0.31
     - _Blur_1: 0
     - _Blur_2: 0
@@ -320,6 +333,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
+    - _ConvertFromRoughness: 0
     - _Cull: 0
     - _CullMode: 0
     - _CullModeForward: 0
@@ -341,6 +355,7 @@ Material:
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _ENABLE_BLOOD: 0
     - _ENABLE_DIRT: 0
     - _EmissiveColorMode: 1
@@ -357,6 +372,7 @@ Material:
     - _Expand_2: 0
     - _Expand_3: 0
     - _FLIP_NORMAL_GREEN_CHANNEL: 0
+    - _GIStrength: 1
     - _GlossMapScale: 0.346
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -411,6 +427,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
+    - _RimExtension: 0
     - _SSSConcentration: 0
     - _SSSScale: 0
     - _Smoothness: 1
@@ -420,9 +437,12 @@ Material:
     - _Smoothness_Strength: 1
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
+    - _SpecularBoost: 1
     - _SpecularHighlights: 1
     - _SpecularOcclusionMode: 1
+    - _SpecularOffsetNoiseStrength: 0.02
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _StencilRef: 0
     - _StencilRefDepth: 8
     - _StencilRefDistortionVec: 4
@@ -454,7 +474,9 @@ Material:
     - _UVEmissive: 0
     - _UVSec: 0
     - _UseEmissiveIntensity: 0
+    - _UseSecondThreshold: 0
     - _UseShadowThreshold: 0
+    - _UseVertexColors: 0
     - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 4
@@ -472,6 +494,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DiffuseThresholds: {r: -0.01, g: 0.01, b: 0, a: 0}
     - _DiffusionProfileAsset: {r: 3.1749385e+26, g: 2.9147697e-17, b: 3.475444e-35, a: 3.3457219e-31}
     - _DoubleSidedConstants: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
@@ -484,9 +507,16 @@ Material:
     - _From_MatID_Color_3: {r: 1, g: 1, b: 1, a: 0}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _LightTint: {r: 1, g: 1, b: 1, a: 1}
+    - _MiddleTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimThresholds: {r: 0.8, g: 0.82, b: 0, a: 0}
     - _SSSColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowThresholds: {r: 0.1, g: 0.11, b: 0, a: 0}
+    - _ShadowTint: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularThresholds: {r: 0.01, g: 0.02, b: 0, a: 0}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _To_Texture_Color_1: {r: 1, g: 1, b: 1, a: 0}
     - _To_Texture_Color_2: {r: 1, g: 1, b: 1, a: 0}

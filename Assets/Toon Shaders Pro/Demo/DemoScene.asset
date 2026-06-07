@@ -147,7 +147,7 @@ MonoBehaviour:
   active: 1
   renderPassEvent:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   outlineType:
     m_OverrideState: 1
     m_Value: 2
@@ -200,7 +200,7 @@ MonoBehaviour:
     m_Value: 3
   maskedOutlineSmoothing:
     m_OverrideState: 1
-    m_Value: 1.2
+    m_Value: 2
   outlineDrawSides:
     m_OverrideState: 1
     m_Value: 1
@@ -218,10 +218,22 @@ MonoBehaviour:
     m_Value: 0
   outlineLighting:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   flipOutlineDirection:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   outlineMinLighting:
     m_OverrideState: 1
+    m_Value: 0.05
+  useNoiseOffsets:
+    m_OverrideState: 1
     m_Value: 0
+  noiseScale:
+    m_OverrideState: 1
+    m_Value: 50
+  noiseOffset:
+    m_OverrideState: 1
+    m_Value: 0
+  noiseStrength:
+    m_OverrideState: 1
+    m_Value: 0.01

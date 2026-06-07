@@ -86,6 +86,10 @@ namespace GlassRefrain.DebugOverlay {
         }
 
         private static string ResolveEnemyReason(EnemyIntentSnapshot enemyIntent) {
+            if (!string.IsNullOrEmpty(enemyIntent.Readability.Reason)) {
+                return enemyIntent.Readability.Reason;
+            }
+
             if (!string.IsNullOrEmpty(enemyIntent.IntentLabel)) {
                 return enemyIntent.IntentLabel;
             }

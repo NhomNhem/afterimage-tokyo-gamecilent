@@ -18,6 +18,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
 			#include "OutlineUtils.hlsl"
 
             struct appdata
@@ -42,9 +43,9 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 				UNITY_SETUP_INSTANCE_ID(v);
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-
+                
                 positionCS = TransformObjectToHClip(v.positionOS.xyz);
-				o.gameObjectPositionWS = unity_ObjectToWorld._m03_m13_m23;
+				o.gameObjectPositionWS = GetObjectToWorldMatrix()._m03_m13_m23; 
 				o.color = v.color;
                 return o;
             }
@@ -69,7 +70,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 		Pass
 		{
 			Name "MaskObjects"
-
+			
 			ZTest Always
 			Cull Off
 			ZWrite Off
@@ -81,7 +82,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
             float frag (v2f i, float4 positionSS : VPOS) : SV_Target
             {
 				UNITY_SETUP_INSTANCE_ID(i);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i); 
 
 #ifndef _IGNORE_DEPTH
 				// Get the depth of the pixel being rendered and the pixel already rendered.
@@ -108,7 +109,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 		Pass
 		{
 			Name "MaskTriangles"
-
+			
 			ZTest Always
 			Cull Off
 			ZWrite Off
@@ -120,7 +121,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
             float frag (v2f i, float4 positionSS : VPOS, uint primitiveID : SV_PrimitiveID) : SV_Target
             {
 				UNITY_SETUP_INSTANCE_ID(i);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i); 
 
 #ifndef _IGNORE_DEPTH
 				// Get the depth of the pixel being rendered and the pixel already rendered.
@@ -147,7 +148,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 		Pass
 		{
 			Name "MaskOnce"
-
+			
 			ZTest Always
 			Cull Off
 			ZWrite Off
@@ -159,7 +160,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
             float frag (v2f i, float4 positionSS : VPOS) : SV_Target
             {
 				UNITY_SETUP_INSTANCE_ID(i);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i); 
 
 #ifndef _IGNORE_DEPTH
 				// Get the depth of the pixel being rendered and the pixel already rendered.
@@ -185,7 +186,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 		Pass
 		{
 			Name "MaskVertexColors"
-
+			
 			ZTest Always
 			Cull Off
 			ZWrite Off
@@ -197,7 +198,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
             float frag (v2f i, float4 positionSS : VPOS) : SV_Target
             {
 				UNITY_SETUP_INSTANCE_ID(i);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i); 
 
 #ifndef _IGNORE_DEPTH
 				// Get the depth of the pixel being rendered and the pixel already rendered.
@@ -224,7 +225,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 		Pass
 		{
 			Name "MaskRSUV"
-
+			
 			ZTest Always
 			Cull Off
 			ZWrite Off
@@ -237,7 +238,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
             {
 				UNITY_SETUP_INSTANCE_ID(i);
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
-
+            	
 #if UNITY_VERSION >= 60030000
 
 #ifndef _IGNORE_DEPTH
@@ -256,11 +257,11 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
 #endif
 
 				float rsuv = unity_RendererUserValue;
-
+                            	
                 // Render random value based on RSUV.
                 float maskColor = hash3to1(rsuv.xxx + float3(17.34f, 271.4f, 94.247f));
                 return maskColor * 0.999f + 0.001f;
-
+            	
 #else
             	// Unity versions before RSUV will do nothing.
 				return 0.0f;
@@ -283,7 +284,7 @@ Shader "Hidden/ToonShadersPro/URP/MaskObject"
             float frag (v2f i, float4 positionSS : VPOS) : SV_Target
             {
 				UNITY_SETUP_INSTANCE_ID(i);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i); 
 
 				// Get the depth of the pixel being rendered and the pixel already rendered.
 				float2 screenUV = positionSS.xy / _ScreenSize.xy;

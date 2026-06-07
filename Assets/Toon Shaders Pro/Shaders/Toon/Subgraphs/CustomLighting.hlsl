@@ -14,7 +14,7 @@ inline float2 CalculateDiffuse(Light light, float3 normalWS, float2 shadowThresh
 {
     float rawDiffuseAmount = dot(normalWS, light.direction);
     float diffuseAmount = smoothstep(diffuseThresholds.x, diffuseThresholds.y, rawDiffuseAmount);
-
+    
 #ifdef _USE_SECOND_THRESHOLD
     diffuseAmount += smoothstep(diffuseThresholds.z, diffuseThresholds.w, rawDiffuseAmount);
 #endif
@@ -27,7 +27,7 @@ inline float2 CalculateDiffuse(Light light, float3 normalWS, float2 shadowThresh
     diffuseAmount *= shadow;
     rawDiffuseAmount *= shadow;
 #endif
-
+    
 #ifdef _LIGHT_LAYERS
     uint meshRenderingLayers = GetMeshRenderingLayer();
     if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
@@ -39,7 +39,7 @@ inline float2 CalculateDiffuse(Light light, float3 normalWS, float2 shadowThresh
         return 0;
     }
 #endif
-
+    
     return float2(diffuseAmount, rawDiffuseAmount);
 }
 
@@ -78,10 +78,10 @@ void CalculateToonLighting_float(float3 PositionWS, float3 NormalWS, float3 View
     AmbientLight = 0.15f;
     DiffuseLight = saturate(dot(NormalWS, normalize(float3(1.0f, 1.0f, 0.0f))));
     DiffuseLight = smoothstep(DiffuseThresholds.x, DiffuseThresholds.y, DiffuseLight);
-
+    
     SpecularLight = (pow(dot(reflect(normalize(float3(1.0f, 1.0f, 0.0f)), NormalWS), -ViewWS), 300)) * DiffuseLight;
     SpecularLight = smoothstep(SpecularThresholds.x, SpecularThresholds.y, SpecularLight);
-
+    
     RimLight = (1.0f - saturate(dot(NormalWS, ViewWS))) * DiffuseLight;
     RimLight = smoothstep(RimThresholds.x, RimThresholds.y, RimLight);
 #else
@@ -90,27 +90,27 @@ void CalculateToonLighting_float(float3 PositionWS, float3 NormalWS, float3 View
     #else
         half4 shadowCoord = TransformWorldToShadowCoord(PositionWS);
     #endif
-
+    
     //OUTPUT_LIGHTMAP_UV(LightmapUV, unity_LightmapST, LightmapUV);
     float2 lightmapUV = DynamicLightmapUV.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
     float4 shadowMask = SAMPLE_SHADOWMASK(lightmapUV);
-
+    
     float3 ambientLight = SampleSH(NormalWS) * AmbientStrength;
-
+    
     Light mainLight = GetMainLight(shadowCoord, PositionWS, shadowMask);
     float2 diffuseAmount = CalculateDiffuse(mainLight, NormalWS, ShadowThresholds, DiffuseThresholds);
     float specularAmount = CalculateSpecular(mainLight, NormalWS, ViewWS, SpecularThresholds, SpecularPower, diffuseAmount.x, SpecularStrength, SpecularOffset);
     float rimAmount = CalculateRim(mainLight, NormalWS, ViewWS, RimThresholds, saturate(diffuseAmount.y + RimExtension));
-
+    
     AmbientLight = ambientLight;
     DiffuseLight = diffuseTint(diffuseAmount.x, ShadowTint, MiddleTint, LightTint, mainLight.color);
     SpecularLight = specularAmount * SpecularColor * mainLight.color;
     RimLight = rimAmount * RimColor * mainLight.color;
-
+    
     #ifdef _ADDITIONAL_LIGHTS
-
+    
         uint lightCount = GetAdditionalLightsCount();
-
+    
         #ifdef _FORWARD_PLUS
             InputData inputData = (InputData)0;
             inputData.positionWS = PositionWS;
@@ -133,7 +133,7 @@ void CalculateToonLighting_float(float3 PositionWS, float3 NormalWS, float3 View
             LIGHT_LOOP_END
 #else
             // Apply secondary lights (Forward rendering).
-            for (uint lightIndex = 0; lightIndex < lightCount; ++lightIndex)
+            for (uint lightIndex = 0; lightIndex < lightCount; ++lightIndex) 
             {
                 Light light = GetAdditionalLight(lightIndex, PositionWS, shadowMask);
                 diffuseAmount = CalculateDiffuse(light, NormalWS, ShadowThresholds, DiffuseThresholds);
@@ -146,14 +146,14 @@ void CalculateToonLighting_float(float3 PositionWS, float3 NormalWS, float3 View
                 RimLight += rimAmount * RimColor * light.color;
             }
 #endif
-
+    
     #endif
-
+    
 #endif
 }
 
 // Get parameters from the main light - usually the scene's primary directional light.
-void MainLight_float(float3 PositionWS,
+void MainLight_float(float3 PositionWS, 
     out float3 Direction, out float3 Color, out float DistanceAttenuation, out float ShadowAttenuation)
 {
     #ifdef SHADERGRAPH_PREVIEW
@@ -176,7 +176,7 @@ void MainLight_float(float3 PositionWS,
     #endif
 }
 
-void MainLight_half(half3 PositionWS,
+void MainLight_half(half3 PositionWS, 
     out half3 Direction, out half3 Color, out half DistanceAttenuation, out half ShadowAttenuation)
 {
     #ifdef SHADERGRAPH_PREVIEW

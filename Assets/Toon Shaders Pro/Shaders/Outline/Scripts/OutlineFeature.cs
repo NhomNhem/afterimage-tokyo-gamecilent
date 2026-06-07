@@ -111,7 +111,7 @@ namespace ToonShadersPro.URP
 
                 return descriptor;
             }
-
+            
 #if !UNITY_6000_4_OR_NEWER
 
 #if UNITY_6000_0_OR_NEWER
@@ -171,6 +171,18 @@ namespace ToonShadersPro.URP
                     else
                     {
                         maskMaterial.DisableKeyword("_IGNORE_DEPTH");
+                    }
+
+                    if (settings.useNoiseOffsets.value)
+                    {
+                        material.EnableKeyword("_USE_NOISE_OFFSETS");
+                        material.SetFloat("_NoiseScale", settings.noiseScale.value);
+                        material.SetFloat("_NoiseOffset", settings.noiseOffset.value);
+                        material.SetFloat("_NoiseStrength", settings.noiseStrength.value);
+                    }
+                    else
+                    {
+                        material.DisableKeyword("_USE_NOISE_OFFSETS");
                     }
 
                     RenderQueueRange range = settings.renderQueue.value.Convert();
@@ -292,7 +304,7 @@ namespace ToonShadersPro.URP
                 cmd.Clear();
                 CommandBufferPool.Release(cmd);
             }
-
+            
 #endif
 
             private static void DrawObjects(ScriptableRenderContext context, ref RenderingData renderingData, CommandBuffer cmd, OutlineSettings settings, Material drawMaterial, int passIndex, ProfilingSampler profilingSampler)
@@ -403,7 +415,7 @@ namespace ToonShadersPro.URP
                 var settings = VolumeManager.instance.stack.GetComponent<OutlineSettings>();
 
                 material.SetTexture("_MaskedObjects", maskedObjectsHandle);
-
+                
                 Blitter.BlitTexture(cmd, source, new Vector4(1, 1, 0, 0), material, 2);
             }
 
@@ -414,7 +426,7 @@ namespace ToonShadersPro.URP
                 RenderQueueRange renderQueueRange = settings.renderQueue.value.Convert();
 
                 int passIndex = (settings.maskDrawingMode.value.Convert());
-                SortingCriteria sortingCriteria =
+                SortingCriteria sortingCriteria = 
                     (settings.renderQueue.value == RenderQueueType.Transparent) ? SortingCriteria.CommonTransparent : SortingCriteria.CommonOpaque;
 
                 var rendererListDesc = new RendererListDesc(shaderTagIDs.ToArray(), cullingResults, camera)

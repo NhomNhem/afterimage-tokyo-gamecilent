@@ -37,6 +37,10 @@ namespace ToonShadersPro.URP
         SerializedDataParameter outlineLighting;
         SerializedDataParameter flipOutlineDirection;
         SerializedDataParameter outlineMinLighting;
+        SerializedDataParameter useNoiseOffsets;
+        SerializedDataParameter noiseScale;
+        SerializedDataParameter noiseOffset;
+        SerializedDataParameter noiseStrength;
 
         private static GUIStyle _headerStyle;
         private static GUIStyle headerStyle
@@ -87,12 +91,16 @@ namespace ToonShadersPro.URP
             outlineLighting = Unpack(o.Find(x => x.outlineLighting));
             flipOutlineDirection = Unpack(o.Find(x => x.flipOutlineDirection));
             outlineMinLighting = Unpack(o.Find(x => x.outlineMinLighting));
+            useNoiseOffsets = Unpack(o.Find(x => x.useNoiseOffsets));
+            noiseScale = Unpack(o.Find(x => x.noiseScale));
+            noiseOffset = Unpack(o.Find(x => x.noiseOffset));
+            noiseStrength = Unpack(o.Find(x => x.noiseStrength));
         }
 
         private void ShowMaskDrawingMode()
         {
             PropertyField(maskDrawingMode);
-
+            
 #if !UNITY_6000_3_OR_NEWER
             if (maskDrawingMode.value.GetEnumValue<MaskDrawingMode>() == MaskDrawingMode.RSUV)
             {
@@ -124,6 +132,19 @@ namespace ToonShadersPro.URP
                 GUILayout.Space(10);
                 EditorGUILayout.LabelField("Outline Options", headerStyle);
                 PropertyField(outlineColor);
+
+                if (activeOutlineType != OutlineType.HullOutlines &&
+                    activeOutlineType != OutlineType.DebugOutlineMask)
+                {
+                    PropertyField(useNoiseOffsets);
+
+                    if (useNoiseOffsets.value.boolValue)
+                    {
+                        PropertyField(noiseScale);
+                        PropertyField(noiseOffset);
+                        PropertyField(noiseStrength);
+                    }
+                }
             }
 
             if(activeOutlineType == OutlineType.DepthNormalOutlines)

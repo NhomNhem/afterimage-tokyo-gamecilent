@@ -30,6 +30,22 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void ReadabilitySnapshot_ExposesPhaseLabelProgressAndDefensiveAnswer() {
+            var model = new M0EnemyIntentModel();
+
+            model.EnterTelegraph("SwingTelegraph", 1.0f, "Telegraph:SwingTelegraph (1.00s)");
+            model.Tick(0.25f);
+
+            var telegraphReadability = model.Snapshot.Readability;
+            Assert.That(telegraphReadability.Phase, Is.EqualTo(EnemyIntentState.Telegraph));
+            Assert.That(telegraphReadability.PhaseLabel, Is.EqualTo("Telegraph:SwingTelegraph (1.00s)"));
+            Assert.That(telegraphReadability.RemainingSeconds, Is.EqualTo(0.75f).Within(0.001f));
+            Assert.That(telegraphReadability.PhaseProgress01, Is.EqualTo(0.25f).Within(0.001f));
+            Assert.That(telegraphReadability.DefensiveAnswer, Is.EqualTo("Prepare"));
+            Assert.That(telegraphReadability.PunishAvailable, Is.False);
+        }
+
+        [Test]
         public void CommitActiveRecoveryFlowMaintainsEnemyOwnership() {
             var model = new M0EnemyIntentModel();
             var intent = new EnemyAttackIntentContext(
@@ -46,11 +62,17 @@ namespace GlassRefrain.Tests.EditMode {
 
             model.EnterActive(0.1f, "Active");
             Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Active));
+            Assert.That(model.Snapshot.Readability.DefensiveAnswer, Is.EqualTo("DodgeOrParry"));
+            CollectionAssert.AreEquivalent(new[] { "DodgePunishable", "ParryEligible" },
+                model.Snapshot.Readability.AttackTags.Tags);
 
             model.EnterRecovery(0.4f, "Recovery", true, 0.3f, "WhiffPlaceholder");
             Assert.That(model.Snapshot.State, Is.EqualTo(EnemyIntentState.Recovery));
             Assert.That(model.Snapshot.PunishWindow.IsOpen, Is.True);
             Assert.That(model.Snapshot.PunishWindow.Source, Is.EqualTo("WhiffPlaceholder"));
+            Assert.That(model.Snapshot.Readability.PunishAvailable, Is.True);
+            Assert.That(model.Snapshot.Readability.PunishSource, Is.EqualTo("WhiffPlaceholder"));
+            Assert.That(model.Snapshot.Readability.DefensiveAnswer, Is.EqualTo("Counter"));
         }
 
         [Test]
@@ -134,6 +156,31 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(snapA.RemainingSeconds, Is.EqualTo(1.0f));
             Assert.That(snapB.RemainingSeconds, Is.EqualTo(0.5f).Within(0.001f));
             Assert.That(snapA.RemainingSeconds, Is.Not.EqualTo(snapB.RemainingSeconds));
+            Assert.That(snapA.Readability.PhaseProgress01, Is.EqualTo(0f));
+            Assert.That(snapB.Readability.PhaseProgress01, Is.EqualTo(0.5f).Within(0.001f));
+        }
+
+        [Test]
+        public void AttackTagsAreCopiedIntoReadabilitySnapshot() {
+            var tags = new[] { "ParryEligible" };
+            var tagSet = new EnemyAttackTagSet(tags);
+            tags[0] = "MutatedAfterConstruction";
+
+            var model = new M0EnemyIntentModel();
+            var intent = new EnemyAttackIntentContext(
+                "SlashC",
+                "M0BasicSlash",
+                0.2f,
+                tagSet);
+
+            model.EnterCommit(intent, 0.2f, "Commit");
+            model.EnterActive(0.2f, "Active");
+
+            var snapshotTags = model.Snapshot.Readability.AttackTags.Tags;
+            snapshotTags[0] = "MutatedFromSnapshot";
+
+            Assert.That(model.Snapshot.Readability.AttackTags.Tags[0], Is.EqualTo("ParryEligible"));
+            Assert.That(model.Snapshot.Readability.DefensiveAnswer, Is.EqualTo("Parry"));
         }
 
         [Test]
@@ -168,6 +215,8 @@ namespace GlassRefrain.Tests.EditMode {
             };
 
             string[] sharedForbiddenPatterns = {
+                "Debug.Log",
+                "UnityEngine.Debug",
                 "InputManager",
                 "UnityEngine.Input;",
                 "UnityEngine.Input ",

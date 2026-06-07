@@ -649,6 +649,7 @@ namespace GlassRefrain.Core {
         public TelegraphStateSnapshot Telegraph { get; }
         public EnemyAttackIntentContext AttackIntent { get; }
         public EnemyPunishWindowContext PunishWindow { get; }
+        public EnemyTelegraphReadabilitySnapshot Readability { get; }
 
         public EnemyIntentSnapshot(
             EnemyIntentState state,
@@ -658,7 +659,35 @@ namespace GlassRefrain.Core {
             float remainingSeconds,
             TelegraphStateSnapshot telegraph,
             EnemyAttackIntentContext attackIntent,
-            EnemyPunishWindowContext punishWindow) {
+            EnemyPunishWindowContext punishWindow)
+            : this(
+                state,
+                enemyId,
+                intentLabel,
+                isTelegraphing,
+                remainingSeconds,
+                telegraph,
+                attackIntent,
+                punishWindow,
+                EnemyTelegraphReadabilitySnapshot.FromIntentState(
+                    state,
+                    intentLabel,
+                    remainingSeconds,
+                    remainingSeconds > 0f ? 0f : 1f,
+                    attackIntent.AttackTags,
+                    punishWindow,
+                    ResolveEnemyReadabilityReason(intentLabel, punishWindow, telegraph))) { }
+
+        public EnemyIntentSnapshot(
+            EnemyIntentState state,
+            string enemyId,
+            string intentLabel,
+            bool isTelegraphing,
+            float remainingSeconds,
+            TelegraphStateSnapshot telegraph,
+            EnemyAttackIntentContext attackIntent,
+            EnemyPunishWindowContext punishWindow,
+            EnemyTelegraphReadabilitySnapshot readability) {
             State = state;
             EnemyId = enemyId ?? string.Empty;
             IntentLabel = intentLabel ?? string.Empty;
@@ -667,6 +696,117 @@ namespace GlassRefrain.Core {
             Telegraph = telegraph;
             AttackIntent = attackIntent;
             PunishWindow = punishWindow;
+            Readability = readability;
+        }
+
+        private static string ResolveEnemyReadabilityReason(
+            string intentLabel,
+            EnemyPunishWindowContext punishWindow,
+            TelegraphStateSnapshot telegraph) {
+            if (!string.IsNullOrEmpty(intentLabel)) {
+                return intentLabel;
+            }
+
+            if (!string.IsNullOrEmpty(punishWindow.Source)) {
+                return punishWindow.Source;
+            }
+
+            return telegraph.TelegraphId;
+        }
+    }
+
+    public readonly struct EnemyTelegraphReadabilitySnapshot {
+        public EnemyIntentState Phase { get; }
+        public string PhaseLabel { get; }
+        public float RemainingSeconds { get; }
+        public float PhaseProgress01 { get; }
+        public EnemyAttackTagSet AttackTags { get; }
+        public string DefensiveAnswer { get; }
+        public bool PunishAvailable { get; }
+        public string PunishSource { get; }
+        public string Reason { get; }
+
+        public EnemyTelegraphReadabilitySnapshot(
+            EnemyIntentState phase,
+            string phaseLabel,
+            float remainingSeconds,
+            float phaseProgress01,
+            EnemyAttackTagSet attackTags,
+            string defensiveAnswer,
+            bool punishAvailable,
+            string punishSource,
+            string reason) {
+            Phase = phase;
+            PhaseLabel = string.IsNullOrEmpty(phaseLabel) ? phase.ToString() : phaseLabel;
+            RemainingSeconds = remainingSeconds > 0f ? remainingSeconds : 0f;
+            PhaseProgress01 = Clamp01(phaseProgress01);
+            AttackTags = attackTags;
+            DefensiveAnswer = defensiveAnswer ?? string.Empty;
+            PunishAvailable = punishAvailable;
+            PunishSource = punishSource ?? string.Empty;
+            Reason = reason ?? string.Empty;
+        }
+
+        public static EnemyTelegraphReadabilitySnapshot FromIntentState(
+            EnemyIntentState phase,
+            string phaseLabel,
+            float remainingSeconds,
+            float phaseProgress01,
+            EnemyAttackTagSet attackTags,
+            EnemyPunishWindowContext punishWindow,
+            string reason) {
+            return new EnemyTelegraphReadabilitySnapshot(
+                phase,
+                phaseLabel,
+                remainingSeconds,
+                phaseProgress01,
+                attackTags,
+                ResolveDefensiveAnswer(phase, attackTags, punishWindow),
+                punishWindow.IsOpen,
+                punishWindow.Source,
+                reason);
+        }
+
+        private static string ResolveDefensiveAnswer(
+            EnemyIntentState phase,
+            EnemyAttackTagSet attackTags,
+            EnemyPunishWindowContext punishWindow) {
+            if (punishWindow.IsOpen) {
+                return "Counter";
+            }
+
+            if (phase == EnemyIntentState.Idle) {
+                return "Read";
+            }
+
+            if (phase == EnemyIntentState.Telegraph) {
+                return "Prepare";
+            }
+
+            var hasParry = attackTags.Contains("ParryEligible");
+            var hasDodge = attackTags.Contains("DodgePunishable") || attackTags.Contains("CounterOnWhiff");
+
+            if (hasParry && hasDodge) {
+                return "DodgeOrParry";
+            }
+
+            if (hasParry) {
+                return "Parry";
+            }
+
+            if (hasDodge) {
+                return "Dodge";
+            }
+
+            return "Spacing";
+        }
+
+        private static float Clamp01(float value) {
+            if (value < 0f) {
+                return 0f;
+            }
+
+            return value > 1f ? 1f : value;
         }
     }
 
@@ -683,10 +823,28 @@ namespace GlassRefrain.Core {
     }
 
     public readonly struct EnemyAttackTagSet {
-        public string[] Tags { get; }
+        private readonly string[] tags;
+
+        public string[] Tags {
+            get { return tags == null ? new string[0] : (string[])tags.Clone(); }
+        }
 
         public EnemyAttackTagSet(string[] tags) {
-            Tags = tags;
+            this.tags = tags == null ? new string[0] : (string[])tags.Clone();
+        }
+
+        public bool Contains(string tag) {
+            if (string.IsNullOrEmpty(tag) || tags == null) {
+                return false;
+            }
+
+            for (var i = 0; i < tags.Length; i++) {
+                if (tags[i] == tag) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

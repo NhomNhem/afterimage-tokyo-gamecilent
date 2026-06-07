@@ -1,3 +1,4 @@
+using System.IO;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;
 using GlassRefrain.DebugOverlay;
@@ -86,6 +87,8 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(snapshot.TargetContext.LastReason, Is.EqualTo("Target not yet valid"));
             Assert.That(snapshot.CombatCore.LastReason, Is.EqualTo("Action accepted"));
             Assert.That(snapshot.EnemyIntent.LastReason, Is.EqualTo("Telegraphing slash"));
+            Assert.That(snapshot.EnemyIntent.Snapshot.Readability.Phase, Is.EqualTo(EnemyIntentState.Telegraph));
+            Assert.That(snapshot.EnemyIntent.Snapshot.Readability.DefensiveAnswer, Is.EqualTo("Prepare"));
             Assert.That(snapshot.Health.LastReason, Is.EqualTo("Damage applied"));
             Assert.That(snapshot.MemoryState.LastReason, Is.EqualTo("Generic hit requests cannot reveal memory"));
             Assert.That(snapshot.MemoryVFXResponse.LastReason, Is.EqualTo("not_accepted_by_memory_state"));
@@ -156,6 +159,49 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void EnemyReadabilityPassesThroughWithoutMutatingSourceModel() {
+            var aggregator = new M0DebugOverlaySnapshotAggregator();
+            var input = new M0InputRouter();
+            var locomotion = new M0PlayerLocomotion();
+            var target = new M0TargetContext();
+            var combat = new M0CombatCore();
+            var enemy = new M0EnemyIntentModel();
+            var health = new M0HealthDamageReactionModel();
+            var memory = new M0MemoryState();
+            var memoryVfx = new M0MemoryVFXResponse();
+            var encounter = new M0EncounterFramework();
+
+            var intent = new EnemyAttackIntentContext(
+                "SlashA",
+                "BasicSlash",
+                0.2f,
+                new EnemyAttackTagSet(new[] { "DodgePunishable", "ParryEligible" }));
+            enemy.EnterCommit(intent, 0.25f, "Commit:SlashA (0.25s)");
+            enemy.EnterActive(0.2f, "Active:SlashA (0.20s)");
+
+            var before = enemy.Snapshot;
+            var snapshot = aggregator.Capture(
+                input.Snapshot,
+                null,
+                locomotion.Snapshot,
+                target.Snapshot,
+                combat.Snapshot,
+                enemy.Snapshot,
+                health.Snapshot,
+                memory.Snapshot,
+                memoryVfx.Snapshot,
+                encounter.Snapshot);
+
+            Assert.That(snapshot.EnemyIntent.LastReason, Is.EqualTo("Active:SlashA (0.20s)"));
+            Assert.That(snapshot.EnemyIntent.Snapshot.Readability.Phase, Is.EqualTo(EnemyIntentState.Active));
+            Assert.That(snapshot.EnemyIntent.Snapshot.Readability.DefensiveAnswer, Is.EqualTo("DodgeOrParry"));
+
+            Assert.That(enemy.Snapshot.State, Is.EqualTo(before.State));
+            Assert.That(enemy.Snapshot.RemainingSeconds, Is.EqualTo(before.RemainingSeconds));
+            CollectionAssert.AreEquivalent(before.Readability.AttackTags.Tags, enemy.Snapshot.Readability.AttackTags.Tags);
+        }
+
+        [Test]
         public void EnemyIntentReason_UsesIntentLabelThenPunishSourceThenTelegraphId() {
             var aggregator = new M0DebugOverlaySnapshotAggregator();
             var input = new M0InputRouter();
@@ -206,6 +252,21 @@ namespace GlassRefrain.Tests.EditMode {
                 input.Snapshot, null, locomotion.Snapshot, target.Snapshot, combat.Snapshot,
                 enemyWithTelegraphOnly, health.Snapshot, memory.Snapshot, memoryVfx.Snapshot, encounter.Snapshot);
             Assert.That(snapshotWithTelegraphOnly.EnemyIntent.LastReason, Is.EqualTo("EnemyAttack02"));
+        }
+
+        [Test]
+        public void DebugOverlaySource_RemainsReadOnlyAndDoesNotLogDirectly() {
+            const string sourcePath = "Assets/_Project/Code/DebugOverlay/M0DebugOverlaySnapshotAggregator.cs";
+            Assert.That(File.Exists(sourcePath), Is.True);
+
+            var source = File.ReadAllText(sourcePath);
+            Assert.That(source, Does.Not.Contain("Debug.Log"));
+            Assert.That(source, Does.Not.Contain("UnityEngine.Debug"));
+            Assert.That(source, Does.Not.Contain("EnterTelegraph("));
+            Assert.That(source, Does.Not.Contain("EnterCommit("));
+            Assert.That(source, Does.Not.Contain("EnterActive("));
+            Assert.That(source, Does.Not.Contain("EnterRecovery("));
+            Assert.That(source, Does.Not.Contain("ClosePunishWindow("));
         }
 
         private static DebugOverlayAggregateSnapshot CreateAggregateSnapshot(M0DebugOverlaySnapshotAggregator aggregator) {
