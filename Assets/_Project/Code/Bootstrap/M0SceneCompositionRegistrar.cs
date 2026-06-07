@@ -56,39 +56,21 @@ namespace GlassRefrain.Bootstrap {
         }
 
         private void RegisterSceneComponents(IContainerBuilder builder) {
-            if (_tickHandler != null) builder.RegisterComponent(_tickHandler);
+            builder.UseComponents(components => {
+                components.AddInstance(_tickHandler);
+                components.AddInstance(_targetableAdapter);
+                components.AddInstance(_visualFeedbackAdapter);
+                components.AddInstance(_debugOverlayAdapter);
+                components.AddInstance(_animationPresentationAdapter);
+                components.AddInstance(_playerInput);
+                components.AddInstance(_loopDriver);
 
-            if (_targetableAdapter != null) {
-                builder.RegisterComponent(_targetableAdapter);
-            }
+                if (_playerAnimationDriver != null)
+                    components.AddInstance(_playerAnimationDriver).As<IPlayerAnimationService>();
 
-            if (_visualFeedbackAdapter != null) {
-                builder.RegisterComponent(_visualFeedbackAdapter);
-            }
-
-            if (_debugOverlayAdapter != null) {
-                builder.RegisterComponent(_debugOverlayAdapter);
-            }
-
-            if (_animationPresentationAdapter != null) {
-                builder.RegisterComponent(_animationPresentationAdapter);
-            }
-
-            if (_playerAnimationDriver != null) {
-                builder.RegisterComponent(_playerAnimationDriver).As<IPlayerAnimationService>();
-            }
-
-            if (_enemyAnimationDriver != null) {
-                builder.RegisterComponent(_enemyAnimationDriver).As<IEnemyAnimationService>();
-            }
-
-            if (_loopDriver != null) {
-                builder.RegisterComponent(_loopDriver);
-            }
-
-            if (_playerInput != null) {
-                builder.RegisterComponent(_playerInput);
-            }
+                if (_enemyAnimationDriver != null)
+                    components.AddInstance(_enemyAnimationDriver).As<IEnemyAnimationService>();
+            });
         }
 
         private void RegisterBuildWiring(IContainerBuilder builder) {
