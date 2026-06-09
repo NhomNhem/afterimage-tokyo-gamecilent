@@ -375,27 +375,68 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 179067871}
+    - {fileID: 500000004}
+    - {fileID: 500000013}
+    - {fileID: 1932872214}
+    - {fileID: 435937322}
+    - {fileID: 435937321}
+    - {fileID: 435937325}
+    - {fileID: 1932872215}
+    - {fileID: 500000016}
+    - {fileID: 1932872218}
+    - {fileID: 1990882809}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  tickHandler: {fileID: 179067871}
-  targetableAdapter: {fileID: 500000004}
-  loopDriver: {fileID: 500000013}
-  playerInput: {fileID: 1932872214}
-  visualFeedbackAdapter: {fileID: 435937322}
-  debugOverlayAdapter: {fileID: 435937321}
-  animationPresentationAdapter: {fileID: 435937325}
-  playerAnimationDriver: {fileID: 1932872215}
-  enemyAnimationDriver: {fileID: 500000016}
-  combatTimingConfig: {fileID: 11400000, guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2}
-  locomotionConfig: {fileID: 11400000, guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2}
-  memoryRuntimeTuningConfig: {fileID: 11400000, guid: fa048c7d2e1bd4745a743423cc6f728a, type: 2}
-  memoryProbe: {fileID: 1932872218}
-  memoryFragments:
-  - {fileID: 1990882809}
+    SerializationNodes:
+    - Name: tickHandler
+      Entry: 10
+      Data: 0
+    - Name: targetableAdapter
+      Entry: 10
+      Data: 1
+    - Name: loopDriver
+      Entry: 10
+      Data: 2
+    - Name: playerInput
+      Entry: 10
+      Data: 3
+    - Name: visualFeedbackAdapter
+      Entry: 10
+      Data: 4
+    - Name: debugOverlayAdapter
+      Entry: 10
+      Data: 5
+    - Name: animationPresentationAdapter
+      Entry: 10
+      Data: 6
+    - Name: playerAnimationDriver
+      Entry: 10
+      Data: 7
+    - Name: enemyAnimationDriver
+      Entry: 10
+      Data: 8
+    - Name: memoryProbe
+      Entry: 10
+      Data: 9
+    - Name: memoryFragments
+      Entry: 7
+      Data: 0|GlassRefrain.Memory.MemoryFragment[], GlassRefrain.Memory
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &435937320
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,7 +631,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c1ca6c9d5a61d41858e9fa0215fb34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Bootstrap::GlassRefrain.Bootstrap.M0TargetableSceneAdapter
-  targetId: enemy-m0-placeholder
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: targetId
+      Entry: 1
+      Data: enemy-m0-placeholder
 --- !u!1 &500000010
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,16 +694,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99c93d50ff701f41923ff0bd8fdedf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Bootstrap::GlassRefrain.Bootstrap.M0EnemyIntentLoopDriver
-  idleDuration: 1.5
-  telegraphDuration: 0.75
-  commitDuration: 0.2
-  activeDuration: 0.15
-  recoveryDuration: 0.6
-  punishWindowDuration: 0.35
-  telegraphId: BasicSlashTelegraph
-  attackId: BasicSlash
-  attackLabel: M0BasicSlash
-  debugParryEligibleActiveDuration: 3
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: idleDuration
+      Entry: 4
+      Data: 1.5
+    - Name: telegraphDuration
+      Entry: 4
+      Data: 0.75
+    - Name: commitDuration
+      Entry: 4
+      Data: 0.2
+    - Name: activeDuration
+      Entry: 4
+      Data: 0.15
+    - Name: recoveryDuration
+      Entry: 4
+      Data: 0.6
+    - Name: punishWindowDuration
+      Entry: 4
+      Data: 0.35
+    - Name: telegraphId
+      Entry: 1
+      Data: BasicSlashTelegraph
+    - Name: attackId
+      Entry: 1
+      Data: BasicSlash
+    - Name: attackLabel
+      Entry: 1
+      Data: M0BasicSlash
+    - Name: debugParryEligibleActiveDuration
+      Entry: 4
+      Data: 3
 --- !u!33 &500000014
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2054,9 +2135,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ffc36e5dd3d2e4c983afdb5cb60c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Memory::GlassRefrain.Memory.MemoryRaycastProProbe
-  rangeDetector: {fileID: 1932872219}
-  interactAction: {fileID: 2231943356329871702, guid: bad54941cef5c844d9f83834126a155d, type: 3}
-  fallbackRadius: 2.25
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 1932872219}
+    - {fileID: 2231943356329871702, guid: bad54941cef5c844d9f83834126a155d, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: rangeDetector
+      Entry: 10
+      Data: 0
+    - Name: interactAction
+      Entry: 10
+      Data: 1
+    - Name: fallbackRadius
+      Entry: 4
+      Data: 2.25
 --- !u!114 &1932872219
 MonoBehaviour:
   m_ObjectHideFlags: 0

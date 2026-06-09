@@ -10,9 +10,8 @@ using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
 using NhemDangFugBixs.VContainer;
 using Sirenix.OdinInspector;
-using UnityEngine;
+using Sirenix.Serialization;
 using VContainer;
-using VContainer.Unity;
 
 namespace GlassRefrain.Bootstrap {
     /// <summary>
@@ -21,27 +20,61 @@ namespace GlassRefrain.Bootstrap {
     /// </summary>
     [LifetimeScopeFor<IGameplayLifetimeScope>]
     public sealed class GameplayLifetimeScope : SerializedLifetimeScope {
-        [TabGroup("Gameplay Scope", "Core Adapters")]
-        [SerializeField, Required] private M0GameplayTickHandler tickHandler;
-        [SerializeField, Required] private M0TargetableSceneAdapter targetableAdapter;
-        [SerializeField, Required] private M0EnemyIntentLoopDriver loopDriver;
-        [SerializeField, Required] private M0DirectPlayerInput playerInput;
-        [SerializeField, Required] private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
-        [SerializeField, Required] private M0CombatDebugOverlayAdapter debugOverlayAdapter;
-        [SerializeField, Required] private M0AnimationPresentationAdapter animationPresentationAdapter;
+        #region Gameplay Scope / Core Adapters
 
-        [TabGroup("Gameplay Scope", "Animation Drivers")]
-        [SerializeField, Required] private AnimancerPlayerAnimationDriver playerAnimationDriver;
-        [SerializeField, Required] private AnimancerEnemyAnimationDriver enemyAnimationDriver;
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private M0GameplayTickHandler tickHandler;
 
-        [TabGroup("Gameplay Scope", "Configs")]
-        [SerializeField, Required] private M0CombatTimingConfig combatTimingConfig;
-        [SerializeField, Required] private M0LocomotionConfig locomotionConfig;
-        [SerializeField, Required] private M0MemoryRuntimeTuningConfig memoryRuntimeTuningConfig;
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private M0TargetableSceneAdapter targetableAdapter;
 
-        [TabGroup("Gameplay Scope", "Memory System")]
-        [SerializeField] private MemoryRaycastProProbe memoryProbe;
-        [SerializeField] private MemoryFragment[] memoryFragments = Array.Empty<MemoryFragment>();
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private M0EnemyIntentLoopDriver loopDriver;
+
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private M0DirectPlayerInput playerInput;
+
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
+
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private M0CombatDebugOverlayAdapter debugOverlayAdapter;
+
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private M0AnimationPresentationAdapter animationPresentationAdapter;
+
+        #endregion
+
+        #region Gameplay Scope / Animation Drivers
+
+        [TabGroup("Gameplay Scope", "Animation Drivers"), OdinSerialize, Required]
+        private AnimancerPlayerAnimationDriver playerAnimationDriver;
+
+        [TabGroup("Gameplay Scope", "Animation Drivers"), OdinSerialize, Required]
+        private AnimancerEnemyAnimationDriver enemyAnimationDriver;
+
+        #endregion
+
+        #region Gameplay Scope / Runtime Services
+
+        [TabGroup("Gameplay Scope", "Configs"), Required]
+        private M0CombatTimingConfig combatTimingConfig;
+
+        [TabGroup("Gameplay Scope", "Configs"), Required]
+        private M0LocomotionConfig locomotionConfig;
+
+        [TabGroup("Gameplay Scope", "Configs"), Required]
+        private M0MemoryRuntimeTuningConfig memoryRuntimeTuningConfig;
+
+        #endregion
+
+        #region Gameplay Scope / Memory System
+        [TabGroup("Gameplay Scope", "Memory System"), OdinSerialize, Required]
+        private MemoryRaycastProProbe memoryProbe;
+
+        [TabGroup("Gameplay Scope", "Memory System"), OdinSerialize, Required]
+        private MemoryFragment[] memoryFragments = Array.Empty<MemoryFragment>();
+        #endregion
 
         protected override void Configure(IContainerBuilder builder) {
             builder.RegisterGeneratedFor<IGameplayLifetimeScope>();

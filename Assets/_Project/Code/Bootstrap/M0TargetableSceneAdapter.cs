@@ -3,10 +3,12 @@ using VContainer;
 using GlassRefrain.Core;
 using NhemDangFugBixs.NhemLogging;
 using GlassRefrain.Targeting;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 namespace GlassRefrain.Bootstrap {
-    public sealed class M0TargetableSceneAdapter : MonoBehaviour, ITargetable {
-        [SerializeField] private string targetId = "enemy-m0-placeholder";
+    public sealed class M0TargetableSceneAdapter : SerializedMonoBehaviour, ITargetable {
+        [OdinSerialize] private string targetId = "enemy-m0-placeholder";
 
         private ITargetableRegistry registry;
         private INhemLogger logger;

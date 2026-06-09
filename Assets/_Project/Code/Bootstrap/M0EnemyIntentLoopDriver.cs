@@ -3,21 +3,23 @@ using VContainer;
 using NhemDangFugBixs.NhemLogging;
 using GlassRefrain.Core;
 using GlassRefrain.Enemy;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 namespace GlassRefrain.Bootstrap {
-    public sealed class M0EnemyIntentLoopDriver : MonoBehaviour, IEnemyDebugHarness {
-        [SerializeField] private float idleDuration = 1.2f;
-        [SerializeField] private float telegraphDuration = 0.9f;
-        [SerializeField] private float commitDuration = 0.25f;
-        [SerializeField] private float activeDuration = 0.2f;
-        [SerializeField] private float recoveryDuration = 0.65f;
-        [SerializeField] private float punishWindowDuration = 0.4f;
-        [SerializeField] private string telegraphId = "BasicSlashTelegraph";
-        [SerializeField] private string attackId = "BasicSlash";
-        [SerializeField] private string attackLabel = "M0BasicSlash";
+    public sealed class M0EnemyIntentLoopDriver : SerializedMonoBehaviour, IEnemyDebugHarness {
+        [OdinSerialize] private float idleDuration = 1.2f;
+        [OdinSerialize] private float telegraphDuration = 0.9f;
+        [OdinSerialize] private float commitDuration = 0.25f;
+        [OdinSerialize] private float activeDuration = 0.2f;
+        [OdinSerialize] private float recoveryDuration = 0.65f;
+        [OdinSerialize] private float punishWindowDuration = 0.4f;
+        [OdinSerialize] private string telegraphId = "BasicSlashTelegraph";
+        [OdinSerialize] private string attackId = "BasicSlash";
+        [OdinSerialize] private string attackLabel = "M0BasicSlash";
 
 #if GR_M0_PROTOTYPE
-        [SerializeField] private float debugParryEligibleActiveDuration = 3.0f;
+        [OdinSerialize] private float debugParryEligibleActiveDuration = 3.0f;
 #endif
 
         private M0EnemyIntentModel _model;
@@ -177,9 +179,8 @@ namespace GlassRefrain.Bootstrap {
             _debugTickLogTimer = 0f;
 #endif
 
-            if (_model != null) {
+            if (_model != null)
                 _model.ResetForEncounter(string.IsNullOrEmpty(reason) ? "EncounterReset" : reason);
-            }
 
 #if GR_M0_PROTOTYPE || GR_ENEMY_DEBUG
             _logger?.Log("[M0EnemyLoop] ResetForEncounter -> Idle");

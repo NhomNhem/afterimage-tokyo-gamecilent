@@ -17,7 +17,7 @@ namespace GlassRefrain.Camera {
     /// </summary>
     public class CameraMovementBasisProvider : MonoBehaviour {
         [SerializeField]
-        private UnityEngine.Camera targetCamera;
+        private UnityEngine.Camera? targetCamera;
 
         private CameraMovementBasisSnapshot currentBasis;
         private bool isValid = false;

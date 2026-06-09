@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GlassRefrain.Infrastructure;
 using NhemDangFugBixs.NhemLogging;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,8 +12,8 @@ namespace GlassRefrain.Bootstrap {
     /// Orchestrates the additive loading sequence for the M0 First Playable Duel.
     /// Strictly follows the order defined in ADR-0001.
     /// </summary>
-    public sealed class M0BootstrapOrchestrator : MonoBehaviour {
-        [SerializeField] private bool loadOnStart = true;
+    public sealed class M0BootstrapOrchestrator : SerializedMonoBehaviour {
+        [OdinSerialize] private bool loadOnStart = true;
         private INhemLogger logger;
 
         private async void Start() {

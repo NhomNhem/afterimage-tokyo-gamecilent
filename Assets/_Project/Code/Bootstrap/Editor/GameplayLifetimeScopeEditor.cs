@@ -1,17 +1,15 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+using Sirenix.OdinInspector.Editor;
 
-namespace GlassRefrain.Bootstrap.Editor
-{
+namespace GlassRefrain.Bootstrap.Editor {
     [CustomEditor(typeof(GameplayLifetimeScope))]
-    public class GameplayLifetimeScopeEditor : UnityEditor.Editor
-    {
+    public class GameplayLifetimeScopeEditor : OdinEditor {
         private bool _isVContainerFieldsGenerated;
 
-        public override VisualElement CreateInspectorGUI()
-        {
+        public override VisualElement CreateInspectorGUI() {
             var rootElement = new VisualElement();
 
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
@@ -23,12 +21,9 @@ namespace GlassRefrain.Bootstrap.Editor
             rootElement.styleSheets.Add(styleSheet);
 
             var vcontainerFoldout = rootElement.Q<Foldout>("vcontainer-foldout");
-            if (vcontainerFoldout != null)
-            {
-                vcontainerFoldout.RegisterValueChangedCallback(evt =>
-                {
-                    if (evt.newValue && !_isVContainerFieldsGenerated)
-                    {
+            if (vcontainerFoldout != null) {
+                vcontainerFoldout.RegisterValueChangedCallback(evt => {
+                    if (evt.newValue && !_isVContainerFieldsGenerated) {
                         GenerateVContainerFields(rootElement, vcontainerFoldout);
                         rootElement.Bind(serializedObject);
                     }
@@ -39,34 +34,30 @@ namespace GlassRefrain.Bootstrap.Editor
             return rootElement;
         }
 
-        private void GenerateVContainerFields(VisualElement root, Foldout foldout)
-        {
+        private void GenerateVContainerFields(VisualElement root, Foldout foldout) {
             _isVContainerFieldsGenerated = true;
 
+            // Lấy danh sách các thuộc tính đã được bind thủ công trong UXML để loại trừ
             var customBoundFields = root.Query<PropertyField>().ToList();
             var excludedProperties = new HashSet<string>();
-            foreach (var field in customBoundFields)
-            {
-                if (!string.IsNullOrEmpty(field.bindingPath))
-                {
+            foreach (var field in customBoundFields) {
+                if (!string.IsNullOrEmpty(field.bindingPath)) {
                     excludedProperties.Add(field.bindingPath);
                 }
             }
-            excludedProperties.Add("m_Script");
 
-            var serializedProp = serializedObject.GetIterator();
-            if (serializedProp.NextVisible(true))
-            {
-                do
-                {
-                    if (!excludedProperties.Contains(serializedProp.name))
-                    {
-                        var propField = new PropertyField(serializedProp.Copy());
-                        foldout.Add(propField);
-                    }
-                }
-                while (serializedProp.NextVisible(false));
-            }
+            excludedProperties.Add("m_Script");
+            excludedProperties.Add("serializationData"); // Loại trừ cả data nhị phân ẩn của Odin luôn
+
+            // THAY ĐỔI Ở ĐÂY: Dùng IMGUIContainer để nhúng trình vẽ của Odin vào UI Toolkit Foldout
+            var odinInspectorContainer = new IMGUIContainer(() => {
+                // Gọi hàm vẽ mặc định của OdinEditor, nó sẽ tự quét [OdinSerialize] và vẽ bằng IMGUI
+                // Đồng thời Odin cũng tự động loại trừ các field vẽ bằng thuộc tính [TabGroup] nếu cần,
+                // Hoặc bạn có thể dùng DrawPropertiesTree() của Odin để tùy biến sâu hơn.
+                this.DrawTree();
+            });
+
+            foldout.Add(odinInspectorContainer);
         }
     }
-}
+}*/

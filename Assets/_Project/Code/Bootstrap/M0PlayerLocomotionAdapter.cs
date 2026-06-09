@@ -35,13 +35,9 @@ namespace GlassRefrain.Bootstrap {
         /// Sets the locomotion instance. Called by M0GameplayTickHandler after
         /// VContainer injection. Adapter only reads snapshots — never mutates truth.
         /// </summary>
-        public void SetLocomotion(M0PlayerLocomotion loco) {
-            _locomotion = loco;
-        }
+        public void SetLocomotion(M0PlayerLocomotion loco) => _locomotion = loco;
 
-        public void SetLogger(INhemLogger log) {
-            _logger = log;
-        }
+        public void SetLogger(INhemLogger log) => _logger = log;
 
         private void Update() {
             if (_locomotion == null) {

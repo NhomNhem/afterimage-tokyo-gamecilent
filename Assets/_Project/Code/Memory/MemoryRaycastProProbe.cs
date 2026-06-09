@@ -1,14 +1,16 @@
 using NhemDangFugBixs.NhemLogging;
 using RaycastPro.Detectors;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
 
 namespace GlassRefrain.Memory {
-    public sealed class MemoryRaycastProProbe : MonoBehaviour {
-        [SerializeField] private RangeDetector rangeDetector;
-        [SerializeField] private InputActionReference interactAction;
-        [SerializeField, Min(0.01f)] private float fallbackRadius = 2.25f;
+    public sealed class MemoryRaycastProProbe : SerializedMonoBehaviour {
+        [OdinSerialize] private RangeDetector rangeDetector;
+        [OdinSerialize] private InputActionReference interactAction;
+        [OdinSerialize, Min(0.01f)] private float fallbackRadius = 2.25f;
 
         private INhemLogger _logger;
         private MemoryInteractionService _memoryInteractionService;
@@ -71,9 +73,8 @@ namespace GlassRefrain.Memory {
                 }
 
                 float sqrDistance = (detectedCollider.ClosestPoint(transform.position) - transform.position).sqrMagnitude;
-                if (sqrDistance >= nearestSqrDistance) {
+                if (sqrDistance >= nearestSqrDistance)
                     continue;
-                }
 
                 nearestSqrDistance = sqrDistance;
                 selectedCollider = detectedCollider;

@@ -16,12 +16,13 @@ using System.Collections.Generic;
 
 namespace GlassRefrain.Bootstrap {
     public class M0GameplayTickHandler : SerializedMonoBehaviour {
-        [OdinSerialize] private M0PlayerLocomotionAdapter adapter;
-        [OdinSerialize] private M0DirectPlayerInput directInput;
-        [OdinSerialize] private CameraMovementBasisProvider cameraBasisProvider;
-        [OdinSerialize] private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
-        [OdinSerialize] private M0CombatDebugOverlayAdapter debugOverlayAdapter;
-        [OdinSerialize] private M0AnimationPresentationAdapter animationPresentationAdapter;
+
+        [OdinSerialize, Required] private M0PlayerLocomotionAdapter adapter;
+        [OdinSerialize, Required] private M0DirectPlayerInput directInput;
+        [OdinSerialize, Required] private CameraMovementBasisProvider cameraBasisProvider;
+        [OdinSerialize, Required] private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
+        [OdinSerialize, Required] private M0CombatDebugOverlayAdapter debugOverlayAdapter;
+        [OdinSerialize, Required] private M0AnimationPresentationAdapter animationPresentationAdapter;
 
         private M0PlayerLocomotion _locomotion;
         private M0TargetContext _targetContext;
@@ -124,6 +125,7 @@ namespace GlassRefrain.Bootstrap {
                     : Vector3.forward;
             }
 
+            /*
             // Warn if presentation adapters are not assigned in Inspector
             if (visualFeedbackAdapter == null) {
                 logger?.LogWarning("[M0Presentation] Visual feedback adapter missing; skipping presentation update");
@@ -139,29 +141,18 @@ namespace GlassRefrain.Bootstrap {
                 logger?.Log("[M0DebugOverlay] Adapter initialized");
             }
 #endif
+*/
 
             SyncDebugOverlayFromSnapshots();
         }
 
         private void OnDestroy() {
-            if (_combatCore != null) {
-                _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
-            }
-            if (_locomotion != null) {
-                _locomotion.SnapshotChanged -= OnLocomotionSnapshotChanged;
-            }
-            if (_enemyIntentModel != null) {
-                _enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
-            }
-            if (_inputRouter != null) {
-                _inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
-            }
-            if (_targetContext != null) {
-                _targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
-            }
-            if (_combatCore != null) {
-                _combatCore.RevealRequestEmitted -= OnRevealRequestEmitted;
-            }
+            _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
+            _locomotion.SnapshotChanged -= OnLocomotionSnapshotChanged;
+            _enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
+            _inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
+            _targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
+            _combatCore.RevealRequestEmitted -= OnRevealRequestEmitted;
         }
 
         private void Update() {
