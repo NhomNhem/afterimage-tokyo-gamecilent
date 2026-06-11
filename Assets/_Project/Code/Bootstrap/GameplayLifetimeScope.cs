@@ -57,13 +57,13 @@ namespace GlassRefrain.Bootstrap {
 
         #region Gameplay Scope / Runtime Services
 
-        [TabGroup("Gameplay Scope", "Configs"), Required]
+        [TabGroup("Gameplay Scope", "Configs"), OdinSerialize, Required]
         private M0CombatTimingConfig combatTimingConfig;
 
-        [TabGroup("Gameplay Scope", "Configs"), Required]
+        [TabGroup("Gameplay Scope", "Configs"), OdinSerialize, Required]
         private M0LocomotionConfig locomotionConfig;
 
-        [TabGroup("Gameplay Scope", "Configs"), Required]
+        [TabGroup("Gameplay Scope", "Configs"), OdinSerialize, Required]
         private M0MemoryRuntimeTuningConfig memoryRuntimeTuningConfig;
 
         #endregion

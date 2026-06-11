@@ -46,12 +46,13 @@ namespace GlassRefrain.Bootstrap {
         private InputIntentSnapshot lastInputSnapshot;
         private TargetContextSnapshot lastTargetSnapshot;
         private readonly M0MemoryInteractionTickBridge _memoryInteractionTickBridge = new M0MemoryInteractionTickBridge();
+        private readonly M0DodgeDisplacementBridge _dodgeDisplacementBridge = new M0DodgeDisplacementBridge();
         private bool _loggedAdapterMissing;
-        private bool _dodgeDisplacementArmed;
         private Vector3 _encounterResetStartPosition;
         private Vector3 _encounterResetStartFacing;
         private readonly List<InputActionIntent> _triggeredInputActions = new List<InputActionIntent>(8);
         private bool _interactTriggeredThisFrame;
+        private bool _isConstructed;
 
         public void SetVisualFeedbackAdapter(M0CombatVisualFeedbackAdapter adapter) {
             visualFeedbackAdapter = adapter;
@@ -77,6 +78,7 @@ namespace GlassRefrain.Bootstrap {
             _memoryVfxResponse = memoryVfxResponse;
             _memoryInteractionService = memoryInteractionService;
             _logger = logger;
+            _isConstructed = true;
 #if GR_ENEMY_DEBUG
             _logger?.Log($"[M0EnemyLoop] TickHandler received loopDriver={_enemyIntentLoopDriver != null}");
 #endif
@@ -147,15 +149,33 @@ namespace GlassRefrain.Bootstrap {
         }
 
         private void OnDestroy() {
-            _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
-            _locomotion.SnapshotChanged -= OnLocomotionSnapshotChanged;
-            _enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
-            _inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
-            _targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
-            _combatCore.RevealRequestEmitted -= OnRevealRequestEmitted;
+            if (!_isConstructed) return;
+
+            if (_combatCore != null) {
+                _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
+                _combatCore.RevealRequestEmitted -= OnRevealRequestEmitted;
+            }
+
+            if (_locomotion != null) {
+                _locomotion.SnapshotChanged -= OnLocomotionSnapshotChanged;
+            }
+
+            if (_enemyIntentModel != null) {
+                _enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
+            }
+
+            if (_inputRouter != null) {
+                _inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
+            }
+
+            if (_targetContext != null) {
+                _targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
+            }
         }
 
         private void Update() {
+            if (!_isConstructed) return;
+
             float dt = Time.deltaTime;
 
             _interactTriggeredThisFrame = false;
@@ -254,7 +274,7 @@ namespace GlassRefrain.Bootstrap {
             _locomotion.ResetForEncounter(_encounterResetStartPosition, _encounterResetStartFacing);
             _enemyIntentLoopDriver.ResetForEncounter("Encounter reset");
 
-            _dodgeDisplacementArmed = false;
+            _dodgeDisplacementBridge.Reset();
             debugOverlayAdapter?.UpdateLastInputAction("ResetEncounter");
             SyncDebugOverlayFromSnapshots();
 
@@ -285,6 +305,17 @@ namespace GlassRefrain.Bootstrap {
             var previousState = lastCombatSnapshot.State;
             var currentState = snapshot.State;
 
+            if (previousState != currentState) {
+                bool dodgeDisplacementStarted = _dodgeDisplacementBridge.HandleCombatTransition(previousState, snapshot, _locomotion);
+                if (dodgeDisplacementStarted && _locomotion != null) {
+                    var before = _locomotion.GetMovementSnapshot().Position;
+#if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
+                    _logger?.Log("[M0Locomotion] Dodge displacement started: before=("
+                                 + before.x.ToString("F2") + "," + before.y.ToString("F2") + "," + before.z.ToString("F2") + ")");
+#endif
+                }
+            }
+
             // Trigger visual feedback on state transitions
             if (visualFeedbackAdapter != null && previousState != currentState)
             {
@@ -300,23 +331,9 @@ namespace GlassRefrain.Bootstrap {
                         visualFeedbackAdapter.TriggerParryFeedback();
                         break;
                     case CombatCoreState.DodgeStartup:
-                        _dodgeDisplacementArmed = true;
                         visualFeedbackAdapter.TriggerDodgeFeedback();
                         break;
                     case CombatCoreState.DodgeActive:
-                        if (_dodgeDisplacementArmed && _locomotion != null) {
-                            var before = _locomotion.GetMovementSnapshot().Position;
-                            bool started = _locomotion.TryBeginDodgeDisplacement();
-                            if (started) {
-#if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
-                                _logger?.Log("[M0Locomotion] Dodge displacement started: before=("
-                                             + before.x.ToString("F2") + "," + before.y.ToString("F2") + "," + before.z.ToString("F2") + ")");
-#endif
-                            }
-
-                            _dodgeDisplacementArmed = false;
-                        }
-
                         visualFeedbackAdapter.TriggerDodgeFeedback();
                         break;
                     case CombatCoreState.CounterActive:

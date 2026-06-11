@@ -6,6 +6,9 @@
     "GlassRefrain.Infrastructure",
     "GlassRefrain.Bootstrap",
     "GlassRefrain.Input",
+    "GlassRefrain.Combat",
+    "GlassRefrain.Locomotion",
+    "NhemDangFugBixs.Logging",
     "NhemDangFugBixs.Attributes"
   ],
   "optionalUnityReferences": [

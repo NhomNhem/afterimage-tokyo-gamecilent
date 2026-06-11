@@ -387,6 +387,9 @@ MonoBehaviour:
     - {fileID: 500000016}
     - {fileID: 1932872218}
     - {fileID: 1990882809}
+    - {fileID: 11400000, guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2}
+    - {fileID: 11400000, guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2}
+    - {fileID: 11400000, guid: fa048c7d2e1bd4745a743423cc6f728a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -422,6 +425,15 @@ MonoBehaviour:
     - Name: memoryProbe
       Entry: 10
       Data: 9
+    - Name: combatTimingConfig
+      Entry: 10
+      Data: 11
+    - Name: locomotionConfig
+      Entry: 10
+      Data: 12
+    - Name: memoryRuntimeTuningConfig
+      Entry: 10
+      Data: 13
     - Name: memoryFragments
       Entry: 7
       Data: 0|GlassRefrain.Memory.MemoryFragment[], GlassRefrain.Memory
