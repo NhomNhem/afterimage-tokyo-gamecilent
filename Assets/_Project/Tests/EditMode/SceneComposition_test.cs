@@ -72,8 +72,10 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayScene_AssignsExplicitMemoryCompositionReferences() {
             string scene = File.ReadAllText(GameplayScenePath);
 
-            Assert.That(scene, Does.Contain("memoryProbe: {fileID: 1932872218}"));
-            Assert.That(scene, Does.Contain("memoryFragments:"));
+            Assert.That(scene, Does.Contain("- Name: memoryProbe"));
+            Assert.That(scene, Does.Contain("Data: 9"));
+            Assert.That(scene, Does.Contain("- {fileID: 1932872218}"));
+            Assert.That(scene, Does.Contain("- Name: memoryFragments"));
             Assert.That(scene, Does.Contain("- {fileID: 1990882809}"));
         }
 
@@ -138,7 +140,8 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayScene_AssignsM0CombatTimingConfigReference() {
             string scene = File.ReadAllText(GameplayScenePath);
 
-            Assert.That(scene, Does.Contain("combatTimingConfig: {fileID: 11400000, guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2}"));
+            Assert.That(scene, Does.Contain("- Name: combatTimingConfig"));
+            Assert.That(scene, Does.Contain("guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2"));
         }
 
         [Test]
@@ -181,7 +184,8 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayScene_AssignsM0LocomotionConfigReference() {
             string scene = File.ReadAllText(GameplayScenePath);
 
-            Assert.That(scene, Does.Contain("locomotionConfig: {fileID: 11400000, guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2}"));
+            Assert.That(scene, Does.Contain("- Name: locomotionConfig"));
+            Assert.That(scene, Does.Contain("guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2"));
         }
 
         [Test]
@@ -277,7 +281,8 @@ namespace GlassRefrain.Tests.EditMode {
         public void GameplayScene_AssignsM0MemoryRuntimeTuningConfigReference() {
             string scene = File.ReadAllText(GameplayScenePath);
 
-            Assert.That(scene, Does.Contain("memoryRuntimeTuningConfig: {fileID: 11400000, guid: fa048c7d2e1bd4745a743423cc6f728a, type: 2}"));
+            Assert.That(scene, Does.Contain("- Name: memoryRuntimeTuningConfig"));
+            Assert.That(scene, Does.Contain("guid: fa048c7d2e1bd4745a743423cc6f728a, type: 2"));
         }
 
         [Test]
@@ -287,9 +292,10 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(source, Does.Contain("public sealed class M0SceneCompositionRegistrar"));
             Assert.That(source, Does.Contain("RegisterSceneComponents(builder)"));
             Assert.That(source, Does.Contain("RegisterBuildWiring(builder)"));
-            Assert.That(source, Does.Contain("builder.RegisterComponent(_tickHandler)"));
-            Assert.That(source, Does.Contain("builder.RegisterComponent(_playerAnimationDriver).As<IPlayerAnimationService>()"));
-            Assert.That(source, Does.Contain("builder.RegisterComponent(_enemyAnimationDriver).As<IEnemyAnimationService>()"));
+            Assert.That(source, Does.Contain("builder.UseComponents(components =>"));
+            Assert.That(source, Does.Contain("components.AddInstance(_tickHandler)"));
+            Assert.That(source, Does.Contain("components.AddInstance(_playerAnimationDriver).As<IPlayerAnimationService>()"));
+            Assert.That(source, Does.Contain("components.AddInstance(_enemyAnimationDriver).As<IEnemyAnimationService>()"));
             Assert.That(source, Does.Contain("_tickHandler.SetVisualFeedbackAdapter(_visualFeedbackAdapter)"));
             Assert.That(source, Does.Contain("_loopDriver.Construct(enemyIntentModel, _logger)"));
             Assert.That(source, Does.Not.Contain("new M0CombatCore"));
