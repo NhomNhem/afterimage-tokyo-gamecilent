@@ -50,7 +50,8 @@ namespace GlassRefrain.Tests.EditMode {
             enemy.EnterTelegraph("EnemyAttack01", 1f, "Telegraphing slash");
 
             var health = new M0HealthDamageReactionModel();
-            health.ApplyDamage(new DamageApplicationContext("EnemyA", "Player", 5f, "Slash", "Damage applied"));
+            health.ApplyDamage(new DamageApplicationContext("EnemyA", "Player", 5f, "Slash", "Damage applied",
+                DamageApplicationCombatOutcome.ConfirmedHit));
 
             var memory = new M0MemoryState();
             memory.IntakeRevealRequest(new RevealRequestContext(

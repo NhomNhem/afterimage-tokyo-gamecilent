@@ -989,24 +989,37 @@ namespace GlassRefrain.Core {
         }
     }
 
+    public enum DamageApplicationCombatOutcome {
+        Unknown = 0,
+        ConfirmedHit = 1,
+        ConfirmedCounterHit = 2,
+        Blocked = 3,
+        Parried = 4,
+        Whiffed = 5,
+        Rejected = 6,
+        Invalid = 7
+    }
+
     public readonly struct DamageApplicationContext {
         public string SourceId { get; }
         public string TargetId { get; }
         public float Amount { get; }
         public string DamageType { get; }
         public string ContextLabel { get; }
+        public DamageApplicationCombatOutcome CombatOutcome { get; }
 
         public DamageApplicationContext(string sourceId, string targetId, float amount, string damageType,
-            string contextLabel) {
+            string contextLabel, DamageApplicationCombatOutcome combatOutcome) {
             SourceId = sourceId ?? string.Empty;
             TargetId = targetId ?? string.Empty;
             Amount = amount;
             DamageType = damageType ?? string.Empty;
             ContextLabel = contextLabel ?? string.Empty;
+            CombatOutcome = combatOutcome;
         }
 
         public DamageApplicationContext(string sourceId, float amount, string damageType)
-            : this(sourceId, string.Empty, amount, damageType, string.Empty) { }
+            : this(sourceId, string.Empty, amount, damageType, string.Empty, DamageApplicationCombatOutcome.Unknown) { }
     }
 
     public enum HealthState {

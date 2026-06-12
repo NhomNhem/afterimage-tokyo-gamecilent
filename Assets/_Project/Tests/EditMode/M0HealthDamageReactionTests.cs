@@ -9,7 +9,8 @@ namespace GlassRefrain.Tests.EditMode {
         public void DamageRequestResultAcceptedForValidDamage() {
             var model = new M0HealthDamageReactionModel(100f);
             var result = model.ApplyDamage(
-                new DamageApplicationContext("CombatCoreConfirmed", "Player", 25f, "Basic", "ConfirmedHit"));
+                new DamageApplicationContext("CombatCoreConfirmed", "Player", 25f, "Basic", "ConfirmedHit",
+                    DamageApplicationCombatOutcome.ConfirmedHit));
 
             Assert.That(result.Result, Is.EqualTo(DamageApplicationResultType.Accepted));
             Assert.That(result.Accepted, Is.True);
@@ -19,7 +20,8 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void HealthSnapshotReflectsLatestDamageResult() {
             var model = new M0HealthDamageReactionModel(80f);
-            model.ApplyDamage(new DamageApplicationContext("Enemy", "Player", 10f, "Basic", "Hit"));
+            model.ApplyDamage(new DamageApplicationContext("Enemy", "Player", 10f, "Basic", "Hit",
+                DamageApplicationCombatOutcome.ConfirmedHit));
 
             Assert.That(model.Snapshot.LastDamageResult.Result, Is.EqualTo(DamageApplicationResultType.Accepted));
             Assert.That(model.Snapshot.LastDamageResult.AppliedAmount, Is.EqualTo(10f));
@@ -29,7 +31,8 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void HitReactionPlaceholderIsSetAfterAcceptedDamage() {
             var model = new M0HealthDamageReactionModel();
-            model.ApplyDamage(new DamageApplicationContext("EnemyStrike", "Player", 5f, "Basic", "Hit"));
+            model.ApplyDamage(new DamageApplicationContext("EnemyStrike", "Player", 5f, "Basic", "Hit",
+                DamageApplicationCombatOutcome.ConfirmedHit));
 
             Assert.That(model.Snapshot.HitReaction.SourceId, Is.EqualTo("EnemyStrike"));
             Assert.That(model.Snapshot.HitReaction.ReactionLabel, Is.EqualTo("HitReactPlaceholder"));
@@ -39,7 +42,8 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void DefeatedStateTriggeredWhenHealthReachesZero() {
             var model = new M0HealthDamageReactionModel(20f);
-            model.ApplyDamage(new DamageApplicationContext("Enemy", "Player", 20f, "Basic", "Lethal"));
+            model.ApplyDamage(new DamageApplicationContext("Enemy", "Player", 20f, "Basic", "Lethal",
+                DamageApplicationCombatOutcome.ConfirmedHit));
 
             Assert.That(model.Snapshot.Defeat.IsDefeated, Is.True);
             Assert.That(model.Snapshot.State, Is.EqualTo(HealthState.Disabled));

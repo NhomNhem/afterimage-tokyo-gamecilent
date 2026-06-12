@@ -18,7 +18,8 @@ namespace GlassRefrain.Tests.EditMode {
             var model = new M0HealthDamageReactionModel(100f);
 
             var result = model.ApplyDamage(
-                new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 12f, "Slash", "ConfirmedHit"));
+                new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 12f, "Slash", "ConfirmedHit",
+                    DamageApplicationCombatOutcome.ConfirmedHit));
 
             Assert.That(result.Result, Is.EqualTo(DamageApplicationResultType.Accepted));
             Assert.That(result.AppliedAmount, Is.EqualTo(12f));
@@ -30,7 +31,8 @@ namespace GlassRefrain.Tests.EditMode {
             var model = new M0HealthDamageReactionModel(100f);
 
             model.ApplyDamage(
-                new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 5f, "Slash", "CounterConfirmed"));
+                new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 5f, "Slash", "CounterConfirmed",
+                    DamageApplicationCombatOutcome.ConfirmedCounterHit));
 
             Assert.That(model.Snapshot.HitReaction.SourceId, Is.EqualTo("CombatCoreConfirmed"));
             Assert.That(model.Snapshot.HitReaction.ReactionLabel, Is.EqualTo("HitReactPlaceholder"));
@@ -42,7 +44,13 @@ namespace GlassRefrain.Tests.EditMode {
             var model = new M0HealthDamageReactionModel(100f);
 
             var rejectedResult = model.ApplyDamage(
-                new DamageApplicationContext("CombatCore", "Enemy", 10f, "Slash", "Rejected"));
+                new DamageApplicationContext(
+                    "CombatCore",
+                    "Enemy",
+                    10f,
+                    "Slash",
+                    "Rejected",
+                    DamageApplicationCombatOutcome.Rejected));
 
             Assert.That(rejectedResult.Result, Is.EqualTo(DamageApplicationResultType.Rejected));
             Assert.That(rejectedResult.AppliedAmount, Is.EqualTo(0f));
@@ -56,7 +64,8 @@ namespace GlassRefrain.Tests.EditMode {
 
             var before = combatCore.Snapshot;
             model.ApplyDamage(
-                new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 9f, "Slash", "ConfirmedHit"));
+                new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 9f, "Slash", "ConfirmedHit",
+                    DamageApplicationCombatOutcome.ConfirmedHit));
             var after = combatCore.Snapshot;
 
             Assert.That(after.State, Is.EqualTo(before.State));
@@ -67,7 +76,8 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void HealthSnapshot_IsObservable_ThroughDebugReadOnlyAggregate_AfterDamage() {
             var health = new M0HealthDamageReactionModel(100f);
-            health.ApplyDamage(new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 7f, "Slash", "ConfirmedHit"));
+            health.ApplyDamage(new DamageApplicationContext("CombatCoreConfirmed", "Enemy", 7f, "Slash", "ConfirmedHit",
+                DamageApplicationCombatOutcome.ConfirmedHit));
 
             var aggregator = new M0DebugOverlaySnapshotAggregator();
             var snapshot = aggregator.Capture(

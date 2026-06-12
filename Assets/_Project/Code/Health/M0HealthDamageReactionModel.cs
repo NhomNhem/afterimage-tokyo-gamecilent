@@ -1,10 +1,7 @@
 using System;
-using GlassRefrain.Code.Shared.DI;
 using GlassRefrain.Core;
-using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Health {
-    [AutoRegisterIn<IGameplayLifetimeScope>, As<IM0HealthDamageReactionModel>, AsSelf]
     public sealed class M0HealthDamageReactionModel : IM0HealthDamageReactionModel {
         private readonly float maxHealth;
         private float currentHealth;
@@ -99,17 +96,9 @@ namespace GlassRefrain.Health {
 
         private static bool IsResolvedCombatOutcome(DamageApplicationContext request) {
             if (string.IsNullOrWhiteSpace(request.SourceId)) return false;
-            if (string.IsNullOrWhiteSpace(request.ContextLabel)) return false;
 
-            var label = request.ContextLabel.Trim();
-            if (label.Equals("Rejected", StringComparison.OrdinalIgnoreCase)) return false;
-            if (label.Equals("Invalid", StringComparison.OrdinalIgnoreCase)) return false;
-            if (label.Equals("Blocked", StringComparison.OrdinalIgnoreCase)) return false;
-            if (label.IndexOf("Rejected", StringComparison.OrdinalIgnoreCase) >= 0) return false;
-            if (label.IndexOf("Invalid", StringComparison.OrdinalIgnoreCase) >= 0) return false;
-            if (label.IndexOf("Blocked", StringComparison.OrdinalIgnoreCase) >= 0) return false;
-
-            return true;
+            return request.CombatOutcome == DamageApplicationCombatOutcome.ConfirmedHit
+                || request.CombatOutcome == DamageApplicationCombatOutcome.ConfirmedCounterHit;
         }
     }
 }
