@@ -12,6 +12,7 @@ namespace GlassRefrain.Tests.EditMode {
     /// </summary>
     public class SceneComposition_test {
         private const string GameplayLifetimeScopePath = "Assets/_Project/Code/Bootstrap/GameplayLifetimeScope.cs";
+        private const string M0GameplayTickHandlerPath = "Assets/_Project/Code/Bootstrap/M0GameplayTickHandler.cs";
         private const string M0RuntimeServiceCompositionRegistrarPath = "Assets/_Project/Code/Bootstrap/M0RuntimeServiceCompositionRegistrar.cs";
         private const string M0SceneCompositionRegistrarPath = "Assets/_Project/Code/Bootstrap/M0SceneCompositionRegistrar.cs";
         private const string GameplayLifetimeScopeEditorPath = "Assets/_Project/Code/Bootstrap/Editor/GameplayLifetimeScopeEditor.cs";
@@ -304,6 +305,16 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(source, Does.Not.Contain("RequestAction("));
             Assert.That(source, Does.Not.Contain("ConsumeInputIntent("));
             Assert.That(source, Does.Not.Contain("TryInteract"));
+        }
+
+        [Test]
+        public void M0GameplayTickHandler_TriggersCounterAvailabilityFromConfirmedCounterWindowOnly() {
+            string source = File.ReadAllText(M0GameplayTickHandlerPath);
+
+            Assert.That(source, Does.Contain("!lastCombatSnapshot.CounterWindow.IsOpen && snapshot.CounterWindow.IsOpen"));
+            Assert.That(source, Does.Contain("visualFeedbackAdapter.TriggerCounterAvailableFeedback()"));
+            Assert.That(source, Does.Contain("case CombatCoreState.CounterActive:"));
+            Assert.That(source, Does.Contain("visualFeedbackAdapter.TriggerCounterFeedback()"));
         }
 
         [Test]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GlassRefrain.Code.Shared.DI;
 using GlassRefrain.Core;
 using NhemDangFugBixs.Attributes;
+using UnityEngine;
 
 namespace GlassRefrain.Input {
     [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Scoped)]
@@ -187,8 +188,6 @@ namespace GlassRefrain.Input {
             return true;
         }
 
-        private static bool AreEqual(Axis2 left, Axis2 right) {
-            return left.X == right.X && left.Y == right.Y;
-        }
+        private static bool AreEqual(Axis2 left, Axis2 right) => Mathf.Approximately(left.X, right.X) && Mathf.Approximately(left.Y, right.Y);
     }
 }

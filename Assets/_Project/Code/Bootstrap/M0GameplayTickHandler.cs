@@ -304,6 +304,7 @@ namespace GlassRefrain.Bootstrap {
         {
             var previousState = lastCombatSnapshot.State;
             var currentState = snapshot.State;
+            bool counterWindowOpened = !lastCombatSnapshot.CounterWindow.IsOpen && snapshot.CounterWindow.IsOpen;
 
             if (previousState != currentState) {
                 bool dodgeDisplacementStarted = _dodgeDisplacementBridge.HandleCombatTransition(previousState, snapshot, _locomotion);
@@ -340,6 +341,11 @@ namespace GlassRefrain.Bootstrap {
                         visualFeedbackAdapter.TriggerCounterFeedback();
                         break;
                 }
+            }
+
+            if (visualFeedbackAdapter != null && counterWindowOpened)
+            {
+                visualFeedbackAdapter.TriggerCounterAvailableFeedback();
             }
 
             animationPresentationAdapter?.ObserveCombatSnapshot(snapshot);

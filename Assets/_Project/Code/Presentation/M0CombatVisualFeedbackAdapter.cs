@@ -15,6 +15,7 @@ namespace GlassRefrain.Presentation
         [OdinSerialize] private Material playerLightAttackMaterial;
         [OdinSerialize] private Material playerHeavyAttackMaterial;
         [OdinSerialize] private Material playerParryMaterial;
+        [OdinSerialize] private Material playerCounterAvailableMaterial;
         [OdinSerialize] private Material playerCounterMaterial;
 
         [OdinSerialize] private Material enemyOriginalMaterial;
@@ -76,7 +77,7 @@ namespace GlassRefrain.Presentation
 
             if (playerParryMaterial != null)
             {
-                ApplyMaterialFeedback(playerRenderer, playerParryMaterial, "Parry", 0.2f);
+                ApplyCombinedFeedback(playerParryMaterial, 1.06f, "Parry", 0.2f);
                 return;
             }
 
@@ -86,6 +87,7 @@ namespace GlassRefrain.Presentation
                 propertyBlock.SetColor("_BaseColor", new Color(0f, 0.8f, 1f));
                 playerRenderer.SetPropertyBlock(propertyBlock);
             }
+            playerRenderer.transform.localScale = playerOriginalScale * 1.06f;
             feedbackTimer = 0.2f;
             currentFeedbackType = "Parry";
         }
@@ -117,6 +119,27 @@ namespace GlassRefrain.Presentation
             playerRenderer.transform.localScale = newScale;
             feedbackTimer = 0.5f;
             currentFeedbackType = "Counter";
+        }
+
+        public void TriggerCounterAvailableFeedback()
+        {
+            if (playerRenderer == null) return;
+
+            if (playerCounterAvailableMaterial != null)
+            {
+                ApplyCombinedFeedback(playerCounterAvailableMaterial, 1.1f, "CounterAvailable", 0.25f);
+                return;
+            }
+
+            if (playerRenderer.sharedMaterial != null && playerRenderer.sharedMaterial.HasProperty("_BaseColor"))
+            {
+                playerRenderer.GetPropertyBlock(propertyBlock);
+                propertyBlock.SetColor("_BaseColor", new Color(0.25f, 1f, 0.55f));
+                playerRenderer.SetPropertyBlock(propertyBlock);
+            }
+            playerRenderer.transform.localScale = playerOriginalScale * 1.1f;
+            feedbackTimer = 0.25f;
+            currentFeedbackType = "CounterAvailable";
         }
 
         public void SetEnemyTelegraphState()

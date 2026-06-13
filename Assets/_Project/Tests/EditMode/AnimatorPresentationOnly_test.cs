@@ -152,6 +152,13 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void M0CombatVisualFeedbackAdapter_CounterAvailabilityHookExists() {
+            var type = typeof(M0CombatVisualFeedbackAdapter);
+
+            Assert.That(type.GetMethod("TriggerCounterAvailableFeedback"), Is.Not.Null);
+        }
+
+        [Test]
         public void M0PlayerAnimationSet_IsScriptableObject() {
             var type = typeof(M0PlayerAnimationSet);
             Assert.That(type.BaseType, Is.EqualTo(typeof(UnityEngine.ScriptableObject)));
