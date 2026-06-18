@@ -23,34 +23,34 @@ namespace GlassRefrain.Presentation
         [OdinSerialize] private Material enemyActiveMaterial;
         [OdinSerialize] private Material enemyRecoveryMaterial;
 
-        private Material playerCurrentMaterial;
-        private Material enemyCurrentMaterial;
-        private Vector3 playerOriginalScale;
-        private Color playerOriginalColor;
-        private bool hadOriginalColor;
-        private MaterialPropertyBlock propertyBlock;
-        private float feedbackTimer;
-        private string currentFeedbackType;
+        private Material _playerCurrentMaterial;
+        private Material _enemyCurrentMaterial;
+        private Vector3 _playerOriginalScale;
+        private Color _playerOriginalColor;
+        private bool _hadOriginalColor;
+        private MaterialPropertyBlock _propertyBlock;
+        private float _feedbackTimer;
+        private string _currentFeedbackType;
 
         private void Awake()
         {
-            playerCurrentMaterial = playerOriginalMaterial;
-            enemyCurrentMaterial = enemyOriginalMaterial;
-            playerOriginalScale = playerRenderer != null ? playerRenderer.transform.localScale : Vector3.one;
-            propertyBlock = new MaterialPropertyBlock();
+            _playerCurrentMaterial = playerOriginalMaterial;
+            _enemyCurrentMaterial = enemyOriginalMaterial;
+            _playerOriginalScale = playerRenderer != null ? playerRenderer.transform.localScale : Vector3.one;
+            _propertyBlock = new MaterialPropertyBlock();
             if (playerRenderer != null && playerRenderer.sharedMaterial != null && playerRenderer.sharedMaterial.HasProperty("_BaseColor"))
             {
-                playerOriginalColor = playerRenderer.sharedMaterial.GetColor("_BaseColor");
-                hadOriginalColor = true;
+                _playerOriginalColor = playerRenderer.sharedMaterial.GetColor("_BaseColor");
+                _hadOriginalColor = true;
             }
         }
 
         private void Update()
         {
-            if (feedbackTimer > 0f)
+            if (_feedbackTimer > 0f)
             {
-                feedbackTimer -= Time.deltaTime;
-                if (feedbackTimer <= 0f)
+                _feedbackTimer -= Time.deltaTime;
+                if (_feedbackTimer <= 0f)
                 {
                     ResetFeedback();
                 }
@@ -83,13 +83,13 @@ namespace GlassRefrain.Presentation
 
             if (playerRenderer.sharedMaterial != null && playerRenderer.sharedMaterial.HasProperty("_BaseColor"))
             {
-                playerRenderer.GetPropertyBlock(propertyBlock);
-                propertyBlock.SetColor("_BaseColor", new Color(0f, 0.8f, 1f));
-                playerRenderer.SetPropertyBlock(propertyBlock);
+                playerRenderer.GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", new Color(0f, 0.8f, 1f));
+                playerRenderer.SetPropertyBlock(_propertyBlock);
             }
-            playerRenderer.transform.localScale = playerOriginalScale * 1.06f;
-            feedbackTimer = 0.2f;
-            currentFeedbackType = "Parry";
+            playerRenderer.transform.localScale = _playerOriginalScale * 1.06f;
+            _feedbackTimer = 0.2f;
+            _currentFeedbackType = "Parry";
         }
 
         public void TriggerDodgeFeedback()
@@ -111,14 +111,14 @@ namespace GlassRefrain.Presentation
 
             if (playerRenderer.sharedMaterial != null && playerRenderer.sharedMaterial.HasProperty("_BaseColor"))
             {
-                playerRenderer.GetPropertyBlock(propertyBlock);
-                propertyBlock.SetColor("_BaseColor", new Color(1f, 0.85f, 0f));
-                playerRenderer.SetPropertyBlock(propertyBlock);
+                playerRenderer.GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", new Color(1f, 0.85f, 0f));
+                playerRenderer.SetPropertyBlock(_propertyBlock);
             }
             Vector3 newScale = Vector3.one * 1.2f;
             playerRenderer.transform.localScale = newScale;
-            feedbackTimer = 0.5f;
-            currentFeedbackType = "Counter";
+            _feedbackTimer = 0.5f;
+            _currentFeedbackType = "Counter";
         }
 
         public void TriggerCounterAvailableFeedback()
@@ -133,45 +133,45 @@ namespace GlassRefrain.Presentation
 
             if (playerRenderer.sharedMaterial != null && playerRenderer.sharedMaterial.HasProperty("_BaseColor"))
             {
-                playerRenderer.GetPropertyBlock(propertyBlock);
-                propertyBlock.SetColor("_BaseColor", new Color(0.25f, 1f, 0.55f));
-                playerRenderer.SetPropertyBlock(propertyBlock);
+                playerRenderer.GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", new Color(0.25f, 1f, 0.55f));
+                playerRenderer.SetPropertyBlock(_propertyBlock);
             }
-            playerRenderer.transform.localScale = playerOriginalScale * 1.1f;
-            feedbackTimer = 0.25f;
-            currentFeedbackType = "CounterAvailable";
+            playerRenderer.transform.localScale = _playerOriginalScale * 1.1f;
+            _feedbackTimer = 0.25f;
+            _currentFeedbackType = "CounterAvailable";
         }
 
         public void SetEnemyTelegraphState()
         {
             if (enemyRenderer == null || enemyTelegraphMaterial == null) return;
 
-            enemyCurrentMaterial = enemyTelegraphMaterial;
-            enemyRenderer.material = enemyCurrentMaterial;
+            _enemyCurrentMaterial = enemyTelegraphMaterial;
+            enemyRenderer.material = _enemyCurrentMaterial;
         }
 
         public void SetEnemyActiveState()
         {
             if (enemyRenderer == null || enemyActiveMaterial == null) return;
 
-            enemyCurrentMaterial = enemyActiveMaterial;
-            enemyRenderer.material = enemyCurrentMaterial;
+            _enemyCurrentMaterial = enemyActiveMaterial;
+            enemyRenderer.material = _enemyCurrentMaterial;
         }
 
         public void SetEnemyRecoveryState()
         {
             if (enemyRenderer == null || enemyRecoveryMaterial == null) return;
 
-            enemyCurrentMaterial = enemyRecoveryMaterial;
-            enemyRenderer.material = enemyCurrentMaterial;
+            _enemyCurrentMaterial = enemyRecoveryMaterial;
+            enemyRenderer.material = _enemyCurrentMaterial;
         }
 
         private void ApplyMaterialFeedback(Renderer renderer, Material feedbackMaterial, string feedbackType, float duration)
         {
-            playerCurrentMaterial = feedbackMaterial;
-            renderer.material = playerCurrentMaterial;
-            feedbackTimer = duration;
-            currentFeedbackType = feedbackType;
+            _playerCurrentMaterial = feedbackMaterial;
+            renderer.material = _playerCurrentMaterial;
+            _feedbackTimer = duration;
+            _currentFeedbackType = feedbackType;
         }
 
         private void ApplyScaleFeedback(float targetScale, string feedbackType, float duration)
@@ -180,22 +180,22 @@ namespace GlassRefrain.Presentation
 
             Vector3 newScale = Vector3.one * targetScale;
             playerRenderer.transform.localScale = newScale;
-            feedbackTimer = duration;
-            currentFeedbackType = feedbackType;
+            _feedbackTimer = duration;
+            _currentFeedbackType = feedbackType;
         }
 
         private void ApplyCombinedFeedback(Material feedbackMaterial, float targetScale, string feedbackType, float duration)
         {
             if (playerRenderer == null) return;
 
-            playerCurrentMaterial = feedbackMaterial;
-            playerRenderer.material = playerCurrentMaterial;
+            _playerCurrentMaterial = feedbackMaterial;
+            playerRenderer.material = _playerCurrentMaterial;
 
             Vector3 newScale = Vector3.one * targetScale;
             playerRenderer.transform.localScale = newScale;
 
-            feedbackTimer = duration;
-            currentFeedbackType = feedbackType;
+            _feedbackTimer = duration;
+            _currentFeedbackType = feedbackType;
         }
 
         private void ResetFeedback()
@@ -206,26 +206,21 @@ namespace GlassRefrain.Presentation
                 {
                     playerRenderer.material = playerOriginalMaterial;
                 }
-                else if (hadOriginalColor)
+                else if (_hadOriginalColor)
                 {
-                    playerRenderer.GetPropertyBlock(propertyBlock);
-                    propertyBlock.SetColor("_BaseColor", playerOriginalColor);
-                    playerRenderer.SetPropertyBlock(propertyBlock);
+                    playerRenderer.GetPropertyBlock(_propertyBlock);
+                    _propertyBlock.SetColor("_BaseColor", _playerOriginalColor);
+                    playerRenderer.SetPropertyBlock(_propertyBlock);
                 }
                 else
                 {
                     playerRenderer.SetPropertyBlock(null);
                 }
-                playerRenderer.transform.localScale = playerOriginalScale;
+                playerRenderer.transform.localScale = _playerOriginalScale;
             }
 
-            if (enemyRenderer != null && enemyOriginalMaterial != null)
-            {
-                enemyRenderer.material = enemyOriginalMaterial;
-            }
-
-            feedbackTimer = 0f;
-            currentFeedbackType = string.Empty;
+            _feedbackTimer = 0f;
+            _currentFeedbackType = string.Empty;
         }
     }
 }

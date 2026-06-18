@@ -1,20 +1,21 @@
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace GlassRefrain.Memory {
     [CreateAssetMenu(
         fileName = "M0MemoryRuntimeTuningConfig",
         menuName = "Glass Refrain/M0/Memory Runtime Tuning Config")]
-    public sealed class M0MemoryRuntimeTuningConfig : ScriptableObject {
+    public sealed class M0MemoryRuntimeTuningConfig : SerializedScriptableObject {
         [BoxGroup("Reveal Candidate")]
-        [SerializeField, Required] private string defaultRevealCandidateId = "M0RevealCandidate";
+        [OdinSerialize, Required] private string defaultRevealCandidateId = "M0RevealCandidate";
 
         [BoxGroup("Reveal Feedback")]
-        [SerializeField, MinValue(0f)] private float revealFeedbackDurationSeconds = 0.25f;
+        [OdinSerialize, MinValue(0f)] private float revealFeedbackDurationSeconds = 0.25f;
         [BoxGroup("Reveal Feedback")]
-        [SerializeField, MinValue(0f)] private float revealFeedbackCooldownSeconds = 0f;
+        [OdinSerialize, MinValue(0f)] private float revealFeedbackCooldownSeconds = 0f;
         [BoxGroup("Reveal Feedback")]
-        [SerializeField, Required] private string revealFeedbackIntensityLabel = "standard";
+        [OdinSerialize, Required] private string revealFeedbackIntensityLabel = "standard";
 
         public string DefaultRevealCandidateId => defaultRevealCandidateId;
         public float RevealFeedbackDurationSeconds => revealFeedbackDurationSeconds;

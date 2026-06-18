@@ -13,6 +13,7 @@ namespace GlassRefrain.Presentation {
 
         private INhemLogger _logger;
         private string _currentClipName = string.Empty;
+        private bool _isCombatMode;
 
         [Inject]
          public void Construct(INhemLogger logger) {
@@ -30,17 +31,38 @@ namespace GlassRefrain.Presentation {
             }
         }
 
+        public void SetCombatMode(bool isCombatMode) {
+            if (_isCombatMode == isCombatMode) return;
+
+            _isCombatMode = isCombatMode;
+            _currentClipName = string.Empty;
+        }
+
         public void PlayNeutral() {
-            Play(animationSet != null ? animationSet.Idle : null, "Player Idle");
+            var transition = _isCombatMode
+                ? (animationSet != null ? animationSet.CombatIdle : null)
+                : (animationSet != null ? animationSet.Idle : null);
+            Play(transition, _isCombatMode ? "Player CombatIdle" : "Player Idle");
         }
 
         public void PlayLocomotion(LocomotionStateSnapshot snapshot) {
             if (snapshot.State == LocomotionState.Moving) {
-                Play(animationSet != null ? animationSet.Locomotion : null, "Player Locomotion");
+                PlayLocomotionClip();
                 return;
             }
 
             if (snapshot.State == LocomotionState.Idle || snapshot.State == LocomotionState.Uninitialized) {
+                PlayNeutral();
+            }
+        }
+
+        public void PlayLocomotion(LocomotionState state, PlayerStateSnapshot fullSnapshot) {
+            if (state == LocomotionState.Moving) {
+                PlayLocomotionClip();
+                return;
+            }
+
+            if (state == LocomotionState.Idle || state == LocomotionState.Uninitialized) {
                 PlayNeutral();
             }
         }
@@ -63,6 +85,25 @@ namespace GlassRefrain.Presentation {
 
         public void PlayCounter(AttackAnimationRequest request) {
             Play(animationSet != null ? animationSet.Counter : null, "Player Counter");
+        }
+
+        public void PlayDash(DodgeAnimationRequest request) {
+            Play(animationSet != null ? animationSet.Dash : null, "Player Dash");
+        }
+
+        public void PlayHitReaction(AttackAnimationRequest request) {
+            Play(animationSet != null ? animationSet.HitReaction : null, "Player HitReaction");
+        }
+
+        public void PlayStun() {
+            Play(animationSet != null ? animationSet.Stun : null, "Player Stun");
+        }
+
+        private void PlayLocomotionClip() {
+            var transition = _isCombatMode
+                ? (animationSet != null ? animationSet.CombatLocomotion : null)
+                : (animationSet != null ? animationSet.Locomotion : null);
+            Play(transition, _isCombatMode ? "Player CombatLocomotion" : "Player Locomotion");
         }
 
         private void Play(M0AnimationClipTransition transition, string label) {

@@ -177,8 +177,7 @@ namespace GlassRefrain.Input {
                 toggleDebugOverlayPressed,
                 inputEnabled);
 
-            var handler = SnapshotChanged;
-            if (handler != null) handler(latestSnapshot);
+            SnapshotChanged?.Invoke(latestSnapshot);
         }
 
         private static bool UpdateButton(ref bool current, bool next) {

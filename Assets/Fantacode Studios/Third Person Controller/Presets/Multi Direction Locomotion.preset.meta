@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5789cd5f7e0f4544ba1b1855f605b24e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2655988077585873504
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262354
+  packageName: FS - Melee Combat System
+  packageVersion: 2.0.6
+  assetPath: Assets/Fantacode Studios/Third Person Controller/Presets/Multi Direction
+    Locomotion.preset
+  uploadId: 831764

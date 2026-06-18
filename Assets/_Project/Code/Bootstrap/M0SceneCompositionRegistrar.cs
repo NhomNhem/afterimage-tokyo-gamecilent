@@ -1,5 +1,8 @@
+using GlassRefrain.Application;
+using GlassRefrain.Combat;
 using GlassRefrain.Enemy;
 using GlassRefrain.Input;
+using GlassRefrain.Locomotion;
 using GlassRefrain.Memory;
 using GlassRefrain.Presentation;
 using NhemDangFugBixs.NhemLogging;
@@ -52,7 +55,26 @@ namespace GlassRefrain.Bootstrap {
 
         public void Register(IContainerBuilder builder) {
             RegisterSceneComponents(builder);
+            RegisterPlayerStateMachine(builder);
             RegisterBuildWiring(builder);
+        }
+
+        private void RegisterPlayerStateMachine(IContainerBuilder builder) {
+            builder.Register<CombatStateMachine>(resolver => {
+                var combatCore = resolver.Resolve<M0CombatCore>();
+                return new CombatStateMachine(combatCore);
+            }, Lifetime.Singleton).AsSelf();
+
+            builder.Register<LocomotionStateMachine>(resolver => {
+                var locomotion = resolver.Resolve<IM0PlayerLocomotion>();
+                return new LocomotionStateMachine(locomotion);
+            }, Lifetime.Singleton).AsSelf();
+
+            builder.Register<IPlayerStateMachine>(resolver => {
+                var combatStateMachine = resolver.Resolve<CombatStateMachine>();
+                var locomotionStateMachine = resolver.Resolve<LocomotionStateMachine>();
+                return new PlayerStateResolver(combatStateMachine, locomotionStateMachine);
+            }, Lifetime.Singleton).As<IPlayerStateMachine>().AsSelf();
         }
 
         private void RegisterSceneComponents(IContainerBuilder builder) {
@@ -80,6 +102,7 @@ namespace GlassRefrain.Bootstrap {
 
                 InjectMemorySceneParticipants(container);
                 WirePresentationAdapters();
+                WirePlayerStateMachine(container);
                 WireEnemyLoop(container);
             });
         }
@@ -94,6 +117,11 @@ namespace GlassRefrain.Bootstrap {
             if (_animationPresentationAdapter == null || _playerAnimationDriver == null || _enemyAnimationDriver == null) {
                 _logger?.LogWarning("[M0Bootstrap] Animation presentation not assigned; animation playback disabled for this M0 smoke run.");
             }
+        }
+
+        private void WirePlayerStateMachine(IObjectResolver container) {
+            var playerStateMachine = container.Resolve<IPlayerStateMachine>();
+            _animationPresentationAdapter?.ObservePlayerState(playerStateMachine);
         }
 
         private void WireEnemyLoop(IObjectResolver container) {

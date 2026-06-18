@@ -2,12 +2,14 @@
   "name": "GlassRefrain.Tests.PlayMode",
   "rootNamespace": "GlassRefrain.Tests.PlayMode",
   "references": [
+    "GlassRefrain.Application",
     "GlassRefrain.Core",
     "GlassRefrain.Infrastructure",
     "GlassRefrain.Bootstrap",
     "GlassRefrain.Input",
     "GlassRefrain.Combat",
     "GlassRefrain.Locomotion",
+    "GlassRefrain.Presentation",
     "NhemDangFugBixs.Logging",
     "NhemDangFugBixs.Attributes"
   ],

@@ -17,14 +17,10 @@ namespace GlassRefrain.Bootstrap {
         private INhemLogger logger;
 
         private async void Start() {
-            if (loadOnStart) {
-                await LoadM0SceneSetAsync();
-            }
+            if (loadOnStart) await LoadM0SceneSetAsync();
         }
 
-        public void SetLogger(INhemLogger log) {
-            logger = log;
-        }
+        public void SetLogger(INhemLogger log) => logger = log;
 
         public async Task LoadM0SceneSetAsync() {
             logger?.Log("[Bootstrap] Starting M0 Additive Scene Load...");

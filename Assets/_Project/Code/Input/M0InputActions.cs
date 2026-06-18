@@ -416,7 +416,7 @@ namespace GlassRefrain.Input
                 {
                     ""name"": """",
                     ""id"": ""c546e57f-df5c-4f11-9e2b-e41b12df2174"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

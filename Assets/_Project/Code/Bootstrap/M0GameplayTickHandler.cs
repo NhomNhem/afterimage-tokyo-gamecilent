@@ -1,5 +1,6 @@
 using UnityEngine;
 using VContainer;
+using GlassRefrain.Application;
 using GlassRefrain.Camera;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;
@@ -16,7 +17,6 @@ using System.Collections.Generic;
 
 namespace GlassRefrain.Bootstrap {
     public class M0GameplayTickHandler : SerializedMonoBehaviour {
-
         [OdinSerialize, Required] private M0PlayerLocomotionAdapter adapter;
         [OdinSerialize, Required] private M0DirectPlayerInput directInput;
         [OdinSerialize, Required] private CameraMovementBasisProvider cameraBasisProvider;
@@ -45,8 +45,10 @@ namespace GlassRefrain.Bootstrap {
         private EnemyIntentSnapshot lastEnemyIntentSnapshot;
         private InputIntentSnapshot lastInputSnapshot;
         private TargetContextSnapshot lastTargetSnapshot;
+
         private readonly M0MemoryInteractionTickBridge _memoryInteractionTickBridge = new M0MemoryInteractionTickBridge();
-        private readonly M0DodgeDisplacementBridge _dodgeDisplacementBridge = new M0DodgeDisplacementBridge();
+        private IPlayerStateMachine _playerStateMachine;
+
         private bool _loggedAdapterMissing;
         private Vector3 _encounterResetStartPosition;
         private Vector3 _encounterResetStartFacing;
@@ -54,20 +56,18 @@ namespace GlassRefrain.Bootstrap {
         private bool _interactTriggeredThisFrame;
         private bool _isConstructed;
 
-        public void SetVisualFeedbackAdapter(M0CombatVisualFeedbackAdapter adapter) {
-            visualFeedbackAdapter = adapter;
-        }
+        public void SetVisualFeedbackAdapter(M0CombatVisualFeedbackAdapter adapter) => visualFeedbackAdapter = adapter;
 
-        public void SetDebugOverlayAdapter(M0CombatDebugOverlayAdapter adapter) {
-            debugOverlayAdapter = adapter;
-        }
+        public void SetDebugOverlayAdapter(M0CombatDebugOverlayAdapter adapter) => debugOverlayAdapter = adapter;
 
-        public void SetAnimationPresentationAdapter(M0AnimationPresentationAdapter adapter) {
-            animationPresentationAdapter = adapter;
-        }
+        public void SetAnimationPresentationAdapter(M0AnimationPresentationAdapter adapter) => animationPresentationAdapter = adapter;
 
         [Inject]
-        public void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext, M0CombatCore combatCore, M0EnemyIntentModel enemyIntentModel, M0EnemyIntentLoopDriver enemyIntentLoopDriver, M0InputRouter inputRouter, IM0MemoryState memoryState, M0MemoryVFXResponse memoryVfxResponse, MemoryInteractionService memoryInteractionService, INhemLogger logger) {
+        public void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext, M0CombatCore combatCore,
+            M0EnemyIntentModel enemyIntentModel, M0EnemyIntentLoopDriver enemyIntentLoopDriver,
+            M0InputRouter inputRouter, IM0MemoryState memoryState, M0MemoryVFXResponse memoryVfxResponse,
+            MemoryInteractionService memoryInteractionService, INhemLogger logger,
+            IPlayerStateMachine playerStateMachine) {
             _locomotion = locomotion;
             _targetContext = targetContext;
             _combatCore = combatCore;
@@ -77,6 +77,7 @@ namespace GlassRefrain.Bootstrap {
             _memoryState = memoryState;
             _memoryVfxResponse = memoryVfxResponse;
             _memoryInteractionService = memoryInteractionService;
+            _playerStateMachine = playerStateMachine;
             _logger = logger;
             _isConstructed = true;
 #if GR_ENEMY_DEBUG
@@ -88,10 +89,13 @@ namespace GlassRefrain.Bootstrap {
                 adapter.SetLocomotion(locomotion);
                 adapter.SetLogger(logger);
                 _loggedAdapterMissing = false;
-            } else if (!_loggedAdapterMissing) {
-                logger?.LogWarning("[M0Locomotion] Adapter reference missing on M0GameplayTickHandler; Player transform will not be updated.");
+            }
+            else if (!_loggedAdapterMissing) {
+                logger?.LogWarning(
+                    "[M0Locomotion] Adapter reference missing on M0GameplayTickHandler; Player transform will not be updated.");
                 _loggedAdapterMissing = true;
             }
+
             if (directInput != null) {
                 directInput.SetLogger(logger);
                 directInput.SetInputRouter(inputRouter);
@@ -101,8 +105,6 @@ namespace GlassRefrain.Bootstrap {
             combatCore.SnapshotChanged += OnCombatSnapshotChanged;
             lastCombatSnapshot = combatCore.Snapshot;
 
-            locomotion.SnapshotChanged += OnLocomotionSnapshotChanged;
-            animationPresentationAdapter?.ObserveLocomotionSnapshot(locomotion.Snapshot);
 
             enemyIntentModel.SnapshotChanged += OnEnemyIntentSnapshotChanged;
             lastEnemyIntentSnapshot = enemyIntentModel.Snapshot;
@@ -119,7 +121,8 @@ namespace GlassRefrain.Bootstrap {
                 _encounterResetStartFacing = adapter.transform.forward.sqrMagnitude > 0.000001f
                     ? adapter.transform.forward.normalized
                     : Vector3.forward;
-            } else {
+            }
+            else {
                 var initialMovementSnapshot = locomotion.GetMovementSnapshot();
                 _encounterResetStartPosition = initialMovementSnapshot.Position;
                 _encounterResetStartFacing = initialMovementSnapshot.Facing.sqrMagnitude > 0.000001f
@@ -151,26 +154,14 @@ namespace GlassRefrain.Bootstrap {
         private void OnDestroy() {
             if (!_isConstructed) return;
 
-            if (_combatCore != null) {
-                _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
-                _combatCore.RevealRequestEmitted -= OnRevealRequestEmitted;
-            }
+            _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
+            _combatCore.RevealRequestEmitted -= OnRevealRequestEmitted;
 
-            if (_locomotion != null) {
-                _locomotion.SnapshotChanged -= OnLocomotionSnapshotChanged;
-            }
+            _enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
 
-            if (_enemyIntentModel != null) {
-                _enemyIntentModel.SnapshotChanged -= OnEnemyIntentSnapshotChanged;
-            }
+            _inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
 
-            if (_inputRouter != null) {
-                _inputRouter.SnapshotChanged -= OnInputSnapshotChanged;
-            }
-
-            if (_targetContext != null) {
-                _targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
-            }
+            _targetContext.SnapshotChanged -= OnTargetSnapshotChanged;
         }
 
         private void Update() {
@@ -188,16 +179,20 @@ namespace GlassRefrain.Bootstrap {
 #if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
                 if (!basis.IsValid) {
                     if (!_warnedInvalidBasis) {
-                        _logger?.LogWarning("[M0GameplayTickHandler] CameraMovementBasis is invalid; locomotion velocity will remain zero.");
+                        _logger?.LogWarning(
+                            "[M0GameplayTickHandler] CameraMovementBasis is invalid; locomotion velocity will remain zero.");
                         _warnedInvalidBasis = true;
                     }
-                } else {
+                }
+                else {
                     _warnedInvalidBasis = false;
                 }
 #endif
-            } else {
+            }
+            else {
                 if (!_warnedMissingBasis) {
-                    _logger?.LogWarning("[M0GameplayTickHandler] CameraMovementBasisProvider not assigned. Camera-relative movement disabled.");
+                    _logger?.LogWarning(
+                        "[M0GameplayTickHandler] CameraMovementBasisProvider not assigned. Camera-relative movement disabled.");
                     _warnedMissingBasis = true;
                 }
             }
@@ -207,7 +202,8 @@ namespace GlassRefrain.Bootstrap {
 
             // Tick order: enemy loop driver first, then enemy intent model
             if (_enemyIntentLoopDriver == null) {
-                _logger?.LogWarning("[M0GameplayTickHandler] _enemyIntentLoopDriver is null in Update. Tick will not be called.");
+                _logger?.LogWarning(
+                    "[M0GameplayTickHandler] _enemyIntentLoopDriver is null in Update. Tick will not be called.");
             }
 #if GR_ENEMY_DEBUG
             _enemyLoopTickDebugTimer += dt;
@@ -264,7 +260,8 @@ namespace GlassRefrain.Bootstrap {
 #endif
 
         private void ResetEncounterLifecycle(string reason) {
-            if (_targetContext == null || _combatCore == null || _locomotion == null || _enemyIntentLoopDriver == null) {
+            if (_targetContext == null || _combatCore == null || _locomotion == null ||
+                _enemyIntentLoopDriver == null) {
                 _logger?.LogWarning("[M0Encounter] Reset skipped: missing runtime dependency");
                 return;
             }
@@ -274,7 +271,6 @@ namespace GlassRefrain.Bootstrap {
             _locomotion.ResetForEncounter(_encounterResetStartPosition, _encounterResetStartFacing);
             _enemyIntentLoopDriver.ResetForEncounter("Encounter reset");
 
-            _dodgeDisplacementBridge.Reset();
             debugOverlayAdapter?.UpdateLastInputAction("ResetEncounter");
             SyncDebugOverlayFromSnapshots();
 
@@ -300,28 +296,14 @@ namespace GlassRefrain.Bootstrap {
                 targetSnapshot.IsLockedOn && !string.IsNullOrEmpty(targetSnapshot.TargetId) ? "Enemy" : "None");
         }
 
-        private void OnCombatSnapshotChanged(M0CombatSnapshot snapshot)
-        {
+        private void OnCombatSnapshotChanged(M0CombatSnapshot snapshot) {
             var previousState = lastCombatSnapshot.State;
             var currentState = snapshot.State;
             bool counterWindowOpened = !lastCombatSnapshot.CounterWindow.IsOpen && snapshot.CounterWindow.IsOpen;
 
-            if (previousState != currentState) {
-                bool dodgeDisplacementStarted = _dodgeDisplacementBridge.HandleCombatTransition(previousState, snapshot, _locomotion);
-                if (dodgeDisplacementStarted && _locomotion != null) {
-                    var before = _locomotion.GetMovementSnapshot().Position;
-#if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
-                    _logger?.Log("[M0Locomotion] Dodge displacement started: before=("
-                                 + before.x.ToString("F2") + "," + before.y.ToString("F2") + "," + before.z.ToString("F2") + ")");
-#endif
-                }
-            }
-
             // Trigger visual feedback on state transitions
-            if (visualFeedbackAdapter != null && previousState != currentState)
-            {
-                switch (currentState)
-                {
+            if (visualFeedbackAdapter != null && previousState != currentState) {
+                switch (currentState) {
                     case CombatCoreState.AttackStartup:
                     case CombatCoreState.AttackActive:
                         // Trigger visual feedback (simplified - in full implementation would distinguish Light vs Heavy)
@@ -343,16 +325,12 @@ namespace GlassRefrain.Bootstrap {
                 }
             }
 
-            if (visualFeedbackAdapter != null && counterWindowOpened)
-            {
+            if (visualFeedbackAdapter != null && counterWindowOpened) {
                 visualFeedbackAdapter.TriggerCounterAvailableFeedback();
             }
 
-            animationPresentationAdapter?.ObserveCombatSnapshot(snapshot);
-
             // Update debug overlay
-            if (debugOverlayAdapter != null)
-            {
+            if (debugOverlayAdapter != null) {
                 debugOverlayAdapter.UpdateCombatState(currentState.ToString());
                 debugOverlayAdapter.UpdateCounterWindowState(
                     snapshot.CounterWindow.IsOpen,
@@ -367,20 +345,13 @@ namespace GlassRefrain.Bootstrap {
             lastCombatSnapshot = snapshot;
         }
 
-        private void OnLocomotionSnapshotChanged(LocomotionStateSnapshot snapshot) {
-            animationPresentationAdapter?.ObserveLocomotionSnapshot(snapshot);
-        }
-
-        private void OnEnemyIntentSnapshotChanged(EnemyIntentSnapshot snapshot)
-        {
+        private void OnEnemyIntentSnapshotChanged(EnemyIntentSnapshot snapshot) {
             var previousState = lastEnemyIntentSnapshot.State;
             var currentState = snapshot.State;
 
             // Update enemy visual feedback based on intent state
-            if (visualFeedbackAdapter != null)
-            {
-                switch (currentState)
-                {
+            if (visualFeedbackAdapter != null) {
+                switch (currentState) {
                     case EnemyIntentState.Telegraph:
                         visualFeedbackAdapter.SetEnemyTelegraphState();
                         break;
@@ -399,8 +370,7 @@ namespace GlassRefrain.Bootstrap {
             animationPresentationAdapter?.ObserveEnemyIntentSnapshot(snapshot);
 
             // Update debug overlay
-            if (debugOverlayAdapter != null)
-            {
+            if (debugOverlayAdapter != null) {
                 debugOverlayAdapter.UpdateEnemyIntentState(currentState.ToString());
 
 /*#if GR_DEBUG_OVERLAY
@@ -411,8 +381,7 @@ namespace GlassRefrain.Bootstrap {
             lastEnemyIntentSnapshot = snapshot;
         }
 
-        private void OnInputSnapshotChanged(InputIntentSnapshot snapshot)
-        {
+        private void OnInputSnapshotChanged(InputIntentSnapshot snapshot) {
             // LastInput overlay is written when triggered intents are routed in HandleInputRouting().
             lastInputSnapshot = snapshot;
         }
@@ -459,6 +428,7 @@ namespace GlassRefrain.Bootstrap {
                                 true);
                             _targetContext.ConsumeInputIntent(intent);
                         }
+
                         break;
                     case InputActionIntent.LightAttack:
 #if GR_INPUT_DEBUG
@@ -507,6 +477,7 @@ namespace GlassRefrain.Bootstrap {
                             debugOverlayAdapter.UpdateLastInputAction("ToggleDebugOverlay");
                             debugOverlayAdapter.ToggleOverlay();
                         }
+
                         break;
                     case InputActionIntent.ResetEncounter:
                         debugOverlayAdapter?.UpdateLastInputAction("ResetEncounter");
@@ -516,8 +487,7 @@ namespace GlassRefrain.Bootstrap {
             }
         }
 
-        private void OnTargetSnapshotChanged(TargetContextSnapshot snapshot)
-        {
+        private void OnTargetSnapshotChanged(TargetContextSnapshot snapshot) {
             if (debugOverlayAdapter == null) return;
 
             // Update debug overlay with lock-on target
@@ -525,24 +495,21 @@ namespace GlassRefrain.Bootstrap {
             debugOverlayAdapter.UpdateLockOnTarget(targetName);
 
 #if GR_INPUT_DEBUG || GR_M0_PROTOTYPE
-            if (lastTargetSnapshot.AcquireReason != snapshot.AcquireReason && !string.IsNullOrEmpty(snapshot.AcquireReason))
-            {
+            if (lastTargetSnapshot.AcquireReason != snapshot.AcquireReason &&
+                !string.IsNullOrEmpty(snapshot.AcquireReason)) {
                 _logger?.Log("[M0Target] AcquireReason: " + snapshot.AcquireReason);
             }
 
-            if (lastTargetSnapshot.InvalidReason != snapshot.InvalidReason && !string.IsNullOrEmpty(snapshot.InvalidReason))
-            {
+            if (lastTargetSnapshot.InvalidReason != snapshot.InvalidReason &&
+                !string.IsNullOrEmpty(snapshot.InvalidReason)) {
                 _logger?.Log("[M0Target] InvalidReason: " + snapshot.InvalidReason);
             }
 
-            if (lastTargetSnapshot.IsLockedOn != snapshot.IsLockedOn)
-            {
-                if (snapshot.IsLockedOn)
-                {
+            if (lastTargetSnapshot.IsLockedOn != snapshot.IsLockedOn) {
+                if (snapshot.IsLockedOn) {
                     _logger?.Log("[M0Target] LockOn acquired");
                 }
-                else
-                {
+                else {
                     _logger?.Log("[M0Target] LockOn released");
                 }
             }
@@ -558,6 +525,5 @@ namespace GlassRefrain.Bootstrap {
                 _memoryVfxResponse,
                 _logger);
         }
-
     }
 }

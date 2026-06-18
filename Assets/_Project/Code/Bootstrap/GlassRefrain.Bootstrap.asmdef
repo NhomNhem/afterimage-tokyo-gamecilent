@@ -2,6 +2,7 @@
   "name": "GlassRefrain.Bootstrap",
   "rootNamespace": "GlassRefrain.Bootstrap",
     "references": [
+      "GlassRefrain.Application",
       "GlassRefrain.Core",
       "GlassRefrain.Infrastructure",
       "GlassRefrain.Combat",

@@ -16,6 +16,7 @@
         "GlassRefrain.Presentation",
         "GlassRefrain.Camera",
         "GlassRefrain.Targeting",
+        "GlassRefrain.Application",
         "NhemDangFugBixs.Attributes",
         "NhemDangFugBixs.Logging",
         "UnityEngine.TestRunner",

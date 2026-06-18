@@ -1,3 +1,4 @@
+using System.Linq;
 using GlassRefrain.Core;
 using GlassRefrain.Presentation;
 using NUnit.Framework;
@@ -79,12 +80,16 @@ namespace GlassRefrain.Tests.EditMode {
         public void IPlayerAnimationService_InterfaceExists() {
             var type = typeof(IPlayerAnimationService);
             Assert.That(type.IsInterface, Is.True);
+            Assert.That(type.GetMethod("SetCombatMode"), Is.Not.Null);
             Assert.That(type.GetMethod("PlayNeutral"), Is.Not.Null);
-            Assert.That(type.GetMethod("PlayLocomotion"), Is.Not.Null);
+            Assert.That(type.GetMethods().Any(m => m.Name == "PlayLocomotion"), Is.True);
             Assert.That(type.GetMethod("PlayAttack"), Is.Not.Null);
             Assert.That(type.GetMethod("PlayDodge"), Is.Not.Null);
             Assert.That(type.GetMethod("PlayParry"), Is.Not.Null);
             Assert.That(type.GetMethod("PlayCounter"), Is.Not.Null);
+            Assert.That(type.GetMethod("PlayDash"), Is.Not.Null);
+            Assert.That(type.GetMethod("PlayHitReaction"), Is.Not.Null);
+            Assert.That(type.GetMethod("PlayStun"), Is.Not.Null);
         }
 
         [Test]
@@ -146,9 +151,16 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void M0AnimationPresentationAdapter_ObserveMethodsExist() {
             var type = typeof(M0AnimationPresentationAdapter);
-            Assert.That(type.GetMethod("ObserveCombatSnapshot"), Is.Not.Null);
-            Assert.That(type.GetMethod("ObserveLocomotionSnapshot"), Is.Not.Null);
+            Assert.That(type.GetMethod("ObservePlayerState"), Is.Not.Null);
             Assert.That(type.GetMethod("ObserveEnemyIntentSnapshot"), Is.Not.Null);
+        }
+
+        [Test]
+        public void M0AnimationPresentationAdapter_ObservePlayerState_AcceptsIPlayerStateMachine() {
+            var method = typeof(M0AnimationPresentationAdapter).GetMethod("ObservePlayerState");
+            Assert.That(method, Is.Not.Null);
+            var paramType = method.GetParameters()[0].ParameterType;
+            Assert.That(paramType.Name, Is.EqualTo("IPlayerStateMachine"));
         }
 
         [Test]

@@ -3,10 +3,6 @@ namespace GlassRefrain.Input {
         public const string GameplayActions = "Assets/_Project/Content/Data/Input/M0InputActions.inputactions";
     }
 
-    public static class M0InputActionMapNames {
-        public const string Gameplay = "Gameplay";
-    }
-
     public static class M0InputActionNames {
         public const string Move = "Move";
         public const string Look = "Look";

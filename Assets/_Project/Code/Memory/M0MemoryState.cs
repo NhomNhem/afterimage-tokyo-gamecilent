@@ -2,14 +2,6 @@ using System;
 using GlassRefrain.Core;
 
 namespace GlassRefrain.Memory {
-    public interface IM0MemoryState {
-        MemoryStateSnapshot Snapshot { get; }
-        event Action<MemoryStateSnapshot> SnapshotChanged;
-        void IntakeRevealRequest(RevealRequestContext request);
-        RevealRequestResult EvaluateRequestedReveal();
-        MemoryStateSnapshot AdvancePhase(string reason, float cooldownSeconds = 0.25f);
-    }
-
     public sealed class M0MemoryState : IM0MemoryState {
         private const float DefaultCooldownSeconds = 0.25f;
 
@@ -177,10 +169,7 @@ namespace GlassRefrain.Memory {
                 responseContext,
                 cooldownContext);
 
-            Action<MemoryStateSnapshot> handler = SnapshotChanged;
-            if (handler != null) {
-                handler(latestSnapshot);
-            }
+            SnapshotChanged?.Invoke(latestSnapshot);
         }
     }
 }

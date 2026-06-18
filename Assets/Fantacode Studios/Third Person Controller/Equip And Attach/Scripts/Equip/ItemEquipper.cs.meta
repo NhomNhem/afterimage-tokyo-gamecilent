@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: cb82844e6e5e92d42b28db4d832ed43e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262354
+  packageName: FS - Melee Combat System
+  packageVersion: 2.0.6
+  assetPath: Assets/Fantacode Studios/Third Person Controller/Equip And Attach/Scripts/Equip/ItemEquipper.cs
+  uploadId: 831764

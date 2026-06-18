@@ -385,11 +385,11 @@ MonoBehaviour:
     - {fileID: 435937325}
     - {fileID: 1932872215}
     - {fileID: 500000016}
-    - {fileID: 1932872218}
-    - {fileID: 1990882809}
     - {fileID: 11400000, guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2}
     - {fileID: 11400000, guid: c7391b1a9e8f4d92a00c14bdf8b8398e, type: 2}
     - {fileID: 11400000, guid: fa048c7d2e1bd4745a743423cc6f728a, type: 2}
+    - {fileID: 1932872218}
+    - {fileID: 1990882809}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -422,18 +422,18 @@ MonoBehaviour:
     - Name: enemyAnimationDriver
       Entry: 10
       Data: 8
-    - Name: memoryProbe
-      Entry: 10
-      Data: 9
     - Name: combatTimingConfig
       Entry: 10
-      Data: 11
+      Data: 9
     - Name: locomotionConfig
       Entry: 10
-      Data: 12
+      Data: 10
     - Name: memoryRuntimeTuningConfig
       Entry: 10
-      Data: 13
+      Data: 11
+    - Name: memoryProbe
+      Entry: 10
+      Data: 12
     - Name: memoryFragments
       Entry: 7
       Data: 0|GlassRefrain.Memory.MemoryFragment[], GlassRefrain.Memory
@@ -442,7 +442,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 10
+      Data: 13
     - Name: 
       Entry: 13
       Data: 
@@ -519,6 +519,9 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: playerParryMaterial
+      Entry: 6
+      Data: 
+    - Name: playerCounterAvailableMaterial
       Entry: 6
       Data: 
     - Name: playerCounterMaterial
@@ -867,6 +870,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 82889727861354620, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0059202677
+      objectReference: {fileID: 0}
+    - target: {fileID: 82889727861354620, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.049177982
+      objectReference: {fileID: 0}
     - target: {fileID: 105795016370994576, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -1178,6 +1189,14 @@ PrefabInstance:
     - target: {fileID: 4483643539032721261, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4527339184903824047, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4527339184903824047, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4567945474724820736, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
       propertyPath: m_Layer
@@ -1733,6 +1752,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!95 &1220419756 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4527339184903824047, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
+  m_PrefabInstance: {fileID: 559362603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &1247940581
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -2081,7 +2105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc3aa55ee40f0946a994615da80b14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Input::GlassRefrain.Input.M0DirectPlayerInput
-  inputAsset: {fileID: -944628639613478452, guid: bad54941cef5c844d9f83834126a155d, type: 3}
 --- !u!114 &1932872215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2095,7 +2118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Presentation::GlassRefrain.Presentation.AnimancerPlayerAnimationDriver
   animancer: {fileID: 1932872216}
-  animationSet: {fileID: 0}
+  animationSet: {fileID: 11400000, guid: 2db640d7d268c5d48bc27fa0689e6913, type: 2}
   disableRootMotion: 1
   playIdleOnEnable: 1
 --- !u!114 &1932872216
@@ -2110,7 +2133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Kybernetik.Animancer::Animancer.AnimancerComponent
-  _Animator: {fileID: 1932872217}
+  _Animator: {fileID: 1220419756}
   _Transitions: {fileID: 0}
   _ActionOnDisable: 0
 --- !u!95 &1932872217

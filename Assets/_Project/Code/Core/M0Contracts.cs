@@ -975,6 +975,11 @@ namespace GlassRefrain.Core {
         TargetLost = 5
     }
 
+    public enum TurnDirection {
+        Left = 0,
+        Right = 1
+    }
+
     public readonly struct CameraMovementBasisSnapshot {
         public Axis2 Forward { get; }
         public Axis2 Right { get; }
@@ -1531,7 +1536,8 @@ namespace GlassRefrain.Core {
         Health = 5,
         MemoryState = 6,
         MemoryVFXResponse = 7,
-        EncounterFramework = 8
+        EncounterFramework = 8,
+        PlayerState = 9
     }
 
     public interface IDebugOverlayChannelSnapshot {

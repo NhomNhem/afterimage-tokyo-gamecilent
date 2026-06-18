@@ -90,8 +90,7 @@ namespace GlassRefrain.Health {
                 hitReaction,
                 defeat);
 
-            var handler = SnapshotChanged;
-            if (handler != null) handler(latestSnapshot);
+            SnapshotChanged?.Invoke(latestSnapshot);
         }
 
         private static bool IsResolvedCombatOutcome(DamageApplicationContext request) {
