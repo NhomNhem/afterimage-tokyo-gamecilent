@@ -1,1 +1,10 @@
-﻿-langVersion:preview
+-langVersion:preview
+-nowarn:UDR0001
+-nowarn:UDR0005
+-nowarn:CS0618
+-nowarn:CS0108
+-nowarn:CS0109
+-nowarn:CS0219
+-nowarn:CS0414
+-nowarn:CS0067
+-nowarn:CS0162

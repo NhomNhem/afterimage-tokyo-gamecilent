@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using GlassRefrain.Core;
 using GlassRefrain.Locomotion;
@@ -23,16 +24,27 @@ public sealed class LocomotionStateMachine : IDisposable {
 
     private readonly IM0PlayerLocomotion? _locomotion;
     private readonly Subject<GroundState> _stateSubject = new();
+    private readonly Subject<LocomotionStateSnapshot> _snapshotSubject = new();
     private LocomotionStateSnapshot _latestSnapshot;
     private bool _disposed;
 
     public Observable<GroundState> StateChanges => _stateSubject;
+    public Observable<LocomotionStateSnapshot> SnapshotChanges => _snapshotSubject;
+    public LocomotionStateSnapshot LatestSnapshot => _latestSnapshot;
     public GroundState CurrentGroundState => LocomotionStateToGroundState(_latestSnapshot.State);
     public LocomotionState CurrentLocomotionState => _latestSnapshot.State;
     public int CurrentPriority => LookupPriority(_latestSnapshot.State);
     public MovementRestrictionContext MovementRestriction => _latestSnapshot.MovementRestriction;
     public RecoveryContext Recovery => _latestSnapshot.Recovery;
     public bool HasLocomotion => _locomotion != null;
+    public Axis2 CurrentMoveIntent => _latestSnapshot.MoveIntent;
+    public Axis2 CurrentFacingDirection {
+        get {
+            if (_locomotion == null) return new Axis2(0f, 1f);
+            var facing = _locomotion.GetMovementSnapshot().Facing;
+            return new Axis2(facing.x, facing.z);
+        }
+    }
 
     public LocomotionStateMachine(IM0PlayerLocomotion? locomotion) {
         _locomotion = locomotion;
@@ -45,10 +57,19 @@ public sealed class LocomotionStateMachine : IDisposable {
         }
 
         _stateSubject.OnNext(CurrentGroundState);
+        _snapshotSubject.OnNext(_latestSnapshot);
     }
 
     public bool TryBeginDodgeDisplacement() {
         return _locomotion?.TryBeginDodgeDisplacement() ?? false;
+    }
+
+    public MovementRestrictionContext GetCurrentRestriction() {
+        return _latestSnapshot.MovementRestriction;
+    }
+
+    public void SetMovementRestriction(MovementRestrictionContext restriction) {
+        _locomotion?.SetMovementRestriction(restriction);
     }
 
     public static GroundState LocomotionStateToGroundState(LocomotionState state) {
@@ -64,6 +85,7 @@ public sealed class LocomotionStateMachine : IDisposable {
         if (_disposed) return;
         _latestSnapshot = snapshot;
         _stateSubject.OnNext(CurrentGroundState);
+        _snapshotSubject.OnNext(snapshot);
     }
 
     private static int LookupPriority(LocomotionState state) {
@@ -91,5 +113,6 @@ public sealed class LocomotionStateMachine : IDisposable {
         if (_locomotion != null)
             _locomotion.SnapshotChanged -= OnSnapshotChanged;
         _stateSubject.Dispose();
+        _snapshotSubject.Dispose();
     }
 }

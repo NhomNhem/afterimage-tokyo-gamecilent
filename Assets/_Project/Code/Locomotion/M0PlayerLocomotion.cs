@@ -301,7 +301,8 @@ namespace GlassRefrain.Locomotion {
                 movementRestriction,
                 recoveryContext,
                 cameraMovementBasis,
-                stateDetail);
+                stateDetail,
+                velocity);
 
             var handler = SnapshotChanged;
             if (handler != null) handler(latestSnapshot);

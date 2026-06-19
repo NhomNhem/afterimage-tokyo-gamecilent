@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;
@@ -15,8 +16,15 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
 
     private PlayerStateSnapshot _currentSnapshot;
     private bool _disposed;
+    private MovementRestrictionContext _preTurnRestriction;
+    private bool _hasTurnRestrictionSaved;
+    private Subject<LocomotionStateSnapshot>? _emptyLocomotionSubject;
 
     public Observable<PlayerStateSnapshot> StateChanges => _stateSubject;
+    public Observable<LocomotionStateSnapshot> LocomotionChanges =>
+        _locomotionStateMachine != null
+            ? _locomotionStateMachine.SnapshotChanges
+            : (_emptyLocomotionSubject ??= new Subject<LocomotionStateSnapshot>());
     public PlayerStateSnapshot CurrentSnapshot => _currentSnapshot;
 
     public PlayerStateResolver(
@@ -38,12 +46,16 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
         if (_disposed) return;
 
         var previousResolvedState = _currentSnapshot.ResolvedState;
+        var previousCombatState = _currentSnapshot.CombatState;
         var snapshot = Resolve();
 
         if (snapshot.ResolvedState != previousResolvedState) {
             _currentSnapshot = snapshot;
             _stateSubject.OnNext(snapshot);
             OnResolvedStateChanged(previousResolvedState, snapshot.ResolvedState);
+        } else if (snapshot.CombatState != previousCombatState) {
+            _currentSnapshot = snapshot;
+            _stateSubject.OnNext(snapshot);
         }
     }
 
@@ -62,6 +74,12 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
             : new CombatResolutionResult(CombatActionType.Unknown, false, false, false, false, string.Empty,
                 "No combat core");
         var detail = BuildStateDetail(resolvedState);
+        var movementDirection = _locomotionStateMachine != null
+            ? _locomotionStateMachine.CurrentMoveIntent
+            : new Axis2(0f, 0f);
+        var facingDirection = _locomotionStateMachine != null
+            ? _locomotionStateMachine.CurrentFacingDirection
+            : new Axis2(0f, 1f);
 
         return new PlayerStateSnapshot(
             resolvedState,
@@ -71,7 +89,9 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
             recovery,
             false,
             detail,
-            resolutionResult);
+            resolutionResult,
+            movementDirection,
+            facingDirection);
     }
 
     private string BuildStateDetail(PlayerState resolved) {
@@ -136,6 +156,26 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
             _locomotionStateMachine?.TryBeginDodgeDisplacement();
     }
 
+    public void SetMovementLockedForTurn(bool isLocked, string source) {
+        if (_locomotionStateMachine == null) return;
+
+        if (isLocked) {
+            _preTurnRestriction = _locomotionStateMachine.GetCurrentRestriction();
+            _hasTurnRestrictionSaved = true;
+            _locomotionStateMachine.SetMovementRestriction(new MovementRestrictionContext(
+                canTranslate: false,
+                canRotate: true,
+                restrictionStrength: 1f,
+                source: source ?? "TurnInPlace"));
+            return;
+        }
+
+        if (_hasTurnRestrictionSaved) {
+            _locomotionStateMachine.SetMovementRestriction(_preTurnRestriction);
+            _hasTurnRestrictionSaved = false;
+        }
+    }
+
     public PlayerStateDebugSnapshot CreateDebugSnapshot() {
         var details = new string[] {
             "ResolvedState: " + _currentSnapshot.ResolvedState,
@@ -155,5 +195,6 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
         _combatSubscription?.Dispose();
         _locomotionSubscription?.Dispose();
         _stateSubject.Dispose();
+        _emptyLocomotionSubject?.Dispose();
     }
 }

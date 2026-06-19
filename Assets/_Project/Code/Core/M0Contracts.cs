@@ -501,6 +501,7 @@ namespace GlassRefrain.Core {
         public RecoveryContext Recovery { get; }
         public CameraMovementBasisSnapshot CameraMovementBasis { get; }
         public string StateDetail { get; }
+        public UnityEngine.Vector3 WorldVelocity { get; }
         public bool HasMoveIntent => MoveIntent.X != 0f || MoveIntent.Y != 0f;
 
         public bool IsRestricted => State == LocomotionState.Restricted;
@@ -513,7 +514,19 @@ namespace GlassRefrain.Core {
             MovementRestrictionContext movementRestriction,
             RecoveryContext recovery,
             CameraMovementBasisSnapshot cameraMovementBasis,
-            string stateDetail) {
+            string stateDetail)
+            : this(state, moveIntent, inputEnabled, movementRestriction, recovery,
+                cameraMovementBasis, stateDetail, UnityEngine.Vector3.zero) { }
+
+        public LocomotionStateSnapshot(
+            LocomotionState state,
+            Axis2 moveIntent,
+            bool inputEnabled,
+            MovementRestrictionContext movementRestriction,
+            RecoveryContext recovery,
+            CameraMovementBasisSnapshot cameraMovementBasis,
+            string stateDetail,
+            UnityEngine.Vector3 worldVelocity) {
             State = state;
             MoveIntent = moveIntent;
             InputEnabled = inputEnabled;
@@ -521,6 +534,7 @@ namespace GlassRefrain.Core {
             Recovery = recovery;
             CameraMovementBasis = cameraMovementBasis;
             StateDetail = stateDetail ?? string.Empty;
+            WorldVelocity = worldVelocity;
         }
     }
 
@@ -973,11 +987,6 @@ namespace GlassRefrain.Core {
         OutOfRange = 3,
         EncounterReset = 4,
         TargetLost = 5
-    }
-
-    public enum TurnDirection {
-        Left = 0,
-        Right = 1
     }
 
     public readonly struct CameraMovementBasisSnapshot {

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using GlassRefrain.Code.Shared.DI;
 using NhemDangFugBixs.NhemLogging;
@@ -5,11 +6,34 @@ using GlassRefrain.Core;
 using NhemDangFugBixs.Attributes;
 
 namespace GlassRefrain.Enemy {
+    /// <summary>
+    /// Read/write surface of the M0 enemy intent state machine.
+    /// Consumers that do not need the concrete type should depend on this interface.
+    /// </summary>
+    public interface IM0EnemyIntentModel {
+        EnemyIntentSnapshot Snapshot { get; }
+        event Action<EnemyIntentSnapshot> SnapshotChanged;
+
+        void EnterIdle(string reason);
+        void EnterTelegraph(string telegraphId, float durationSeconds, string reason);
+        void EnterCommit(EnemyAttackIntentContext intent, float durationSeconds, string reason);
+        void EnterActive(float durationSeconds, string reason);
+        void EnterRecovery(
+            float durationSeconds,
+            string reason,
+            bool openPunishWindow,
+            float punishWindowSeconds,
+            string punishSource);
+        void ClosePunishWindow(string reason);
+        void Tick(float deltaSeconds);
+        void ResetForEncounter(string reason);
+    }
+
     [AutoRegisterIn<IGameplayLifetimeScope>(Lifetime = NhemLifetime.Singleton)]
     [AsSelf]
-    public sealed class M0EnemyIntentModel {
+    public sealed class M0EnemyIntentModel : IM0EnemyIntentModel {
         private readonly string enemyId;
-        private readonly INhemLogger logger;
+        private readonly INhemLogger? logger;
 
         private EnemyIntentState currentState;
         private string intentLabel;
@@ -20,9 +44,9 @@ namespace GlassRefrain.Enemy {
         private EnemyAttackIntentContext attackIntent;
         private EnemyPunishWindowContext punishWindow;
         private EnemyIntentSnapshot latestSnapshot;
-        public event Action<EnemyIntentSnapshot> SnapshotChanged;
+        public event Action<EnemyIntentSnapshot>? SnapshotChanged;
 
-        public M0EnemyIntentModel(INhemLogger logger = null) {
+        public M0EnemyIntentModel(INhemLogger? logger = null) {
             this.enemyId = "M0Enemy";
             this.logger = logger;
 

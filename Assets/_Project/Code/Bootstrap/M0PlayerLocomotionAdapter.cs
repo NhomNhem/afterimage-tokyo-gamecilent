@@ -67,9 +67,7 @@ namespace GlassRefrain.Bootstrap {
 
             // Apply facing rotation to transform
             // Create rotation that points forward in the facing direction
-            if (snapshot.Facing.sqrMagnitude > 0.001f) {
-                transform.rotation = Quaternion.LookRotation(snapshot.Facing, Vector3.up);
-            }
+            if (snapshot.Facing.sqrMagnitude > 0.001f) transform.rotation = Quaternion.LookRotation(snapshot.Facing, Vector3.up);
 
 #if GR_M0_PROTOTYPE || GR_INPUT_DEBUG
             Vector3 after = transform.position;
@@ -86,12 +84,6 @@ namespace GlassRefrain.Bootstrap {
         /// <summary>
         /// Public access to movement snapshot for external systems.
         /// </summary>
-        public LocomotionMovementSnapshot GetMovementSnapshot() {
-            if (_locomotion == null) {
-                _logger?.LogError("[M0PlayerLocomotionAdapter] locomotion is null — was SetLocomotion() called before first Update?");
-                return default;
-            }
-            return _locomotion.GetMovementSnapshot();
-        }
+        public LocomotionMovementSnapshot GetMovementSnapshot() => _locomotion.GetMovementSnapshot();
     }
 }

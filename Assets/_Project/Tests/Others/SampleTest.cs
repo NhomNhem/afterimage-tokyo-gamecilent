@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using GlassRefrain.Core;
 using Sirenix.OdinInspector;
 
@@ -25,12 +26,12 @@ namespace GlassRefrain.Tests.Others {
     }
 
     public class CombatSystem {
-        public SampleTest002.DamageModifier OnCalculateDamage;
+        public SampleTest002.DamageModifier? OnCalculateDamage;
 
         public void DealDamage(IEnemy enemy, int baseDamage) {
             int finalDamage = baseDamage;
 
-            finalDamage = OnCalculateDamage.Invoke(finalDamage, enemy);
+            finalDamage = OnCalculateDamage!.Invoke(finalDamage, enemy);
 
             enemy.TakeDamage(finalDamage);
         }

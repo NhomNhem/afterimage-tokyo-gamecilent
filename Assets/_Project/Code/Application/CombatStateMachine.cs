@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;

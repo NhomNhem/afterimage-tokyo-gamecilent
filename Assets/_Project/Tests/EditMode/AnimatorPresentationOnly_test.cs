@@ -93,6 +93,54 @@ namespace GlassRefrain.Tests.EditMode {
         }
 
         [Test]
+        public void DashDirection_EnumHasFourDirections() {
+            var values = System.Enum.GetValues(typeof(DashDirection));
+            Assert.That(values.Length, Is.EqualTo(4));
+            Assert.That(System.Enum.IsDefined(typeof(DashDirection), DashDirection.Forward), Is.True);
+            Assert.That(System.Enum.IsDefined(typeof(DashDirection), DashDirection.Back), Is.True);
+            Assert.That(System.Enum.IsDefined(typeof(DashDirection), DashDirection.Left), Is.True);
+            Assert.That(System.Enum.IsDefined(typeof(DashDirection), DashDirection.Right), Is.True);
+        }
+
+        [Test]
+        public void PlayerStateSnapshot_HasMovementAndFacingDirection() {
+            var snapshot = new PlayerStateSnapshot(
+                PlayerState.Moving,
+                CombatCoreState.Neutral,
+                LocomotionState.Moving,
+                new ActionLockContext(false, string.Empty, CombatCoreState.Neutral),
+                new RecoveryContext(RecoverySource.Unknown, false, 0f, string.Empty),
+                false,
+                "test",
+                new CombatResolutionResult(false, false, "test"),
+                new Axis2(1f, 0f),
+                new Axis2(0f, 1f));
+
+            Assert.That(snapshot.MovementDirection.X, Is.EqualTo(1f));
+            Assert.That(snapshot.MovementDirection.Y, Is.EqualTo(0f));
+            Assert.That(snapshot.FacingDirection.X, Is.EqualTo(0f));
+            Assert.That(snapshot.FacingDirection.Y, Is.EqualTo(1f));
+        }
+
+        [Test]
+        public void PlayerStateSnapshot_OldConstructor_DefaultsMovementToZero() {
+            var snapshot = new PlayerStateSnapshot(
+                PlayerState.Idle,
+                CombatCoreState.Neutral,
+                LocomotionState.Idle,
+                new ActionLockContext(false, string.Empty, CombatCoreState.Neutral),
+                new RecoveryContext(RecoverySource.Unknown, false, 0f, string.Empty),
+                false,
+                "test",
+                new CombatResolutionResult(false, false, "test"));
+
+            Assert.That(snapshot.MovementDirection.X, Is.EqualTo(0f));
+            Assert.That(snapshot.MovementDirection.Y, Is.EqualTo(0f));
+            Assert.That(snapshot.FacingDirection.X, Is.EqualTo(0f));
+            Assert.That(snapshot.FacingDirection.Y, Is.EqualTo(1f));
+        }
+
+        [Test]
         public void IEnemyAnimationService_InterfaceExists() {
             var type = typeof(IEnemyAnimationService);
             Assert.That(type.IsInterface, Is.True);
@@ -180,6 +228,54 @@ namespace GlassRefrain.Tests.EditMode {
         public void M0EnemyAnimationSet_IsScriptableObject() {
             var type = typeof(M0EnemyAnimationSet);
             Assert.That(type.BaseType, Is.EqualTo(typeof(UnityEngine.ScriptableObject)));
+        }
+
+        [Test]
+        public void M0PlayerAnimationSet_HasAttackWindupProperty() {
+            var type = typeof(M0PlayerAnimationSet);
+            var property = type.GetProperty("AttackWindup");
+            Assert.That(property, Is.Not.Null, "M0PlayerAnimationSet should expose AttackWindup property");
+            Assert.That(property.PropertyType, Is.EqualTo(typeof(M0AnimationClipTransition)));
+        }
+
+        [Test]
+        public void M0PlayerAnimationSet_HasAttackRecoveryProperty() {
+            var type = typeof(M0PlayerAnimationSet);
+            var property = type.GetProperty("AttackRecovery");
+            Assert.That(property, Is.Not.Null, "M0PlayerAnimationSet should expose AttackRecovery property");
+            Assert.That(property.PropertyType, Is.EqualTo(typeof(M0AnimationClipTransition)));
+        }
+
+        [Test]
+        public void AttackAnimationRequest_StoresCombatPhaseForWindup() {
+            var request = new AttackAnimationRequest(
+                CombatActionType.LightAttack,
+                CombatCoreState.AttackStartup,
+                "windup phase");
+
+            Assert.That(request.CombatState, Is.EqualTo(CombatCoreState.AttackStartup));
+            Assert.That(request.AttackType, Is.EqualTo(CombatActionType.LightAttack));
+        }
+
+        [Test]
+        public void AttackAnimationRequest_StoresCombatPhaseForRecovery() {
+            var request = new AttackAnimationRequest(
+                CombatActionType.HeavyAttack,
+                CombatCoreState.AttackRecovery,
+                "recovery phase");
+
+            Assert.That(request.CombatState, Is.EqualTo(CombatCoreState.AttackRecovery));
+            Assert.That(request.AttackType, Is.EqualTo(CombatActionType.HeavyAttack));
+        }
+
+        [Test]
+        public void AttackAnimationRequest_StoresCombatPhaseForActive() {
+            var request = new AttackAnimationRequest(
+                CombatActionType.LightAttack,
+                CombatCoreState.AttackActive,
+                "active phase");
+
+            Assert.That(request.CombatState, Is.EqualTo(CombatCoreState.AttackActive));
         }
     }
 }

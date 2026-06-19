@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using GlassRefrain.Core;
 using GlassRefrain.Targeting;
@@ -22,7 +23,7 @@ namespace GlassRefrain.Combat {
         private RecoveryContext recoveryContext;
         private RevealRequestContext lastRevealRequestContext;
         private M0CombatSnapshot latestSnapshot;
-        private M0TargetContext targetContext;
+        private M0TargetContext? targetContext;
         private bool parryWasEligible;
         private float actionStateElapsedSeconds;
         private readonly INhemLogger? logger;
@@ -53,8 +54,8 @@ namespace GlassRefrain.Combat {
 
         public RevealRequestContext LastRevealRequestContext => lastRevealRequestContext;
 
-        public event Action<M0CombatSnapshot> SnapshotChanged;
-        public event Action<RevealRequestContext> RevealRequestEmitted;
+        public event Action<M0CombatSnapshot>? SnapshotChanged;
+        public event Action<RevealRequestContext>? RevealRequestEmitted;
 
         public void SetTargetContext(M0TargetContext context) {
             targetContext = context;
