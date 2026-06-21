@@ -27,6 +27,7 @@ namespace GlassRefrain.Locomotion {
         private Vector3 dodgeDisplacementDirection = Vector3.forward;
         private float dodgeDisplacementRemainingDistance;
         private float dodgeDisplacementRemainingSeconds;
+        private bool _strafeModeEnabled;
 
         public M0PlayerLocomotion() : this(new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 1.5f, 10.0f, 0.2f)) { }
 
@@ -118,7 +119,14 @@ namespace GlassRefrain.Locomotion {
 
         public void SetMovementRestriction(MovementRestrictionContext restriction) {
             movementRestriction = restriction;
+            if (!restriction.CanTranslate) {
+                velocity = Vector3.zero;
+            }
             RefreshSnapshot();
+        }
+
+        public void SetStrafeMode(bool enabled) {
+            _strafeModeEnabled = enabled;
         }
 
         public void SetRecoveryContext(RecoveryContext recovery) {
@@ -229,9 +237,10 @@ namespace GlassRefrain.Locomotion {
             float speed = settings.MoveSpeed * inputMagnitude;
             velocity = desiredDirection * speed;
 
-            // Update facing to follow movement direction
+            // Update facing: in strafe mode (lock-on), face camera forward; otherwise follow movement
             if (inputMagnitude > settings.InputDeadzone) {
-                facing = Vector3.Lerp(facing, desiredDirection, settings.FacingLerpSpeed * deltaTime);
+                Vector3 targetFacing = _strafeModeEnabled ? cachedCameraForward : desiredDirection;
+                facing = Vector3.Lerp(facing, targetFacing, settings.FacingLerpSpeed * deltaTime);
                 facing = facing.normalized;
             }
         }
@@ -252,7 +261,6 @@ namespace GlassRefrain.Locomotion {
 
                 position += dodgeDisplacementDirection * frameDistance;
                 velocity = dodgeDisplacementDirection * (frameDistance / deltaTime);
-                facing = dodgeDisplacementDirection;
 
                 dodgeDisplacementRemainingDistance = Mathf.Max(0f, dodgeDisplacementRemainingDistance - frameDistance);
                 dodgeDisplacementRemainingSeconds = Mathf.Max(0f, dodgeDisplacementRemainingSeconds - deltaTime);

@@ -1,3 +1,4 @@
+using GlassRefrain.Camera;
 using GlassRefrain.Code.Shared.DI;
 using NhemDangFugBixs.Attributes;
 using NhemDangFugBixs.NhemLogging;
@@ -19,6 +20,7 @@ namespace GlassRefrain.Bootstrap {
 
             RegisterLogging(builder);
             RegisterDebugOverlay(builder);
+            RegisterCameraServices(builder);
         }
 
         private static void RegisterLogging(IContainerBuilder builder)
@@ -37,6 +39,12 @@ namespace GlassRefrain.Bootstrap {
 #else
     builder.Register<IDebugOverlaySink, NullDebugOverlaySink>(Lifetime.Singleton);
 #endif
+        }
+
+        private static void RegisterCameraServices(IContainerBuilder builder)
+        {
+            // Cross-scene camera target provider — registered in parent scope so both gameplay and camera scenes can access.
+            builder.Register<IM0CameraTargetProvider, M0CameraTargetProvider>(Lifetime.Singleton);
         }
     }
 }

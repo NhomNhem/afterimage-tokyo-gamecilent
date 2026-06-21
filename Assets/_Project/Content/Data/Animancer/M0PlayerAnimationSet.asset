@@ -36,20 +36,65 @@ MonoBehaviour:
   heavyAttack:
     clip: {fileID: -8632713256952390345, guid: 31700544721f3674e93d606ad61dc1be, type: 3}
     fadeDuration: 0.1
+  attackWindup:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  attackRecovery:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
   dodge:
-    clip: {fileID: 2127604031359038904, guid: 5e6268a8db07421499a9da12f223049d, type: 3}
+    clip: {fileID: 120459418513675320, guid: 2cd4db4609b999a49a45649e38a0693d, type: 3}
+    fadeDuration: 0.1
+  dodgeStartup:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  dodgeActive:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  dodgeRecovery:
+    clip: {fileID: 0}
     fadeDuration: 0.1
   dash:
     clip: {fileID: 120459418513675320, guid: 2cd4db4609b999a49a45649e38a0693d, type: 3}
     fadeDuration: 0.1
-  parry:
+  dashBack:
     clip: {fileID: -8992432515866989136, guid: 7608f48a39fb04c498e3a468bfde8321, type: 3}
+    fadeDuration: 0.1
+  dashLeft:
+    clip: {fileID: -7483124496326908604, guid: 826aec7517f0c7046819313715762a21, type: 3}
+    fadeDuration: 0.1
+  dashRight:
+    clip: {fileID: 5148013183046091580, guid: 58f84d3adbac9f24cb22276dfe745cf1, type: 3}
+    fadeDuration: 0.1
+  parry:
+    clip: {fileID: 2127604031359038904, guid: 5e6268a8db07421499a9da12f223049d, type: 3}
+    fadeDuration: 0.1
+  parryStartup:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  parryActive:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  parryRecovery:
+    clip: {fileID: 0}
     fadeDuration: 0.1
   counter:
     clip: {fileID: 5040504226652575205, guid: 76ef9f1dbb9526b459de0794b16d1b7a, type: 3}
     fadeDuration: 0.1
+  counterStartup:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  counterActive:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  counterRecovery:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
   hitReaction:
     clip: {fileID: 8338732804319002307, guid: 36fe30ba832ef4c42ac1961245b8cfbf, type: 3}
+    fadeDuration: 0.1
+  hitReaction2:
+    clip: {fileID: 0}
     fadeDuration: 0.1
   stun:
     clip: {fileID: 9103476863572651487, guid: f70fa0a93b179c945b193007ea5e8ea7, type: 3}
@@ -62,4 +107,13 @@ MonoBehaviour:
     fadeDuration: 0.1
   walkRight:
     clip: {fileID: 3427438671640132418, guid: da072d0f667457e429eae283f3472e2a, type: 3}
+    fadeDuration: 0.1
+  turn180:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  turnLeft90:
+    clip: {fileID: 0}
+    fadeDuration: 0.1
+  turnRight90:
+    clip: {fileID: 0}
     fadeDuration: 0.1

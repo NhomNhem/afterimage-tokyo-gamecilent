@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Hitbox
+  - NarrowBeam
+  - SwingableLedge
+  - Slide
+  - NavmeshLink
+  - NavmeshSurface
   layers:
   - Default
   - TransparentFX
@@ -13,16 +18,16 @@ TagManager:
   - Water
   - UI
   - Interactable
-  - 
+  - Ledge
   - Enemy
   - VisionSensor
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - NPC
+  - Vehicle
+  - FootTrigger
+  - Cover
+  - Hotspot
+  - PlayerAlly
+  - HitBone
   - 
   - 
   - 

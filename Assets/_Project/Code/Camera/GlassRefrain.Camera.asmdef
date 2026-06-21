@@ -2,7 +2,10 @@
   "name": "GlassRefrain.Camera",
   "rootNamespace": "GlassRefrain.Camera",
   "references": [
-    "GlassRefrain.Core"
+    "GlassRefrain.Core",
+    "GlassRefrain.Input",
+    "Unity.InputSystem",
+    "VContainer"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

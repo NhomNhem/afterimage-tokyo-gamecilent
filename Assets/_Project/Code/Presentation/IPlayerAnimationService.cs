@@ -27,8 +27,8 @@ namespace GlassRefrain.Presentation {
         void PlayDodge(DodgeAnimationRequest request);
         void PlayDash(DashDirection direction);
         void PlayParry(ParryAnimationRequest request);
-        void PlayCounter(AttackAnimationRequest request);
-        void PlayHitReaction(AttackAnimationRequest request);
+        void PlayCounter(CounterAnimationRequest request);
+        void PlayHitReaction(HitReactionAnimationRequest request);
         void PlayStun();
     }
 }

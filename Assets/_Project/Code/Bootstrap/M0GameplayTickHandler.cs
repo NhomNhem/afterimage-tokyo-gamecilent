@@ -23,6 +23,7 @@ namespace GlassRefrain.Bootstrap {
         [OdinSerialize, Required] private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
         [OdinSerialize, Required] private M0CombatDebugOverlayAdapter debugOverlayAdapter;
         [OdinSerialize, Required] private M0AnimationPresentationAdapter animationPresentationAdapter;
+        [OdinSerialize, Required] private Transform enemyTransform;
 
         private M0PlayerLocomotion _locomotion;
         private M0TargetContext _targetContext;
@@ -48,6 +49,7 @@ namespace GlassRefrain.Bootstrap {
 
         private readonly M0MemoryInteractionTickBridge _memoryInteractionTickBridge = new M0MemoryInteractionTickBridge();
         private IPlayerStateMachine _playerStateMachine;
+        private IM0CameraTargetProvider _targetProvider;
 
         private bool _loggedAdapterMissing;
         private Vector3 _encounterResetStartPosition;
@@ -55,6 +57,7 @@ namespace GlassRefrain.Bootstrap {
         private readonly List<InputActionIntent> _triggeredInputActions = new List<InputActionIntent>(8);
         private bool _interactTriggeredThisFrame;
         private bool _isConstructed;
+        private bool _movementLockedForAttack;
 
         public void SetVisualFeedbackAdapter(M0CombatVisualFeedbackAdapter adapter) => visualFeedbackAdapter = adapter;
 
@@ -67,7 +70,7 @@ namespace GlassRefrain.Bootstrap {
             M0EnemyIntentModel enemyIntentModel, M0EnemyIntentLoopDriver enemyIntentLoopDriver,
             M0InputRouter inputRouter, IM0MemoryState memoryState, M0MemoryVFXResponse memoryVfxResponse,
             MemoryInteractionService memoryInteractionService, INhemLogger logger,
-            IPlayerStateMachine playerStateMachine) {
+            IPlayerStateMachine playerStateMachine, IM0CameraTargetProvider targetProvider) {
             _locomotion = locomotion;
             _targetContext = targetContext;
             _combatCore = combatCore;
@@ -78,6 +81,7 @@ namespace GlassRefrain.Bootstrap {
             _memoryVfxResponse = memoryVfxResponse;
             _memoryInteractionService = memoryInteractionService;
             _playerStateMachine = playerStateMachine;
+            _targetProvider = targetProvider;
             _logger = logger;
             _isConstructed = true;
 #if GR_ENEMY_DEBUG
@@ -114,6 +118,8 @@ namespace GlassRefrain.Bootstrap {
 
             targetContext.SnapshotChanged += OnTargetSnapshotChanged;
             lastTargetSnapshot = targetContext.Snapshot;
+            _locomotion?.SetStrafeMode(lastTargetSnapshot.IsLockedOn);
+            _playerStateMachine?.SetHasTargetFocus(lastTargetSnapshot.IsLockedOn);
             combatCore.RevealRequestEmitted += OnRevealRequestEmitted;
 
             if (adapter != null) {
@@ -199,6 +205,15 @@ namespace GlassRefrain.Bootstrap {
 
             _locomotion.ProcessMovementInput(dt);
             _locomotion.UpdatePosition(dt);
+
+            // Feed positions to cross-scene camera target provider
+            if (_targetProvider != null) {
+                var playerSnapshot = _locomotion.GetMovementSnapshot();
+                _targetProvider.SetPlayerPosition(playerSnapshot.Position);
+                _targetProvider.SetEnemyPosition(enemyTransform != null
+                    ? (Vector3?)enemyTransform.position
+                    : null);
+            }
 
             // Tick order: enemy loop driver first, then enemy intent model
             if (_enemyIntentLoopDriver == null) {
@@ -300,6 +315,9 @@ namespace GlassRefrain.Bootstrap {
             var previousState = lastCombatSnapshot.State;
             var currentState = snapshot.State;
             bool counterWindowOpened = !lastCombatSnapshot.CounterWindow.IsOpen && snapshot.CounterWindow.IsOpen;
+
+            // Lock/unlock movement based on combat state
+            UpdateMovementLockForCombatState(currentState);
 
             // Trigger visual feedback on state transitions
             if (visualFeedbackAdapter != null && previousState != currentState) {
@@ -431,23 +449,14 @@ namespace GlassRefrain.Bootstrap {
 
                         break;
                     case InputActionIntent.LightAttack:
-#if GR_INPUT_DEBUG
-                        _logger?.Log("[M0Input] LightAttack pressed");
-#endif
                         debugOverlayAdapter?.UpdateLastInputAction("LightAttack");
                         _combatCore?.ConsumeAttackIntent(CombatActionType.LightAttack);
                         break;
                     case InputActionIntent.HeavyAttack:
-#if GR_INPUT_DEBUG
-                        _logger?.Log("[M0Input] HeavyAttack pressed");
-#endif
                         debugOverlayAdapter?.UpdateLastInputAction("HeavyAttack");
                         _combatCore?.ConsumeAttackIntent(CombatActionType.HeavyAttack);
                         break;
                     case InputActionIntent.Parry:
-#if GR_INPUT_DEBUG
-                        _logger?.Log("[M0Input] Parry pressed");
-#endif
                         debugOverlayAdapter?.UpdateLastInputAction("Parry");
                         _combatCore?.ConsumeDefensiveIntent(CombatActionType.Parry, enemySnapshot);
                         break;
@@ -516,6 +525,8 @@ namespace GlassRefrain.Bootstrap {
 #endif
 
             lastTargetSnapshot = snapshot;
+            _locomotion?.SetStrafeMode(snapshot.IsLockedOn);
+            _playerStateMachine?.SetHasTargetFocus(snapshot.IsLockedOn);
         }
 
         private void OnRevealRequestEmitted(RevealRequestContext request) {
@@ -524,6 +535,33 @@ namespace GlassRefrain.Bootstrap {
                 _memoryState,
                 _memoryVfxResponse,
                 _logger);
+        }
+
+        private void UpdateMovementLockForCombatState(CombatCoreState state) {
+            if (_locomotion == null) return;
+
+            bool shouldLock = state == CombatCoreState.AttackStartup ||
+                              state == CombatCoreState.AttackActive ||
+                              state == CombatCoreState.AttackRecovery ||
+                              state == CombatCoreState.CounterActive ||
+                              state == CombatCoreState.HitReact;
+
+            if (shouldLock && !_movementLockedForAttack) {
+                _movementLockedForAttack = true;
+                _locomotion.SetMovementRestriction(new MovementRestrictionContext(
+                    canTranslate: false,
+                    canRotate: false,
+                    restrictionStrength: 1f,
+                    source: "CombatAction"));
+            }
+            else if (!shouldLock && _movementLockedForAttack) {
+                _movementLockedForAttack = false;
+                _locomotion.SetMovementRestriction(new MovementRestrictionContext(
+                    canTranslate: true,
+                    canRotate: true,
+                    restrictionStrength: 0f,
+                    source: string.Empty));
+            }
         }
     }
 }

@@ -27,6 +27,7 @@ public interface IM0PlayerLocomotion {
     LocomotionMovementSnapshot GetMovementSnapshot();
     void ConsumeInputIntent(InputIntentSnapshot inputIntent);
     void SetMovementRestriction(MovementRestrictionContext restriction);
+    void SetStrafeMode(bool enabled);
     void SetRecoveryContext(RecoveryContext recovery);
     void SetCameraMovementBasis(CameraMovementBasisSnapshot cameraBasis);
     bool TryBeginDodgeDisplacement();

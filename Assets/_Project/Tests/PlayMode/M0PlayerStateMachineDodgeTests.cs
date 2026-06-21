@@ -125,9 +125,9 @@ namespace GlassRefrain.Tests.PlayMode {
             public void PlayAttack(AttackAnimationRequest request) { }
             public void PlayDodge(DodgeAnimationRequest request) { }
             public void PlayParry(ParryAnimationRequest request) { }
-            public void PlayCounter(AttackAnimationRequest request) { }
+            public void PlayCounter(CounterAnimationRequest request) { }
             public void PlayDash(DashDirection direction) { }
-            public void PlayHitReaction(AttackAnimationRequest request) { }
+            public void PlayHitReaction(HitReactionAnimationRequest request) { }
             public void PlayStun() { }
         }
     }

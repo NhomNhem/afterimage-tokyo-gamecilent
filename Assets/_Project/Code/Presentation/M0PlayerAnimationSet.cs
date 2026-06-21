@@ -21,13 +21,29 @@ namespace GlassRefrain.Presentation {
         [SerializeField] private M0AnimationClipTransition attackWindup;
         [SerializeField] private M0AnimationClipTransition attackRecovery;
 
+        [Header("Dodge phase clips (optional — falls back to main dodge clip)")]
         [SerializeField] private M0AnimationClipTransition dodge;
+        [SerializeField] private M0AnimationClipTransition dodgeStartup;
+        [SerializeField] private M0AnimationClipTransition dodgeActive;
+        [SerializeField] private M0AnimationClipTransition dodgeRecovery;
         [SerializeField] private M0AnimationClipTransition dash;
         [SerializeField] private M0AnimationClipTransition dashBack;
         [SerializeField] private M0AnimationClipTransition dashLeft;
         [SerializeField] private M0AnimationClipTransition dashRight;
+
+        [Header("Parry phase clips (optional — falls back to main parry clip)")]
         [SerializeField] private M0AnimationClipTransition parry;
+        [SerializeField] private M0AnimationClipTransition parryStartup;
+        [SerializeField] private M0AnimationClipTransition parryActive;
+        [SerializeField] private M0AnimationClipTransition parryRecovery;
+
+        [Header("Counter phase clips (optional — falls back to main counter clip)")]
         [SerializeField] private M0AnimationClipTransition counter;
+        [SerializeField] private M0AnimationClipTransition counterStartup;
+        [SerializeField] private M0AnimationClipTransition counterActive;
+        [SerializeField] private M0AnimationClipTransition counterRecovery;
+
+        [Header("Defensive and reaction clips")]
         [SerializeField] private M0AnimationClipTransition hitReaction;
         [SerializeField] private M0AnimationClipTransition hitReaction2;
         [SerializeField] private M0AnimationClipTransition stun;
@@ -53,12 +69,21 @@ namespace GlassRefrain.Presentation {
         public M0AnimationClipTransition AttackWindup => attackWindup;
         public M0AnimationClipTransition AttackRecovery => attackRecovery;
         public M0AnimationClipTransition Dodge => dodge;
+        public M0AnimationClipTransition DodgeStartup => dodgeStartup;
+        public M0AnimationClipTransition DodgeActive => dodgeActive;
+        public M0AnimationClipTransition DodgeRecovery => dodgeRecovery;
         public M0AnimationClipTransition Dash => dash;
         public M0AnimationClipTransition DashBack => dashBack;
         public M0AnimationClipTransition DashLeft => dashLeft;
         public M0AnimationClipTransition DashRight => dashRight;
         public M0AnimationClipTransition Parry => parry;
+        public M0AnimationClipTransition ParryStartup => parryStartup;
+        public M0AnimationClipTransition ParryActive => parryActive;
+        public M0AnimationClipTransition ParryRecovery => parryRecovery;
         public M0AnimationClipTransition Counter => counter;
+        public M0AnimationClipTransition CounterStartup => counterStartup;
+        public M0AnimationClipTransition CounterActive => counterActive;
+        public M0AnimationClipTransition CounterRecovery => counterRecovery;
         public M0AnimationClipTransition HitReaction => hitReaction;
         public M0AnimationClipTransition HitReaction2 => hitReaction2;
         public M0AnimationClipTransition Stun => stun;

@@ -57,8 +57,8 @@ namespace GlassRefrain.Presentation {
                 return;
             }
 
-            var relativeDirection = ComputeRelativeDirection(snapshot);
-            _playerAnimationService.PlayLocomotion(locomotionSnapshot, relativeDirection);
+            var rawDirection = new Vector2(snapshot.MovementDirection.X, snapshot.MovementDirection.Y);
+            _playerAnimationService.PlayLocomotion(locomotionSnapshot, rawDirection);
         }
 
         private void OnPlayerStateChanged(PlayerStateSnapshot snapshot) {
@@ -73,16 +73,22 @@ namespace GlassRefrain.Presentation {
             var isCombatMode = snapshot.HasTargetFocus || snapshot.CombatState != CombatCoreState.Neutral;
             _playerAnimationService.SetCombatMode(isCombatMode);
 
-            var relativeDirection = ComputeRelativeDirection(snapshot);
+            var rawDirection = new Vector2(snapshot.MovementDirection.X, snapshot.MovementDirection.Y);
 
             switch (snapshot.ResolvedState) {
                 case PlayerState.Idle:
                 case PlayerState.Moving:
-                    _playerAnimationService.PlayLocomotion(snapshot.LocomotionState, snapshot, relativeDirection);
+                    _playerAnimationService.PlayLocomotion(snapshot.LocomotionState, snapshot, rawDirection);
                     break;
                 case PlayerState.Dodge:
-                    var dashDir = ResolveDashDirection(relativeDirection);
-                    _playerAnimationService.PlayDash(dashDir);
+                    var dodgeDirection = ResolveDashDirection(rawDirection);
+#if GR_M0_PROTOTYPE
+                    _logger?.Log("[M0Animation] Dodge: moveDir=(" + snapshot.MovementDirection.X + "," + snapshot.MovementDirection.Y
+                        + ") faceDir=(" + snapshot.FacingDirection.X + "," + snapshot.FacingDirection.Y
+                        + ") rawDir=(" + rawDirection.x + "," + rawDirection.y
+                        + ") resolved=" + dodgeDirection);
+#endif
+                    _playerAnimationService.PlayDash(dodgeDirection);
                     break;
                 case PlayerState.Parry:
                     _playerAnimationService.PlayParry(new ParryAnimationRequest(
@@ -93,16 +99,16 @@ namespace GlassRefrain.Presentation {
                         ResolveAttackType(snapshot), snapshot.CombatState, snapshot.StateDetail));
                     break;
                 case PlayerState.CounterActive:
-                    _playerAnimationService.PlayCounter(new AttackAnimationRequest(
-                        CombatActionType.Counter, snapshot.CombatState, snapshot.StateDetail));
+                    _playerAnimationService.PlayCounter(new CounterAnimationRequest(
+                        snapshot.CombatState, snapshot.StateDetail));
                     break;
                 case PlayerState.RevealBeat:
-                    _playerAnimationService.PlayCounter(new AttackAnimationRequest(
-                        CombatActionType.Counter, snapshot.CombatState, "RevealBeat"));
+                    _playerAnimationService.PlayCounter(new CounterAnimationRequest(
+                        snapshot.CombatState, "RevealBeat"));
                     break;
                 case PlayerState.HitReaction:
-                    _playerAnimationService.PlayHitReaction(new AttackAnimationRequest(
-                        CombatActionType.LightAttack, snapshot.CombatState, snapshot.StateDetail));
+                    _playerAnimationService.PlayHitReaction(new HitReactionAnimationRequest(
+                        snapshot.CombatState, snapshot.StateDetail));
                     break;
                 case PlayerState.Disabled:
                     _playerAnimationService.PlayNeutral();

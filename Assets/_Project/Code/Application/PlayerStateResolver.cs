@@ -16,6 +16,7 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
 
     private PlayerStateSnapshot _currentSnapshot;
     private bool _disposed;
+    private bool _hasTargetFocus;
     private MovementRestrictionContext _preTurnRestriction;
     private bool _hasTurnRestrictionSaved;
     private Subject<LocomotionStateSnapshot>? _emptyLocomotionSubject;
@@ -87,7 +88,7 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
             locomotionState,
             actionLock,
             recovery,
-            false,
+            _hasTargetFocus,
             detail,
             resolutionResult,
             movementDirection,
@@ -174,6 +175,14 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
             _locomotionStateMachine.SetMovementRestriction(_preTurnRestriction);
             _hasTurnRestrictionSaved = false;
         }
+    }
+
+    public void SetHasTargetFocus(bool hasTargetFocus) {
+        if (_hasTargetFocus == hasTargetFocus) return;
+
+        _hasTargetFocus = hasTargetFocus;
+        _currentSnapshot = Resolve();
+        _stateSubject.OnNext(_currentSnapshot);
     }
 
     public PlayerStateDebugSnapshot CreateDebugSnapshot() {

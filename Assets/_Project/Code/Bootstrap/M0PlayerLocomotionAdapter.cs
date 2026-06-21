@@ -72,11 +72,6 @@ namespace GlassRefrain.Bootstrap {
 #if GR_M0_PROTOTYPE || GR_INPUT_DEBUG
             Vector3 after = transform.position;
             bool moved = (after - before).sqrMagnitude > 0.0000001f;
-            if (moved && !_wasMoving) {
-                _logger?.Log($"[M0Locomotion] Move applied: before=({before.x:F2},{before.y:F2},{before.z:F2}) after=({after.x:F2},{after.y:F2},{after.z:F2})");
-            } else if (!moved && _wasMoving) {
-                _logger?.Log("[M0Locomotion] Move stopped");
-            }
             _wasMoving = moved;
 #endif
         }

@@ -26,6 +26,11 @@ namespace GlassRefrain.Presentation {
         private bool _hasStableDirection;
         private bool _mixerLockedDuringTurn;
 
+        private bool _hitReactionToggle;
+        private const float HitReactionFadeFromIdle = 0.15f;
+        private const float HitReactionFadeFromAction = 0.1f;
+        private const float HitReactionFadeFromReaction = 0.05f;
+
         public bool IsTurnActive => _isTurnActive;
         public Action<bool> TurnActiveChanged { get; set; }
 
@@ -158,32 +163,172 @@ namespace GlassRefrain.Presentation {
         public void PlayDodge(DodgeAnimationRequest request) {
             if (_isTurnActive) EndTurn();
             _locomotionMixer = null;
-            Play(animationSet != null ? animationSet.Dodge : null, "Player Dodge");
+
+            var transition = ResolveDodgeTransition(request.CombatState);
+            Play(transition, "Player Dodge " + request.CombatState);
+        }
+
+        private M0AnimationClipTransition ResolveDodgeTransition(CombatCoreState combatState) {
+            if (animationSet == null) return null;
+
+            // Phase-specific clips (optional — fall back to main dodge clip)
+            switch (combatState) {
+                case CombatCoreState.DodgeStartup: {
+                    var phase = animationSet.DodgeStartup;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+                case CombatCoreState.DodgeActive: {
+                    var phase = animationSet.DodgeActive;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+                case CombatCoreState.DodgeRecovery: {
+                    var phase = animationSet.DodgeRecovery;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+            }
+
+            return animationSet.Dodge;
         }
 
         public void PlayParry(ParryAnimationRequest request) {
             if (_isTurnActive) EndTurn();
             _locomotionMixer = null;
-            Play(animationSet != null ? animationSet.Parry : null, "Player Parry");
+
+            var transition = ResolveParryTransition(request.CombatState);
+            Play(transition, "Player Parry " + request.CombatState);
         }
 
-        public void PlayCounter(AttackAnimationRequest request) {
+        private M0AnimationClipTransition ResolveParryTransition(CombatCoreState combatState) {
+            if (animationSet == null) return null;
+
+            switch (combatState) {
+                case CombatCoreState.ParryStartup: {
+                    var phase = animationSet.ParryStartup;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+                case CombatCoreState.ParryActive: {
+                    var phase = animationSet.ParryActive;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+                case CombatCoreState.ParryRecovery: {
+                    var phase = animationSet.ParryRecovery;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+            }
+
+            return animationSet.Parry;
+        }
+
+        public void PlayCounter(CounterAnimationRequest request) {
             if (_isTurnActive) EndTurn();
             _locomotionMixer = null;
-            Play(animationSet != null ? animationSet.Counter : null, "Player Counter");
+
+            var transition = ResolveCounterTransition(request.CombatState);
+            Play(transition, "Player Counter " + request.CombatState);
+        }
+
+        private M0AnimationClipTransition ResolveCounterTransition(CombatCoreState combatState) {
+            if (animationSet == null) return null;
+
+            switch (combatState) {
+                case CombatCoreState.CounterWindow: {
+                    var phase = animationSet.CounterStartup;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+                case CombatCoreState.CounterActive: {
+                    var phase = animationSet.CounterActive;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+                case CombatCoreState.RevealBeat: {
+                    var phase = animationSet.CounterRecovery;
+                    if (phase != null && phase.IsAssigned) return phase;
+                    break;
+                }
+            }
+
+            return animationSet.Counter;
         }
 
         public void PlayDash(DashDirection direction) {
             if (_isTurnActive) EndTurn();
             _locomotionMixer = null;
             var transition = GetDashTransition(direction);
+#if GR_M0_PROTOTYPE
+            var clipName = transition != null && transition.IsAssigned ? transition.Clip.name : "null";
+            _logger?.Log("[M0Animation] PlayDash direction=" + direction + " clip=" + clipName + " prevClip=" + _currentClipName);
+#endif
             Play(transition, "Player Dash " + direction);
         }
 
-        public void PlayHitReaction(AttackAnimationRequest request) {
+        public void PlayHitReaction(HitReactionAnimationRequest request) {
             if (_isTurnActive) EndTurn();
             _locomotionMixer = null;
-            Play(animationSet != null ? animationSet.HitReaction : null, "Player HitReaction");
+
+            if (animationSet == null) {
+                Play(null, "Player HitReaction");
+                return;
+            }
+
+            var transition = ResolveHitReactionTransition();
+            var fadeDuration = ResolveHitReactionFadeDuration();
+
+            DisableRootMotion();
+
+            if (!CanPlay("Player HitReaction")) {
+                return;
+            }
+
+            if (transition == null || !transition.IsAssigned) {
+                _logger?.LogWarning("[M0Animation] Missing hit reaction clip. Assign hitReaction in M0PlayerAnimationSet.", this);
+                return;
+            }
+
+            var clip = transition.Clip;
+            var previousClipName = _currentClipName;
+            _currentClipName = clip.name;
+            animancer.Play(clip, fadeDuration).Time = 0f;
+
+            _hitReactionToggle = !_hitReactionToggle;
+
+#if GR_M0_PROTOTYPE
+            _logger?.Log("[M0Animation] HitReaction: clip=" + clip.name + " fade=" + fadeDuration + "s from=" + previousClipName);
+#endif
+        }
+
+        private M0AnimationClipTransition ResolveHitReactionTransition() {
+            var primary = animationSet.HitReaction;
+            var alternate = animationSet.HitReaction2;
+
+            if (_hitReactionToggle && alternate != null && alternate.IsAssigned) {
+                return alternate;
+            }
+
+            return primary;
+        }
+
+        private float ResolveHitReactionFadeDuration() {
+            if (string.IsNullOrEmpty(_currentClipName)) {
+                return HitReactionFadeFromIdle;
+            }
+
+            if (_currentClipName.Contains("HitReact")) {
+                return HitReactionFadeFromReaction;
+            }
+
+            if (_currentClipName.Contains("Attack") || _currentClipName.Contains("Dodge") ||
+                _currentClipName.Contains("Parry") || _currentClipName.Contains("Counter")) {
+                return HitReactionFadeFromAction;
+            }
+
+            return HitReactionFadeFromIdle;
         }
 
         public void PlayStun() {
