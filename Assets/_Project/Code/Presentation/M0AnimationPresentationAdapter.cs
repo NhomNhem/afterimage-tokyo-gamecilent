@@ -8,15 +8,19 @@ using VContainer;
 
 namespace GlassRefrain.Presentation {
     public sealed class M0AnimationPresentationAdapter : MonoBehaviour {
+        [SerializeField] private Transform playerTransform;
+        [SerializeField] private float maxMoveSpeed = 5.0f;
+
         private IPlayerAnimationService _playerAnimationService;
         private IEnemyAnimationService _enemyAnimationService;
+        private ITurnDetectionSource _turnDetection;
         private INhemLogger _logger;
         private EnemyIntentState _lastEnemyIntentState = EnemyIntentState.Idle;
         private IDisposable _playerStateSubscription;
         private IDisposable _locomotionSubscription;
         private PlayerStateSnapshot _lastPlayerSnapshot;
         private bool _hasPlayerSnapshot;
-        private IPlayerStateMachine _activeStateMachine;
+        private Vector3 _previousEulerAngles = Vector3.zero;
 
         [Inject]
         public void Construct(
@@ -31,25 +35,23 @@ namespace GlassRefrain.Presentation {
         public void ObservePlayerState(IPlayerStateMachine stateMachine) {
             _playerStateSubscription?.Dispose();
             _locomotionSubscription?.Dispose();
-            _activeStateMachine = stateMachine;
             _playerStateSubscription = stateMachine.StateChanges.Subscribe(OnPlayerStateChanged);
             _locomotionSubscription = stateMachine.LocomotionChanges.Subscribe(OnLocomotionTick);
             OnPlayerStateChanged(stateMachine.CurrentSnapshot);
-            SubscribeToTurnSignal();
         }
 
-        private void SubscribeToTurnSignal() {
-            _playerAnimationService.TurnActiveChanged -= OnTurnActiveChanged;
-            _playerAnimationService.TurnActiveChanged += OnTurnActiveChanged;
-        }
-
-        private void OnTurnActiveChanged(bool isTurnActive) {
-            if (_activeStateMachine == null) return;
-            _activeStateMachine.SetMovementLockedForTurn(isTurnActive, "TurnInPlace");
+        public void SubscribeToTurnDetection(ITurnDetectionSource turnDetection) {
+            _turnDetection = turnDetection;
+            turnDetection.SharpTurnDetected += OnSharpTurnDetected;
         }
 
         private void OnLocomotionTick(LocomotionStateSnapshot locomotionSnapshot) {
             if (_playerAnimationService == null) return;
+
+            if (_hasPlayerSnapshot) {
+                UpdateLocomotionParameters(locomotionSnapshot);
+            }
+
             if (!_hasPlayerSnapshot) return;
 
             var snapshot = _lastPlayerSnapshot;
@@ -57,8 +59,38 @@ namespace GlassRefrain.Presentation {
                 return;
             }
 
-            var rawDirection = new Vector2(snapshot.MovementDirection.X, snapshot.MovementDirection.Y);
+            var rawDirection = new Vector2(locomotionSnapshot.MoveIntent.X, locomotionSnapshot.MoveIntent.Y);
             _playerAnimationService.PlayLocomotion(locomotionSnapshot, rawDirection);
+        }
+
+        private void UpdateLocomotionParameters(LocomotionStateSnapshot locomotionSnapshot) {
+            if (playerTransform == null) return;
+
+            Vector3 velocity = locomotionSnapshot.WorldVelocity;
+            Vector3 forward = playerTransform.forward;
+            Vector3 right = playerTransform.right;
+
+            float forwardSpeed = Vector3.Dot(velocity, forward);
+            float strafeSpeed = Vector3.Dot(velocity, right);
+
+            float moveAmount = Mathf.Clamp01(Mathf.Abs(forwardSpeed) / maxMoveSpeed);
+            float strafeAmount = Mathf.Clamp(strafeSpeed / maxMoveSpeed, -1f, 1f);
+
+            // Compute rotationValue from angular delta (FS Melee HandleTurning pattern)
+            Vector3 currentEuler = playerTransform.eulerAngles;
+            Vector3 eulerDelta = currentEuler - _previousEulerAngles;
+            float rotationValue = 0f;
+            if (Mathf.Abs(eulerDelta.y) > 0.5f) {
+                rotationValue = Mathf.Sign(eulerDelta.y) * 0.5f;
+            }
+            _previousEulerAngles = currentEuler;
+
+            _playerAnimationService.SetLocomotionParameters(moveAmount, strafeAmount, rotationValue);
+        }
+
+        private void OnSharpTurnDetected(bool isRightTurn) {
+            if (_playerAnimationService == null) return;
+            _playerAnimationService.PlayTurn(isRightTurn ? TurnDirection.Right : TurnDirection.Left);
         }
 
         private void OnPlayerStateChanged(PlayerStateSnapshot snapshot) {
@@ -134,6 +166,13 @@ namespace GlassRefrain.Presentation {
                 snapshot.Telegraph.TelegraphId));
         }
 
+        public void ObserveEnemyHitReaction() {
+            if (_enemyAnimationService == null) return;
+
+            _enemyAnimationService.PlayHitReaction(new HitReactionAnimationRequest(
+                CombatCoreState.HitReact, "ConfirmedHit"));
+        }
+
         private static CombatActionType ResolveAttackType(PlayerStateSnapshot snapshot) {
             var actionType = snapshot.LastResolutionResult.ActionType;
             if (actionType == CombatActionType.LightAttack || actionType == CombatActionType.HeavyAttack) {
@@ -174,9 +213,16 @@ namespace GlassRefrain.Presentation {
             return relativeDirection.x >= 0f ? DashDirection.Right : DashDirection.Left;
         }
 
+        private void Start() {
+            if (playerTransform != null) {
+                _previousEulerAngles = playerTransform.eulerAngles;
+            }
+        }
+
         private void OnDestroy() {
-            if (_playerAnimationService != null) {
-                _playerAnimationService.TurnActiveChanged -= OnTurnActiveChanged;
+            if (_turnDetection != null) {
+                _turnDetection.SharpTurnDetected -= OnSharpTurnDetected;
+                _turnDetection = null;
             }
             _playerStateSubscription?.Dispose();
             _playerStateSubscription = null;

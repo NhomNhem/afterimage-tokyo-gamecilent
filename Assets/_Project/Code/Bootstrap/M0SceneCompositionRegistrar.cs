@@ -1,5 +1,6 @@
 using GlassRefrain.Application;
 using GlassRefrain.Combat;
+using GlassRefrain.Core;
 using GlassRefrain.Enemy;
 using GlassRefrain.Input;
 using GlassRefrain.Locomotion;
@@ -122,6 +123,9 @@ namespace GlassRefrain.Bootstrap {
         private void WirePlayerStateMachine(IObjectResolver container) {
             var playerStateMachine = container.Resolve<IPlayerStateMachine>();
             _animationPresentationAdapter?.ObservePlayerState(playerStateMachine);
+
+            var turnDetection = container.Resolve<ITurnDetectionSource>();
+            _animationPresentationAdapter?.SubscribeToTurnDetection(turnDetection);
         }
 
         private void WireEnemyLoop(IObjectResolver container) {

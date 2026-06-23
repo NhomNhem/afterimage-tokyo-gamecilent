@@ -8,6 +8,7 @@ namespace GlassRefrain.Camera {
         public Vector3 PlayerPosition { get; private set; }
         public Vector3? EnemyPosition { get; private set; }
         public bool HasValidTarget => EnemyPosition.HasValue;
+        public bool IsLockOn { get; private set; }
 
         public void SetPlayerPosition(Vector3 position) {
             PlayerPosition = position;
@@ -15,6 +16,10 @@ namespace GlassRefrain.Camera {
 
         public void SetEnemyPosition(Vector3? position) {
             EnemyPosition = position;
+        }
+
+        public void SetLockOn(bool isLockOn) {
+            IsLockOn = isLockOn;
         }
     }
 }

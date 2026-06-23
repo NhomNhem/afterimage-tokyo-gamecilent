@@ -17,8 +17,6 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
     private PlayerStateSnapshot _currentSnapshot;
     private bool _disposed;
     private bool _hasTargetFocus;
-    private MovementRestrictionContext _preTurnRestriction;
-    private bool _hasTurnRestrictionSaved;
     private Subject<LocomotionStateSnapshot>? _emptyLocomotionSubject;
 
     public Observable<PlayerStateSnapshot> StateChanges => _stateSubject;
@@ -155,26 +153,6 @@ public sealed class PlayerStateResolver : IPlayerStateMachine {
     private void OnResolvedStateChanged(PlayerState previous, PlayerState current) {
         if (current == PlayerState.Dodge && previous != PlayerState.Dodge)
             _locomotionStateMachine?.TryBeginDodgeDisplacement();
-    }
-
-    public void SetMovementLockedForTurn(bool isLocked, string source) {
-        if (_locomotionStateMachine == null) return;
-
-        if (isLocked) {
-            _preTurnRestriction = _locomotionStateMachine.GetCurrentRestriction();
-            _hasTurnRestrictionSaved = true;
-            _locomotionStateMachine.SetMovementRestriction(new MovementRestrictionContext(
-                canTranslate: false,
-                canRotate: true,
-                restrictionStrength: 1f,
-                source: source ?? "TurnInPlace"));
-            return;
-        }
-
-        if (_hasTurnRestrictionSaved) {
-            _locomotionStateMachine.SetMovementRestriction(_preTurnRestriction);
-            _hasTurnRestrictionSaved = false;
-        }
     }
 
     public void SetHasTargetFocus(bool hasTargetFocus) {

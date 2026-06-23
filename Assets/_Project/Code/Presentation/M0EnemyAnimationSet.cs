@@ -7,10 +7,12 @@ namespace GlassRefrain.Presentation {
         [SerializeField] private M0AnimationClipTransition telegraph;
         [SerializeField] private M0AnimationClipTransition active;
         [SerializeField] private M0AnimationClipTransition recovery;
+        [SerializeField] private M0AnimationClipTransition hitReaction;
 
         public M0AnimationClipTransition Idle => idle;
         public M0AnimationClipTransition Telegraph => telegraph;
         public M0AnimationClipTransition Active => active;
         public M0AnimationClipTransition Recovery => recovery;
+        public M0AnimationClipTransition HitReaction => hitReaction;
     }
 }

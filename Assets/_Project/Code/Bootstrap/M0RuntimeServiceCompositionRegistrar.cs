@@ -1,5 +1,6 @@
 using System;
 using GlassRefrain.Combat;
+using GlassRefrain.Core;
 using GlassRefrain.Locomotion;
 using GlassRefrain.Memory;
 using NhemDangFugBixs.NhemLogging;
@@ -35,8 +36,12 @@ namespace GlassRefrain.Bootstrap {
                 .As<IM0CombatCore>()
                 .AsSelf();
 
-            builder.Register(_ => new M0PlayerLocomotion(locomotionSettings), Lifetime.Singleton)
+            builder.Register(c => {
+                    var logger = c.Resolve<INhemLogger>();
+                    return new M0PlayerLocomotion(locomotionSettings, logger);
+                }, Lifetime.Singleton)
                 .As<IM0PlayerLocomotion>()
+                .As<ITurnDetectionSource>()
                 .AsSelf();
 
             builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton)

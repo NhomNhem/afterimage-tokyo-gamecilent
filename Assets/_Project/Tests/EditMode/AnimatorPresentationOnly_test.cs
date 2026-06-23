@@ -90,6 +90,8 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(type.GetMethod("PlayDash"), Is.Not.Null);
             Assert.That(type.GetMethod("PlayHitReaction"), Is.Not.Null);
             Assert.That(type.GetMethod("PlayStun"), Is.Not.Null);
+            Assert.That(type.GetMethod("PlayTurn"), Is.Not.Null);
+            Assert.That(type.GetMethod("SetLocomotionParameters"), Is.Not.Null);
         }
 
         [Test]

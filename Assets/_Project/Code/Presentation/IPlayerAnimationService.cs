@@ -10,19 +10,15 @@ namespace GlassRefrain.Presentation {
     }
 
     public enum TurnDirection {
-        Left90 = 0,
-        Right90 = 1,
-        Turn180 = 2
+        Left,
+        Right
     }
 
     public interface IPlayerAnimationService {
-        bool IsTurnActive { get; }
-        System.Action<bool> TurnActiveChanged { get; set; }
         void SetCombatMode(bool isCombatMode);
         void PlayNeutral();
         void PlayLocomotion(LocomotionStateSnapshot snapshot, Vector2 relativeMovementDirection);
         void PlayLocomotion(LocomotionState state, PlayerStateSnapshot fullSnapshot, Vector2 relativeMovementDirection);
-        void PlayTurn(TurnDirection direction);
         void PlayAttack(AttackAnimationRequest request);
         void PlayDodge(DodgeAnimationRequest request);
         void PlayDash(DashDirection direction);
@@ -30,5 +26,17 @@ namespace GlassRefrain.Presentation {
         void PlayCounter(CounterAnimationRequest request);
         void PlayHitReaction(HitReactionAnimationRequest request);
         void PlayStun();
+
+        /// <summary>
+        /// Play a 180° turn animation triggered by >130° input reversal (FS Melee pattern).
+        /// </summary>
+        void PlayTurn(TurnDirection direction);
+
+        /// <summary>
+        /// Set continuous locomotion blend parameters on the Animator.
+        /// Called every frame during locomotion for smooth blend tree transitions.
+        /// FS Melee pattern: animator.SetFloat with damping.
+        /// </summary>
+        void SetLocomotionParameters(float moveAmount, float strafeAmount, float rotationValue);
     }
 }

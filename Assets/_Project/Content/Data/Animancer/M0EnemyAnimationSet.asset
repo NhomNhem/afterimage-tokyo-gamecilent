@@ -24,3 +24,6 @@ MonoBehaviour:
   recovery:
     clip: {fileID: 0}
     fadeDuration: 0.1
+  hitReaction:
+    clip: {fileID: 8338732804319002307, guid: 36fe30ba832ef4c42ac1961245b8cfbf, type: 3}
+    fadeDuration: 0.1

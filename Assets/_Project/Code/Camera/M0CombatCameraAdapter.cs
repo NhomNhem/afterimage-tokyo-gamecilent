@@ -84,6 +84,7 @@ namespace GlassRefrain.Camera {
                 _hasLastPosition = true;
             }
 
+            HandleLockOnSync();
             HandleKeyboard();
 
             _cameraService.ApplyLook(_lookInput);
@@ -103,12 +104,14 @@ namespace GlassRefrain.Camera {
             }
         }
 
+        private void HandleLockOnSync() {
+            if (_targetProvider.IsLockOn != _cameraService.IsLockOn) {
+                _cameraService.SetLockOn(_targetProvider.IsLockOn);
+            }
+        }
+
         private void HandleKeyboard() {
             if (Keyboard.current == null) return;
-
-            if (Keyboard.current.tabKey.wasPressedThisFrame) {
-                _cameraService.ToggleLockOn();
-            }
 
             if (Keyboard.current.escapeKey.wasPressedThisFrame) {
                 if (Cursor.lockState == CursorLockMode.Locked) {

@@ -95,7 +95,7 @@ namespace GlassRefrain.Camera {
             var finalPos = ApplyShake(_currentPosition, deltaTime);
 
             // FOV
-            var speedFactor = Mathf.Clamp01(playerSpeed / 10f);
+            var speedFactor = Mathf.Clamp01(playerSpeed / _settings.SpeedToFOVRatio);
             var targetFOV = _settings.BaseFOV + _settings.MaxFOVExpansion * speedFactor;
             _currentFOV = Mathf.SmoothDamp(
                 _currentFOV, targetFOV, ref _fovVelocity,

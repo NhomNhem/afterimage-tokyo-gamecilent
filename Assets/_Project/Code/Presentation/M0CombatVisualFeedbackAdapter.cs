@@ -144,26 +144,72 @@ namespace GlassRefrain.Presentation
 
         public void SetEnemyTelegraphState()
         {
-            if (enemyRenderer == null || enemyTelegraphMaterial == null) return;
+            if (enemyRenderer == null) return;
 
-            _enemyCurrentMaterial = enemyTelegraphMaterial;
-            enemyRenderer.material = _enemyCurrentMaterial;
+            if (enemyTelegraphMaterial != null)
+            {
+                _enemyCurrentMaterial = enemyTelegraphMaterial;
+                enemyRenderer.material = _enemyCurrentMaterial;
+                return;
+            }
+
+            if (enemyRenderer.sharedMaterial != null && enemyRenderer.sharedMaterial.HasProperty("_BaseColor"))
+            {
+                enemyRenderer.GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", new Color(1f, 0.4f, 0f));
+                enemyRenderer.SetPropertyBlock(_propertyBlock);
+            }
         }
 
         public void SetEnemyActiveState()
         {
-            if (enemyRenderer == null || enemyActiveMaterial == null) return;
+            if (enemyRenderer == null) return;
 
-            _enemyCurrentMaterial = enemyActiveMaterial;
-            enemyRenderer.material = _enemyCurrentMaterial;
+            if (enemyActiveMaterial != null)
+            {
+                _enemyCurrentMaterial = enemyActiveMaterial;
+                enemyRenderer.material = _enemyCurrentMaterial;
+                return;
+            }
+
+            if (enemyRenderer.sharedMaterial != null && enemyRenderer.sharedMaterial.HasProperty("_BaseColor"))
+            {
+                enemyRenderer.GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", new Color(1f, 0f, 0f));
+                enemyRenderer.SetPropertyBlock(_propertyBlock);
+            }
         }
 
         public void SetEnemyRecoveryState()
         {
-            if (enemyRenderer == null || enemyRecoveryMaterial == null) return;
+            if (enemyRenderer == null) return;
 
-            _enemyCurrentMaterial = enemyRecoveryMaterial;
-            enemyRenderer.material = _enemyCurrentMaterial;
+            if (enemyRecoveryMaterial != null)
+            {
+                _enemyCurrentMaterial = enemyRecoveryMaterial;
+                enemyRenderer.material = _enemyCurrentMaterial;
+                return;
+            }
+
+            if (enemyRenderer.sharedMaterial != null && enemyRenderer.sharedMaterial.HasProperty("_BaseColor"))
+            {
+                enemyRenderer.GetPropertyBlock(_propertyBlock);
+                _propertyBlock.SetColor("_BaseColor", new Color(0.5f, 0.5f, 0.5f));
+                enemyRenderer.SetPropertyBlock(_propertyBlock);
+            }
+        }
+
+        public void ResetEnemyState()
+        {
+            if (enemyRenderer == null) return;
+
+            if (enemyOriginalMaterial != null)
+            {
+                enemyRenderer.material = enemyOriginalMaterial;
+                return;
+            }
+
+            enemyRenderer.SetPropertyBlock(null);
         }
 
         private void ApplyMaterialFeedback(Renderer renderer, Material feedbackMaterial, string feedbackType, float duration)

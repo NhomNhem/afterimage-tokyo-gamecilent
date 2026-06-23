@@ -23,6 +23,8 @@
         "UnityEditor.TestRunner",
         "VContainer",
         "VContainer.Editor",
+        "R3",
+        "R3.Unity",
         "Sirenix.Serialization",
         "Sirenix.OdinInspector.Modules.UnityMathematics"
     ],
@@ -31,12 +33,8 @@
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
-    "precompiledReferences": [
-        "nunit.framework.dll",
-        "Sirenix.Serialization.dll"
-    ],
-    "autoReferenced": false,
+    "overrideReferences": false,
+    "autoReferenced": true,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS",
         "UNITY_INCLUDE_TESTS"

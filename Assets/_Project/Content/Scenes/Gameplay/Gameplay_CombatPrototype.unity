@@ -501,18 +501,24 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 559362605}
+    - {fileID: 1959090280}
+    - {fileID: 2100000, guid: c8d328d69bac0d24cae165f832feef89, type: 2}
+    - {fileID: 2100000, guid: fce5f3c4ab2266049a73a496ed016200, type: 2}
+    - {fileID: 2100000, guid: 6f233085dcaacb047a878db595cd3a21, type: 2}
+    - {fileID: 2100000, guid: acfc692892dd7f242bc857644d1e1c9a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
     - Name: playerRenderer
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: enemyRenderer
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: playerOriginalMaterial
       Entry: 6
       Data: 
@@ -532,17 +538,17 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: enemyOriginalMaterial
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 2
     - Name: enemyTelegraphMaterial
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 3
     - Name: enemyActiveMaterial
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 4
     - Name: enemyRecoveryMaterial
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 5
 --- !u!4 &435937323
 Transform:
   m_ObjectHideFlags: 0
@@ -593,6 +599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab6e7fcdecb4b98b8dc788ffbd6d5a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Presentation::GlassRefrain.Presentation.M0AnimationPresentationAdapter
+  playerTransform: {fileID: 1932872213}
+  maxMoveSpeed: 5
 --- !u!1 &500000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1564,6 +1572,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3783074506700319736, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
   m_PrefabInstance: {fileID: 559362603}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &559362605 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1241013970766570029, guid: e28a635a247e4e3409abc5b7610b02db, type: 3}
+  m_PrefabInstance: {fileID: 559362603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &705430264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2080,6 +2093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f32c639fcddc754c9200b679d863133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Bootstrap::GlassRefrain.Bootstrap.M0PlayerLocomotionAdapter
+  rotationSpeed: 4
+  maxRotationSpeed: 8
 --- !u!4 &1932872213
 Transform:
   m_ObjectHideFlags: 0
@@ -2124,8 +2139,6 @@ MonoBehaviour:
   animationSet: {fileID: 11400000, guid: 2db640d7d268c5d48bc27fa0689e6913, type: 2}
   disableRootMotion: 1
   playIdleOnEnable: 1
-  sharpTurnAngleDegrees: 130
-  defaultTurnLockDuration: 0.35
 --- !u!114 &1932872216
 MonoBehaviour:
   m_ObjectHideFlags: 0

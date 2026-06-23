@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GlassRefrain.Core;
+using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Locomotion {
-    public sealed class M0PlayerLocomotion : IM0PlayerLocomotion {
+    public sealed class M0PlayerLocomotion : IM0PlayerLocomotion, ITurnDetectionSource {
         private InputIntentSnapshot currentInput;
         private MovementRestrictionContext movementRestriction;
         private RecoveryContext recoveryContext;
@@ -28,10 +29,16 @@ namespace GlassRefrain.Locomotion {
         private float dodgeDisplacementRemainingDistance;
         private float dodgeDisplacementRemainingSeconds;
         private bool _strafeModeEnabled;
+        private bool _sharpTurnPending;
+        private bool _sharpTurnIsRight;
+        private INhemLogger _logger;
+        public event Action<bool> SharpTurnDetected;
 
-        public M0PlayerLocomotion() : this(new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 1.5f, 10.0f, 0.2f)) { }
+        public M0PlayerLocomotion() : this(new M0LocomotionSettings(5.0f, 0.1f, 8.0f, 8.0f, 6.0f, 1.5f, 10.0f, 0.2f), null) { }
 
-        public M0PlayerLocomotion(M0LocomotionSettings settings) {
+        public M0PlayerLocomotion(M0LocomotionSettings settings) : this(settings, null) { }
+
+        public M0PlayerLocomotion(M0LocomotionSettings settings, INhemLogger logger) {
             if (settings.MoveSpeed <= 0f) {
                 throw new ArgumentOutOfRangeException(
                     nameof(settings),
@@ -72,6 +79,7 @@ namespace GlassRefrain.Locomotion {
             }
 
             this.settings = settings;
+            _logger = logger;
 
             currentInput = new InputIntentSnapshot(
                 new Axis2(0f, 0f),
@@ -197,6 +205,7 @@ namespace GlassRefrain.Locomotion {
 
         /// <summary>
         /// Process movement input and update velocity based on camera movement basis.
+        /// Uses acceleration/deceleration for smooth velocity transitions (FS Melee pattern).
         /// Should be called once per frame before UpdatePosition.
         /// </summary>
         public void ProcessMovementInput(float deltaTime) {
@@ -205,7 +214,7 @@ namespace GlassRefrain.Locomotion {
             }
 
             if (!currentInput.InputEnabled || !movementRestriction.CanTranslate) {
-                velocity = Vector3.zero;
+                velocity = Vector3.MoveTowards(velocity, Vector3.zero, settings.Deceleration * deltaTime);
                 return;
             }
 
@@ -213,13 +222,13 @@ namespace GlassRefrain.Locomotion {
             Axis2 inputAxis = currentInput.Move;
             float inputMagnitude = Mathf.Sqrt(inputAxis.X * inputAxis.X + inputAxis.Y * inputAxis.Y);
             if (inputMagnitude < settings.InputDeadzone) {
-                velocity = Vector3.zero;
+                velocity = Vector3.MoveTowards(velocity, Vector3.zero, settings.Deceleration * deltaTime);
                 return;
             }
 
             // If camera basis is not valid, don't process movement
             if (!cameraMovementBasis.IsValid) {
-                velocity = Vector3.zero;
+                velocity = Vector3.MoveTowards(velocity, Vector3.zero, settings.Deceleration * deltaTime);
                 return;
             }
 
@@ -227,19 +236,41 @@ namespace GlassRefrain.Locomotion {
             // Combine camera forward and right by input axis.
             Vector3 desiredDirectionRaw = cachedCameraForward * inputAxis.Y + cachedCameraRight * inputAxis.X;
             if (desiredDirectionRaw.sqrMagnitude <= 0.000001f) {
-                velocity = Vector3.zero;
+                velocity = Vector3.MoveTowards(velocity, Vector3.zero, settings.Deceleration * deltaTime);
                 return;
             }
 
             Vector3 desiredDirection = desiredDirectionRaw.normalized;
 
-            // Calculate velocity
+            // Calculate desired velocity and smoothly accelerate toward it (FS Melee pattern)
             float speed = settings.MoveSpeed * inputMagnitude;
-            velocity = desiredDirection * speed;
+            Vector3 desiredVelocity = desiredDirection * speed;
+            velocity = Vector3.MoveTowards(velocity, desiredVelocity, settings.Acceleration * deltaTime);
+            velocity = Vector3.ClampMagnitude(velocity, settings.MoveSpeed);
 
             // Update facing: in strafe mode (lock-on), face camera forward; otherwise follow movement
             if (inputMagnitude > settings.InputDeadzone) {
                 Vector3 targetFacing = _strafeModeEnabled ? cachedCameraForward : desiredDirection;
+
+                // Detect sharp turns (>130°) before lerping facing (FS Melee pattern)
+                // Use inputMagnitude instead of velocity — facing lerps every frame while velocity
+                // accelerates slowly, so velocity-based gate would miss the >130° window.
+                float turnAngle = Vector3.SignedAngle(facing, targetFacing, Vector3.up);
+#if GR_M0_PROTOTYPE
+                _logger?.Log($"[M0Turn] angle={turnAngle:F1} inputMag={inputMagnitude:F2} pending={_sharpTurnPending}");
+#endif
+                if (Mathf.Abs(turnAngle) > settings.TurnAngleThreshold && !_sharpTurnPending) {
+                    _sharpTurnPending = true;
+                    _sharpTurnIsRight = turnAngle > 0f;
+#if GR_M0_PROTOTYPE
+                    _logger?.Log($"[M0Turn] *** SHARP TURN DETECTED right={_sharpTurnIsRight} ***");
+#endif
+                    SharpTurnDetected?.Invoke(_sharpTurnIsRight);
+                }
+                if (Mathf.Abs(turnAngle) < 30f) {
+                    _sharpTurnPending = false;
+                }
+
                 facing = Vector3.Lerp(facing, targetFacing, settings.FacingLerpSpeed * deltaTime);
                 facing = facing.normalized;
             }

@@ -2,6 +2,7 @@ using UnityEngine;
 using GlassRefrain.Core;
 using GlassRefrain.Locomotion;
 using NhemDangFugBixs.NhemLogging;
+using Sirenix.OdinInspector;
 
 namespace GlassRefrain.Bootstrap {
     /// <summary>
@@ -22,10 +23,8 @@ namespace GlassRefrain.Bootstrap {
     /// This is explicit composition — the adapter does not own the locomotion instance.
     /// </summary>
     public class M0PlayerLocomotionAdapter : MonoBehaviour {
-        /// <summary>
-        /// Current locomotion instance. Set by M0GameplayTickHandler via VContainer
-        /// during M0 bootstrap. Never owns movement truth.
-        /// </summary>
+        [SerializeField, Required] private M0LocomotionConfig locomotionConfig;
+
         private M0PlayerLocomotion _locomotion;
         private INhemLogger _logger;
         private bool _wasMoving;
@@ -57,6 +56,7 @@ namespace GlassRefrain.Bootstrap {
 
         /// <summary>
         /// Reads locomotion movement snapshot and applies it to player transform.
+        /// Uses Quaternion.RotateTowards with speed-adaptive rotation rate (FS Melee pattern).
         /// </summary>
         private void ApplyLocomotionToTransform() {
             LocomotionMovementSnapshot snapshot = _locomotion.GetMovementSnapshot();
@@ -65,9 +65,15 @@ namespace GlassRefrain.Bootstrap {
             // Apply position to transform
             transform.position = snapshot.Position;
 
-            // Apply facing rotation to transform
-            // Create rotation that points forward in the facing direction
-            if (snapshot.Facing.sqrMagnitude > 0.001f) transform.rotation = Quaternion.LookRotation(snapshot.Facing, Vector3.up);
+            // Apply facing rotation to transform using Quaternion.RotateTowards
+            // with speed-adaptive rate (faster rotation at higher speeds)
+            if (snapshot.Facing.sqrMagnitude > 0.001f) {
+                Quaternion targetRotation = Quaternion.LookRotation(snapshot.Facing, Vector3.up);
+                float speedFactor = Mathf.Clamp01(snapshot.Velocity.magnitude / 5.0f);
+                float effectiveSpeed = Mathf.Lerp(locomotionConfig.RotationSpeed, locomotionConfig.MaxRotationSpeed, speedFactor);
+                transform.rotation = Quaternion.RotateTowards(
+                    transform.rotation, targetRotation, effectiveSpeed * Time.deltaTime * 100f);
+            }
 
 #if GR_M0_PROTOTYPE || GR_INPUT_DEBUG
             Vector3 after = transform.position;

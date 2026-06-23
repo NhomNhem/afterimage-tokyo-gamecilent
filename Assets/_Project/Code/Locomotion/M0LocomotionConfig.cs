@@ -11,6 +11,13 @@ namespace GlassRefrain.Locomotion {
         [OdinSerialize, MinValue(0f)] private float moveSpeed = 5.0f;
         [OdinSerialize, Range(0f, 0.99f)] private float inputDeadzone = 0.1f;
         [OdinSerialize, MinValue(0f)] private float facingLerpSpeed = 8.0f;
+        [OdinSerialize, MinValue(0f)] private float acceleration = 8.0f;
+        [OdinSerialize, MinValue(0f)] private float deceleration = 6.0f;
+
+        [BoxGroup("Rotation Tuning")]
+        [OdinSerialize, MinValue(0f)] private float turnAngleThreshold = 130f;
+        [OdinSerialize, MinValue(0.1f)] private float rotationSpeed = 4.0f;
+        [OdinSerialize, MinValue(0.1f)] private float maxRotationSpeed = 8.0f;
 
         [BoxGroup("Dodge Tuning")]
         [OdinSerialize, MinValue(0f)] private float dodgeDistance = 1.5f;
@@ -20,6 +27,11 @@ namespace GlassRefrain.Locomotion {
         public float MoveSpeed => moveSpeed;
         public float InputDeadzone => inputDeadzone;
         public float FacingLerpSpeed => facingLerpSpeed;
+        public float Acceleration => acceleration;
+        public float Deceleration => deceleration;
+        public float TurnAngleThreshold => turnAngleThreshold;
+        public float RotationSpeed => rotationSpeed;
+        public float MaxRotationSpeed => maxRotationSpeed;
         public float DodgeDistance => dodgeDistance;
         public float DodgeSpeed => dodgeSpeed;
         public float DodgeDurationSeconds => dodgeDurationSeconds;
@@ -29,9 +41,14 @@ namespace GlassRefrain.Locomotion {
                 moveSpeed,
                 inputDeadzone,
                 facingLerpSpeed,
+                acceleration,
+                deceleration,
                 dodgeDistance,
                 dodgeSpeed,
-                dodgeDurationSeconds);
+                dodgeDurationSeconds,
+                turnAngleThreshold,
+                rotationSpeed,
+                maxRotationSpeed);
         }
     }
 }

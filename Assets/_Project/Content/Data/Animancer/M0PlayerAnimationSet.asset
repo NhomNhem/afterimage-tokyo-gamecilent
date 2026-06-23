@@ -108,12 +108,9 @@ MonoBehaviour:
   walkRight:
     clip: {fileID: 3427438671640132418, guid: da072d0f667457e429eae283f3472e2a, type: 3}
     fadeDuration: 0.1
-  turn180:
-    clip: {fileID: 0}
-    fadeDuration: 0.1
-  turnLeft90:
-    clip: {fileID: 0}
-    fadeDuration: 0.1
-  turnRight90:
-    clip: {fileID: 0}
-    fadeDuration: 0.1
+  turnLeft:
+    clip: {fileID: 5160531908060559234, guid: f43fcb3013c138a4780e7e10404c1541, type: 3}
+    fadeDuration: 0.25
+  turnRight:
+    clip: {fileID: -8492048150976211942, guid: f43fcb3013c138a4780e7e10404c1541, type: 3}
+    fadeDuration: 0.25

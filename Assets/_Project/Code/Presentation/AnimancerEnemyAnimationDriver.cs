@@ -52,6 +52,10 @@ namespace GlassRefrain.Presentation {
             }
         }
 
+        public void PlayHitReaction(HitReactionAnimationRequest request) {
+            Play(animationSet != null ? animationSet.HitReaction : null, "Enemy HitReaction");
+        }
+
         private void Play(M0AnimationClipTransition transition, string label) {
             DisableRootMotion();
 

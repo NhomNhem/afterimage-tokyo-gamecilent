@@ -23,6 +23,20 @@ namespace GlassRefrain.Locomotion {
         public float FacingLerpSpeed { get; }
 
         /// <summary>
+        /// Acceleration rate for movement velocity (units/s^2).
+        /// FS Melee pattern: Vector3.MoveTowards(current, desired, accel * dt).
+        /// Default: 8.0
+        /// </summary>
+        public float Acceleration { get; }
+
+        /// <summary>
+        /// Deceleration rate for movement velocity (units/s^2).
+        /// Applied when input falls below deadzone.
+        /// Default: 6.0
+        /// </summary>
+        public float Deceleration { get; }
+
+        /// <summary>
         /// Total dodge displacement distance in meters.
         /// </summary>
         public float DodgeDistance { get; }
@@ -37,19 +51,48 @@ namespace GlassRefrain.Locomotion {
         /// </summary>
         public float DodgeDurationSeconds { get; }
 
+        /// <summary>
+        /// Angle threshold for sharp turn detection (degrees).
+        /// When input direction reversal exceeds this angle, a turn animation is triggered.
+        /// </summary>
+        public float TurnAngleThreshold { get; }
+
+        /// <summary>
+        /// Base rotation speed for Quaternion.RotateTowards (degrees/sec).
+        /// Used by M0PlayerLocomotionAdapter at low movement speeds.
+        /// FS Melee pattern: scaled by Time.deltaTime * 100.
+        /// </summary>
+        public float RotationSpeed { get; }
+
+        /// <summary>
+        /// Maximum rotation speed for Quaternion.RotateTowards (degrees/sec).
+        /// Used at full movement speed; lerped from RotationSpeed based on velocity.
+        /// </summary>
+        public float MaxRotationSpeed { get; }
+
         public M0LocomotionSettings(
             float moveSpeed = 5.0f,
             float inputDeadzone = 0.1f,
             float facingLerpSpeed = 8.0f,
+            float acceleration = 8.0f,
+            float deceleration = 6.0f,
             float dodgeDistance = 1.5f,
             float dodgeSpeed = 10.0f,
-            float dodgeDurationSeconds = 0.2f) {
+            float dodgeDurationSeconds = 0.2f,
+            float turnAngleThreshold = 130f,
+            float rotationSpeed = 4.0f,
+            float maxRotationSpeed = 8.0f) {
             MoveSpeed = moveSpeed;
             InputDeadzone = inputDeadzone;
             FacingLerpSpeed = facingLerpSpeed;
+            Acceleration = acceleration;
+            Deceleration = deceleration;
             DodgeDistance = dodgeDistance;
             DodgeSpeed = dodgeSpeed;
             DodgeDurationSeconds = dodgeDurationSeconds;
+            TurnAngleThreshold = turnAngleThreshold;
+            RotationSpeed = rotationSpeed;
+            MaxRotationSpeed = maxRotationSpeed;
         }
     }
 }

@@ -120,6 +120,7 @@ namespace GlassRefrain.Bootstrap {
             lastTargetSnapshot = targetContext.Snapshot;
             _locomotion?.SetStrafeMode(lastTargetSnapshot.IsLockedOn);
             _playerStateMachine?.SetHasTargetFocus(lastTargetSnapshot.IsLockedOn);
+            _targetProvider?.SetLockOn(lastTargetSnapshot.IsLockedOn);
             combatCore.RevealRequestEmitted += OnRevealRequestEmitted;
 
             if (adapter != null) {
@@ -347,6 +348,11 @@ namespace GlassRefrain.Bootstrap {
                 visualFeedbackAdapter.TriggerCounterAvailableFeedback();
             }
 
+            if (snapshot.LastResolutionResult.HitConfirmed && previousState == CombatCoreState.AttackActive &&
+                currentState != CombatCoreState.AttackActive) {
+                animationPresentationAdapter?.ObserveEnemyHitReaction();
+            }
+
             // Update debug overlay
             if (debugOverlayAdapter != null) {
                 debugOverlayAdapter.UpdateCombatState(currentState.ToString());
@@ -370,6 +376,9 @@ namespace GlassRefrain.Bootstrap {
             // Update enemy visual feedback based on intent state
             if (visualFeedbackAdapter != null) {
                 switch (currentState) {
+                    case EnemyIntentState.Idle:
+                        visualFeedbackAdapter.ResetEnemyState();
+                        break;
                     case EnemyIntentState.Telegraph:
                         visualFeedbackAdapter.SetEnemyTelegraphState();
                         break;
@@ -527,6 +536,7 @@ namespace GlassRefrain.Bootstrap {
             lastTargetSnapshot = snapshot;
             _locomotion?.SetStrafeMode(snapshot.IsLockedOn);
             _playerStateMachine?.SetHasTargetFocus(snapshot.IsLockedOn);
+            _targetProvider?.SetLockOn(snapshot.IsLockedOn);
         }
 
         private void OnRevealRequestEmitted(RevealRequestContext request) {

@@ -11,8 +11,10 @@ namespace GlassRefrain.Camera {
         Vector3 PlayerPosition { get; }
         Vector3? EnemyPosition { get; }
         bool HasValidTarget { get; }
+        bool IsLockOn { get; }
 
         void SetPlayerPosition(Vector3 position);
         void SetEnemyPosition(Vector3? position);
+        void SetLockOn(bool isLockOn);
     }
 }

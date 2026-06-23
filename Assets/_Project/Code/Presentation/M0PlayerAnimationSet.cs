@@ -53,10 +53,9 @@ namespace GlassRefrain.Presentation {
         [SerializeField] private M0AnimationClipTransition walkLeft;
         [SerializeField] private M0AnimationClipTransition walkRight;
 
-        [Header("Turn in place (FS Melee hard pivot)")]
-        [SerializeField] private M0AnimationClipTransition turn180;
-        [SerializeField] private M0AnimationClipTransition turnLeft90;
-        [SerializeField] private M0AnimationClipTransition turnRight90;
+        [Header("180° turn animations (FS Melee)")]
+        [SerializeField] private M0AnimationClipTransition turnLeft;
+        [SerializeField] private M0AnimationClipTransition turnRight;
 
         public M0AnimationClipTransition Idle => idle;
         public M0AnimationClipTransition Locomotion => locomotion;
@@ -90,8 +89,7 @@ namespace GlassRefrain.Presentation {
         public M0AnimationClipTransition WalkBack => walkBack;
         public M0AnimationClipTransition WalkLeft => walkLeft;
         public M0AnimationClipTransition WalkRight => walkRight;
-        public M0AnimationClipTransition Turn180 => turn180;
-        public M0AnimationClipTransition TurnLeft90 => turnLeft90;
-        public M0AnimationClipTransition TurnRight90 => turnRight90;
+        public M0AnimationClipTransition TurnLeft => turnLeft;
+        public M0AnimationClipTransition TurnRight => turnRight;
     }
 }

@@ -12,9 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2b537c684cfeb3bcf0820a0a309a, type: 3}
   m_Name: M0LocomotionConfig
   m_EditorClassIdentifier: GlassRefrain.Locomotion::GlassRefrain.Locomotion.M0LocomotionConfig
-  moveSpeed: 5
-  inputDeadzone: 0.1
-  facingLerpSpeed: 8
-  dodgeDistance: 1.5
-  dodgeSpeed: 10
-  dodgeDurationSeconds: 0.2
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: moveSpeed
+      Entry: 4
+      Data: 5
+    - Name: inputDeadzone
+      Entry: 4
+      Data: 0.1
+    - Name: facingLerpSpeed
+      Entry: 4
+      Data: 8
+    - Name: acceleration
+      Entry: 4
+      Data: 8
+    - Name: deceleration
+      Entry: 4
+      Data: 6
+    - Name: turnAngleThreshold
+      Entry: 4
+      Data: 130
+    - Name: rotationSpeed
+      Entry: 4
+      Data: 4
+    - Name: maxRotationSpeed
+      Entry: 4
+      Data: 8
+    - Name: dodgeDistance
+      Entry: 4
+      Data: 1.5
+    - Name: dodgeSpeed
+      Entry: 4
+      Data: 10
+    - Name: dodgeDurationSeconds
+      Entry: 4
+      Data: 0.2

@@ -115,13 +115,10 @@ namespace GlassRefrain.Tests.PlayMode {
         }
 
         private sealed class MockAnimationService : IPlayerAnimationService {
-            public bool IsTurnActive => false;
-            public System.Action<bool> TurnActiveChanged { get; set; }
             public void SetCombatMode(bool isCombatMode) { }
             public void PlayNeutral() { }
             public void PlayLocomotion(LocomotionStateSnapshot snapshot, UnityEngine.Vector2 relativeMovementDirection) { }
             public void PlayLocomotion(LocomotionState state, PlayerStateSnapshot fullSnapshot, UnityEngine.Vector2 relativeMovementDirection) { }
-            public void PlayTurn(TurnDirection direction) { }
             public void PlayAttack(AttackAnimationRequest request) { }
             public void PlayDodge(DodgeAnimationRequest request) { }
             public void PlayParry(ParryAnimationRequest request) { }
@@ -129,6 +126,8 @@ namespace GlassRefrain.Tests.PlayMode {
             public void PlayDash(DashDirection direction) { }
             public void PlayHitReaction(HitReactionAnimationRequest request) { }
             public void PlayStun() { }
+            public void PlayTurn(TurnDirection direction) { }
+            public void SetLocomotionParameters(float moveAmount, float strafeAmount, float rotationValue) { }
         }
     }
 }

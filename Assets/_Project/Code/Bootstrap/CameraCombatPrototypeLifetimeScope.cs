@@ -28,6 +28,7 @@ namespace GlassRefrain.Bootstrap {
         [SerializeField] private float baseFOV = 60f;
         [SerializeField] private float maxFOVExpansion = 5f;
         [SerializeField] private float fovSmoothTime = 0.3f;
+        [SerializeField] private float speedToFOVRatio = 12f;
         [SerializeField] private float shakeDecay = 5f;
         [SerializeField] private float shakeFrequency = 15f;
         [SerializeField] private float lockOnDistance = 7f;
@@ -39,7 +40,7 @@ namespace GlassRefrain.Bootstrap {
                 yawSensitivity, pitchSensitivity, minPitch, maxPitch,
                 positionSmoothTime, rotationSmoothTime,
                 collisionRadius, collisionSafetyMargin, collisionMask,
-                baseFOV, maxFOVExpansion, fovSmoothTime,
+                baseFOV, maxFOVExpansion, fovSmoothTime, speedToFOVRatio,
                 shakeDecay, shakeFrequency,
                 lockOnDistance, lockOnHeight);
 

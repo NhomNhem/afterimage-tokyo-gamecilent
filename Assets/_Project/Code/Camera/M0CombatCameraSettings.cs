@@ -26,6 +26,7 @@ namespace GlassRefrain.Camera {
         public readonly float BaseFOV;
         public readonly float MaxFOVExpansion;
         public readonly float FOVSmoothTime;
+        public readonly float SpeedToFOVRatio;
 
         public readonly float ShakeDecay;
         public readonly float ShakeFrequency;
@@ -50,6 +51,7 @@ namespace GlassRefrain.Camera {
             float baseFOV,
             float maxFOVExpansion,
             float fovSmoothTime,
+            float speedToFOVRatio,
             float shakeDecay,
             float shakeFrequency,
             float lockOnDistance,
@@ -70,6 +72,7 @@ namespace GlassRefrain.Camera {
             BaseFOV = baseFOV;
             MaxFOVExpansion = maxFOVExpansion;
             FOVSmoothTime = fovSmoothTime;
+            SpeedToFOVRatio = speedToFOVRatio > 0.001f ? speedToFOVRatio : 10f;
             ShakeDecay = shakeDecay;
             ShakeFrequency = shakeFrequency;
             LockOnDistance = lockOnDistance;
