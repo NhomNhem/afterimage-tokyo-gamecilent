@@ -37,13 +37,12 @@ namespace GlassRefrain.Tests.EditMode {
             var input = new M0InputRouter();
             input.RecordRoutingOutcome(InputActionIntent.Dodge, InputRoutingDisposition.Rejected, "CombatCore", "Dodge blocked");
 
-            var locomotion = new M0PlayerLocomotion();
-            locomotion.SetMovementRestriction(new MovementRestrictionContext(false, true, 1f, "Movement locked"));
+            var locomotion = new LocomotionCore();
 
             var target = new M0TargetContext();
             target.RequestAcquire(new TargetAcquireRequest("EnemyA", "TestHarness", "Acquire target"));
 
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             combat.RequestAction(new CombatActionRequest(CombatActionType.Dodge, "TestHarness", "Overlay"));
 
             var enemy = new M0EnemyIntentModel();
@@ -84,7 +83,6 @@ namespace GlassRefrain.Tests.EditMode {
                 encounter.Snapshot);
 
             Assert.That(snapshot.Input.LastReason, Is.EqualTo("Dodge blocked"));
-            Assert.That(snapshot.Locomotion.LastReason, Is.EqualTo("Movement locked"));
             Assert.That(snapshot.TargetContext.LastReason, Is.EqualTo("Target not yet valid"));
             Assert.That(snapshot.CombatCore.LastReason, Is.EqualTo("Action accepted"));
             Assert.That(snapshot.EnemyIntent.LastReason, Is.EqualTo("Telegraphing slash"));
@@ -96,7 +94,6 @@ namespace GlassRefrain.Tests.EditMode {
             Assert.That(snapshot.EncounterFramework.LastReason, Is.EqualTo("Prepare duel"));
 
             Assert.That(((InputIntentSnapshot)snapshot.Input.SourceSnapshot).InputEnabled, Is.True);
-            Assert.That(((LocomotionStateSnapshot)snapshot.Locomotion.SourceSnapshot).MovementRestriction.Source, Is.EqualTo("Movement locked"));
             Assert.That(((TargetContextSnapshot)snapshot.TargetContext.SourceSnapshot).AcquireReason, Is.EqualTo("Acquire target"));
             Assert.That(((M0CombatSnapshot)snapshot.CombatCore.SourceSnapshot).State, Is.EqualTo(CombatCoreState.DodgeStartup));
             Assert.That(((EnemyIntentSnapshot)snapshot.EnemyIntent.SourceSnapshot).State, Is.EqualTo(EnemyIntentState.Telegraph));
@@ -110,9 +107,9 @@ namespace GlassRefrain.Tests.EditMode {
         public void ChannelVisibilityTogglesWithoutMutatingSourceSystems() {
             var aggregator = new M0DebugOverlaySnapshotAggregator();
             var input = new M0InputRouter();
-            var locomotion = new M0PlayerLocomotion();
+            var locomotion = new LocomotionCore();
             var target = new M0TargetContext();
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var enemy = new M0EnemyIntentModel();
             var health = new M0HealthDamageReactionModel();
             var memory = new M0MemoryState();
@@ -163,9 +160,9 @@ namespace GlassRefrain.Tests.EditMode {
         public void EnemyReadabilityPassesThroughWithoutMutatingSourceModel() {
             var aggregator = new M0DebugOverlaySnapshotAggregator();
             var input = new M0InputRouter();
-            var locomotion = new M0PlayerLocomotion();
+            var locomotion = new LocomotionCore();
             var target = new M0TargetContext();
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var enemy = new M0EnemyIntentModel();
             var health = new M0HealthDamageReactionModel();
             var memory = new M0MemoryState();
@@ -206,9 +203,9 @@ namespace GlassRefrain.Tests.EditMode {
         public void EnemyIntentReason_UsesIntentLabelThenPunishSourceThenTelegraphId() {
             var aggregator = new M0DebugOverlaySnapshotAggregator();
             var input = new M0InputRouter();
-            var locomotion = new M0PlayerLocomotion();
+            var locomotion = new LocomotionCore();
             var target = new M0TargetContext();
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var health = new M0HealthDamageReactionModel();
             var memory = new M0MemoryState();
             var memoryVfx = new M0MemoryVFXResponse();
@@ -272,9 +269,9 @@ namespace GlassRefrain.Tests.EditMode {
 
         private static DebugOverlayAggregateSnapshot CreateAggregateSnapshot(M0DebugOverlaySnapshotAggregator aggregator) {
             var input = new M0InputRouter();
-            var locomotion = new M0PlayerLocomotion();
+            var locomotion = new LocomotionCore();
             var target = new M0TargetContext();
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var enemy = new M0EnemyIntentModel();
             var health = new M0HealthDamageReactionModel();
             var memory = new M0MemoryState();

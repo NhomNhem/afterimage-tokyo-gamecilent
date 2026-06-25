@@ -41,7 +41,10 @@ namespace GlassRefrain.Bootstrap {
         private M0CombatDebugOverlayAdapter debugOverlayAdapter;
 
         [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
-        private M0AnimationPresentationAdapter animationPresentationAdapter;
+        private AnimationFacade animationFacade;
+
+        [TabGroup("Gameplay Scope", "Core Adapters"), OdinSerialize, Required]
+        private PlayerMover playerMover;
 
         #endregion
 
@@ -99,12 +102,13 @@ namespace GlassRefrain.Bootstrap {
         private M0SceneCompositionRegistrar CreateSceneCompositionRegistrar() {
             return new M0SceneCompositionRegistrar(
                 tickHandler,
+                playerMover,
                 targetableAdapter,
                 loopDriver,
                 playerInput,
                 visualFeedbackAdapter,
                 debugOverlayAdapter,
-                animationPresentationAdapter,
+                animationFacade,
                 playerAnimationDriver,
                 enemyAnimationDriver,
                 memoryProbe,

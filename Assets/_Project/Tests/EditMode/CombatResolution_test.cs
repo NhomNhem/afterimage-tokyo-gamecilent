@@ -17,7 +17,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void LightAttack_Intent_Routes_To_CombatCore_As_LightAttack_Request() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
 
             var result = combat.ConsumeAttackIntent(CombatActionType.LightAttack);
 
@@ -28,7 +28,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void HeavyAttack_Intent_Routes_To_CombatCore_As_HeavyAttack_Request() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
 
             var result = combat.ConsumeAttackIntent(CombatActionType.HeavyAttack);
 
@@ -41,7 +41,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Rejects_LightAttack_During_AttackRecovery() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             combat.RequestAction(new CombatActionRequest(CombatActionType.LightAttack, "test", "setup"));
             combat.AdvanceState("startup→active");
             combat.AdvanceState("active→recovery");
@@ -56,7 +56,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Rejects_HeavyAttack_During_AttackStartup() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             combat.RequestAction(new CombatActionRequest(CombatActionType.LightAttack, "test", "setup"));
             Assert.That(combat.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup));
 
@@ -69,7 +69,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Resolves_Hit_When_Valid_Active_Target_Exists() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var targetCtx = new M0TargetContext();
             targetCtx.SetTargetValidity(new TargetValidityContext("enemy-01", true, string.Empty));
             targetCtx.RequestAcquire(new TargetAcquireRequest("enemy-01", "test", "setup"));
@@ -87,7 +87,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Resolves_Whiff_When_No_Valid_Target_Exists() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
 
             var resolution = combat.ResolveAttack(CombatActionType.LightAttack);
 
@@ -99,7 +99,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Resolves_Whiff_When_Target_Exists_But_Not_Locked_On() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var targetCtx = new M0TargetContext();
             targetCtx.SetTargetValidity(new TargetValidityContext("enemy-01", true, string.Empty));
             Assert.That(targetCtx.Snapshot.IsLockedOn, Is.False, "Target should not be locked on yet");
@@ -114,7 +114,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatResultSnapshot_Is_ReadOnly_Struct() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var snapshot = combat.Snapshot;
 
             // M0CombatSnapshot is a readonly struct — assign to local copy; original is unaffected
@@ -128,7 +128,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Owns_Validity_Decision_Not_TargetContext() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var targetCtx = new M0TargetContext();
             combat.SetTargetContext(targetCtx);
 
@@ -145,7 +145,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Resolution_Does_Not_Mutate_Damage_Or_Health() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             var targetCtx = new M0TargetContext();
             targetCtx.SetTargetValidity(new TargetValidityContext("enemy-01", true, string.Empty));
             targetCtx.RequestAcquire(new TargetAcquireRequest("enemy-01", "test", "setup"));
@@ -157,7 +157,7 @@ namespace GlassRefrain.Tests.EditMode {
             // Combat resolution does not have a damage value — only hit confirmed
             // Health/Damage mutation is the domain of Health system (deferred story)
             Assert.That(resolution.Resolved, Is.True);
-            // Snapshot has no damage field — this test confirms M0CombatCore owns only combat truth, not health truth
+            // Snapshot has no damage field — this test confirms CombatCore owns only combat truth, not health truth
             Assert.That(typeof(M0CombatSnapshot).GetProperty("Damage"), Is.Null,
                 "M0CombatSnapshot must not expose a damage property — damage belongs to Health system");
             Assert.That(typeof(CombatResolutionResult).GetProperty("Damage"), Is.Null,
@@ -167,27 +167,27 @@ namespace GlassRefrain.Tests.EditMode {
         // ─── 8.10: Manual VContainer registration resolves Combat Core wiring ────
 
         [Test]
-        public void ManualVContainer_Resolves_M0CombatCore_As_Singleton() {
+        public void ManualVContainer_Resolves_CombatCore_As_Singleton() {
             var builder = new ContainerBuilder();
             builder.Register(_ => new M0CombatTimingSettings(0.12f, 0.18f, 0.25f, 0.08f, 0.18f, 0.25f, 0.08f, 0.16f, 0.25f, 0.5f, 0.25f), Lifetime.Singleton);
             builder.Register<INhemLogger, NhemNullLogger>(Lifetime.Singleton);
-            builder.Register<M0CombatCore>(Lifetime.Singleton);
+            builder.Register<CombatCore>(Lifetime.Singleton);
 
             using (var container = builder.Build()) {
-                var instance1 = container.Resolve<M0CombatCore>();
-                var instance2 = container.Resolve<M0CombatCore>();
+                var instance1 = container.Resolve<CombatCore>();
+                var instance2 = container.Resolve<CombatCore>();
 
-                Assert.That(instance1, Is.Not.Null, "M0CombatCore should resolve from manual DI container");
+                Assert.That(instance1, Is.Not.Null, "CombatCore should resolve from manual DI container");
                 Assert.That(ReferenceEquals(instance1, instance2), Is.True,
-                    "M0CombatCore should be a singleton (same instance both times)");
+                    "CombatCore should be a singleton (same instance both times)");
             }
         }
 
         // ─── 8.11 / 8.12: No legacy Input Manager or hardcoded device polling ────
 
         [Test]
-        public void M0CombatCore_Has_No_UnityEngine_Input_References() {
-            var combatType = typeof(M0CombatCore);
+        public void CombatCore_Has_No_UnityEngine_Input_References() {
+            var combatType = typeof(CombatCore);
             var methods = combatType.GetMethods(
                 System.Reflection.BindingFlags.Public |
                 System.Reflection.BindingFlags.NonPublic |
@@ -198,7 +198,7 @@ namespace GlassRefrain.Tests.EditMode {
                 if (body == null) continue;
                 foreach (var local in body.LocalVariables) {
                     Assert.That(local.LocalType.Namespace, Does.Not.StartWith("UnityEngine.InputLegacy"),
-                        "M0CombatCore must not use legacy Input Manager");
+                        "CombatCore must not use legacy Input Manager");
                 }
             }
         }
@@ -213,7 +213,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCore_Rejects_LightAttack_During_HitReact() {
-            var combat = new M0CombatCore();
+            var combat = new CombatCore();
             combat.TriggerHitReact("test-source");
             Assert.That(combat.Snapshot.State, Is.EqualTo(CombatCoreState.HitReact));
 
@@ -227,29 +227,23 @@ namespace GlassRefrain.Tests.EditMode {
         // ─── AC-2: Action lock context emitted after accepted attack ─────────────
 
         [Test]
-        public void CombatCore_Emits_ActionLock_After_Accepted_HeavyAttack() {
-            var combat = new M0CombatCore();
+        public void CombatCore_TransitionsToAttackStartup_After_Accepted_HeavyAttack() {
+            var combat = new CombatCore();
 
             var result = combat.ConsumeAttackIntent(CombatActionType.HeavyAttack);
 
             Assert.That(result.Accepted, Is.True, "HeavyAttack should be accepted from Neutral state");
-            Assert.That(combat.Snapshot.ActionLock.LockActive, Is.True,
-                "ActionLock should be active after accepted attack");
-            Assert.That(combat.Snapshot.ActionLock.RequestingState, Is.EqualTo(CombatCoreState.AttackStartup),
-                "ActionLock requesting state should be AttackStartup");
+            Assert.That(combat.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup));
         }
 
         [Test]
-        public void CombatCore_Emits_ActionLock_After_Accepted_LightAttack() {
-            var combat = new M0CombatCore();
+        public void CombatCore_TransitionsToAttackStartup_After_Accepted_LightAttack() {
+            var combat = new CombatCore();
 
             var result = combat.ConsumeAttackIntent(CombatActionType.LightAttack);
 
             Assert.That(result.Accepted, Is.True, "LightAttack should be accepted from Neutral state");
-            Assert.That(combat.Snapshot.ActionLock.LockActive, Is.True,
-                "ActionLock should be active after accepted LightAttack");
-            Assert.That(combat.Snapshot.ActionLock.RequestingState, Is.EqualTo(CombatCoreState.AttackStartup),
-                "ActionLock requesting state should be AttackStartup");
+            Assert.That(combat.Snapshot.State, Is.EqualTo(CombatCoreState.AttackStartup));
         }
     }
 }

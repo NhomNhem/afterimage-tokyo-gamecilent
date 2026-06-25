@@ -6,6 +6,8 @@ using NhemDangFugBixs.NhemLogging;
 
 namespace GlassRefrain.Input {
     public class M0DirectPlayerInput : MonoBehaviour {
+        public System.Action<Vector2> DashRequested;
+
         private M0InputActions _inputActions;
         private M0InputActions.GameplayActions _gameplay;
         private M0InputRouter inputRouter;
@@ -14,6 +16,9 @@ namespace GlassRefrain.Input {
         private int _lastDebugForceInvokeFrame = -1;
 #endif
         private INhemLogger logger;
+        private float _lastSTapTime = -1f;
+        private float _prevMoveY;
+        private const float DoubleTapWindow = 0.3f;
 
         private void Awake() {
             _inputActions = new M0InputActions();
@@ -64,6 +69,9 @@ namespace GlassRefrain.Input {
 
             _gameplay.ToggleDebugOverlay.started += OnToggleDebugOverlayChanged;
             _gameplay.ToggleDebugOverlay.canceled += OnToggleDebugOverlayChanged;
+
+            _gameplay.DashLeft.performed += OnDashLeft;
+            _gameplay.DashRight.performed += OnDashRight;
 #if GR_M0_PROTOTYPE
             _gameplay.DebugForceParryEligibleActive.performed += OnDebugForceParryEligibleActivePerformed;
 #endif
@@ -101,6 +109,9 @@ namespace GlassRefrain.Input {
 
             _gameplay.ToggleDebugOverlay.started -= OnToggleDebugOverlayChanged;
             _gameplay.ToggleDebugOverlay.canceled -= OnToggleDebugOverlayChanged;
+
+            _gameplay.DashLeft.performed -= OnDashLeft;
+            _gameplay.DashRight.performed -= OnDashRight;
 #if GR_M0_PROTOTYPE
             _gameplay.DebugForceParryEligibleActive.performed -= OnDebugForceParryEligibleActivePerformed;
 #endif
@@ -118,6 +129,19 @@ namespace GlassRefrain.Input {
 
             var moveVec = _gameplay.Move.ReadValue<Vector2>();
             inputRouter.SetMove(new Axis2(moveVec.x, moveVec.y));
+
+            float now = Time.time;
+            bool sJustPressed = _prevMoveY >= -0.3f && moveVec.y < -0.5f;
+            _prevMoveY = moveVec.y;
+
+            if (sJustPressed && Mathf.Abs(moveVec.x) < 0.3f) {
+                if (_lastSTapTime > 0f && (now - _lastSTapTime) < DoubleTapWindow) {
+                    DashRequested?.Invoke(new Vector2(0f, -1f));
+                    _lastSTapTime = -1f;
+                } else {
+                    _lastSTapTime = now;
+                }
+            }
         }
 
         private void OnLockOnChanged(InputAction.CallbackContext context) =>
@@ -143,6 +167,14 @@ namespace GlassRefrain.Input {
 
         private void OnToggleDebugOverlayChanged(InputAction.CallbackContext context) =>
             HandleButtonState(InputActionIntent.ToggleDebugOverlay, _gameplay.ToggleDebugOverlay, context);
+
+        private void OnDashLeft(InputAction.CallbackContext context) {
+            if (context.performed) DashRequested?.Invoke(new Vector2(-1f, 0f));
+        }
+
+        private void OnDashRight(InputAction.CallbackContext context) {
+            if (context.performed) DashRequested?.Invoke(new Vector2(1f, 0f));
+        }
 
         private void HandleButtonState(InputActionIntent actionIntent, InputAction action, InputAction.CallbackContext context) {
             if (inputRouter == null || action == null) return;

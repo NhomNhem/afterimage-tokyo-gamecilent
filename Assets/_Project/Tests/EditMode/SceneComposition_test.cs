@@ -251,11 +251,12 @@ namespace GlassRefrain.Tests.EditMode {
 
             Assert.That(source, Does.Contain("public sealed class M0RuntimeServiceCompositionRegistrar"));
             Assert.That(source, Does.Contain("public void Register(IContainerBuilder builder)"));
-            Assert.That(source, Does.Contain("builder.Register(resolver => new M0CombatCore("));
+            Assert.That(source, Does.Contain("builder.Register(resolver => new CombatCore("));
             Assert.That(source, Does.Contain("resolver.Resolve<INhemLogger>()"));
-            Assert.That(source, Does.Contain(".As<IM0CombatCore>()"));
-            Assert.That(source, Does.Contain("builder.Register(_ => new M0PlayerLocomotion(locomotionSettings), Lifetime.Singleton)"));
-            Assert.That(source, Does.Contain(".As<IM0PlayerLocomotion>()"));
+            Assert.That(source, Does.Contain(".As<ICombatCore>()"));
+            Assert.That(source, Does.Contain("builder.Register(c => {"));
+            Assert.That(source, Does.Contain("return new LocomotionCore(locomotionSettings, logger);"));
+            Assert.That(source, Does.Contain(".As<ILocomotionCore>()"));
             Assert.That(source, Does.Contain("builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton)"));
             Assert.That(source, Does.Contain(".As<IM0MemoryState>()"));
             Assert.That(source, Does.Contain("builder.Register(_ => new M0MemoryVFXResponse("));

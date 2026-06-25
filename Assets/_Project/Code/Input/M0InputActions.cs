@@ -201,6 +201,24 @@ namespace GlassRefrain.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DashLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DashRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5f6a7b8-9c0d-1e2f-3a4b-5c6d7e8f9a0b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -343,6 +361,17 @@ namespace GlassRefrain.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""DashLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -361,7 +390,7 @@ namespace GlassRefrain.Input
                 {
                     ""name"": """",
                     ""id"": ""a2f72d6f-77c1-4f8f-8fd2-9f0e2e24a828"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -387,7 +416,7 @@ namespace GlassRefrain.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Counter"",
+                    ""action"": ""DashRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -409,7 +438,7 @@ namespace GlassRefrain.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Interact"",
+                    ""action"": ""Counter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -548,6 +577,8 @@ namespace GlassRefrain.Input
             m_Gameplay_ResetEncounter = m_Gameplay.FindAction("ResetEncounter", throwIfNotFound: true);
             m_Gameplay_ToggleDebugOverlay = m_Gameplay.FindAction("ToggleDebugOverlay", throwIfNotFound: true);
             m_Gameplay_DebugForceParryEligibleActive = m_Gameplay.FindAction("DebugForceParryEligibleActive", throwIfNotFound: true);
+            m_Gameplay_DashLeft = m_Gameplay.FindAction("DashLeft", throwIfNotFound: true);
+            m_Gameplay_DashRight = m_Gameplay.FindAction("DashRight", throwIfNotFound: true);
         }
 
         ~@M0InputActions()
@@ -640,6 +671,8 @@ namespace GlassRefrain.Input
         private readonly InputAction m_Gameplay_ResetEncounter;
         private readonly InputAction m_Gameplay_ToggleDebugOverlay;
         private readonly InputAction m_Gameplay_DebugForceParryEligibleActive;
+        private readonly InputAction m_Gameplay_DashLeft;
+        private readonly InputAction m_Gameplay_DashRight;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -699,6 +732,14 @@ namespace GlassRefrain.Input
             /// Provides access to the underlying input action "Gameplay/DebugForceParryEligibleActive".
             /// </summary>
             public InputAction @DebugForceParryEligibleActive => m_Wrapper.m_Gameplay_DebugForceParryEligibleActive;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/DashLeft".
+            /// </summary>
+            public InputAction @DashLeft => m_Wrapper.m_Gameplay_DashLeft;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/DashRight".
+            /// </summary>
+            public InputAction @DashRight => m_Wrapper.m_Gameplay_DashRight;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -761,6 +802,12 @@ namespace GlassRefrain.Input
                 @DebugForceParryEligibleActive.started += instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.performed += instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.canceled += instance.OnDebugForceParryEligibleActive;
+                @DashLeft.started += instance.OnDashLeft;
+                @DashLeft.performed += instance.OnDashLeft;
+                @DashLeft.canceled += instance.OnDashLeft;
+                @DashRight.started += instance.OnDashRight;
+                @DashRight.performed += instance.OnDashRight;
+                @DashRight.canceled += instance.OnDashRight;
             }
 
             /// <summary>
@@ -808,6 +855,12 @@ namespace GlassRefrain.Input
                 @DebugForceParryEligibleActive.started -= instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.performed -= instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.canceled -= instance.OnDebugForceParryEligibleActive;
+                @DashLeft.started -= instance.OnDashLeft;
+                @DashLeft.performed -= instance.OnDashLeft;
+                @DashLeft.canceled -= instance.OnDashLeft;
+                @DashRight.started -= instance.OnDashRight;
+                @DashRight.performed -= instance.OnDashRight;
+                @DashRight.canceled -= instance.OnDashRight;
             }
 
             /// <summary>
@@ -958,6 +1011,20 @@ namespace GlassRefrain.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnDebugForceParryEligibleActive(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "DashLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDashLeft(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "DashRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDashRight(InputAction.CallbackContext context);
         }
     }
 }

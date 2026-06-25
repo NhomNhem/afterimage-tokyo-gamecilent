@@ -1,4 +1,5 @@
 using System;
+using GlassRefrain.Application;
 using GlassRefrain.Combat;
 using GlassRefrain.Core;
 using GlassRefrain.Locomotion;
@@ -29,19 +30,35 @@ namespace GlassRefrain.Bootstrap {
             M0LocomotionSettings locomotionSettings = CreateLocomotionSettings();
             M0MemoryRuntimeTuningSettings memoryRuntimeTuningSettings = CreateMemoryRuntimeTuningSettings();
 
-            builder.Register(resolver => new M0CombatCore(
+            builder.Register(resolver => new CombatCore(
                     combatTimingSettings,
                     resolver.Resolve<INhemLogger>()),
                 Lifetime.Singleton)
-                .As<IM0CombatCore>()
+                .As<ICombatCore>()
                 .AsSelf();
 
             builder.Register(c => {
                     var logger = c.Resolve<INhemLogger>();
-                    return new M0PlayerLocomotion(locomotionSettings, logger);
+                    return new LocomotionCore(locomotionSettings, logger);
                 }, Lifetime.Singleton)
-                .As<IM0PlayerLocomotion>()
-                .As<ITurnDetectionSource>()
+                .As<ILocomotionCore>()
+                .AsSelf();
+
+            builder.Register<SkillSlotResolver>(Lifetime.Singleton)
+                .AsSelf();
+
+            builder.Register<ImmunityLayer>(Lifetime.Singleton)
+                .AsSelf();
+
+            builder.Register<CombatModeTracker>(Lifetime.Singleton)
+                .AsSelf();
+
+            builder.Register(resolver => new PlayerStateMachine(
+                    resolver.Resolve<LocomotionCore>(),
+                    resolver.Resolve<CombatCore>(),
+                    resolver.Resolve<INhemLogger>(),
+                    resolver.Resolve<ImmunityLayer>()),
+                Lifetime.Singleton)
                 .AsSelf();
 
             builder.Register(_ => new M0MemoryState(memoryRuntimeTuningSettings.DefaultRevealCandidateId), Lifetime.Singleton)

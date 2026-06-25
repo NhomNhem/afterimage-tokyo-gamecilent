@@ -24,7 +24,7 @@ namespace GlassRefrain.Bootstrap {
         public IReadOnlyList<string> RuntimeMemoryLogEntries => _runtimeMemoryLogPlaceholder.Entries;
 
         public void TickInteraction(
-            M0PlayerLocomotion locomotion,
+            LocomotionCore locomotion,
             MemoryInteractionService memoryInteractionService,
             IM0MemoryState memoryState,
             M0MemoryVFXResponse memoryVfxResponse,

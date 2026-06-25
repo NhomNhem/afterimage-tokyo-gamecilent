@@ -291,22 +291,16 @@ namespace GlassRefrain.Core {
         public CombatActionRequestResult LastActionResult { get; }
         public CombatResolutionResult LastResolutionResult { get; }
         public CounterWindowState CounterWindow { get; }
-        public ActionLockContext ActionLock { get; }
-        public RecoveryContext Recovery { get; }
 
         public M0CombatSnapshot(
             CombatCoreState state,
             CombatActionRequestResult lastActionResult,
             CombatResolutionResult lastResolutionResult,
-            CounterWindowState counterWindow,
-            ActionLockContext actionLock,
-            RecoveryContext recovery) {
+            CounterWindowState counterWindow) {
             State = state;
             LastActionResult = lastActionResult;
             LastResolutionResult = lastResolutionResult;
             CounterWindow = counterWindow;
-            ActionLock = actionLock;
-            Recovery = recovery;
         }
     }
 

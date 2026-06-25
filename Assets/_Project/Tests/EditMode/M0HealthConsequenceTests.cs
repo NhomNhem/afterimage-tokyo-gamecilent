@@ -60,7 +60,7 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void DamageConsequence_DoesNotMutateCombatCoreDefensiveOwnership() {
             var model = new M0HealthDamageReactionModel(100f);
-            var combatCore = new M0CombatCore();
+            var combatCore = new CombatCore();
 
             var before = combatCore.Snapshot;
             model.ApplyDamage(
@@ -83,9 +83,9 @@ namespace GlassRefrain.Tests.EditMode {
             var snapshot = aggregator.Capture(
                 new M0InputRouter().Snapshot,
                 null,
-                new M0PlayerLocomotion().Snapshot,
+                new LocomotionCore().Snapshot,
                 new M0TargetContext().Snapshot,
-                new M0CombatCore().Snapshot,
+                new CombatCore().Snapshot,
                 new M0EnemyIntentModel().Snapshot,
                 health.Snapshot,
                 new M0MemoryState().Snapshot,

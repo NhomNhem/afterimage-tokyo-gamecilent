@@ -40,8 +40,8 @@ namespace GlassRefrain.Tests.EditMode {
 
             // Then
             using (var container = builder.Build()) {
-                Assert.That(container.Resolve<M0CombatCore>(), Is.Not.Null, "M0CombatCore failed to resolve");
-                Assert.That(container.Resolve<M0PlayerLocomotion>(), Is.Not.Null, "M0PlayerLocomotion failed to resolve");
+                Assert.That(container.Resolve<CombatCore>(), Is.Not.Null, "CombatCore failed to resolve");
+                Assert.That(container.Resolve<LocomotionCore>(), Is.Not.Null, "LocomotionCore failed to resolve");
                 Assert.That(container.Resolve<M0TargetContext>(), Is.Not.Null, "M0TargetContext failed to resolve");
                 Assert.That(container.Resolve<M0HealthDamageReactionModel>(), Is.Not.Null, "M0HealthDamageReactionModel failed to resolve");
                 Assert.That(container.Resolve<M0EnemyIntentModel>(), Is.Not.Null, "M0EnemyIntentModel failed to resolve");
@@ -49,8 +49,8 @@ namespace GlassRefrain.Tests.EditMode {
                 Assert.That(container.Resolve<M0MemoryVFXResponse>(), Is.Not.Null, "M0MemoryVFXResponse failed to resolve");
                 Assert.That(container.Resolve<ITargetableRegistry>(), Is.Not.Null, "ITargetableRegistry failed to resolve");
                 Assert.That(container.Resolve<M0InputRouter>(), Is.Not.Null, "M0InputRouter failed to resolve");
-                Assert.That(container.Resolve<IM0CombatCore>(), Is.SameAs(container.Resolve<M0CombatCore>()));
-                Assert.That(container.Resolve<IM0PlayerLocomotion>(), Is.SameAs(container.Resolve<M0PlayerLocomotion>()));
+                Assert.That(container.Resolve<ICombatCore>(), Is.SameAs(container.Resolve<CombatCore>()));
+                Assert.That(container.Resolve<ILocomotionCore>(), Is.SameAs(container.Resolve<LocomotionCore>()));
                 Assert.That(container.Resolve<IM0MemoryState>(), Is.SameAs(container.Resolve<M0MemoryState>()));
             }
         }

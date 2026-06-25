@@ -280,35 +280,33 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 1932872212}
     - {fileID: 1932872214}
     - {fileID: 500000002}
     - {fileID: 435937322}
     - {fileID: 435937321}
-    - {fileID: 435937325}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: adapter
-      Entry: 10
-      Data: 0
+    - Name: playerMover
+      Entry: 6
+      Data: 
     - Name: directInput
       Entry: 10
-      Data: 1
+      Data: 0
     - Name: cameraBasisProvider
       Entry: 10
-      Data: 2
+      Data: 1
     - Name: visualFeedbackAdapter
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: debugOverlayAdapter
       Entry: 10
-      Data: 4
-    - Name: animationPresentationAdapter
-      Entry: 10
-      Data: 5
+      Data: 3
+    - Name: animationFacade
+      Entry: 6
+      Data: 
     - Name: enemyTransform
       Entry: 6
       Data: 
@@ -386,7 +384,8 @@ MonoBehaviour:
     - {fileID: 1932872214}
     - {fileID: 435937322}
     - {fileID: 435937321}
-    - {fileID: 435937325}
+    - {fileID: 1932872220}
+    - {fileID: 1932872221}
     - {fileID: 1932872215}
     - {fileID: 500000016}
     - {fileID: 11400000, guid: b1e71d949c744cdf9a75c80e41a9f3ad, type: 2}
@@ -417,27 +416,30 @@ MonoBehaviour:
     - Name: debugOverlayAdapter
       Entry: 10
       Data: 5
-    - Name: animationPresentationAdapter
+    - Name: animationFacade
       Entry: 10
       Data: 6
-    - Name: playerAnimationDriver
+    - Name: playerMover
       Entry: 10
       Data: 7
-    - Name: enemyAnimationDriver
+    - Name: playerAnimationDriver
       Entry: 10
       Data: 8
-    - Name: combatTimingConfig
+    - Name: enemyAnimationDriver
       Entry: 10
       Data: 9
-    - Name: locomotionConfig
+    - Name: combatTimingConfig
       Entry: 10
       Data: 10
-    - Name: memoryRuntimeTuningConfig
+    - Name: locomotionConfig
       Entry: 10
       Data: 11
-    - Name: memoryProbe
+    - Name: memoryRuntimeTuningConfig
       Entry: 10
       Data: 12
+    - Name: memoryProbe
+      Entry: 10
+      Data: 13
     - Name: memoryFragments
       Entry: 7
       Data: 0|GlassRefrain.Memory.MemoryFragment[], GlassRefrain.Memory
@@ -446,7 +448,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 13
+      Data: 14
     - Name: 
       Entry: 13
       Data: 
@@ -465,7 +467,6 @@ GameObject:
   - component: {fileID: 435937322}
   - component: {fileID: 435937321}
   - component: {fileID: 435937324}
-  - component: {fileID: 435937325}
   m_Layer: 0
   m_Name: PresentationAdapter
   m_TagString: Untagged
@@ -587,20 +588,6 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
---- !u!114 &435937325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435937320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ab6e7fcdecb4b98b8dc788ffbd6d5a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: GlassRefrain.Presentation::GlassRefrain.Presentation.M0AnimationPresentationAdapter
-  playerTransform: {fileID: 1932872213}
-  maxMoveSpeed: 5
 --- !u!1 &500000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,6 +2029,119 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!1 &1503919551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1503919555}
+  - component: {fileID: 1503919554}
+  - component: {fileID: 1503919553}
+  - component: {fileID: 1503919552}
+  m_Layer: 0
+  m_Name: Ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &1503919552
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503919551}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1503919553
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503919551}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &1503919554
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503919551}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1503919555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503919551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1785052525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2068,12 +2168,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1932872213}
-  - component: {fileID: 1932872212}
   - component: {fileID: 1932872214}
   - component: {fileID: 1932872216}
   - component: {fileID: 1932872215}
   - component: {fileID: 1932872218}
   - component: {fileID: 1932872219}
+  - component: {fileID: 1932872221}
+  - component: {fileID: 1932872220}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -2081,20 +2182,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1932872212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1932872211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f32c639fcddc754c9200b679d863133, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: GlassRefrain.Bootstrap::GlassRefrain.Bootstrap.M0PlayerLocomotionAdapter
-  rotationSpeed: 4
-  maxRotationSpeed: 8
 --- !u!4 &1932872213
 Transform:
   m_ObjectHideFlags: 0
@@ -2136,7 +2223,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GlassRefrain.Presentation::GlassRefrain.Presentation.AnimancerPlayerAnimationDriver
   animancer: {fileID: 1932872216}
-  animationSet: {fileID: 11400000, guid: 2db640d7d268c5d48bc27fa0689e6913, type: 2}
+  library: {fileID: 11400000, guid: e19d08f430a3d904d9a0b2a952927401, type: 2}
+  upperBodyMask: {fileID: 31900000, guid: 9576758f2d3aa94419e1549ff80b229d, type: 2}
   disableRootMotion: 1
   playIdleOnEnable: 1
 --- !u!114 &1932872216
@@ -2241,6 +2329,32 @@ MonoBehaviour:
   local: 1
   limited: 0
   limitCount: 3
+--- !u!114 &1932872220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932872211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90f860bc9bc8471498c7518f167a4d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GlassRefrain.Presentation::GlassRefrain.Presentation.AnimationFacade
+  playerTransform: {fileID: 0}
+  maxMoveSpeed: 5
+--- !u!114 &1932872221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932872211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1901eb2d90e1c3643b9a129ec7a5f7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GlassRefrain.Bootstrap::GlassRefrain.Bootstrap.PlayerMover
 --- !u!1 &1959090279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2556,3 +2670,4 @@ SceneRoots:
   - {fileID: 2131933448}
   - {fileID: 1990882813}
   - {fileID: 705430264}
+  - {fileID: 1503919555}

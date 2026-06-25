@@ -14,7 +14,7 @@ namespace GlassRefrain.Tests.EditMode {
     /// - AC-4: Facing supports movement direction when not locked-on
     /// </summary>
     public class LocomotionBasis_test {
-        private M0PlayerLocomotion locomotion = null!;
+        private LocomotionCore locomotion = null!;
 
         [SetUp]
         public void Setup() {
@@ -22,7 +22,7 @@ namespace GlassRefrain.Tests.EditMode {
                 moveSpeed: 5.0f,
                 inputDeadzone: 0.1f,
                 facingLerpSpeed: 8.0f);
-            locomotion = new M0PlayerLocomotion(settings);
+            locomotion = new LocomotionCore(settings);
         }
 
         #region AC-1: Camera Movement Basis Projection
@@ -187,7 +187,7 @@ namespace GlassRefrain.Tests.EditMode {
                 moveSpeed: 5.0f,
                 inputDeadzone: 0.1f,
                 facingLerpSpeed: 8.0f);
-            M0PlayerLocomotion locomotionWithDeadzone = new M0PlayerLocomotion(settings);
+            LocomotionCore locomotionWithDeadzone = new LocomotionCore(settings);
 
             // Create input below deadzone (0.05 magnitude)
             var deadzonInput = new InputIntentSnapshot(
@@ -215,7 +215,7 @@ namespace GlassRefrain.Tests.EditMode {
                 moveSpeed: 5.0f,
                 inputDeadzone: 0.1f,
                 facingLerpSpeed: 8.0f);
-            M0PlayerLocomotion locomotionThreshold = new M0PlayerLocomotion(settings);
+            LocomotionCore locomotionThreshold = new LocomotionCore(settings);
 
             // Test just below threshold: (0.0707, 0.0707) magnitude = 0.0999... < 0.1
             var justBelowDeadzone = new InputIntentSnapshot(
@@ -261,61 +261,20 @@ namespace GlassRefrain.Tests.EditMode {
             LocomotionStateSnapshot beforeRestriction = locomotion.Snapshot;
             Assert.AreEqual(LocomotionState.Moving, beforeRestriction.State);
 
-            // Act: Apply movement restriction
-            var restriction = new MovementRestrictionContext(
-                canTranslate: false,
-                canRotate: true,
-                restrictionStrength: 1.0f,
-                source: "Test Restriction");
-            locomotion.SetMovementRestriction(restriction);
+            // Act: Apply movement restriction via ControlState
+            float deltaTime = 1.0f / 60.0f;
+            locomotion.Tick(moveInput, new ControlState(canMove: false, canAttack: true, canRotate: true), deltaTime);
 
             // Assert: Should transition to Restricted state
             LocomotionStateSnapshot afterRestriction = locomotion.Snapshot;
             Assert.AreEqual(LocomotionState.Restricted, afterRestriction.State,
                 "Movement restriction should transition to Restricted state");
 
-            // Process movement with restriction
-            float deltaTime = 1.0f / 60.0f;
-            LocomotionMovementSnapshot beforeProcess = locomotion.GetMovementSnapshot();
-            locomotion.ProcessMovementInput(deltaTime);
             LocomotionMovementSnapshot afterProcess = locomotion.GetMovementSnapshot();
 
             // Verify velocity is zero when restricted
             Assert.AreEqual(0f, afterProcess.Velocity.magnitude, 0.001f,
                 "Velocity should be zero when movement is restricted");
-        }
-
-        /// <summary>
-        /// AC-2: FSM respects recovery context (IsRecovering=true).
-        /// When recovering, state should be Recovering regardless of input.
-        /// </summary>
-        [Test]
-        public void test_fsm_recovery_state_overrides_movement() {
-            // Arrange: Create movement input
-            var moveInput = new InputIntentSnapshot(
-                new Axis2(1f, 0f),
-                new Axis2(0f, 0f),
-                false, false, false, false, false, false, false, false,
-                true);
-
-            locomotion.ConsumeInputIntent(moveInput);
-
-            // Verify we're in Moving state
-            LocomotionStateSnapshot beforeRecovery = locomotion.Snapshot;
-            Assert.AreEqual(LocomotionState.Moving, beforeRecovery.State);
-
-            // Act: Apply recovery context
-            var recovery = new RecoveryContext(
-                source: RecoverySource.PlayerLocomotion,
-                isRecovering: true,
-                remainingSeconds: 0.5f,
-                detail: "Recovery");
-            locomotion.SetRecoveryContext(recovery);
-
-            // Assert: Should transition to Recovering state
-            LocomotionStateSnapshot afterRecovery = locomotion.Snapshot;
-            Assert.AreEqual(LocomotionState.Recovering, afterRecovery.State,
-                "Active recovery should transition to Recovering state");
         }
 
         #endregion
@@ -342,14 +301,12 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             // Act: Process movement
-            locomotion.ConsumeInputIntent(moveRight);
             float deltaTime = 1.0f / 60.0f;  // One frame at 60 FPS
 
             // Initial snapshot before processing
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
 
-            // Process movement input to calculate facing
-            locomotion.ProcessMovementInput(deltaTime);
+            locomotion.Tick(moveRight, new ControlState(true, true, true), deltaTime);
 
             // Second snapshot after processing
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
@@ -381,10 +338,9 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             // Act: Process with no input
-            locomotion.ConsumeInputIntent(idleInput);
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
 
-            locomotion.ProcessMovementInput(0.016f);
+            locomotion.Tick(idleInput, new ControlState(true, true, true), 0.016f);
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 
             // Assert: Facing should remain essentially the same
@@ -420,7 +376,7 @@ namespace GlassRefrain.Tests.EditMode {
 
             // Process movement for one frame (1/60 sec)
             float deltaTime = 1.0f / 60.0f;
-            locomotion.ProcessMovementInput(deltaTime);
+            locomotion.Tick(moveRight, new ControlState(true, true, true), deltaTime);
 
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 
@@ -456,8 +412,7 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             // Act
-            locomotion.ConsumeInputIntent(moveInput);
-            locomotion.ProcessMovementInput(1.0f / 60.0f);
+            locomotion.Tick(moveInput, new ControlState(true, true, true), 1.0f / 60.0f);
             LocomotionMovementSnapshot snapshot = locomotion.GetMovementSnapshot();
 
             // Assert: Facing magnitude should be 1.0 (normalized)
@@ -487,10 +442,9 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             // Act
-            locomotion.ConsumeInputIntent(moveRight);
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
 
-            locomotion.ProcessMovementInput(1.0f / 60.0f);
+            locomotion.Tick(moveRight, new ControlState(true, true, true), 1.0f / 60.0f);
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 
             // Assert: Facing should move toward +X direction (right)
@@ -527,12 +481,10 @@ namespace GlassRefrain.Tests.EditMode {
                 "Camera missing");
 
             locomotion.SetCameraMovementBasis(invalidBasis);
-            locomotion.ConsumeInputIntent(moveInput);
 
             // Act: Process movement with invalid basis
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
-            locomotion.ProcessMovementInput(1.0f / 60.0f);
-            locomotion.UpdatePosition(1.0f / 60.0f);
+            locomotion.Tick(moveInput, new ControlState(true, true, true), 1.0f / 60.0f);
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 
             // Assert: Velocity should be zero
@@ -566,11 +518,9 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             // Act: Process movement for one frame
-            locomotion.ConsumeInputIntent(moveForward);
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
 
-            locomotion.ProcessMovementInput(0.016f);
-            locomotion.UpdatePosition(0.016f);
+            locomotion.Tick(moveForward, new ControlState(true, true, true), 0.016f);
 
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 
@@ -597,11 +547,9 @@ namespace GlassRefrain.Tests.EditMode {
                 true);
 
             // Act: Process movement
-            locomotion.ConsumeInputIntent(moveRight);
             LocomotionMovementSnapshot before = locomotion.GetMovementSnapshot();
 
-            locomotion.ProcessMovementInput(0.016f);
-            locomotion.UpdatePosition(0.016f);
+            locomotion.Tick(moveRight, new ControlState(true, true, true), 0.016f);
 
             LocomotionMovementSnapshot after = locomotion.GetMovementSnapshot();
 

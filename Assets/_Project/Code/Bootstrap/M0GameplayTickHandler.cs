@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 using GlassRefrain.Application;
@@ -13,27 +14,28 @@ using GlassRefrain.Targeting;
 using NhemDangFugBixs.NhemLogging;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using System.Collections.Generic;
 
 namespace GlassRefrain.Bootstrap {
     public class M0GameplayTickHandler : SerializedMonoBehaviour {
-        [OdinSerialize, Required] private M0PlayerLocomotionAdapter adapter;
+        [OdinSerialize, Required] private PlayerMover playerMover;
         [OdinSerialize, Required] private M0DirectPlayerInput directInput;
         [OdinSerialize, Required] private CameraMovementBasisProvider cameraBasisProvider;
         [OdinSerialize, Required] private M0CombatVisualFeedbackAdapter visualFeedbackAdapter;
         [OdinSerialize, Required] private M0CombatDebugOverlayAdapter debugOverlayAdapter;
-        [OdinSerialize, Required] private M0AnimationPresentationAdapter animationPresentationAdapter;
+        [OdinSerialize, Required] private AnimationFacade animationFacade;
         [OdinSerialize, Required] private Transform enemyTransform;
 
-        private M0PlayerLocomotion _locomotion;
+        private LocomotionCore _locomotion;
         private M0TargetContext _targetContext;
-        private M0CombatCore _combatCore;
+        private CombatCore _combatCore;
         private M0EnemyIntentModel _enemyIntentModel;
         private M0EnemyIntentLoopDriver _enemyIntentLoopDriver;
         private M0InputRouter _inputRouter;
         private IM0MemoryState _memoryState;
         private M0MemoryVFXResponse _memoryVfxResponse;
         private MemoryInteractionService _memoryInteractionService;
+        private PlayerStateMachine _stateMachine;
+        private SkillSlotResolver _skillResolver;
         private INhemLogger _logger;
 
         private bool _warnedMissingBasis;
@@ -48,7 +50,6 @@ namespace GlassRefrain.Bootstrap {
         private TargetContextSnapshot lastTargetSnapshot;
 
         private readonly M0MemoryInteractionTickBridge _memoryInteractionTickBridge = new M0MemoryInteractionTickBridge();
-        private IPlayerStateMachine _playerStateMachine;
         private IM0CameraTargetProvider _targetProvider;
 
         private bool _loggedAdapterMissing;
@@ -57,20 +58,19 @@ namespace GlassRefrain.Bootstrap {
         private readonly List<InputActionIntent> _triggeredInputActions = new List<InputActionIntent>(8);
         private bool _interactTriggeredThisFrame;
         private bool _isConstructed;
-        private bool _movementLockedForAttack;
+        private Vector2 _pendingDashDirection;
 
         public void SetVisualFeedbackAdapter(M0CombatVisualFeedbackAdapter adapter) => visualFeedbackAdapter = adapter;
 
         public void SetDebugOverlayAdapter(M0CombatDebugOverlayAdapter adapter) => debugOverlayAdapter = adapter;
 
-        public void SetAnimationPresentationAdapter(M0AnimationPresentationAdapter adapter) => animationPresentationAdapter = adapter;
-
         [Inject]
-        public void Construct(M0PlayerLocomotion locomotion, M0TargetContext targetContext, M0CombatCore combatCore,
+        public void Construct(LocomotionCore locomotion, M0TargetContext targetContext, CombatCore combatCore,
             M0EnemyIntentModel enemyIntentModel, M0EnemyIntentLoopDriver enemyIntentLoopDriver,
             M0InputRouter inputRouter, IM0MemoryState memoryState, M0MemoryVFXResponse memoryVfxResponse,
             MemoryInteractionService memoryInteractionService, INhemLogger logger,
-            IPlayerStateMachine playerStateMachine, IM0CameraTargetProvider targetProvider) {
+            PlayerStateMachine stateMachine, IM0CameraTargetProvider targetProvider,
+            SkillSlotResolver skillResolver) {
             _locomotion = locomotion;
             _targetContext = targetContext;
             _combatCore = combatCore;
@@ -80,7 +80,8 @@ namespace GlassRefrain.Bootstrap {
             _memoryState = memoryState;
             _memoryVfxResponse = memoryVfxResponse;
             _memoryInteractionService = memoryInteractionService;
-            _playerStateMachine = playerStateMachine;
+            _stateMachine = stateMachine;
+            _skillResolver = skillResolver;
             _targetProvider = targetProvider;
             _logger = logger;
             _isConstructed = true;
@@ -89,20 +90,11 @@ namespace GlassRefrain.Bootstrap {
 #endif
 
             combatCore.SetTargetContext(targetContext);
-            if (adapter != null) {
-                adapter.SetLocomotion(locomotion);
-                adapter.SetLogger(logger);
-                _loggedAdapterMissing = false;
-            }
-            else if (!_loggedAdapterMissing) {
-                logger?.LogWarning(
-                    "[M0Locomotion] Adapter reference missing on M0GameplayTickHandler; Player transform will not be updated.");
-                _loggedAdapterMissing = true;
-            }
 
             if (directInput != null) {
                 directInput.SetLogger(logger);
                 directInput.SetInputRouter(inputRouter);
+                directInput.DashRequested += OnDashRequested;
             }
 
             // Subscribe to snapshot events for presentation adapters
@@ -119,14 +111,13 @@ namespace GlassRefrain.Bootstrap {
             targetContext.SnapshotChanged += OnTargetSnapshotChanged;
             lastTargetSnapshot = targetContext.Snapshot;
             _locomotion?.SetStrafeMode(lastTargetSnapshot.IsLockedOn);
-            _playerStateMachine?.SetHasTargetFocus(lastTargetSnapshot.IsLockedOn);
             _targetProvider?.SetLockOn(lastTargetSnapshot.IsLockedOn);
             combatCore.RevealRequestEmitted += OnRevealRequestEmitted;
 
-            if (adapter != null) {
-                _encounterResetStartPosition = adapter.transform.position;
-                _encounterResetStartFacing = adapter.transform.forward.sqrMagnitude > 0.000001f
-                    ? adapter.transform.forward.normalized
+            if (playerMover != null) {
+                _encounterResetStartPosition = playerMover.transform.position;
+                _encounterResetStartFacing = playerMover.transform.forward.sqrMagnitude > 0.000001f
+                    ? playerMover.transform.forward.normalized
                     : Vector3.forward;
             }
             else {
@@ -160,6 +151,10 @@ namespace GlassRefrain.Bootstrap {
 
         private void OnDestroy() {
             if (!_isConstructed) return;
+
+            if (directInput != null) {
+                directInput.DashRequested -= OnDashRequested;
+            }
 
             _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
             _combatCore.RevealRequestEmitted -= OnRevealRequestEmitted;
@@ -204,13 +199,42 @@ namespace GlassRefrain.Bootstrap {
                 }
             }
 
-            _locomotion.ProcessMovementInput(dt);
-            _locomotion.UpdatePosition(dt);
+            // Player aggregator handles locomotion + combat tick
+            var inputSnapshot = _inputRouter?.Snapshot ?? default;
+
+            if (_pendingDashDirection.sqrMagnitude > 0.01f && _locomotion != null && cameraBasisProvider != null) {
+                var dir = _pendingDashDirection;
+                int slot = dir.x < -0.5f ? SkillSlotResolver.SlotDashLeft
+                    : dir.x > 0.5f ? SkillSlotResolver.SlotDashRight : SkillSlotResolver.SlotDashBack;
+                if (_skillResolver.CanActivate(slot)) {
+                    var basis = cameraBasisProvider.GetMovementBasis();
+                    if (basis.IsValid) {
+                        Vector3 cameraForward = new Vector3(basis.Forward.X, 0f, basis.Forward.Y).normalized;
+                        Vector3 cameraRight = new Vector3(basis.Right.X, 0f, basis.Right.Y).normalized;
+                        Vector3 dashDir;
+                        if (dir.y < -0.5f) {
+                            var prevFrame = _stateMachine?.Frame ?? default;
+                            dashDir = prevFrame.Facing.sqrMagnitude > 0.001f ? -prevFrame.Facing : -cameraForward;
+                        } else {
+                            dashDir = (cameraRight * dir.x + cameraForward * dir.y).normalized;
+                        }
+                        if (_locomotion.TryBeginDashDisplacement(dashDir)) {
+                            _skillResolver.MarkUsed(slot);
+                            if (dir.x < -0.5f) animationFacade?.TriggerDashLeft();
+                            else if (dir.x > 0.5f) animationFacade?.TriggerDashRight();
+                            else if (dir.y < -0.5f) animationFacade?.TriggerDashBack();
+                        }
+                    }
+                }
+                _pendingDashDirection = Vector2.zero;
+            }
+
+            _stateMachine?.Tick(inputSnapshot, dt);
+            var frame = _stateMachine?.Frame ?? default;
 
             // Feed positions to cross-scene camera target provider
             if (_targetProvider != null) {
-                var playerSnapshot = _locomotion.GetMovementSnapshot();
-                _targetProvider.SetPlayerPosition(playerSnapshot.Position);
+                _targetProvider.SetPlayerPosition(frame.Position);
                 _targetProvider.SetEnemyPosition(enemyTransform != null
                     ? (Vector3?)enemyTransform.position
                     : null);
@@ -231,9 +255,6 @@ namespace GlassRefrain.Bootstrap {
             _enemyIntentLoopDriver?.Tick(dt);
             _enemyIntentModel?.Tick(dt);
 
-            // Story 1-6: Combat Core tick for time-based state management (CounterWindow duration expiry).
-            _combatCore?.Tick(dt);
-
             _memoryInteractionTickBridge.TickInteraction(
                 _locomotion,
                 _memoryInteractionService,
@@ -241,11 +262,6 @@ namespace GlassRefrain.Bootstrap {
                 _memoryVfxResponse,
                 debugOverlayAdapter,
                 _interactTriggeredThisFrame);
-
-            // Story 1-6: Recovery context forwarding — forwards combat recovery state to locomotion each frame.
-            // M0PlayerLocomotion.SetRecoveryContext already handles IsRecovering == false as a no-op.
-            if (_combatCore != null && _locomotion != null)
-                _locomotion.SetRecoveryContext(_combatCore.Snapshot.Recovery);
 
             _memoryInteractionTickBridge.TickRevealFeedback(
                 dt,
@@ -317,9 +333,6 @@ namespace GlassRefrain.Bootstrap {
             var currentState = snapshot.State;
             bool counterWindowOpened = !lastCombatSnapshot.CounterWindow.IsOpen && snapshot.CounterWindow.IsOpen;
 
-            // Lock/unlock movement based on combat state
-            UpdateMovementLockForCombatState(currentState);
-
             // Trigger visual feedback on state transitions
             if (visualFeedbackAdapter != null && previousState != currentState) {
                 switch (currentState) {
@@ -350,7 +363,7 @@ namespace GlassRefrain.Bootstrap {
 
             if (snapshot.LastResolutionResult.HitConfirmed && previousState == CombatCoreState.AttackActive &&
                 currentState != CombatCoreState.AttackActive) {
-                animationPresentationAdapter?.ObserveEnemyHitReaction();
+                animationFacade?.ObserveEnemyHitReaction();
             }
 
             // Update debug overlay
@@ -394,7 +407,7 @@ namespace GlassRefrain.Bootstrap {
                 }
             }
 
-            animationPresentationAdapter?.ObserveEnemyIntentSnapshot(snapshot);
+            animationFacade?.ObserveEnemyIntentSnapshot(snapshot);
 
             // Update debug overlay
             if (debugOverlayAdapter != null) {
@@ -415,24 +428,6 @@ namespace GlassRefrain.Bootstrap {
 
         private void HandleInputRouting() {
             if (_inputRouter == null) return;
-
-            var inputSnapshot = _inputRouter.Snapshot;
-            if (_locomotion != null) {
-                var locomotionIntent = new InputIntentSnapshot(
-                    inputSnapshot.Move,
-                    new Axis2(0f, 0f),
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    inputSnapshot.InputEnabled);
-
-                _locomotion.ConsumeInputIntent(locomotionIntent);
-            }
 
             _triggeredInputActions.Clear();
             _inputRouter.DrainTriggeredActions(_triggeredInputActions);
@@ -505,6 +500,10 @@ namespace GlassRefrain.Bootstrap {
             }
         }
 
+        private void OnDashRequested(Vector2 direction) {
+            _pendingDashDirection = direction;
+        }
+
         private void OnTargetSnapshotChanged(TargetContextSnapshot snapshot) {
             if (debugOverlayAdapter == null) return;
 
@@ -535,7 +534,6 @@ namespace GlassRefrain.Bootstrap {
 
             lastTargetSnapshot = snapshot;
             _locomotion?.SetStrafeMode(snapshot.IsLockedOn);
-            _playerStateMachine?.SetHasTargetFocus(snapshot.IsLockedOn);
             _targetProvider?.SetLockOn(snapshot.IsLockedOn);
         }
 
@@ -547,31 +545,5 @@ namespace GlassRefrain.Bootstrap {
                 _logger);
         }
 
-        private void UpdateMovementLockForCombatState(CombatCoreState state) {
-            if (_locomotion == null) return;
-
-            bool shouldLock = state == CombatCoreState.AttackStartup ||
-                              state == CombatCoreState.AttackActive ||
-                              state == CombatCoreState.AttackRecovery ||
-                              state == CombatCoreState.CounterActive ||
-                              state == CombatCoreState.HitReact;
-
-            if (shouldLock && !_movementLockedForAttack) {
-                _movementLockedForAttack = true;
-                _locomotion.SetMovementRestriction(new MovementRestrictionContext(
-                    canTranslate: false,
-                    canRotate: false,
-                    restrictionStrength: 1f,
-                    source: "CombatAction"));
-            }
-            else if (!shouldLock && _movementLockedForAttack) {
-                _movementLockedForAttack = false;
-                _locomotion.SetMovementRestriction(new MovementRestrictionContext(
-                    canTranslate: true,
-                    canRotate: true,
-                    restrictionStrength: 0f,
-                    source: string.Empty));
-            }
-        }
     }
 }

@@ -43,7 +43,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParryIntentRoutesToCombatCoreAsParryAction() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             var result = core.ConsumeDefensiveIntent(CombatActionType.Parry, ActiveParryEligible());
             Assert.That(result.Accepted, Is.True, "Parry intent should be accepted in Neutral");
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.ParryStartup));
@@ -51,7 +51,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void DodgeIntentRoutesToCombatCoreAsDodgeAction() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             var result = core.ConsumeDefensiveIntent(CombatActionType.Dodge, IdleSnapshot());
             Assert.That(result.Accepted, Is.True, "Dodge intent should be accepted in Neutral");
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeStartup));
@@ -59,7 +59,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CounterIntentRoutesToCombatCoreAsCounterAction() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.OpenCounterWindow("test", 0.5f);
             var result = core.ConsumeDefensiveIntent(CombatActionType.Counter, IdleSnapshot());
             Assert.That(result.Accepted, Is.True, "Counter intent should be accepted when CounterWindow is open");
@@ -69,14 +69,14 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void InputDoesNotDecideParryValidity() {
             // Same action type, same caller — result differs based on snapshot state only.
-            var core1 = new M0CombatCore();
+            var core1 = new CombatCore();
             var r1 = core1.ConsumeDefensiveIntent(CombatActionType.Parry, ActiveParryEligible());
             Assert.That(r1.Accepted, Is.True);
             core1.AdvanceState("parry active");
             core1.AdvanceState("parry recovery");
             Assert.That(core1.Snapshot.CounterWindow.IsOpen, Is.True, "Valid parry should open window");
 
-            var core2 = new M0CombatCore();
+            var core2 = new CombatCore();
             core2.ConsumeDefensiveIntent(CombatActionType.Parry, IdleSnapshot());
             core2.AdvanceState("parry active");
             core2.AdvanceState("parry recovery");
@@ -89,7 +89,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParrySucceedsAndOpensCounterWindowWhenEnemyActiveAndParryEligible() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, ActiveParryEligible());
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
@@ -102,7 +102,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParryDoesNotOpenCounterWindowWhenEnemyInTelegraph() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, MakeSnapshot(EnemyIntentState.Telegraph, new[] { "ParryEligible" }));
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
@@ -112,7 +112,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParryDoesNotOpenCounterWindowWhenEnemyInCommit() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, MakeSnapshot(EnemyIntentState.Commit, new[] { "ParryEligible" }));
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
@@ -121,7 +121,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParryDoesNotOpenCounterWindowWhenEnemyInRecovery() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, MakeSnapshot(EnemyIntentState.Recovery, new[] { "ParryEligible" }));
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
@@ -130,7 +130,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParryDoesNotOpenCounterWindowWhenEnemyInIdle() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, IdleSnapshot());
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
@@ -139,7 +139,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParryAgainstActiveButNonParryEligibleTagsDoesNotOpenCounterWindow() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, ActiveNonEligible());
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
@@ -148,7 +148,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void ParryAgainstActiveWithEmptyTagsOpensCounterWindow() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, ActiveEmptyTags());
             core.AdvanceState("parry active");
             core.AdvanceState("parry recovery");
@@ -161,7 +161,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void DodgeTransitionsThroughExpectedStatesViaConsumeDefensiveIntent() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Dodge, IdleSnapshot());
             Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeStartup));
 
@@ -177,25 +177,24 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void DodgeRecoveryContextIsActiveWhenInDodgeRecoveryState() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Dodge, IdleSnapshot());
             core.AdvanceState("dodge active");
             core.AdvanceState("dodge recovery");
-            Assert.That(core.Snapshot.Recovery.RecoveryActive, Is.True);
-            Assert.That(core.Snapshot.Recovery.RequestingState, Is.EqualTo(CombatCoreState.DodgeRecovery));
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.DodgeRecovery));
         }
 
         [Test]
         public void DodgeRecoveryContextIsFalseWhenNeutral() {
-            var core = new M0CombatCore();
-            Assert.That(core.Snapshot.Recovery.RecoveryActive, Is.False);
+            var core = new CombatCore();
+            Assert.That(core.Snapshot.State, Is.EqualTo(CombatCoreState.Neutral));
         }
 
         [Test]
         public void DodgeDoesNotMutateEnemyIntentSnapshot() {
             var snapshot = IdleSnapshot();
             var stateBefore = snapshot.State;
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Dodge, snapshot);
             Assert.That(snapshot.State, Is.EqualTo(stateBefore), "EnemyIntentSnapshot must not be mutated by Combat Core");
         }
@@ -206,7 +205,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CounterRejectedWhenCounterWindowIsClosed() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             var result = core.ConsumeDefensiveIntent(CombatActionType.Counter, IdleSnapshot());
             Assert.That(result.Accepted, Is.False);
             Assert.That(result.Result, Is.EqualTo(CombatActionResult.Rejected));
@@ -215,7 +214,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CounterAcceptedWhenCounterWindowIsOpen() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.OpenCounterWindow("test", 0.5f);
             var result = core.ConsumeDefensiveIntent(CombatActionType.Counter, IdleSnapshot());
             Assert.That(result.Accepted, Is.True);
@@ -226,7 +225,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CounterWindowExpiresAfterDurationWhenTicked() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.OpenCounterWindow("test", 0.5f);
             Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True);
             core.Tick(0.3f);
@@ -237,7 +236,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CounterWindowDoesNotExpireBeforeDuration() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.OpenCounterWindow("test", 1.0f);
             core.Tick(0.5f);
             Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.True, "Window should still be open at 0.5s");
@@ -247,7 +246,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CounterRejectedAfterWindowExpired() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.OpenCounterWindow("test", 0.1f);
             core.Tick(0.15f);
             Assert.That(core.Snapshot.CounterWindow.IsOpen, Is.False);
@@ -258,7 +257,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void OpenCounterWindowDoesNotChangeCurrentState() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             core.ConsumeDefensiveIntent(CombatActionType.Parry, MakeSnapshot(EnemyIntentState.Active, new[] { "ParryEligible" }));
             core.AdvanceState("active");
             var stateBefore = core.Snapshot.State;
@@ -269,7 +268,7 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CounterAcceptedTransitionsToCounterActiveAndEmitsRevealRequest() {
-            var core = new M0CombatCore();
+            var core = new CombatCore();
             var revealEmitted = false;
             core.RevealRequestEmitted += _ => revealEmitted = true;
 
@@ -303,7 +302,7 @@ namespace GlassRefrain.Tests.EditMode {
         [Test]
         public void DefensiveWiringFilesDoNotReferenceForbiddenDependencies() {
             string[] files = {
-                "Assets/_Project/Code/Combat/M0CombatCore.cs",
+                "Assets/_Project/Code/Combat/CombatCore.cs",
                 "Assets/_Project/Code/Input/M0DirectPlayerInput.cs",
                 "Assets/_Project/Code/Bootstrap/M0GameplayTickHandler.cs"
             };

@@ -77,13 +77,13 @@ namespace GlassRefrain.Tests.EditMode {
 
         [Test]
         public void CombatCoreAndHealthRemainRevealContextProvidersOnly() {
-            M0CombatCore combatCore = new M0CombatCore();
+            CombatCore combatCore = new CombatCore();
             M0HealthDamageReactionModel health = new M0HealthDamageReactionModel();
 
             Assert.That(combatCore.LastRevealRequestContext.RequestSourceType, Is.EqualTo(CombatRequestSourceType.Unknown));
             Assert.That(health.Snapshot.LastDamageResult.Accepted, Is.False);
 
-            string combatSource = File.ReadAllText("Assets/_Project/Code/Combat/M0CombatCore.cs");
+            string combatSource = File.ReadAllText("Assets/_Project/Code/Combat/CombatCore.cs");
             string healthSource = File.ReadAllText("Assets/_Project/Code/Health/M0HealthDamageReactionModel.cs");
             Assert.That(combatSource.Contains("EvaluateRequestedReveal"), Is.False);
             Assert.That(combatSource.Contains("RevealRequestDecision"), Is.False);
@@ -114,7 +114,7 @@ namespace GlassRefrain.Tests.EditMode {
                 "Assets/_Project/Code/Core/M0Contracts.cs",
                 "Assets/_Project/Code/Memory/M0MemoryState.cs",
                 "Assets/_Project/Code/Memory/GlassRefrain.Memory.asmdef",
-                "Assets/_Project/Code/Combat/M0CombatCore.cs",
+                "Assets/_Project/Code/Combat/CombatCore.cs",
                 "Assets/_Project/Code/Health/M0HealthDamageReactionModel.cs"
             };
             string[] forbiddenPatterns = {
