@@ -115,6 +115,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "DashLeft",
                     "type": "Button",
                     "id": "d1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
@@ -303,6 +312,17 @@
                     "name": "",
                     "id": "a2f72d6f-77c1-4f8f-8fd2-9f0e2e24a828",
                     "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2c3d4e5-6f7a-8b9c-0d1e-2f3a4b5c6d7e",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

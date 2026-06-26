@@ -22,6 +22,7 @@ namespace GlassRefrain.Presentation {
         void PlayStun();
         void PlayEnterCombat();
         void PlayExitCombat();
+        void PlayJump();
         void SetLocomotionParameters(float moveAmount, float strafeAmount, float rotationValue);
     }
 }

@@ -203,6 +203,15 @@ namespace GlassRefrain.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""DashLeft"",
                     ""type"": ""Button"",
                     ""id"": ""d1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c"",
@@ -394,6 +403,17 @@ namespace GlassRefrain.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2c3d4e5-6f7a-8b9c-0d1e-2f3a4b5c6d7e"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -577,6 +597,7 @@ namespace GlassRefrain.Input
             m_Gameplay_ResetEncounter = m_Gameplay.FindAction("ResetEncounter", throwIfNotFound: true);
             m_Gameplay_ToggleDebugOverlay = m_Gameplay.FindAction("ToggleDebugOverlay", throwIfNotFound: true);
             m_Gameplay_DebugForceParryEligibleActive = m_Gameplay.FindAction("DebugForceParryEligibleActive", throwIfNotFound: true);
+            m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
             m_Gameplay_DashLeft = m_Gameplay.FindAction("DashLeft", throwIfNotFound: true);
             m_Gameplay_DashRight = m_Gameplay.FindAction("DashRight", throwIfNotFound: true);
         }
@@ -671,6 +692,7 @@ namespace GlassRefrain.Input
         private readonly InputAction m_Gameplay_ResetEncounter;
         private readonly InputAction m_Gameplay_ToggleDebugOverlay;
         private readonly InputAction m_Gameplay_DebugForceParryEligibleActive;
+        private readonly InputAction m_Gameplay_Jump;
         private readonly InputAction m_Gameplay_DashLeft;
         private readonly InputAction m_Gameplay_DashRight;
         /// <summary>
@@ -732,6 +754,10 @@ namespace GlassRefrain.Input
             /// Provides access to the underlying input action "Gameplay/DebugForceParryEligibleActive".
             /// </summary>
             public InputAction @DebugForceParryEligibleActive => m_Wrapper.m_Gameplay_DebugForceParryEligibleActive;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Jump".
+            /// </summary>
+            public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
             /// <summary>
             /// Provides access to the underlying input action "Gameplay/DashLeft".
             /// </summary>
@@ -802,6 +828,9 @@ namespace GlassRefrain.Input
                 @DebugForceParryEligibleActive.started += instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.performed += instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.canceled += instance.OnDebugForceParryEligibleActive;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
                 @DashLeft.started += instance.OnDashLeft;
                 @DashLeft.performed += instance.OnDashLeft;
                 @DashLeft.canceled += instance.OnDashLeft;
@@ -855,6 +884,9 @@ namespace GlassRefrain.Input
                 @DebugForceParryEligibleActive.started -= instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.performed -= instance.OnDebugForceParryEligibleActive;
                 @DebugForceParryEligibleActive.canceled -= instance.OnDebugForceParryEligibleActive;
+                @Jump.started -= instance.OnJump;
+                @Jump.performed -= instance.OnJump;
+                @Jump.canceled -= instance.OnJump;
                 @DashLeft.started -= instance.OnDashLeft;
                 @DashLeft.performed -= instance.OnDashLeft;
                 @DashLeft.canceled -= instance.OnDashLeft;
@@ -1011,6 +1043,13 @@ namespace GlassRefrain.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnDebugForceParryEligibleActive(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnJump(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "DashLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

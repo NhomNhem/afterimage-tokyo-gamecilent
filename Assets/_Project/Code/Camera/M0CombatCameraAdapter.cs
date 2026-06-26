@@ -73,6 +73,7 @@ namespace GlassRefrain.Camera {
         public void OnResetEncounter(InputAction.CallbackContext ctx) { }
         public void OnDashLeft(InputAction.CallbackContext ctx) { }
         public void OnDashRight(InputAction.CallbackContext ctx) { }
+        public void OnJump(InputAction.CallbackContext ctx) { }
 #if GR_M0_PROTOTYPE
         public void OnDebugForceParryEligibleActive(InputAction.CallbackContext ctx) { }
 #endif

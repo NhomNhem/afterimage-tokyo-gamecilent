@@ -95,6 +95,7 @@ namespace GlassRefrain.Bootstrap {
                 directInput.SetLogger(logger);
                 directInput.SetInputRouter(inputRouter);
                 directInput.DashRequested += OnDashRequested;
+                directInput.JumpRequested += OnJumpRequested;
             }
 
             // Subscribe to snapshot events for presentation adapters
@@ -154,6 +155,7 @@ namespace GlassRefrain.Bootstrap {
 
             if (directInput != null) {
                 directInput.DashRequested -= OnDashRequested;
+                directInput.JumpRequested -= OnJumpRequested;
             }
 
             _combatCore.SnapshotChanged -= OnCombatSnapshotChanged;
@@ -502,6 +504,10 @@ namespace GlassRefrain.Bootstrap {
 
         private void OnDashRequested(Vector2 direction) {
             _pendingDashDirection = direction;
+        }
+
+        private void OnJumpRequested() {
+            animationFacade?.PlayJump();
         }
 
         private void OnTargetSnapshotChanged(TargetContextSnapshot snapshot) {

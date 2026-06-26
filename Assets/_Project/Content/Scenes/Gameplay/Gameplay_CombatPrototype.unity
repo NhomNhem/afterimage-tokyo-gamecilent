@@ -2224,7 +2224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GlassRefrain.Presentation::GlassRefrain.Presentation.AnimancerPlayerAnimationDriver
   animancer: {fileID: 1932872216}
   library: {fileID: 11400000, guid: e19d08f430a3d904d9a0b2a952927401, type: 2}
-  upperBodyMask: {fileID: 31900000, guid: 9576758f2d3aa94419e1549ff80b229d, type: 2}
+  upperBodyMask: {fileID: 31900000, guid: 00f04d822a240e14e89c26ddbeaf87cb, type: 2}
   disableRootMotion: 1
   playIdleOnEnable: 1
 --- !u!114 &1932872216

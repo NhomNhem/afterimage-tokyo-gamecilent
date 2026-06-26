@@ -7,6 +7,7 @@ using NhemDangFugBixs.NhemLogging;
 namespace GlassRefrain.Input {
     public class M0DirectPlayerInput : MonoBehaviour {
         public System.Action<Vector2> DashRequested;
+        public System.Action JumpRequested;
 
         private M0InputActions _inputActions;
         private M0InputActions.GameplayActions _gameplay;
@@ -72,6 +73,7 @@ namespace GlassRefrain.Input {
 
             _gameplay.DashLeft.performed += OnDashLeft;
             _gameplay.DashRight.performed += OnDashRight;
+            _inputActions.FindAction("Jump").performed += OnJump;
 #if GR_M0_PROTOTYPE
             _gameplay.DebugForceParryEligibleActive.performed += OnDebugForceParryEligibleActivePerformed;
 #endif
@@ -112,6 +114,7 @@ namespace GlassRefrain.Input {
 
             _gameplay.DashLeft.performed -= OnDashLeft;
             _gameplay.DashRight.performed -= OnDashRight;
+            _inputActions.FindAction("Jump").performed -= OnJump;
 #if GR_M0_PROTOTYPE
             _gameplay.DebugForceParryEligibleActive.performed -= OnDebugForceParryEligibleActivePerformed;
 #endif
@@ -174,6 +177,10 @@ namespace GlassRefrain.Input {
 
         private void OnDashRight(InputAction.CallbackContext context) {
             if (context.performed) DashRequested?.Invoke(new Vector2(1f, 0f));
+        }
+
+        private void OnJump(InputAction.CallbackContext context) {
+            if (context.performed) JumpRequested?.Invoke();
         }
 
         private void HandleButtonState(InputActionIntent actionIntent, InputAction action, InputAction.CallbackContext context) {

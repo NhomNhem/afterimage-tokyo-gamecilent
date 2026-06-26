@@ -50,6 +50,7 @@ namespace GlassRefrain.Presentation {
         public ClipTransition HitReaction;
         public ClipTransition HitReaction2;
         public ClipTransition Stun;
+        public ClipTransition Jump;
 
         [Header("Directional")]
         public ClipTransition WalkBack;

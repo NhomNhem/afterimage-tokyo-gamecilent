@@ -101,6 +101,12 @@ namespace GlassRefrain.Presentation {
             _playerAnimationService.PlayDash(DashDirection.Back);
         }
 
+        public void PlayJump() {
+            if (_playerAnimationService == null) return;
+            _suppressLocomotionUntil = Time.time + 1.0f;
+            _playerAnimationService.PlayJump();
+        }
+
         private void OnFullStateChanged() {
             if (_playerAnimationService == null) return;
             if (Time.time < _suppressLocomotionUntil) return;

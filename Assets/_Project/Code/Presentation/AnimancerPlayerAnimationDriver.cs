@@ -9,13 +9,11 @@ namespace GlassRefrain.Presentation {
     public sealed class AnimancerPlayerAnimationDriver : MonoBehaviour, IPlayerAnimationService {
         [SerializeField] private AnimancerComponent animancer;
         [SerializeField] private PlayerAnimLibrary library;
-        [SerializeField] private AvatarMask upperBodyMask;
         [SerializeField] private bool disableRootMotion = true;
         [SerializeField] private bool playIdleOnEnable = true;
 
         private INhemLogger _logger;
         private AnimancerState _currentState;
-        private AnimancerLayer _actionLayer;
         private bool _isCombatMode;
         private CartesianMixerState _locomotionMixer;
         private float _defaultFadeDuration = 0.25f;
@@ -32,14 +30,7 @@ namespace GlassRefrain.Presentation {
         [Inject]
         public void Construct(INhemLogger logger) { _logger = logger; }
 
-        private void Awake() {
-            DisableRootMotion();
-            if (animancer != null && animancer.Layers.Count < 2)
-                animancer.Layers.Add();
-            _actionLayer = animancer?.Layers[1];
-            if (_actionLayer != null && upperBodyMask != null)
-                _actionLayer.Mask = upperBodyMask;
-        }
+        private void Awake() { DisableRootMotion(); }
 
         private void OnEnable() {
             DisableRootMotion();
@@ -151,7 +142,14 @@ namespace GlassRefrain.Presentation {
 
         public void PlayExitCombat() {
             _locomotionMixer = null;
-            _currentState = Play(library.CombatExit, 1);
+            _currentState = Play(library.CombatExit, 0);
+            if (_currentState != null)
+                _currentState.Events(this).OnEnd = PlayNeutral;
+        }
+
+        public void PlayJump() {
+            _locomotionMixer = null;
+            _currentState = Play(library.Jump, 0);
             if (_currentState != null)
                 _currentState.Events(this).OnEnd = PlayNeutral;
         }
@@ -207,10 +205,7 @@ namespace GlassRefrain.Presentation {
 
             if (_currentState?.Clip == t.Clip) return _currentState;
 
-            var layer = layerIndex == 1 ? _actionLayer : animancer.Layers[0];
-            if (layer == null) return null;
-
-            _currentState = layer.Play(t);
+            _currentState = animancer.Layers[0].Play(t);
             _currentState.Time = 0f;
             return _currentState;
         }
